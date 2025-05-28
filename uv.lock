@@ -743,6 +743,7 @@ dependencies = [
     { name = "beautifulsoup4" },
     { name = "mcp", extra = ["cli"] },
     { name = "pydantic" },
+    { name = "pyyaml" },
     { name = "requests" },
     { name = "snowflake-connector-python" },
 ]
@@ -761,6 +762,7 @@ requires-dist = [
     { name = "beautifulsoup4", specifier = ">=4.13.4" },
     { name = "mcp", extras = ["cli"], specifier = ">=1.8.0" },
     { name = "pydantic", specifier = ">=2.11.4" },
+    { name = "pyyaml", specifier = ">=6.0.2" },
     { name = "requests", specifier = ">=2.32.3" },
     { name = "snowflake-connector-python", specifier = ">=3.15.0" },
 ]
