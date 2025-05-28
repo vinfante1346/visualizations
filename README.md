@@ -61,11 +61,11 @@ Set the path to the service configuration file and values for environment variab
 {
   "mcpServers": {
     "mcp-server-snowflake": {
-      "command": "uv",
+      "command": "uvx",
       "args": [
-        "run",
         "--from",
         "git+https://github.com/Snowflake-Labs/mcp",
+        "mcp-server-snowflake",
         "--service-config-file",
         "<path to file>/service_config.yaml"
       ]
@@ -84,11 +84,11 @@ Register the MCP server in cursor by opening Cursor and navigating to Settings -
 {
   "mcpServers": {
     "mcp-server-snowflake": {
-      "command": "uv",
+      "command": "uvx",
       "args": [
-        "run",
         "--from",
         "git+https://github.com/Snowflake-Labs/mcp",
+        "mcp-server-snowflake",
         "--service-config-file",
         "<path to file>/service_config.yaml",
         "--account-identifier",
@@ -111,8 +111,8 @@ Update the `fastagent.config.yaml` mcp server section:
 mcp:
     servers:
         mcp-server-snowflake:
-            command: "uv"
-            args: ["run", "--from", "git+https://github.com/Snowflake-Labs/mcp", "--service-config-file", "<path to file>/service_config.yaml"]
+            command: "uvx"
+            args: ["--from", "git+https://github.com/Snowflake-Labs/mcp", "mcp-server-snowflake", "--service-config-file", "<path to file>/service_config.yaml"]
 ```
 
 Update the `fastagent.secrets.yaml` mcp server section:
