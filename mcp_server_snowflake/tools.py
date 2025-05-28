@@ -9,9 +9,6 @@ from snowflake.connector import connect
 
 from mcp_server_snowflake.utils import SnowflakeResponse, SnowflakeException
 
-import logging
-
-logger = logging.getLogger(__name__)
 
 sfse = SnowflakeResponse()  # For parsing Snowflake responses
 
@@ -61,8 +58,6 @@ async def query_cortex_search(
 
     if isinstance(columns, list) and len(columns) > 0:
         payload["columns"] = columns
-
-    logging.warning(payload)
 
     response = requests.post(base_url, headers=headers, json=payload)
 
