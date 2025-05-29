@@ -132,7 +132,7 @@ mcp:
 
 MCP Inspector is suggested for troubleshooting the MCP server. Run the below to launch the inspector. Be sure to set values for service config file, SNOWFLAKE_ACCOUNT, SNOWFLAKE_USER, and SNOWFLAKE_PAT are set accordingly.
 
-`npx @modelcontextprotocol/inspector uvx mcp-server-snowflake --service-config-file "<path to file>/service_config.yaml" --account-identifier $SNOWFLAKE_ACCOUNT --username $SNOWFLAKE_USER --pat $SNOWFLAKE_PAT`
+`npx @modelcontextprotocol/inspector uvx --from "git+https://github.com/Snowflake-Labs/mcp" mcp-server-snowflake --service-config-file "<path_to_file>/service_config.yaml" --account-identifier $SNOWFLAKE_ACCOUNT --username $SNOWFLAKE_USER --pat $SNOWFLAKE_PAT`
 
 # FAQs
 
