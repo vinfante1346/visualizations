@@ -1,25 +1,9 @@
 import asyncio
 import argparse
 import os
-from textwrap import dedent
+
 from . import server
-
-
-class MissingArgumentsException(Exception):
-    def __init__(self, missing: list):
-        self.missing = missing
-        super().__init__(missing)
-
-    def __str__(self):
-        missing_str = "\n\t\t".join(["--" + i for i in self.missing])
-        message = f"""
-        -----------------------------------------------------------------------------------
-        Required arguments missing:
-        \t{missing_str}
-        These values must be specified as command-line arguments or environment variables
-        -----------------------------------------------------------------------------------"""
-
-        return dedent(message)
+from mcp_server_snowflake.utils import MissingArgumentsException
 
 
 def get_var(var_name: str, env_var_name: str, args) -> str | None:
