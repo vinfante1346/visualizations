@@ -57,6 +57,7 @@ class SnowflakeService:
     agent_services : list
         List of configured agent service specifications
     """
+
     def __init__(
         self,
         account_identifier: Optional[str] = None,
