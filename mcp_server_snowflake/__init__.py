@@ -1,7 +1,6 @@
 import asyncio
 import argparse
 import os
-from pathlib import Path
 
 from . import server
 
@@ -43,18 +42,17 @@ def main():
         "--service-config-file",
         required=False,
         help="Path to service specification file",
-        default=Path(__file__).parent.parent / "services" / "service_config.yaml",
     )
 
     args = parser.parse_args()
     account_identifier = get_var("account_identifier", "SNOWFLAKE_ACCOUNT", args)
     username = get_var("username", "SNOWFLAKE_USER", args)
     pat = get_var("pat", "SNOWFLAKE_PAT", args)
-    service_config_file = args.service_config_file
+    service_config_file = get_var("service_config_file", "SERVICE_CONFIG_FILE", args)
 
-    if not account_identifier or not pat:
+    if not account_identifier or not pat or not service_config_file:
         raise ValueError(
-            "Both account_identifier and pat must be provided either as command line arguments or environment variables."
+            "Values must be passed to account_identifier, pat, and service_config_file as command line arguments or environment variables."
         )
     asyncio.run(
         server.main(
