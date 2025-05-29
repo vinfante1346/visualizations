@@ -28,7 +28,7 @@ A simple configuration file is used to create tooling for the various Cortex AI 
       <Search services that ...>
     database_name: <database_name>
     schema_name: <schema_name>
-- analyst_services: # List all Cortex Analsyt semantic models/views
+- analyst_services: # List all Cortex Analyst semantic models/views
   - service_name: <service_name> # Create descriptive name for the service
     semantic_model: <semantic_yaml> OR <semantic_view> # Fully-qualify semantic YAML model or Semantic View
     description: > # Should start with "Analyst service that ..."

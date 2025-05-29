@@ -154,7 +154,7 @@ class SnowflakeException(Exception):
         self.tool = tool
 
     def __str__(self):
-        """Generic Exeptions"""
+        """Generic Exceptions"""
         if self.status_code == 400:
             if "unknown model" in self.message:
                 return f"{self.tool} Error: Selected model not available or invalid.\n\nError Message: {self.message} "
@@ -162,6 +162,6 @@ class SnowflakeException(Exception):
                 return f"{self.tool} Error: The resource cannot be found.\n\nError Message: {self.message} "
 
         elif self.status_code == 401:
-            return f"{self.tool} Error: An authorization error ocurred.\n\nError Message: {self.message} "
+            return f"{self.tool} Error: An authorization error occurred.\n\nError Message: {self.message} "
         else:
-            return f"{self.tool} Error: An error has ocurred.\n\nError Message: {self.message} \n Code: {self.status_code}"
+            return f"{self.tool} Error: An error has occurred.\n\nError Message: {self.message} \n Code: {self.status_code}"
