@@ -1,3 +1,21 @@
+"""
+Snowflake MCP Server.
+
+This module implements a Model Context Protocol (MCP) server for interacting with
+Snowflake's Cortex services including Search, Analyst, and Complete services.
+
+The server provides tools for:
+- Cortex Complete: LLM completion using Snowflake's language models
+- Cortex Search: Semantic search across configured search services
+- Cortex Analyst: Querying semantic models using natural language
+- Model management: Retrieving available model information
+
+Examples
+--------
+Run the server with Snowflake credentials:
+    python server.py --account-identifier myaccount --username myuser --pat mytoken --config-path config.yaml
+"""
+
 import logging
 from typing import Optional, Any
 from pydantic import AnyUrl
@@ -20,6 +38,44 @@ logger = logging.getLogger(server_name)
 
 
 class SnowflakeService:
+    """
+    Snowflake service configuration and management.
+
+    This class handles the configuration and setup of Snowflake Cortex services
+    including search, analyst, and agent services. It loads service specifications
+    from a YAML configuration file and provides access to service parameters.
+
+    Parameters
+    ----------
+    account_identifier : str, optional
+        Snowflake account identifier
+    username : str, optional
+        Snowflake username for authentication
+    pat : str, optional
+        Personal Access Token for Snowflake authentication
+    config_path : str, optional
+        Path to the service configuration YAML file
+
+    Attributes
+    ----------
+    account_identifier : str
+        Snowflake account identifier
+    username : str
+        Snowflake username
+    pat : str
+        Personal Access Token
+    config_path : str
+        Path to configuration file
+    default_complete_model : str
+        Default model for Cortex Complete operations
+    search_services : list
+        List of configured search service specifications
+    analyst_services : list
+        List of configured analyst service specifications
+    agent_services : list
+        List of configured agent service specifications
+    """
+
     def __init__(
         self,
         account_identifier: Optional[str] = None,
@@ -41,12 +97,43 @@ class SnowflakeService:
     def get_service_specs(
         specs: list[dict], service_name: str, default: Any = []
     ) -> list:
+        """
+        Extract service specification by name from configuration.
+
+        Parameters
+        ----------
+        specs : list[dict]
+            List of service specification dictionaries
+        service_name : str
+            Name of the service to find
+        default : Any, optional
+            Default value to return if service not found, by default []
+
+        Returns
+        -------
+        list
+            Service specification list or default value
+        """
         # Find the service specification by name
         return next(
             (spec.get(service_name) for spec in specs if service_name in spec), []
         )
 
     def unpack_service_specs(self) -> None:
+        """
+        Load and parse service specifications from configuration file.
+
+        Reads the YAML configuration file and extracts service specifications
+        for search, analyst, and agent services. Also sets the default
+        completion model.
+
+        Raises
+        ------
+        FileNotFoundError
+            If the configuration file cannot be found
+        yaml.YAMLError
+            If the YAML file is malformed
+        """
         # Load the service configuration from a JSON file
         with open(self.config_path, "r") as file:
             service_config = yaml.safe_load(file)
@@ -70,6 +157,26 @@ class SnowflakeService:
 
 
 async def load_service_config_resource(file_path: str):
+    """
+    Load service configuration from YAML file as JSON string.
+
+    Parameters
+    ----------
+    file_path : str
+        Path to the YAML configuration file
+
+    Returns
+    -------
+    str
+        JSON string representation of the configuration
+
+    Raises
+    ------
+    FileNotFoundError
+        If the configuration file cannot be found
+    yaml.YAMLError
+        If the YAML file is malformed
+    """
     # TO DO: Change this to a YAML file to support comments and more readable for users to complete
     # Load the service configuration from a JSON file
     with open(file_path, "r") as file:
@@ -79,6 +186,31 @@ async def load_service_config_resource(file_path: str):
 
 
 async def main(account_identifier: str, username: str, pat: str, config_path: str):
+    """
+    Main server setup and execution function.
+
+    Initializes the Snowflake MCP server with the provided credentials and
+    configuration. Sets up resource handlers, tool handlers, and starts
+    the server using stdio streams.
+
+    Parameters
+    ----------
+    account_identifier : str
+        Snowflake account identifier
+    username : str
+        Snowflake username for authentication
+    pat : str
+        Personal Access Token for Snowflake authentication
+    config_path : str
+        Path to the service configuration YAML file
+
+    Raises
+    ------
+    ValueError
+        If required parameters are missing or invalid
+    ConnectionError
+        If unable to connect to Snowflake services
+    """
     snowflake_service = SnowflakeService(
         account_identifier=account_identifier,
         username=username,
@@ -92,6 +224,14 @@ async def main(account_identifier: str, username: str, pat: str, config_path: st
 
     @server.list_resources()
     async def list_resources() -> list[types.Resource]:
+        """
+        List available resources.
+
+        Returns
+        -------
+        list[types.Resource]
+            List of available resources including service configuration
+        """
         return [
             types.Resource(
                 uri=config_file_uri.as_uri(),
@@ -103,6 +243,24 @@ async def main(account_identifier: str, username: str, pat: str, config_path: st
 
     @server.read_resource()
     async def read_resource(uri: AnyUrl) -> str:
+        """
+        Read resource content by URI.
+
+        Parameters
+        ----------
+        uri : AnyUrl
+            URI of the resource to read
+
+        Returns
+        -------
+        str
+            Resource content as string
+
+        Raises
+        ------
+        ValueError
+            If the requested resource URI is not found
+        """
         if str(uri) == config_file_uri.as_uri():
             service_config = await load_service_config_resource(
                 snowflake_service.config_path
@@ -112,6 +270,18 @@ async def main(account_identifier: str, username: str, pat: str, config_path: st
 
     @server.list_tools()
     async def handle_list_tools() -> list[types.Tool]:
+        """
+        List available tools.
+
+        Returns all available tools including base tools (complete, models,
+        specification) and dynamically generated tools from service
+        configurations (search and analyst services).
+
+        Returns
+        -------
+        list[types.Tool]
+            List of all available tools
+        """
         # Define tool types for Cortex Search Service
         search_tools_types = tools.get_cortex_search_tool_types(
             snowflake_service.search_services
@@ -140,6 +310,30 @@ async def main(account_identifier: str, username: str, pat: str, config_path: st
     async def handle_call_tool(
         name: str, arguments: dict | None
     ) -> list[types.TextContent | types.ImageContent | types.EmbeddedResource]:
+        """
+        Handle tool execution requests.
+
+        Routes tool calls to appropriate handlers based on tool name.
+        Supports specification retrieval, model management, completion,
+        search, and analyst tools.
+
+        Parameters
+        ----------
+        name : str
+            Name of the tool to execute
+        arguments : dict, optional
+            Tool-specific arguments
+
+        Returns
+        -------
+        list[types.TextContent | types.ImageContent | types.EmbeddedResource]
+            Tool execution results
+
+        Raises
+        ------
+        ValueError
+            If required parameters are missing or tool is not found
+        """
         if name == "get-specification-resource":
             spec = await read_resource(config_file_uri.as_uri())
             return [
