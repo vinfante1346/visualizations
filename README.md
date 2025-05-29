@@ -15,9 +15,9 @@ The MCP server currently supports the below Cortex AI capabilities:
 A simple configuration file is used to create tooling for the various Cortex AI features. An example can be seen at [services/service_config.yaml](services/service_config.yaml) and a template is below. Many Cortex Search and Cortex Analyst services can be added. Ideal descriptions are both highly descriptive and mutually exclusive. The path to this configuration file will be passed to the server and the contents used to create MCP server tools at startup.
 
 ```
-- cortex_complete: # Set default model if one is not specified by user in Cortex Copmlete tool
-  - default_model: snowflake-llama-3.3-70b
-- search_services: # List all Cortex Search services
+cortex_complete: # Set default model if one is not specified by user in Cortex Copmlete tool
+  default_model: snowflake-llama-3.3-70b
+search_services: # List all Cortex Search services
   - service_name: <service_name>
     description: > # Should start with "Search service that ..."
       <Search services that ...>
@@ -28,11 +28,15 @@ A simple configuration file is used to create tooling for the various Cortex AI 
       <Search services that ...>
     database_name: <database_name>
     schema_name: <schema_name>
-- analyst_services: # List all Cortex Analyst semantic models/views
+analyst_services: # List all Cortex Analyst semantic models/views
   - service_name: <service_name> # Create descriptive name for the service
-    semantic_model: <semantic_yaml> OR <semantic_view> # Fully-qualify semantic YAML model or Semantic View
+    semantic_model: <semantic_yaml_or_view> # Fully-qualify semantic YAML model or Semantic View
     description: > # Should start with "Analyst service that ..."
-      Analyst service that ...
+      <Analyst service that ...>
+  - service_name: <service_name> # Create descriptive name for the service
+    semantic_model: <semantic_yaml_or_view> # Fully-qualify semantic YAML model or Semantic View
+    description: > # Should start with "Analyst service that ..."
+      <Analyst service that ...>
 ```
 
 ## Snowflake Account Identifier

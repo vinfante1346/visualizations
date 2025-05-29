@@ -17,7 +17,7 @@ Run the server with Snowflake credentials:
 """
 
 import logging
-from typing import Optional, Any
+from typing import Optional
 from pydantic import AnyUrl
 import yaml
 import json
@@ -75,7 +75,6 @@ class SnowflakeService:
     agent_services : list
         List of configured agent service specifications
     """
-
     def __init__(
         self,
         account_identifier: Optional[str] = None,
@@ -93,32 +92,6 @@ class SnowflakeService:
         self.agent_services = []
         self.unpack_service_specs()
 
-    @staticmethod
-    def get_service_specs(
-        specs: list[dict], service_name: str, default: Any = []
-    ) -> list:
-        """
-        Extract service specification by name from configuration.
-
-        Parameters
-        ----------
-        specs : list[dict]
-            List of service specification dictionaries
-        service_name : str
-            Name of the service to find
-        default : Any, optional
-            Default value to return if service not found, by default []
-
-        Returns
-        -------
-        list
-            Service specification list or default value
-        """
-        # Find the service specification by name
-        return next(
-            (spec.get(service_name) for spec in specs if service_name in spec), []
-        )
-
     def unpack_service_specs(self) -> None:
         """
         Load and parse service specifications from configuration file.
@@ -126,29 +99,34 @@ class SnowflakeService:
         Reads the YAML configuration file and extracts service specifications
         for search, analyst, and agent services. Also sets the default
         completion model.
-
-        Raises
-        ------
-        FileNotFoundError
-            If the configuration file cannot be found
-        yaml.YAMLError
-            If the YAML file is malformed
         """
-        # Load the service configuration from a JSON file
-        with open(self.config_path, "r") as file:
-            service_config = yaml.safe_load(file)
+        try:
+            # Load the service configuration from a YAML file
+            with open(self.config_path, "r") as file:
+                service_config = yaml.safe_load(file)
+        except FileNotFoundError:
+            logger.error(f"Service configuration file not found: {self.config_path}")
+            raise
+        except yaml.YAMLError as e:
+            logger.error(f"Error parsing YAML file: {e}")
+            raise
+        except Exception as e:
+            logger.error(f"Unexpected error loading service config: {e}")
+            raise
 
         # Extract the service specifications
-        self.search_services = self.get_service_specs(service_config, "search_services")
-        self.analyst_services = self.get_service_specs(
-            service_config, "analyst_services"
-        )
-        self.agent_services = self.get_service_specs(service_config, "agent_services")
-        self.default_complete_model = self.get_service_specs(
-            self.get_service_specs(service_config, "cortex_complete"),
-            "default_model",
-            None,
-        )
+        try:
+            self.search_services = service_config.get("search_services", [])
+            self.analyst_services = service_config.get("analyst_services", [])
+            self.agent_services = service_config.get(
+                "agent_services", []
+            )  # Not supported yet
+            self.default_complete_model = service_config.get("cortex_complete", {}).get(
+                "default_model", None
+            )
+        except Exception as e:
+            logger.error(f"Error extracting service specifications: {e}")
+            raise
 
         if self.default_complete_model is None:
             logger.warning(
@@ -177,8 +155,6 @@ async def load_service_config_resource(file_path: str):
     yaml.YAMLError
         If the YAML file is malformed
     """
-    # TO DO: Change this to a YAML file to support comments and more readable for users to complete
-    # Load the service configuration from a JSON file
     with open(file_path, "r") as file:
         service_config = yaml.safe_load(file)
 
