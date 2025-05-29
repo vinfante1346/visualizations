@@ -7,6 +7,7 @@ from snowflake.connector import DictCursor
 from snowflake.connector import connect
 from pydantic import BaseModel
 import ast
+from textwrap import dedent
 
 P = ParamSpec("P")
 R = TypeVar("R")
@@ -165,3 +166,20 @@ class SnowflakeException(Exception):
             return f"{self.tool} Error: An authorization error occurred.\n\nError Message: {self.message} "
         else:
             return f"{self.tool} Error: An error has occurred.\n\nError Message: {self.message} \n Code: {self.status_code}"
+
+
+class MissingArgumentsException(Exception):
+    def __init__(self, missing: list):
+        self.missing = missing
+        super().__init__(missing)
+
+    def __str__(self):
+        missing_str = "\n\t\t".join(["--" + i for i in self.missing])
+        message = f"""
+        -----------------------------------------------------------------------------------
+        Required arguments missing:
+        \t{missing_str}
+        These values must be specified as command-line arguments or environment variables
+        -----------------------------------------------------------------------------------"""
+
+        return dedent(message)

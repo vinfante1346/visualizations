@@ -3,6 +3,7 @@ import argparse
 import os
 
 from . import server
+from mcp_server_snowflake.utils import MissingArgumentsException
 
 
 def get_var(var_name: str, env_var_name: str, args) -> str | None:
@@ -50,10 +51,17 @@ def main():
     pat = get_var("pat", "SNOWFLAKE_PAT", args)
     service_config_file = get_var("service_config_file", "SERVICE_CONFIG_FILE", args)
 
-    if not account_identifier or not pat or not service_config_file:
-        raise ValueError(
-            "Values must be passed to account_identifier, pat, and service_config_file as command line arguments or environment variables."
-        )
+    parameters = dict(
+        account_identifier=account_identifier,
+        username=username,
+        pat=pat,
+        service_config_file=service_config_file,
+    )
+
+    if not all(parameters.values()):
+        raise MissingArgumentsException(
+            missing=[k for k, v in parameters.items() if not v]
+        ) from None
     asyncio.run(
         server.main(
             account_identifier=account_identifier,
