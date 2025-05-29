@@ -10,7 +10,7 @@ The package supports:
 - Cortex Complete: Large language model completions and chat
 - Cortex Search: Semantic search across Snowflake data
 - Cortex Analyst: Natural language to SQL query generation
-- Model management: Discovery and information about available models
+- Model discovery: Identify available models in region
 
 The server can be configured through command-line arguments or environment
 variables and uses a YAML configuration file to define service specifications.
@@ -22,25 +22,10 @@ SNOWFLAKE_ACCOUNT : str
 SNOWFLAKE_USER : str
     Snowflake username (alternative to --username)
 SNOWFLAKE_PAT : str
-    Personal Access Token (alternative to --pat)
+    Programmatic Access Token (alternative to --pat)
+SERVICE_CONFIG_FILE : str
+    Path to service configuration file (alternative to --service-config-file)
 
-Examples
---------
-Run the server with command-line arguments:
-
-    python -m mcp_server_snowflake --account-identifier myaccount --username myuser --pat mytoken
-
-Run the server with environment variables:
-
-    export SNOWFLAKE_ACCOUNT=myaccount
-    export SNOWFLAKE_USER=myuser
-    export SNOWFLAKE_PAT=mytoken
-    python -m mcp_server_snowflake
-
-Notes
------
-The server requires at minimum an account identifier and Personal Access Token
-to authenticate with Snowflake.
 """
 
 import asyncio
@@ -109,7 +94,7 @@ def main():
 
     Raises
     ------
-    ValueError
+    MissingArgumentException
         If required parameters (account_identifier and pat) are not provided
         through either command line arguments or environment variables
     SystemExit
@@ -119,24 +104,10 @@ def main():
     -----
     The server requires these minimum parameters:
     - account_identifier: Snowflake account identifier
-    - pat: Personal Access Token for authentication
+    - username: Snowflake username
+    - pat: Programmatic Access Token for authentication
+    - service-config-file: Path to service configuration file
 
-    Optional parameters:
-    - username: Snowflake username (recommended for full functionality)
-    - service-config-file: Path to YAML service configuration
-
-    The service configuration file defaults to '../services/service_config.yaml'
-    relative to the package directory if not specified.
-
-    Examples
-    --------
-    Run with command line arguments:
-
-    >>> main()  # Uses sys.argv for argument parsing
-
-    The function is typically called when the package is run as a module:
-
-    $ python -m mcp_server_snowflake --account-identifier myaccount --pat mytoken
     """
     parser = argparse.ArgumentParser(description="Snowflake MCP Server")
 
@@ -147,7 +118,7 @@ def main():
         "--username", required=False, help="Username for Snowflake account"
     )
     parser.add_argument(
-        "--pat", required=False, help="Personal Access Token (PAT) for Snowflake"
+        "--pat", required=False, help="Programmatic Access Token (PAT) for Snowflake"
     )
     parser.add_argument(
         "--service-config-file",

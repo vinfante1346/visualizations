@@ -1,33 +1,3 @@
-"""
-Snowflake Response Parsing and Exception Handling Utilities.
-
-This module provides utilities for parsing responses from Snowflake Cortex REST APIs
-and handling exceptions. It includes response models, parsers for different API types,
-and a decorator system for consistent response handling across all Cortex services.
-
-The module handles:
-- Response parsing for Cortex Complete, Search, and Analyst APIs
-- Server-Sent Events (SSE) processing for streaming responses
-- SQL execution for Analyst query results
-- Structured and unstructured response formatting
-- Custom exception handling with detailed error messages
-
-Classes
--------
-AnalystResponse : BaseModel
-    Response model for Cortex Analyst API results
-SearchResponse : BaseModel
-    Response model for Cortex Search API results
-CompleteResponse : BaseModel
-    Response model for Cortex Complete API results
-CompleteResponseStructured : BaseModel
-    Response model for structured Cortex Complete API results
-SnowflakeResponse : class
-    Main response parser and decorator provider
-SnowflakeException : Exception
-    Custom exception class for Snowflake API errors
-"""
-
 import requests
 from functools import wraps
 from typing import Awaitable, Callable, TypeVar, Optional, Union
@@ -122,8 +92,8 @@ class SnowflakeResponse:
 
     The class supports three main API types:
     - complete: Language model completion responses
-    - analyst: Natural language to SQL with execution
-    - search: Semantic search results
+    - analyst: Cortex Analyst responses
+    - search: Cortex search responses
 
     Examples
     --------
@@ -201,12 +171,6 @@ class SnowflakeResponse:
         -------
         str
             JSON string containing parsed analyst response with text, SQL, and results
-
-        Notes
-        -----
-        The method automatically detects content types in the response:
-        - "text": Natural language explanation
-        - "sql": Generated SQL statement to be executed
         """
         content = response.json().get("message", {"content": []}).get("content", [])
         res = {}
@@ -237,11 +201,6 @@ class SnowflakeResponse:
         -------
         str
             JSON string containing formatted search results
-
-        Notes
-        -----
-        The response typically contains a "results" field with search matches,
-        relevance scores, and any requested column data.
         """
         content = response.json()
         ret = SearchResponse(results=content.get("results", []))
@@ -276,12 +235,6 @@ class SnowflakeResponse:
             If SSE event data cannot be parsed as JSON
         SyntaxError
             If structured response cannot be parsed as valid Python literal
-
-        Notes
-        -----
-        The method processes SSE events line by line, extracting delta content
-        from each event. For structured responses, it uses ast.literal_eval
-        to safely parse the JSON string into Python objects.
         """
         sse_events = dict(events=[])
         content_text = []
@@ -338,12 +291,6 @@ class SnowflakeResponse:
         ... async def my_completion_function(prompt, **kwargs):
         ...     # Make API call
         ...     return raw_response
-
-        Notes
-        -----
-        The decorator automatically extracts connection parameters from kwargs
-        for Analyst API SQL execution. For Complete API, it detects structured
-        responses based on the presence of response_format in kwargs.
         """
 
         def cortex_wrapper(

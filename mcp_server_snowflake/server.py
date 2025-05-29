@@ -1,21 +1,3 @@
-"""
-Snowflake MCP Server.
-
-This module implements a Model Context Protocol (MCP) server for interacting with
-Snowflake's Cortex services including Search, Analyst, and Complete services.
-
-The server provides tools for:
-- Cortex Complete: LLM completion using Snowflake's language models
-- Cortex Search: Semantic search across configured search services
-- Cortex Analyst: Querying semantic models using natural language
-- Model management: Retrieving available model information
-
-Examples
---------
-Run the server with Snowflake credentials:
-    python server.py --account-identifier myaccount --username myuser --pat mytoken --config-path config.yaml
-"""
-
 import logging
 from typing import Optional
 from pydantic import AnyUrl
@@ -52,7 +34,7 @@ class SnowflakeService:
     username : str, optional
         Snowflake username for authentication
     pat : str, optional
-        Personal Access Token for Snowflake authentication
+        Programmatic Access Token for Snowflake authentication
     config_path : str, optional
         Path to the service configuration YAML file
 
@@ -63,7 +45,7 @@ class SnowflakeService:
     username : str
         Snowflake username
     pat : str
-        Personal Access Token
+        Programmatic Access Token
     config_path : str
         Path to configuration file
     default_complete_model : str
@@ -134,7 +116,7 @@ class SnowflakeService:
             )
 
 
-async def load_service_config_resource(file_path: str):
+async def load_service_config_resource(file_path: str) -> str:
     """
     Load service configuration from YAML file as JSON string.
 
@@ -176,7 +158,7 @@ async def main(account_identifier: str, username: str, pat: str, config_path: st
     username : str
         Snowflake username for authentication
     pat : str
-        Personal Access Token for Snowflake authentication
+        Programmatic Access Token for Snowflake authentication
     config_path : str
         Path to the service configuration YAML file
 

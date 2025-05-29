@@ -1,20 +1,3 @@
-"""
-Snowflake Cortex Services Tools.
-
-This module provides functions for interacting with Snowflake's Cortex services
-including Search, Complete, and Analyst services through REST APIs. It also
-provides utility functions for tool registration and model management.
-
-The module handles:
-- Cortex Search: Semantic search functionality
-- Cortex Complete: LLM completion services
-- Cortex Analyst: Natural language to SQL queries
-- Model management: Retrieving available models and regions
-
-All API functions are decorated with response handlers for consistent
-error handling and response formatting.
-"""
-
 import requests
 from typing import Optional
 from collections import OrderedDict
@@ -62,7 +45,7 @@ async def query_cortex_search(
     query : str
         The search query string to submit to Cortex Search
     PAT : str
-        Personal Access Token for authentication
+        Programmatic Access Token for authentication
     columns : list[str], optional
         List of columns to return for each relevant result, by default None
     filter_query : dict, optional
@@ -227,7 +210,7 @@ async def cortex_complete(
     account_identifier : str
         Snowflake account identifier
     PAT : str
-        Personal Access Token for authentication
+        Programmatic Access Token for authentication
     response_format : dict, optional
         JSON schema for structured response format, by default None
 
@@ -362,7 +345,7 @@ def get_region(
     username : str
         Snowflake username for authentication
     PAT : str
-        Personal Access Token for authentication
+        Programmatic Access Token for authentication
 
     Returns
     -------
@@ -398,7 +381,8 @@ async def get_cortex_models(
     Retrieve available Cortex Complete model information from Snowflake documentation.
 
     Scrapes the Snowflake documentation to get current model availability
-    information and combines it with the account's region information.
+    information specifically for the REST API and combines it with the account's region
+    information.
 
     Parameters
     ----------
@@ -407,7 +391,7 @@ async def get_cortex_models(
     username : str
         Snowflake username for authentication
     PAT : str
-        Personal Access Token for authentication
+        Programmatic Access Token for authentication
     url : str, optional
         URL to Snowflake Cortex model documentation, by default official docs URL
 
@@ -417,12 +401,6 @@ async def get_cortex_models(
         Either an error message string or a dictionary containing:
         - 'current_region': The account's region
         - 'model_availability': List of available models with their details
-
-    Notes
-    -----
-    This function scrapes the live Snowflake documentation to ensure
-    up-to-date model availability information. The returned data includes
-    model names, regions, and availability status.
     """
 
     # Send HTTP request
@@ -486,11 +464,6 @@ def get_cortex_models_tool_type():
     -------
     types.Tool
         MCP Tool object for retrieving model cards and availability information
-
-    Notes
-    -----
-    This tool requires no input parameters and returns comprehensive model
-    availability information including the account's current region.
     """
     return types.Tool(
         name="get-model-cards",
@@ -529,7 +502,7 @@ async def query_cortex_analyst(
     username : str
         Snowflake username for authentication
     PAT : str
-        Personal Access Token for authentication
+        Programmatic Access Token for authentication
 
     Returns
     -------
@@ -575,7 +548,7 @@ async def query_cortex_analyst(
             }
         ],
         semantic_type: semantic_model,
-        "stream": False,  # TO DO: Will need to set to True and handle SSE events
+        "stream": False,
     }
 
     response = requests.post(base_url, headers=headers, json=payload)
@@ -608,12 +581,6 @@ def get_cortex_analyst_tool_types(analyst_services: list[dict]) -> list[types.To
     -------
     list[types.Tool]
         List of MCP Tool objects with input schemas for natural language queries
-
-    Notes
-    -----
-    Each generated tool accepts natural language queries that are processed
-    by Cortex Analyst to generate appropriate SQL against the configured
-    semantic models.
     """
 
     return [
