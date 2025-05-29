@@ -38,20 +38,33 @@ class SnowflakeService:
         self.unpack_service_specs()
 
     def unpack_service_specs(self) -> None:
-        # Load the service configuration from a YAML file
-        with open(self.config_path, "r") as file:
-            service_config = yaml.safe_load(file)
+        try:
+            # Load the service configuration from a YAML file
+            with open(self.config_path, "r") as file:
+                service_config = yaml.safe_load(file)
+        except FileNotFoundError:
+            logger.error(f"Service configuration file not found: {self.config_path}")
+            raise
+        except yaml.YAMLError as e:
+            logger.error(f"Error parsing YAML file: {e}")
+            raise
+        except Exception as e:
+            logger.error(f"Unexpected error loading service config: {e}")
+            raise
 
         # Extract the service specifications
-        self.search_services = service_config.get("search_services", [])
-        self.analyst_services = service_config.get("analyst_services", [])
-
-        self.agent_services = service_config.get(
-            "agent_services", []
-        )  # Not supported yet
-        self.default_complete_model = service_config.get("cortex_complete", {}).get(
-            "default_model", None
-        )
+        try:
+            self.search_services = service_config.get("search_services", [])
+            self.analyst_services = service_config.get("analyst_services", [])
+            self.agent_services = service_config.get(
+                "agent_services", []
+            )  # Not supported yet
+            self.default_complete_model = service_config.get("cortex_complete", {}).get(
+                "default_model", None
+            )
+        except Exception as e:
+            logger.error(f"Error extracting service specifications: {e}")
+            raise
 
         if self.default_complete_model is None:
             logger.warning(
