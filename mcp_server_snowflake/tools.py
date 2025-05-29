@@ -27,20 +27,44 @@ async def query_cortex_search(
 ) -> dict:
     """
     Query a Cortex Search Service using the REST API.
+
+    Performs semantic search against a configured Cortex Search service using
+    Snowflake's REST API. Supports filtering and column selection for refined
+    search results.
+
+    Parameters
+    ----------
+    account_identifier : str
+        Snowflake account identifier
+    service_name : str
+        Name of the Cortex Search Service
+    database_name : str
+        Target database containing the search service
+    schema_name : str
+        Target schema containing the search service
+    query : str
+        The search query string to submit to Cortex Search
+    PAT : str
+        Programmatic Access Token for authentication
+    columns : list[str], optional
+        List of columns to return for each relevant result, by default None
+    filter_query : dict, optional
+        Filter query to apply to search results, by default {}
+
+    Returns
+    -------
+    dict
+        JSON response from the Cortex Search API containing search results
+
+    Raises
+    ------
+    SnowflakeException
+        If the API request fails or returns an error status code
+
+    References
+    ----------
+    Snowflake Cortex Search REST API:
     https://docs.snowflake.com/developer-guide/snowflake-rest-api/reference/cortex-search-service
-
-    Args:
-        account_identifier (str): Your Snowflake account_identifier.
-        service_name (str): Name of the Cortex Search Service.
-        database_name (str): Target database.
-        schschema_nameema (str): Target schema.
-        query (str): The query string to submit to Cortex Search.
-        PAT (str): Personal Access Token token for authentication.
-        columns (list[str], optional): A list of columns to return for each relevant result in the response. Defaults to None.
-        filter_query (dict, optional): A filter query to apply to the search results. Defaults to an empty dict.
-
-    Returns:
-        dict: JSON response from the Cortex Search API.
     """
     base_url = f"https://{account_identifier}.snowflakecomputing.com/api/v2/databases/{database_name}/schemas/{schema_name}/cortex-search-services/{service_name}:query"
 
@@ -73,13 +97,30 @@ async def query_cortex_search(
 
 def get_cortex_search_tool_types(search_services: list[dict]) -> list[types.Tool]:
     """
-    Get the tool parameter inputs for each search services.
+    Generate MCP tool definitions for configured search services.
 
-    Args:
-        search_services (list[dict]): List of search service specifications.
+    Creates tool specifications for each configured Cortex Search service,
+    including input schemas with query parameters, column selection, and
+    filtering options.
 
-    Returns:
-        list[types.Tool]: List of tool parameters.
+    Parameters
+    ----------
+    search_services : list[dict]
+        List of search service configuration dictionaries containing
+        service_name, description, and other service metadata
+
+    Returns
+    -------
+    list[types.Tool]
+        List of MCP Tool objects with complete input schemas for search operations
+
+    Notes
+    -----
+    The generated tools support advanced filtering with operators:
+    - @eq: Equality matching for text/numeric values
+    - @contains: Array contains matching
+    - @gte/@lte: Numeric/date range filtering
+    - @and/@or/@not: Logical operators for complex filters
     """
 
     return [
@@ -153,6 +194,41 @@ async def cortex_complete(
     PAT: str,
     response_format: Optional[dict] = None,
 ) -> dict:
+    """
+    Generate text completions using Snowflake Cortex Complete API.
+
+    Sends a chat completion request to Snowflake's Cortex Complete service
+    using the specified language model. Supports structured JSON responses
+    when a response format is provided.
+
+    Parameters
+    ----------
+    prompt : str
+        User prompt message to send to the language model
+    model : str
+        Snowflake Cortex LLM model name to use for completion
+    account_identifier : str
+        Snowflake account identifier
+    PAT : str
+        Programmatic Access Token for authentication
+    response_format : dict, optional
+        JSON schema for structured response format, by default None
+
+    Returns
+    -------
+    dict
+        JSON response from the Cortex Complete API containing the generated text
+
+    Raises
+    ------
+    SnowflakeException
+        If the API request fails or returns an error status code
+
+    Notes
+    -----
+    The temperature is set to 0.0 for deterministic responses. The response_format
+    parameter allows for structured JSON outputs following a provided schema.
+    """
     base_url = f"https://{account_identifier}.snowflakecomputing.com/api/v2/cortex/inference:complete"
 
     headers = {
@@ -184,6 +260,22 @@ async def cortex_complete(
 
 
 def get_cortex_complete_tool_type():
+    """
+    Generate MCP tool definition for Cortex Complete service.
+
+    Creates a tool specification for the Cortex Complete LLM service with
+    support for prompt input, model selection, and structured JSON responses.
+
+    Returns
+    -------
+    types.Tool
+        MCP Tool object with complete input schema for LLM completion operations
+
+    Notes
+    -----
+    The tool supports optional structured JSON responses through the response_format
+    parameter, which accepts a JSON schema defining the expected output structure.
+    """
     return types.Tool(
         name="cortex-complete",
         description="""Simple LLM chat completion API using Cortex Complete""",
@@ -241,7 +333,29 @@ def get_region(
     PAT: str,
 ) -> str:
     """
-    Get the region of the Snowflake account.
+    Retrieve the current region of the Snowflake account.
+
+    Executes a SQL query to determine the region where the Snowflake
+    account is located using the CURRENT_REGION() function.
+
+    Parameters
+    ----------
+    account_identifier : str
+        Snowflake account identifier
+    username : str
+        Snowflake username for authentication
+    PAT : str
+        Programmatic Access Token for authentication
+
+    Returns
+    -------
+    str
+        The region name where the Snowflake account is located
+
+    Raises
+    ------
+    snowflake.connector.errors.Error
+        If connection to Snowflake fails or query execution fails
     """
 
     statement = "SELECT CURRENT_REGION()"
@@ -264,7 +378,29 @@ async def get_cortex_models(
     url: str = "https://docs.snowflake.com/en/user-guide/snowflake-cortex/cortex-llm-rest-api#model-availability",
 ) -> str | dict[str, list[dict[str, str]] | str]:
     """
-    Get available model cards in Snowflake Cortex COMPLETE REST API.
+    Retrieve available Cortex Complete model information from Snowflake documentation.
+
+    Scrapes the Snowflake documentation to get current model availability
+    information specifically for the REST API and combines it with the account's region
+    information.
+
+    Parameters
+    ----------
+    account_identifier : str
+        Snowflake account identifier
+    username : str
+        Snowflake username for authentication
+    PAT : str
+        Programmatic Access Token for authentication
+    url : str, optional
+        URL to Snowflake Cortex model documentation, by default official docs URL
+
+    Returns
+    -------
+    str | dict[str, list[dict[str, str]] | str]
+        Either an error message string or a dictionary containing:
+        - 'current_region': The account's region
+        - 'model_availability': List of available models with their details
     """
 
     # Send HTTP request
@@ -318,6 +454,17 @@ async def get_cortex_models(
 
 
 def get_cortex_models_tool_type():
+    """
+    Generate MCP tool definition for retrieving Cortex model information.
+
+    Creates a tool specification for fetching available Cortex Complete
+    models and their regional availability.
+
+    Returns
+    -------
+    types.Tool
+        MCP Tool object for retrieving model cards and availability information
+    """
     return types.Tool(
         name="get-model-cards",
         description="""Retrieves available model cards in Snowflake Cortex REST API""",
@@ -335,19 +482,44 @@ async def query_cortex_analyst(
     PAT: str,
 ) -> dict:
     """
-    Query the Snowflake Cortex Analyst Service using the REST API.
+    Query Snowflake Cortex Analyst service for natural language to SQL conversion.
 
-    Args:
-        account_identifier (str): Your Snowflake account_identifier.
-        semantic_model (str): Fully qualified path to YAML semantic file or Snowflake Semantic View.
-                              Examples:
-                              - "@my_db.my_schema.my_stage/my_semantic_model.yaml"
-                              - "MY_DB.MY_SCH.MY_SEMANTIC_VIEW"
-        query (str): The query string to submit to Cortex Analyst.
-        PAT (str): Personal Access Token token for authentication.
+    Sends a natural language query to the Cortex Analyst service, which
+    interprets the query against a semantic model and generates appropriate
+    SQL responses with explanations.
 
-    Returns:
-        dict: JSON response from the Cortex Analyst API.
+    Parameters
+    ----------
+    account_identifier : str
+        Snowflake account identifier
+    semantic_model : str
+        Fully qualified path to YAML semantic file or Snowflake Semantic View.
+        Examples:
+        - "@my_db.my_schema.my_stage/my_semantic_model.yaml"
+        - "MY_DB.MY_SCH.MY_SEMANTIC_VIEW"
+    query : str
+        Natural language query string to submit to Cortex Analyst
+    username : str
+        Snowflake username for authentication
+    PAT : str
+        Programmatic Access Token for authentication
+
+    Returns
+    -------
+    dict
+        JSON response from the Cortex Analyst API containing generated SQL,
+        explanations, and query results
+
+    Raises
+    ------
+    SnowflakeException
+        If the API request fails or returns an error status code
+
+    Notes
+    -----
+    The function automatically detects whether the semantic_model parameter
+    refers to a YAML file (starts with @ and ends with .yaml) or a semantic view.
+    Currently configured for non-streaming responses.
     """
     base_url = f"https://{account_identifier}.snowflakecomputing.com/api/v2/cortex/analyst/message"
 
@@ -376,7 +548,7 @@ async def query_cortex_analyst(
             }
         ],
         semantic_type: semantic_model,
-        "stream": False,  # TO DO: Will need to set to True and handle SSE events
+        "stream": False,
     }
 
     response = requests.post(base_url, headers=headers, json=payload)
@@ -394,13 +566,21 @@ async def query_cortex_analyst(
 
 def get_cortex_analyst_tool_types(analyst_services: list[dict]) -> list[types.Tool]:
     """
-    Get the tool parameter inputs for each analyst services.
+    Generate MCP tool definitions for configured Cortex Analyst services.
 
-    Args:
-        analyst_services (list[dict]): List of analyst service specifications.
+    Creates tool specifications for each configured Cortex Analyst service,
+    enabling natural language querying against semantic models.
 
-    Returns:
-        list[types.Tool]: List of tool parameters.
+    Parameters
+    ----------
+    analyst_services : list[dict]
+        List of analyst service configuration dictionaries containing
+        service_name, description, and semantic model references
+
+    Returns
+    -------
+    list[types.Tool]
+        List of MCP Tool objects with input schemas for natural language queries
     """
 
     return [

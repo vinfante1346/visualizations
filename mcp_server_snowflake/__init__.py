@@ -1,3 +1,33 @@
+"""
+Snowflake MCP Server Package.
+
+This package provides a Model Context Protocol (MCP) server implementation for
+interacting with Snowflake's Cortex AI services. The server enables seamless
+integration with Snowflake's machine learning and AI capabilities through a
+standardized protocol interface.
+
+The package supports:
+- Cortex Complete: Large language model completions and chat
+- Cortex Search: Semantic search across Snowflake data
+- Cortex Analyst: Natural language to SQL query generation
+- Model discovery: Identify available models in region
+
+The server can be configured through command-line arguments or environment
+variables and uses a YAML configuration file to define service specifications.
+
+Environment Variables
+---------------------
+SNOWFLAKE_ACCOUNT : str
+    Snowflake account identifier (alternative to --account-identifier)
+SNOWFLAKE_USER : str
+    Snowflake username (alternative to --username)
+SNOWFLAKE_PAT : str
+    Programmatic Access Token (alternative to --pat)
+SERVICE_CONFIG_FILE : str
+    Path to service configuration file (alternative to --service-config-file)
+
+"""
+
 import asyncio
 import argparse
 import os
@@ -8,14 +38,38 @@ from mcp_server_snowflake.utils import MissingArgumentsException
 
 def get_var(var_name: str, env_var_name: str, args) -> str | None:
     """
-    Get the value of a variable from command line arguments or environment variables.
+    Retrieve variable value from command line arguments or environment variables.
 
-    Args:
-        var_name (str): The name of the variable to check in command line arguments.
-        env_var_name (str): The name of the environment variable to check.
+    Checks for a variable value first in command line arguments, then falls back
+    to environment variables. This provides flexible configuration options for
+    the MCP server.
 
-    Returns:
-        str | None: The value of the variable if found, otherwise None.
+    Parameters
+    ----------
+    var_name : str
+        The attribute name to check in the command line arguments object
+    env_var_name : str
+        The environment variable name to check if command line arg is not provided
+    args : argparse.Namespace
+        Parsed command line arguments object
+
+    Returns
+    -------
+    str | None
+        The variable value if found in either source, None otherwise
+
+    Examples
+    --------
+    Get account identifier from args or environment:
+
+    >>> args = parser.parse_args(['--account-identifier', 'myaccount'])
+    >>> get_var('account_identifier', 'SNOWFLAKE_ACCOUNT', args)
+    'myaccount'
+
+    >>> os.environ['SNOWFLAKE_ACCOUNT'] = 'myaccount'
+    >>> args = parser.parse_args([])
+    >>> get_var('account_identifier', 'SNOWFLAKE_ACCOUNT', args)
+    'myaccount'
     """
 
     if getattr(args, var_name):
@@ -27,7 +81,34 @@ def get_var(var_name: str, env_var_name: str, args) -> str | None:
 
 
 def main():
-    """Main entry point for the package."""
+    """
+    Main entry point for the Snowflake MCP server package.
+
+    Parses command line arguments, retrieves configuration from arguments or
+    environment variables, validates required parameters, and starts the
+    asyncio-based MCP server. The server handles Model Context Protocol
+    communications over stdin/stdout streams.
+
+    The function sets up argument parsing for Snowflake connection parameters
+    and service configuration, then delegates to the main server implementation.
+
+    Raises
+    ------
+    MissingArgumentException
+        If required parameters (account_identifier and pat) are not provided
+        through either command line arguments or environment variables
+    SystemExit
+        If argument parsing fails or help is requested
+
+    Notes
+    -----
+    The server requires these minimum parameters:
+    - account_identifier: Snowflake account identifier
+    - username: Snowflake username
+    - pat: Programmatic Access Token for authentication
+    - service-config-file: Path to service configuration file
+
+    """
     parser = argparse.ArgumentParser(description="Snowflake MCP Server")
 
     parser.add_argument(
@@ -37,7 +118,7 @@ def main():
         "--username", required=False, help="Username for Snowflake account"
     )
     parser.add_argument(
-        "--pat", required=False, help="Personal Access Token (PAT) for Snowflake"
+        "--pat", required=False, help="Programmatic Access Token (PAT) for Snowflake"
     )
     parser.add_argument(
         "--service-config-file",
