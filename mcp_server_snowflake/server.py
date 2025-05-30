@@ -20,12 +20,15 @@ from mcp.server import Server, NotificationOptions
 import mcp.types as types
 import mcp.server.stdio
 from mcp.server.models import InitializationOptions
+from snowflake.connector import connect
 
 import mcp_server_snowflake.tools as tools
 
 config_file_uri = Path(__file__).parent.parent / "services" / "service_config.yaml"
 server_name = "mcp-server-snowflake"
 server_version = "0.0.1"
+tag_major_version = 1
+tag_minor_version = 0
 
 logger = logging.getLogger(server_name)
 
@@ -85,6 +88,9 @@ class SnowflakeService:
         self.analyst_services = []
         self.agent_services = []
         self.unpack_service_specs()
+        self.set_query_tag(
+            major_version=tag_major_version, minor_version=tag_minor_version
+        )
 
     def unpack_service_specs(self) -> None:
         """
@@ -126,6 +132,43 @@ class SnowflakeService:
             logger.warning(
                 "No default model found in the service specification. Using snowflake-llama-3.3-70b as default."
             )
+
+    def set_query_tag(
+        self,
+        query_tag: dict[str, str] = {"origin": "sf_sit", "name": "mcp_server"},
+        major_version: Optional[int] = None,
+        minor_version: Optional[int] = None,
+    ) -> None:
+        """
+        Set the query tag for the Snowflake service.
+
+        Parameters
+        ----------
+        query_tag : dict[str, str], optional
+            Query tag dictionary
+        major_version : int, optional
+            Major version of the query tag
+        minor_version : int, optional
+            Minor version of the query tag
+        """
+        if major_version is not None and minor_version is not None:
+            query_tag["version"] = {"major": major_version, "minor": minor_version}
+
+        try:
+            with (
+                connect(
+                    account=self.account_identifier,
+                    user=self.username,
+                    password=self.pat,
+                    session_parameters={
+                        "QUERY_TAG": json.dumps(query_tag),
+                    },
+                ) as con,
+                con.cursor() as cur,
+            ):
+                cur.execute("SELECT 1").fetchone()
+        except Exception as e:
+            logger.warning(f"Error setting query tag: {e}")
 
 
 async def load_service_config_resource(file_path: str) -> str:
