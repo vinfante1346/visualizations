@@ -1,5 +1,9 @@
 # Snowflake Cortex AI Model Context Protocol (MCP) Server
 
+<a href="https://emerging-solutions-toolbox.streamlit.app/">
+    <img src="https://github.com/user-attachments/assets/aa206d11-1d86-4f32-8a6d-49fe9715b098" alt="image" width="150" align="right";">
+</a>
+
 This Snowflake MCP server provides tooling for Snowflake Cortex AI features, bringing these capabilities to the MCP ecosystem. When connected to an MCP Client (e.g. [Claude for Desktop](https://claude.ai/download), [fast-agent](https://fast-agent.ai/), [Agentic Orchestration Framework](https://github.com/Snowflake-Labs/orchestration-framework/blob/main/README.md)), users can leverage these Cortex AI features.
 
 The MCP server currently supports the below Cortex AI capabilities:
