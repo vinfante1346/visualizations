@@ -138,7 +138,7 @@ mcp:
                 SNOWFLAKE_USER: <add-snowflake-username>
 ```
 
-<img src="./images/fast-agent_v2.gif" width="1000" height="500"/>
+<img src="./images/fast-agent.gif" width="1000" height="500"/>
 
 
 # Troubleshooting
