@@ -137,7 +137,9 @@ mcp:
                 SNOWFLAKE_ACCOUNT: <add-snowflake-account-identifier>
                 SNOWFLAKE_USER: <add-snowflake-username>
 ```
-https://github.com/user-attachments/assets/2700fd14-c275-4873-bd9f-aa76f1bfbe3a
+
+<img src="./images/fast-agent_v2.gif" width="1000" height="500"/>
+
 
 # Troubleshooting
 
