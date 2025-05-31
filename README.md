@@ -117,7 +117,7 @@ For troubleshooting Cursor server issues, view the logs by opening the Output pa
 
 ## [fast-agent](https://fast-agent.ai/)
 
-Update the `fastagent.config.yaml` mcp server section:
+Update the `fastagent.config.yaml` mcp server section with an updated path to the configuration file.
 ```
 # MCP Servers
 mcp:
@@ -127,7 +127,7 @@ mcp:
             args: ["--from", "git+https://github.com/Snowflake-Labs/mcp", "mcp-server-snowflake", "--service-config-file", "<path to file>/service_config.yaml"]
 ```
 
-Update the `fastagent.secrets.yaml` mcp server section:
+Update the `fastagent.secrets.yaml` mcp server section with environment variables.
 ```
 mcp:
     servers:
@@ -137,6 +137,7 @@ mcp:
                 SNOWFLAKE_ACCOUNT: <add-snowflake-account-identifier>
                 SNOWFLAKE_USER: <add-snowflake-username>
 ```
+
 
 # Troubleshooting
 
