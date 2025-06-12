@@ -250,13 +250,18 @@ class SnowflakeResponse:
         sse_events = dict(events=[])
         content_text = []
         for event in response.iter_lines():
-            if bool(event.strip()):
-                if event.decode("utf-8").startswith("data: "):
-                    event_row = event.decode("utf-8").removeprefix("data: ")
-                    try:
-                        sse_events["events"].append(json.loads(event_row))
-                    except json.JSONDecodeError as JDE:
-                        raise (JDE)
+            if not event.strip():
+                continue
+
+            decoded = event.decode("utf-8")
+            if not decoded.startswith("data: "):
+                continue
+
+            event_row = decoded.removeprefix("data: ")
+            try:
+                sse_events["events"].append(json.loads(event_row))
+            except json.JSONDecodeError as e:
+                raise e
 
         for event in sse_events["events"]:
             delta = event.get("choices")[0].get("delta", {})
@@ -418,7 +423,7 @@ class MissingArgumentsException(Exception):
         super().__init__(missing)
 
     def __str__(self):
-        missing_str = "\n\t\t".join(["--" + i for i in self.missing])
+        missing_str = "\n\t\t".join([f"--{i}" for i in self.missing])
         message = f"""
         -----------------------------------------------------------------------------------
         Required arguments missing:
