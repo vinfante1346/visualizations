@@ -14,11 +14,11 @@ from functools import wraps
 from typing import Awaitable, Callable, TypeVar, Optional, Union
 from typing_extensions import ParamSpec
 import json
-from snowflake.connector import DictCursor
-from snowflake.connector import connect
 from pydantic import BaseModel
 import ast
 from textwrap import dedent
+
+from mcp_server_snowflake.connection import SnowflakeConnectionManager
 
 P = ParamSpec("P")
 R = TypeVar("R")
@@ -142,7 +142,8 @@ class SnowflakeResponse:
         statement : str
             SQL statement to execute
         **kwargs
-            Connection parameters including account, user, password
+            Connection parameters including account, user, password, and any additional
+            connection parameters (e.g., role, warehouse)
 
         Returns
         -------
@@ -154,9 +155,18 @@ class SnowflakeResponse:
         snowflake.connector.errors.Error
             If connection fails or SQL execution encounters an error
         """
-        with (
-            connect(**kwargs) as con,
-            con.cursor(DictCursor) as cur,
+        required_params = {
+            "account_identifier": kwargs.pop("account"),
+            "username": kwargs.pop("user"),
+            "pat": kwargs.pop("password"),
+        }
+
+        connection_manager = SnowflakeConnectionManager(**required_params)
+
+        # Forward any remaining kwargs to get_connection
+        with connection_manager.get_connection(use_dict_cursor=True, **kwargs) as (
+            con,
+            cur,
         ):
             cur.execute(statement)
             return cur.fetchall()
