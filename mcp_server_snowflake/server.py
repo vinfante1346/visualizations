@@ -279,10 +279,9 @@ def create_snowflake_service():
 
 
 server = FastMCP("Snowflake MCP Server")
-snowflake_service = create_snowflake_service()
 
 
-def initialize_resources():
+def initialize_resources(snowflake_service):
     @server.resource(snowflake_service.config_path_uri)
     async def get_tools_config():
         """
@@ -294,7 +293,7 @@ def initialize_resources():
         return json.loads(tools_config)
 
 
-def initialize_tools():
+def initialize_tools(snowflake_service):
     if snowflake_service is not None:
         # Add tools for each configured search service
         if snowflake_service.search_services:
@@ -353,8 +352,9 @@ def initialize_tools():
 
 
 def main():
-    initialize_tools()
-    initialize_resources()
+    snowflake_service = create_snowflake_service()
+    initialize_tools(snowflake_service)
+    initialize_resources(snowflake_service)
 
     server.run()
 
