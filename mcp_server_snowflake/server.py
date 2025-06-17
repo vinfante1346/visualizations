@@ -18,7 +18,7 @@ import mcp_server_snowflake.tools as tools
 
 server_name = "mcp-server-snowflake"
 tag_major_version = 1
-tag_minor_version = 0
+tag_minor_version = 1
 
 logger = logging.getLogger(server_name)
 
