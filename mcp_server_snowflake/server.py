@@ -1,34 +1,24 @@
-# Copyright 2025 Snowflake Inc.
-# SPDX-License-Identifier: Apache-2.0
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-# http://www.apache.org/licenses/LICENSE-2.0
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-import logging
+import os
+import argparse
 from typing import Optional
-from pydantic import AnyUrl
 import yaml
+import logging
 import json
 from pathlib import Path
 
-from mcp.server import Server, NotificationOptions
-import mcp.types as types
-import mcp.server.stdio
-from mcp.server.models import InitializationOptions
-from mcp_server_snowflake.connection import SnowflakeConnectionManager
+from fastmcp import FastMCP
+from fastmcp.tools import Tool
 
+from mcp_server_snowflake.connection import SnowflakeConnectionManager
+from mcp_server_snowflake.utils import (
+    MissingArgumentsException,
+    load_tools_config_resource,
+)
 import mcp_server_snowflake.tools as tools
 
-config_file_uri = Path(__file__).parent.parent / "services" / "service_config.yaml"
 server_name = "mcp-server-snowflake"
-server_version = "0.0.1"
 tag_major_version = 1
-tag_minor_version = 0
+tag_minor_version = 1
 
 logger = logging.getLogger(server_name)
 
@@ -83,6 +73,7 @@ class SnowflakeService:
         self.username = username
         self.pat = pat
         self.config_path = config_path
+        self.config_path_uri = Path(config_path).resolve().as_uri()
         self.default_complete_model = None
         self.search_services = []
         self.analyst_services = []
@@ -137,6 +128,7 @@ class SnowflakeService:
             logger.warning(
                 "No default model found in the service specification. Using snowflake-llama-3.3-70b as default."
             )
+            self.default_complete_model = "snowflake-llama-3.3-70b"
 
     def set_query_tag(
         self,
@@ -168,316 +160,204 @@ class SnowflakeService:
             logger.warning(f"Error setting query tag: {e}")
 
 
-async def load_service_config_resource(file_path: str) -> str:
+def get_var(var_name: str, env_var_name: str, args) -> str | None:
     """
-    Load service configuration from YAML file as JSON string.
+    Retrieve variable value from command line arguments or environment variables.
+
+    Checks for a variable value first in command line arguments, then falls back
+    to environment variables. This provides flexible configuration options for
+    the MCP server.
 
     Parameters
     ----------
-    file_path : str
-        Path to the YAML configuration file
+    var_name : str
+        The attribute name to check in the command line arguments object
+    env_var_name : str
+        The environment variable name to check if command line arg is not provided
+    args : argparse.Namespace
+        Parsed command line arguments object
 
     Returns
     -------
-    str
-        JSON string representation of the configuration
+    str | None
+        The variable value if found in either source, None otherwise
+
+    Examples
+    --------
+    Get account identifier from args or environment:
+
+    >>> args = parser.parse_args(['--account-identifier', 'myaccount'])
+    >>> get_var('account_identifier', 'SNOWFLAKE_ACCOUNT', args)
+    'myaccount'
+
+    >>> os.environ['SNOWFLAKE_ACCOUNT'] = 'myaccount'
+    >>> args = parser.parse_args([])
+    >>> get_var('account_identifier', 'SNOWFLAKE_ACCOUNT', args)
+    'myaccount'
+    """
+
+    if getattr(args, var_name):
+        return getattr(args, var_name)
+    elif env_var_name in os.environ:
+        return os.environ[env_var_name]
+    else:
+        return None
+
+
+def create_snowflake_service():
+    """
+    Main entry point for the Snowflake MCP server package.
+
+    Parses command line arguments, retrieves configuration from arguments or
+    environment variables, validates required parameters, and starts the
+    asyncio-based MCP server. The server handles Model Context Protocol
+    communications over stdin/stdout streams.
+
+    The function sets up argument parsing for Snowflake connection parameters
+    and service configuration, then delegates to the main server implementation.
 
     Raises
     ------
-    FileNotFoundError
-        If the configuration file cannot be found
-    yaml.YAMLError
-        If the YAML file is malformed
+    MissingArgumentException
+        If required parameters (account_identifier and pat) are not provided
+        through either command line arguments or environment variables
+    SystemExit
+        If argument parsing fails or help is requested
+
+    Notes
+    -----
+    The server requires these minimum parameters:
+    - account_identifier: Snowflake account identifier
+    - username: Snowflake username
+    - pat: Programmatic Access Token for authentication
+    - service-config-file: Path to service configuration file
+
     """
-    with open(file_path, "r") as file:
-        service_config = yaml.safe_load(file)
+    parser = argparse.ArgumentParser(description="Snowflake MCP Server")
 
-    return json.dumps(service_config)
+    parser.add_argument(
+        "--account-identifier", required=False, help="Snowflake account identifier"
+    )
+    parser.add_argument(
+        "--username", required=False, help="Username for Snowflake account"
+    )
+    parser.add_argument(
+        "--pat", required=False, help="Programmatic Access Token (PAT) for Snowflake"
+    )
+    parser.add_argument(
+        "--service-config-file",
+        required=False,
+        help="Path to service specification file",
+    )
 
+    args = parser.parse_args()
+    account_identifier = get_var("account_identifier", "SNOWFLAKE_ACCOUNT", args)
+    username = get_var("username", "SNOWFLAKE_USER", args)
+    pat = get_var("pat", "SNOWFLAKE_PAT", args)
+    service_config_file = get_var("service_config_file", "SERVICE_CONFIG_FILE", args)
 
-async def main(account_identifier: str, username: str, pat: str, config_path: str):
-    """
-    Main server setup and execution function.
+    parameters = dict(
+        account_identifier=account_identifier,
+        username=username,
+        pat=pat,
+        service_config_file=service_config_file,
+    )
 
-    Initializes the Snowflake MCP server with the provided credentials and
-    configuration. Sets up resource handlers, tool handlers, and starts
-    the server using stdio streams.
+    if not all(parameters.values()):
+        raise MissingArgumentsException(
+            missing=[k for k, v in parameters.items() if not v]
+        ) from None
 
-    Parameters
-    ----------
-    account_identifier : str
-        Snowflake account identifier
-    username : str
-        Snowflake username for authentication
-    pat : str
-        Programmatic Access Token for Snowflake authentication
-    config_path : str
-        Path to the service configuration YAML file
-
-    Raises
-    ------
-    ValueError
-        If required parameters are missing or invalid
-    ConnectionError
-        If unable to connect to Snowflake services
-    """
     snowflake_service = SnowflakeService(
         account_identifier=account_identifier,
         username=username,
         pat=pat,
-        config_path=config_path,
-    )  # noqa F841
-    server = Server("snowflake")  # noqa F841
+        config_path=service_config_file,
+    )
 
-    # For DEBUGGING
-    logger.info("Starting Snowflake MCP server")
+    return snowflake_service
 
-    @server.list_resources()
-    async def list_resources() -> list[types.Resource]:
+
+server = FastMCP("Snowflake MCP Server")
+
+
+def initialize_resources(snowflake_service):
+    @server.resource(snowflake_service.config_path_uri)
+    async def get_tools_config():
         """
-        List available resources.
+        Tools Specification Configuration.
 
-        Returns
-        -------
-        list[types.Resource]
-            List of available resources including service configuration
+        Provides access to the YAML tools configuration file as JSON.
         """
-        return [
-            types.Resource(
-                uri=config_file_uri.as_uri(),
-                name="Service Specification Configuration",
-                description="Service Specification Configuration",
-                mimeType="application/yaml",
-            )
-        ]
+        tools_config = await load_tools_config_resource(snowflake_service.config_path)
+        return json.loads(tools_config)
 
-    @server.read_resource()
-    async def read_resource(uri: AnyUrl) -> str:
-        """
-        Read resource content by URI.
 
-        Parameters
-        ----------
-        uri : AnyUrl
-            URI of the resource to read
-
-        Returns
-        -------
-        str
-            Resource content as string
-
-        Raises
-        ------
-        ValueError
-            If the requested resource URI is not found
-        """
-        if str(uri) == config_file_uri.as_uri():
-            service_config = await load_service_config_resource(
-                snowflake_service.config_path
-            )
-
-            return service_config
-
-    @server.list_tools()
-    async def handle_list_tools() -> list[types.Tool]:
-        """
-        List available tools.
-
-        Returns all available tools including base tools (complete, models,
-        specification) and dynamically generated tools from service
-        configurations (search and analyst services).
-
-        Returns
-        -------
-        list[types.Tool]
-            List of all available tools
-        """
-        # Define tool types for Cortex Search Service
-        search_tools_types = tools.get_cortex_search_tool_types(
-            snowflake_service.search_services
-        )
-        # Define tool types for Cortex Analyst Service
-        analyst_tools_types = tools.get_cortex_analyst_tool_types(
-            snowflake_service.analyst_services
-        )
-        # Tools that are not dynamically instantiated based on config file
-        base_tools = [
-            # Cortex Complete Tool Type
-            tools.get_cortex_complete_tool_type(),
-            # Get model cards
-            tools.get_cortex_models_tool_type(),
-            # Get spec config file
-            types.Tool(
-                name="get-specification-resource",
-                description="""Retrieves the service specification resource""",
-                inputSchema={"type": "object", "properties": {}, "required": []},
-            ),
-        ]
-
-        return base_tools + search_tools_types + analyst_tools_types
-
-    @server.call_tool()
-    async def handle_call_tool(
-        name: str, arguments: dict | None
-    ) -> list[types.TextContent | types.ImageContent | types.EmbeddedResource]:
-        """
-        Handle tool execution requests.
-
-        Routes tool calls to appropriate handlers based on tool name.
-        Supports specification retrieval, model management, completion,
-        search, and analyst tools.
-
-        Parameters
-        ----------
-        name : str
-            Name of the tool to execute
-        arguments : dict, optional
-            Tool-specific arguments
-
-        Returns
-        -------
-        list[types.TextContent | types.ImageContent | types.EmbeddedResource]
-            Tool execution results
-
-        Raises
-        ------
-        ValueError
-            If required parameters are missing or tool is not found
-        """
-        if name == "get-specification-resource":
-            spec = await read_resource(config_file_uri.as_uri())
-            return [
-                types.EmbeddedResource(
-                    type="resource",
-                    resource=types.TextResourceContents(
-                        text=spec,
-                        uri=config_file_uri.as_uri(),
-                        mimeType="application/json",
-                    ),
+def initialize_tools(snowflake_service):
+    if snowflake_service is not None:
+        # Add tools for each configured search service
+        if snowflake_service.search_services:
+            for service in snowflake_service.search_services:
+                search_wrapper = tools.create_search_wrapper(
+                    snowflake_service=snowflake_service, service_details=service
                 )
-            ]
+                server.add_tool(
+                    Tool.from_function(
+                        fn=search_wrapper,
+                        name=service.get("service_name"),
+                        description=service.get(
+                            "description",
+                            f"Search service: {service.get('service_name')}",
+                        ),
+                    )
+                )
 
-        if name == "get-model-cards":
-            # Call the cortex_complete function
-            response = await tools.get_cortex_models(
-                account_identifier=snowflake_service.account_identifier,
-                username=snowflake_service.username,
-                PAT=snowflake_service.pat,
-            )
+        if snowflake_service.analyst_services:
+            for service in snowflake_service.analyst_services:
+                cortex_analyst_wrapper = tools.create_cortex_analyst_wrapper(
+                    snowflake_service=snowflake_service, service_details=service
+                )
+                server.add_tool(
+                    Tool.from_function(
+                        fn=cortex_analyst_wrapper,
+                        name=service.get("service_name"),
+                        description=service.get(
+                            "description",
+                            f"Analyst service: {service.get('service_name')}",
+                        ),
+                    )
+                )
 
-            if response:
-                return [types.TextContent(type="text", text=json.dumps(response))]
-            else:
-                raise ValueError("No model cards found.")
-
-        if name == "cortex-complete":
-            # Validate required parameters
-            prompt = arguments.get("prompt")
-            if not prompt:
-                raise ValueError("Missing required parameters")
-
-            model = arguments.get("model")
-            if not model:
-                model = snowflake_service.default_complete_model
-
-            response_format = arguments.get("response_format")
-
-            # Call the cortex_complete function
-            response = await tools.cortex_complete(
-                prompt=prompt,
-                model=model,
-                account_identifier=snowflake_service.account_identifier,
-                PAT=snowflake_service.pat,
-                response_format=response_format,
-            )
-
-            return [types.TextContent(type="text", text=str(response))]
-
-        if name in [
-            spec.get("service_name") for spec in snowflake_service.search_services
-        ]:
-            # Find the corresponding service specification
-            service_spec = next(
-                (
-                    spec
-                    for spec in snowflake_service.search_services
-                    if spec.get("service_name") == name
-                ),
-                None,
-            )
-            if not service_spec:
-                raise ValueError(f"Service specification for {name} not found")
-
-            # Extract parameters from the service specification
-            database_name = service_spec.get("database_name")
-            schema_name = service_spec.get("schema_name")
-
-            # Validate required parameters
-            query = arguments.get("query")
-            columns = arguments.get("columns", [])
-            filter_query = arguments.get("filter_query", None)
-            if not query:
-                raise ValueError("Missing required parameters")
-
-            # Call the query_cortex_search function
-            response = await tools.query_cortex_search(
-                account_identifier=snowflake_service.account_identifier,
-                service_name=name,
-                database_name=database_name,
-                schema_name=schema_name,
-                query=query,
-                PAT=snowflake_service.pat,
-                columns=columns,
-                filter_query=filter_query,
-            )
-
-            return [types.TextContent(type="text", text=str(response))]
-
-        if name in [
-            spec.get("service_name") for spec in snowflake_service.analyst_services
-        ]:
-            # Find the corresponding service specification
-            service_spec = next(
-                (
-                    spec
-                    for spec in snowflake_service.analyst_services
-                    if spec.get("service_name") == name
-                ),
-                None,
-            )
-            if not service_spec:
-                raise ValueError(f"Service specification for {name} not found")
-
-            # Extract parameters from the service specification
-            semantic_model = service_spec.get("semantic_model")
-
-            # Validate required parameters
-            query = arguments.get("query")
-            if not query:
-                raise ValueError("Missing required parameters")
-
-            # Call the query_cortex_search function
-            response = await tools.query_cortex_analyst(
-                account_identifier=snowflake_service.account_identifier,
-                semantic_model=semantic_model,
-                query=query,
-                username=snowflake_service.username,
-                PAT=snowflake_service.pat,
-            )
-
-            return [types.TextContent(type="text", text=str(response))]
-
-    # Run the server using stdin/stdout streams
-    async with mcp.server.stdio.stdio_server() as (read_stream, write_stream):
-        await server.run(
-            read_stream,
-            write_stream,
-            InitializationOptions(
-                server_name=server_name,
-                server_version=server_version,
-                capabilities=server.get_capabilities(
-                    notification_options=NotificationOptions(),
-                    experimental_capabilities={},
-                ),
-            ),
+        chat_complete_wrapper = tools.create_chat_complete_wrapper(
+            snowflake_service=snowflake_service
         )
+        server.add_tool(
+            Tool.from_function(
+                fn=chat_complete_wrapper,
+                name="cortex_complete",
+                description="Generate text completions using Snowflake Cortex Complete API.",
+            )
+        )
+
+        get_cortex_models_wrapper = tools.create_get_cortex_models_wrapper(
+            snowflake_service=snowflake_service
+        )
+        server.add_tool(
+            Tool.from_function(
+                fn=get_cortex_models_wrapper,
+                name="get_cortex_models",
+                description="Retrieves available Cortex Complete models and their regional availability.",
+            )
+        )
+
+
+def main():
+    snowflake_service = create_snowflake_service()
+    initialize_tools(snowflake_service)
+    initialize_resources(snowflake_service)
+
+    server.run()
+
+
+if __name__ == "__main__":
+    main()

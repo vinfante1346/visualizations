@@ -13,12 +13,13 @@ import requests
 from typing import Optional
 from collections import OrderedDict
 
-import mcp.types as types
 from bs4 import BeautifulSoup
+from typing import Annotated
+from pydantic import Field
 
 from mcp_server_snowflake.utils import SnowflakeResponse, SnowflakeException
 from mcp_server_snowflake.connection import SnowflakeConnectionManager
-
+import mcp_server_snowflake.prompts as prompts
 
 sfse = SnowflakeResponse()  # For parsing Snowflake responses
 
@@ -26,12 +27,12 @@ sfse = SnowflakeResponse()  # For parsing Snowflake responses
 # Cortex Search Service
 @sfse.snowflake_response(api="search")
 async def query_cortex_search(
-    account_identifier: str,
-    service_name: str,
-    database_name: str,
-    schema_name: str,
-    query: str,
-    PAT: str,
+    account_identifier: str = None,
+    service_name: str = None,
+    database_name: str = None,
+    schema_name: str = None,
+    query: str = None,
+    PAT: str = None,
     columns: Optional[list[str]] = None,
     filter_query: Optional[dict] = {},
 ) -> dict:
@@ -85,6 +86,9 @@ async def query_cortex_search(
         "Accept": "application/json, text/event-stream",
     }
 
+    if filter_query is None:
+        filter_query = {}
+
     payload = {
         "query": query,
         "filter": filter_query,
@@ -105,94 +109,60 @@ async def query_cortex_search(
         )
 
 
-def get_cortex_search_tool_types(search_services: list[dict]) -> list[types.Tool]:
-    """
-    Generate MCP tool definitions for configured search services.
+def create_search_wrapper(**kwargs):
+    async def search_wrapper(
+        query: Annotated[
+            str, Field(description="User query to search in search service")
+        ],
+        columns: Annotated[
+            list[str],
+            Field(
+                description="Optional list of columns to return for each relevant result in the response"
+            ),
+        ] = [],
+        filter_query: Annotated[
+            dict, Field(description=prompts.cortex_search_filter_description)
+        ] = {},
+    ):
+        """
+        Search using Cortex Search Service.
 
-    Creates tool specifications for each configured Cortex Search service,
-    including input schemas with query parameters, column selection, and
-    filtering options.
+        Parameters
+        ----------
+        query : str
+            The search query string to submit to Cortex Search
+        columns : list[str], optional
+            List of columns to return for each relevant result, by default []
+        filter_query : dict, optional
+            Filter query to apply to search results, by default {}
 
-    Parameters
-    ----------
-    search_services : list[dict]
-        List of search service configuration dictionaries containing
-        service_name, description, and other service metadata
+        Returns
+        -------
+        dict
+            JSON response from the Cortex Search API containing search results
 
-    Returns
-    -------
-    list[types.Tool]
-        List of MCP Tool objects with complete input schemas for search operations
+        Raises
+        ------
+        SnowflakeException
+            If the API request fails or returns an error status code
+        """
 
-    Notes
-    -----
-    The generated tools support advanced filtering with operators:
-    - @eq: Equality matching for text/numeric values
-    - @contains: Array contains matching
-    - @gte/@lte: Numeric/date range filtering
-    - @and/@or/@not: Logical operators for complex filters
-    """
+        if kwargs.get("snowflake_service") and kwargs.get("service_details"):
+            snowflake_service = kwargs.get("snowflake_service")
+            service_details = kwargs.get("service_details")
 
-    return [
-        types.Tool(
-            name=x.get("service_name"),
-            description=x.get("description"),
-            inputSchema={
-                "type": "object",
-                "properties": {
-                    "query": {
-                        "type": "string",
-                        "description": "User query to search in search service",
-                    },
-                    "columns": {
-                        "type": "array",
-                        "description": "Optional list of columns to return for each relevant result in the response.",
-                    },
-                    "filter_query": {
-                        "type": "object",
-                        "description": """Cortex Search supports filtering on the ATTRIBUTES columns specified in the CREATE CORTEX SEARCH SERVICE command.
+            return await query_cortex_search(
+                query=query,
+                columns=columns,
+                filter_query=filter_query,
+                account_identifier=snowflake_service.account_identifier,
+                service_name=service_details.get("service_name"),
+                database_name=service_details.get("database_name"),
+                schema_name=service_details.get("schema_name"),
+                PAT=snowflake_service.pat,
+            )
 
-Cortex Search supports four matching operators:
-
-1. TEXT or NUMERIC equality: @eq
-2. ARRAY contains: @contains
-3. NUMERIC or DATE/TIMESTAMP greater than or equal to: @gte
-4. NUMERIC or DATE/TIMESTAMP less than or equal to: @lte
-
-These matching operators can be composed with various logical operators:
-
-- @and
-- @or
-- @not
-
-The following usage notes apply:
-
-Matching against NaN ('not a number') values in the source query are handled as
-described in Special values. Fixed-point numeric values with more than 19 digits (not
-including leading zeroes) do not work with @eq, @gte, or @lte and will not be returned
-by these operators (although they could still be returned by the overall query with the
-use of @not).
-
-TIMESTAMP and DATE filters accept values of the form: YYYY-MM-DD and, for timezone
-aware dates: YYYY-MM-DD+HH:MM. If the timezone offset is not specified, the date is
-interpreted in UTC.
-
-These operators can be combined into a single filter object.
-
-Example:
-Filtering on rows where NUMERIC column numeric_col is between 10.5 and 12.5 (inclusive):
-
-{ "@and": [
-  { "@gte": { "numeric_col": 10.5 } },
-  { "@lte": { "numeric_col": 12.5 } }
-]}""",
-                    },
-                },
-                "required": ["query"],
-            },
-        )
-        for x in search_services
-    ]
+    return search_wrapper
 
 
 # Cortex Complete Service
@@ -269,74 +239,73 @@ async def cortex_complete(
         )
 
 
-def get_cortex_complete_tool_type():
-    """
-    Generate MCP tool definition for Cortex Complete service.
+def create_chat_complete_wrapper(**kwargs):
+    async def chat_complete_wrapper(
+        prompt: Annotated[
+            str, Field(description="User prompt message to send to the language model")
+        ],
+        model: Annotated[
+            str,
+            Field(
+                description="Optional Snowflake Cortex LLM model name to use for completion"
+            ),
+        ] = "",
+        response_format: Optional[
+            Annotated[
+                dict,
+                Field(description=prompts.cortex_complete_response_format_description),
+            ]
+        ] = {},
+    ):
+        """
+        Generate text completions using Snowflake Cortex Complete API.
 
-    Creates a tool specification for the Cortex Complete LLM service with
-    support for prompt input, model selection, and structured JSON responses.
+        Sends a chat completion request to Snowflake's Cortex Complete service
+        using the specified language model. Supports structured JSON responses
+        when a response format is provided.
 
-    Returns
-    -------
-    types.Tool
-        MCP Tool object with complete input schema for LLM completion operations
+        Parameters
+        ----------
+        prompt : str
+            User prompt message to send to the language model
+        model : str, optional
+            Snowflake Cortex LLM model name to use for completion, by default ""
+        response_format : dict, optional
+            JSON schema for structured response format, by default {}
 
-    Notes
-    -----
-    The tool supports optional structured JSON responses through the response_format
-    parameter, which accepts a JSON schema defining the expected output structure.
-    """
-    return types.Tool(
-        name="cortex-complete",
-        description="""Simple LLM chat completion API using Cortex Complete""",
-        inputSchema={
-            "type": "object",
-            "properties": {
-                "prompt": {
-                    "type": "string",
-                    "description": "User prompt message to send to the LLM",
-                },
-                "model": {
-                    "type": "string",
-                    "description": "Optional Snowflake Cortex LLM Model name to use.",
-                },
-                "response_format": {
-                    "type": "object",
-                    "description": """Optional JSON response format to use for the LLM response.
-                            Type must be 'json' and schema must be a valid JSON schema.
-                            Example:
-                            {
-                                "type": "json",
-                                "schema": {
-                                    "type": "object",
-                                    "properties": {
-                                    "people": {
-                                        "type": "array",
-                                        "items": {
-                                        "type": "object",
-                                        "properties": {
-                                            "name": {
-                                            "type": "string"
-                                            },
-                                            "age": {
-                                            "type": "number"
-                                            }
-                                        },
-                                        "required": ["name", "age"]
-                                        }
-                                    }
-                                    },
-                                    "required": ["people"]
-                                }
-                            }
-                            """,
-                },
-            },
-            "required": ["prompt"],
-        },
-    )
+        Returns
+        -------
+        dict
+            JSON response from the Cortex Search API containing search results
+
+        Raises
+        ------
+        SnowflakeException
+            If the API request fails or returns an error status code
+        """
+
+        if kwargs.get("snowflake_service"):
+            snowflake_service = kwargs.get("snowflake_service")
+
+            # Use default model if none provided
+            if not model:
+                model = (
+                    getattr(snowflake_service, "default_complete_model")
+                    or "snowflake-llama-3.3-70b"
+                )
+
+            return await cortex_complete(
+                prompt=prompt,
+                model=model,
+                response_format=response_format,
+                account_identifier=snowflake_service.account_identifier,
+                PAT=snowflake_service.pat,
+            )
+
+    return chat_complete_wrapper
 
 
+# Get model availability
 def get_region(
     account_identifier: str,
     username: str,
@@ -460,23 +429,42 @@ async def get_cortex_models(
             return f"No model availability table found at {url}."
 
 
-def get_cortex_models_tool_type():
-    """
-    Generate MCP tool definition for retrieving Cortex model information.
+def create_get_cortex_models_wrapper(**kwargs):
+    async def get_cortex_models_wrapper():
+        """
+        Retrieves available Cortex Complete models and their regional availability.
 
-    Creates a tool specification for fetching available Cortex Complete
-    models and their regional availability.
+        This async wrapper is designed to be used as a tool in the MCP server, allowing
+        clients to fetch the list of available Snowflake Cortex Complete models and their
+        availability in the current Snowflake region.
 
-    Returns
-    -------
-    types.Tool
-        MCP Tool object for retrieving model cards and availability information
-    """
-    return types.Tool(
-        name="get-model-cards",
-        description="""Retrieves available model cards in Snowflake Cortex REST API""",
-        inputSchema={"type": "object", "properties": {}, "required": []},
-    )
+        Parameters
+        -------
+        None
+
+        Returns
+        -------
+        OrderedDict
+            An ordered dictionary containing:
+                - current_region: The current Snowflake region for the account, by default None
+                - model_availability: A list of dictionaries, each representing a model and its availability, by default None
+
+        Raises
+        ------
+        Exception
+            If the underlying get_cortex_models function fails to retrieve or parse the model information
+
+        """
+        if kwargs.get("snowflake_service"):
+            snowflake_service = kwargs.get("snowflake_service")
+
+            return await get_cortex_models(
+                account_identifier=snowflake_service.account_identifier,
+                username=snowflake_service.username,
+                PAT=snowflake_service.pat,
+            )
+
+    return get_cortex_models_wrapper
 
 
 # Cortex Analyst Service
@@ -507,7 +495,8 @@ async def query_cortex_analyst(
     query : str
         Natural language query string to submit to Cortex Analyst
     username : str
-        Snowflake username for authentication
+        Snowflake username for authentication.
+        This is used in the decorator to execute the query via SnowflakeConnectionManager.
     PAT : str
         Programmatic Access Token for authentication
 
@@ -571,39 +560,44 @@ async def query_cortex_analyst(
         )
 
 
-def get_cortex_analyst_tool_types(analyst_services: list[dict]) -> list[types.Tool]:
-    """
-    Generate MCP tool definitions for configured Cortex Analyst services.
+def create_cortex_analyst_wrapper(**kwargs):
+    async def cortex_analyst_wrapper(
+        query: Annotated[
+            str,
+            Field(
+                description="Rephrased natural language query to submit to Cortex Analyst"
+            ),
+        ],
+    ):
+        """
+        Query Snowflake Cortex Analyst service for natural language to SQL conversion.
 
-    Creates tool specifications for each configured Cortex Analyst service,
-    enabling natural language querying against semantic models.
+        Parameters
+        ----------
+        query : str
+            The natural language query string to submit to Cortex Analyst
 
-    Parameters
-    ----------
-    analyst_services : list[dict]
-        List of analyst service configuration dictionaries containing
-        service_name, description, and semantic model references
+        Returns
+        -------
+        dict
+            JSON response from the Cortex Analyst API containing the generated SQL and related information
 
-    Returns
-    -------
-    list[types.Tool]
-        List of MCP Tool objects with input schemas for natural language queries
-    """
+        Raises
+        ------
+        SnowflakeException
+            If the API request fails or returns an error status code
+        """
 
-    return [
-        types.Tool(
-            name=x.get("service_name"),
-            description=x.get("description"),
-            inputSchema={
-                "type": "object",
-                "properties": {
-                    "query": {
-                        "type": "string",
-                        "description": "A rephrased natural language prompt from the user.",
-                    },
-                },
-                "required": ["query"],
-            },
-        )
-        for x in analyst_services
-    ]
+        if kwargs.get("snowflake_service") and kwargs.get("service_details"):
+            snowflake_service = kwargs.get("snowflake_service")
+            service_details = kwargs.get("service_details")
+
+            return await query_cortex_analyst(
+                account_identifier=snowflake_service.account_identifier,
+                semantic_model=service_details.get("semantic_model"),
+                query=query,
+                username=snowflake_service.username,
+                PAT=snowflake_service.pat,
+            )
+
+    return cortex_analyst_wrapper

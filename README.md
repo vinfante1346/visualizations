@@ -16,7 +16,7 @@ The MCP server currently supports the below Cortex AI capabilities:
 
 ## Service Configuration
 
-A simple configuration file is used to create tooling for the various Cortex AI features. An example can be seen at [services/service_config.yaml](services/service_config.yaml) and a template is below. Many Cortex Search and Cortex Analyst services can be added. Ideal descriptions are both highly descriptive and mutually exclusive. The path to this configuration file will be passed to the server and the contents used to create MCP server tools at startup.
+A simple configuration file is used to create tooling for the various Cortex AI features. An example can be seen at [services/tools_config.yaml](services/tools_config.yaml) and a template is below. Many Cortex Search and Cortex Analyst services can be added. Ideal descriptions are both highly descriptive and mutually exclusive. The path to this configuration file will be passed to the server and the contents used to create MCP server tools at startup.
 
 ```
 cortex_complete: # Set default model if one is not specified by user in Cortex Copmlete tool
@@ -75,7 +75,7 @@ Set the path to the service configuration file and values for environment variab
         "git+https://github.com/Snowflake-Labs/mcp",
         "mcp-server-snowflake",
         "--service-config-file",
-        "<path to file>/service_config.yaml"
+        "<path to file>/tools_config.yaml"
       ]
       "env": {
         "SNOWFLAKE_PAT": "<programmatic_access_token>",
@@ -98,7 +98,7 @@ Register the MCP server in cursor by opening Cursor and navigating to Settings -
         "git+https://github.com/Snowflake-Labs/mcp",
         "mcp-server-snowflake",
         "--service-config-file",
-        "<path to file>/service_config.yaml",
+        "<path to file>/tools_config.yaml",
         "--account-identifier",
         "<account-identifier>",
         "--username",
@@ -126,7 +126,7 @@ mcp:
     servers:
         mcp-server-snowflake:
             command: "uvx"
-            args: ["--from", "git+https://github.com/Snowflake-Labs/mcp", "mcp-server-snowflake", "--service-config-file", "<path to file>/service_config.yaml"]
+            args: ["--from", "git+https://github.com/Snowflake-Labs/mcp", "mcp-server-snowflake", "--service-config-file", "<path to file>/tools_config.yaml"]
 ```
 
 Update the `fastagent.secrets.yaml` mcp server section with environment variables.
@@ -149,7 +149,7 @@ mcp:
 
 MCP Inspector is suggested for troubleshooting the MCP server. Run the below to launch the inspector. Be sure to set values for service config file, SNOWFLAKE_ACCOUNT, SNOWFLAKE_USER, and SNOWFLAKE_PAT are set accordingly.
 
-`npx @modelcontextprotocol/inspector uvx --from "git+https://github.com/Snowflake-Labs/mcp" mcp-server-snowflake --service-config-file "<path_to_file>/service_config.yaml" --account-identifier $SNOWFLAKE_ACCOUNT --username $SNOWFLAKE_USER --pat $SNOWFLAKE_PAT`
+`npx @modelcontextprotocol/inspector uvx --from "git+https://github.com/Snowflake-Labs/mcp" mcp-server-snowflake --service-config-file "<path_to_file>/tools_config.yaml" --account-identifier $SNOWFLAKE_ACCOUNT --username $SNOWFLAKE_USER --pat $SNOWFLAKE_PAT`
 
 # FAQs
 
