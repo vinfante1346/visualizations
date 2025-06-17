@@ -169,6 +169,12 @@ MCP Inspector is suggested for troubleshooting the MCP server. Run the below to 
 
 - You may add multiple instances of both services. The MCP Client will determine the appropriate one(s) to use based on the user's prompt.
 
+#### Help! I'm getting an SSLError?
+
+- If your account name contains underscores, try using the dashed version of the URL.
+  - Account identifier with underscores: `acme-marketing_test_account`
+  - Account identifier with dashes: `acme-marketing-test-account`
+
 # Bug Reports, Feedback, or Other Questions
 
 Please add issues to the GitHub repository.
