@@ -10,7 +10,10 @@ from fastmcp import FastMCP
 from fastmcp.tools import Tool
 
 from mcp_server_snowflake.connection import SnowflakeConnectionManager
-from mcp_server_snowflake.utils import MissingArgumentsException
+from mcp_server_snowflake.utils import (
+    MissingArgumentsException,
+    load_tools_config_resource,
+)
 import mcp_server_snowflake.tools as tools
 
 server_name = "mcp-server-snowflake"
@@ -279,42 +282,16 @@ server = FastMCP("Snowflake MCP Server")
 snowflake_service = create_snowflake_service()
 
 
-@server.resource(snowflake_service.config_path_uri)
-async def get_tools_config():
-    """
-    Tools Specification Configuration.
+def initialize_resources():
+    @server.resource(snowflake_service.config_path_uri)
+    async def get_tools_config():
+        """
+        Tools Specification Configuration.
 
-    Provides access to the YAML tools configuration file as JSON.
-    """
-    tools_config = await load_tools_config_resource(snowflake_service.config_path)
-    return json.loads(tools_config)
-
-
-async def load_tools_config_resource(file_path: str) -> str:
-    """
-    Load tools configuration from YAML file as JSON string.
-
-    Parameters
-    ----------
-    file_path : str
-        Path to the YAML configuration file
-
-    Returns
-    -------
-    str
-        JSON string representation of the configuration
-
-    Raises
-    ------
-    FileNotFoundError
-        If the configuration file cannot be found
-    yaml.YAMLError
-        If the YAML file is malformed
-    """
-    with open(file_path, "r") as file:
-        tools_config = yaml.safe_load(file)
-
-    return json.dumps(tools_config)
+        Provides access to the YAML tools configuration file as JSON.
+        """
+        tools_config = await load_tools_config_resource(snowflake_service.config_path)
+        return json.loads(tools_config)
 
 
 def initialize_tools():
@@ -377,6 +354,7 @@ def initialize_tools():
 
 def main():
     initialize_tools()
+    initialize_resources()
 
     server.run()
 

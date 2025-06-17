@@ -10,6 +10,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 import requests
+import yaml
 from functools import wraps
 from typing import Awaitable, Callable, TypeVar, Optional, Union
 from typing_extensions import ParamSpec
@@ -442,3 +443,30 @@ class MissingArgumentsException(Exception):
         -----------------------------------------------------------------------------------"""
 
         return dedent(message)
+
+
+async def load_tools_config_resource(file_path: str) -> str:
+    """
+    Load tools configuration from YAML file as JSON string.
+
+    Parameters
+    ----------
+    file_path : str
+        Path to the YAML configuration file
+
+    Returns
+    -------
+    str
+        JSON string representation of the configuration
+
+    Raises
+    ------
+    FileNotFoundError
+        If the configuration file cannot be found
+    yaml.YAMLError
+        If the YAML file is malformed
+    """
+    with open(file_path, "r") as file:
+        tools_config = yaml.safe_load(file)
+
+    return json.dumps(tools_config)

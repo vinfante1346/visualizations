@@ -305,6 +305,7 @@ def create_chat_complete_wrapper(**kwargs):
     return chat_complete_wrapper
 
 
+# Get model availability
 def get_region(
     account_identifier: str,
     username: str,
