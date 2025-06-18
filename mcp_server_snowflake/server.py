@@ -9,23 +9,23 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-import os
 import argparse
-from typing import Optional
-import yaml
-import logging
 import json
+import logging
+import os
 from pathlib import Path
+from typing import Optional
 
+import yaml
 from fastmcp import FastMCP
 from fastmcp.tools import Tool
 
+import mcp_server_snowflake.tools as tools
 from mcp_server_snowflake.connection import SnowflakeConnectionManager
 from mcp_server_snowflake.utils import (
     MissingArgumentsException,
     load_tools_config_resource,
 )
-import mcp_server_snowflake.tools as tools
 
 server_name = "mcp-server-snowflake"
 tag_major_version = 1
@@ -197,13 +197,13 @@ def get_var(var_name: str, env_var_name: str, args) -> str | None:
     --------
     Get account identifier from args or environment:
 
-    >>> args = parser.parse_args(['--account-identifier', 'myaccount'])
-    >>> get_var('account_identifier', 'SNOWFLAKE_ACCOUNT', args)
+    >>> args = parser.parse_args(["--account-identifier", "myaccount"])
+    >>> get_var("account_identifier", "SNOWFLAKE_ACCOUNT", args)
     'myaccount'
 
-    >>> os.environ['SNOWFLAKE_ACCOUNT'] = 'myaccount'
+    >>> os.environ["SNOWFLAKE_ACCOUNT"] = "myaccount"
     >>> args = parser.parse_args([])
-    >>> get_var('account_identifier', 'SNOWFLAKE_ACCOUNT', args)
+    >>> get_var("account_identifier", "SNOWFLAKE_ACCOUNT", args)
     'myaccount'
     """
 
@@ -217,7 +217,7 @@ def get_var(var_name: str, env_var_name: str, args) -> str | None:
 
 def create_snowflake_service():
     """
-    Main entry point for the Snowflake MCP server package.
+    Create main entry point for the Snowflake MCP server package.
 
     Parses command line arguments, retrieves configuration from arguments or
     environment variables, validates required parameters, and starts the
