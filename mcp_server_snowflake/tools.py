@@ -26,12 +26,12 @@ sfse = SnowflakeResponse()  # For parsing Snowflake responses
 # Cortex Search Service
 @sfse.snowflake_response(api="search")
 async def query_cortex_search(
-    account_identifier: str = None,
-    service_name: str = None,
-    database_name: str = None,
-    schema_name: str = None,
-    query: str = None,
-    PAT: str = None,
+    account_identifier: str,
+    service_name: str,
+    database_name: str,
+    schema_name: str,
+    query: str,
+    PAT: str,
     columns: Optional[list[str]] = None,
     filter_query: Optional[dict] = {},
 ) -> dict:
@@ -275,7 +275,7 @@ def create_chat_complete_wrapper(**kwargs):
         Returns
         -------
         dict
-            JSON response from the Cortex Search API containing search results
+            JSON response from the Cortex Complete API containing the generated text
 
         Raises
         ------
