@@ -9,7 +9,6 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-import ast
 import json
 from functools import wraps
 from textwrap import dedent
@@ -64,37 +63,6 @@ class SearchResponse(BaseModel):
     results: Union[str, dict, list]
 
 
-class CompleteResponse(BaseModel):
-    """
-    Response model for Cortex Complete API results.
-
-    Represents the response from Cortex Complete for unstructured text generation.
-
-    Attributes
-    ----------
-    results : str | dict | list
-        Generated text or content from the language model
-    """
-
-    results: Union[str, dict, list]
-
-
-class CompleteResponseStructured(BaseModel):
-    """
-    Response model for structured Cortex Complete API results.
-
-    Represents the response from Cortex Complete when using structured
-    JSON output with a defined schema.
-
-    Attributes
-    ----------
-    results : dict | list
-        Structured data conforming to the provided JSON schema
-    """
-
-    results: Union[dict, list]
-
-
 class SnowflakeResponse:
     """
     Response parser and decorator provider for Snowflake Cortex APIs.
@@ -104,7 +72,6 @@ class SnowflakeResponse:
     executes SQL queries, and formats responses consistently across all services.
 
     The class supports three main API types:
-    - complete: Language model completion responses
     - analyst: Cortex Analyst responses
     - search: Cortex search responses
 
@@ -113,8 +80,8 @@ class SnowflakeResponse:
     Basic usage with decorator:
 
     >>> sfse = SnowflakeResponse()
-    >>> @sfse.snowflake_response(api="complete")
-    ... async def my_complete_function():
+    >>> @sfse.snowflake_response(api="analyst")
+    ... async def my_analyst_function():
     ...     # Function implementation
     ...     pass
 
@@ -126,8 +93,6 @@ class SnowflakeResponse:
         Parse Cortex Analyst API responses
     parse_search_response(response)
         Parse Cortex Search API responses
-    parse_llm_response(response, structured=False)
-        Parse Cortex Complete API responses
     snowflake_response(api)
         Decorator factory for response parsing
     """
@@ -229,67 +194,6 @@ class SnowflakeResponse:
         ret = SearchResponse(results=content.get("results", []))
         return ret.model_dump_json()
 
-    def parse_llm_response(
-        self, response: requests.models.Response | dict, structured: bool = False
-    ) -> str | list | dict:
-        """
-        Parse Cortex Complete LLM API response from Server-Sent Events.
-
-        Processes streaming SSE response from the Cortex Complete API,
-        extracting text content and optionally parsing structured JSON
-        responses based on provided schemas.
-
-        Parameters
-        ----------
-        response : requests.models.Response | dict
-            Raw streaming response from Cortex Complete API
-        structured : bool, optional
-            Whether to parse response as structured JSON, by default False
-
-        Returns
-        -------
-        str | list | dict
-            JSON string containing either plain text or structured data
-            depending on the structured parameter
-
-        Raises
-        ------
-        json.JSONDecodeError
-            If SSE event data cannot be parsed as JSON
-        SyntaxError
-            If structured response cannot be parsed as valid Python literal
-        """
-        sse_events = dict(events=[])
-        content_text = []
-        for event in response.iter_lines():
-            if not event.strip():
-                continue
-
-            decoded = event.decode("utf-8")
-            if not decoded.startswith("data: "):
-                continue
-
-            event_row = decoded.removeprefix("data: ")
-            try:
-                sse_events["events"].append(json.loads(event_row))
-            except json.JSONDecodeError as e:
-                raise e
-
-        for event in sse_events["events"]:
-            delta = event.get("choices")[0].get("delta", {})
-            if delta.get("type") == "text":
-                if content := delta.get("content"):
-                    content_text.append(content)
-
-        if structured:
-            ret = CompleteResponseStructured(
-                results=ast.literal_eval("".join(content_text))
-            )
-        else:
-            ret = CompleteResponse(results="".join(content_text))
-
-        return ret.model_dump_json()
-
     def snowflake_response(
         self,
         api: str,
@@ -304,7 +208,7 @@ class SnowflakeResponse:
         Parameters
         ----------
         api : str
-            API type to handle. Must be one of: "complete", "analyst", "search"
+            API type to handle. Must be one of: "analyst", "search"
 
         Returns
         -------
@@ -313,9 +217,9 @@ class SnowflakeResponse:
 
         Examples
         --------
-        Decorating a function for Cortex Complete API:
+        Decorating a function for Cortex Analyst:
 
-        >>> @sfse.snowflake_response(api="complete")
+        >>> @sfse.snowflake_response(api="analyst")
         ... async def my_completion_function(prompt, **kwargs):
         ...     # Make API call
         ...     return raw_response
@@ -333,11 +237,6 @@ class SnowflakeResponse:
                     password=kwargs.get("PAT", ""),
                 )
                 match api:
-                    case "complete":
-                        structured = kwargs.get("response_format", {})
-                        parsed = self.parse_llm_response(
-                            response=raw_sse, structured=bool(structured)
-                        )
                     case "analyst":
                         parsed = self.parse_analyst_response(
                             response=raw_sse, **conn_kwargs
@@ -386,7 +285,7 @@ class SnowflakeException(Exception):
     Raising a Snowflake exception:
 
     >>> raise SnowflakeException(
-    ...     tool="Cortex Complete", message="Model not found", status_code=400
+    ...     tool="Cortex Analyst", message="Model not found", status_code=400
     ... )
     """
 

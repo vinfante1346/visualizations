@@ -39,7 +39,7 @@ class SnowflakeService:
     Snowflake service configuration and management.
 
     This class handles the configuration and setup of Snowflake Cortex services
-    including complete, search, and analyst. It loads service specifications from a
+    including search, and analyst. It loads service specifications from a
     YAML configuration file and provides access to service parameters.
 
     Parameters
@@ -67,8 +67,6 @@ class SnowflakeService:
         Path to configuration file
     transport : str
         Transport for the MCP server
-    default_complete_model : str
-        Default model for Cortex Complete operations
     search_services : list
         List of configured search service specifications
     analyst_services : list
@@ -91,7 +89,6 @@ class SnowflakeService:
         self.service_config_file = service_config_file
         self.config_path_uri = Path(service_config_file).resolve().as_uri()
         self.transport: Literal["stdio", "sse", "streamable-http"] = transport
-        self.default_complete_model = None
         self.search_services = []
         self.analyst_services = []
         self.agent_services = []
@@ -136,18 +133,9 @@ class SnowflakeService:
             self.agent_services = service_config.get(
                 "agent_services", []
             )  # Not supported yet
-            self.default_complete_model = service_config.get("cortex_complete", {}).get(
-                "default_model", None
-            )
         except Exception as e:
             logger.error(f"Error extracting service specifications: {e}")
             raise
-
-        if self.default_complete_model is None:
-            logger.warning(
-                "No default model found in the service specification. Using snowflake-llama-3.3-70b as default."
-            )
-            self.default_complete_model = "snowflake-llama-3.3-70b"
 
     def set_query_tag(
         self,
@@ -349,28 +337,6 @@ def initialize_tools(snowflake_service):
                         ),
                     )
                 )
-
-        chat_complete_wrapper = tools.create_chat_complete_wrapper(
-            snowflake_service=snowflake_service
-        )
-        server.add_tool(
-            Tool.from_function(
-                fn=chat_complete_wrapper,
-                name="cortex_complete",
-                description="Generate text completions using Snowflake Cortex Complete API.",
-            )
-        )
-
-        get_cortex_models_wrapper = tools.create_get_cortex_models_wrapper(
-            snowflake_service=snowflake_service
-        )
-        server.add_tool(
-            Tool.from_function(
-                fn=get_cortex_models_wrapper,
-                name="get_cortex_models",
-                description="Retrieves available Cortex Complete models and their regional availability.",
-            )
-        )
 
 
 def main():

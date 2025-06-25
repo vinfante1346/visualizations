@@ -18,13 +18,8 @@ from mcp_server_snowflake.server import SnowflakeService
 
 
 @pytest.fixture
-def base_config():
-    return {"cortex_complete": {"default_model": "snowflake-llama-3.3-70b"}}
-
-
-@pytest.fixture
-def valid_config_yaml(tmp_path, base_config):
-    config = base_config.copy()
+def valid_config_yaml(tmp_path):
+    config = {}
     config.update(
         {
             "search_services": [
@@ -52,20 +47,8 @@ def valid_config_yaml(tmp_path, base_config):
 
 
 @pytest.fixture
-def invalid_yaml(tmp_path):
-    config_file = tmp_path / "invalid_service_config.yaml"
-    with open(config_file, "w") as f:
-        f.write("""
-        cortex_complete:
-          default_model: "snowflake-llama-3.3-70b"
-          search_services: - invalid yaml format
-        """)
-    return config_file
-
-
-@pytest.fixture
-def missing_required_fields(tmp_path, base_config):
-    config = base_config.copy()
+def missing_required_fields(tmp_path):
+    config = {}
     config.update(
         {
             "search_services": [
@@ -91,7 +74,6 @@ def test_valid_config_loads_successfully(valid_config_yaml):
         service_config_file=str(valid_config_yaml),
         transport="",
     )
-    assert service.default_complete_model == "snowflake-llama-3.3-70b"
     assert len(service.search_services) == 1
     assert len(service.analyst_services) == 1
 
@@ -103,18 +85,6 @@ def test_valid_config_loads_successfully(valid_config_yaml):
     analyst_service = service.analyst_services[0]
     assert analyst_service["service_name"] == "test_analyst"
     assert analyst_service["semantic_model"] == "test_model.yaml"
-
-
-def test_invalid_yaml_raises_error(invalid_yaml):
-    """Test that invalid YAML format raises YAMLError"""
-    with pytest.raises(yaml.YAMLError):
-        SnowflakeService(
-            account_identifier="",
-            username="",
-            pat="",
-            service_config_file=str(invalid_yaml),
-            transport="",
-        )
 
 
 def test_missing_fields_handled_gracefully(missing_required_fields):
