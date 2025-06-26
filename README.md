@@ -139,6 +139,11 @@ mcp:
 
 <img src="/images/fast-agent.gif" width="800" height="500"/>
 
+## Microsoft Visual Studio Code + GitHub Copilot
+
+For prerequisites, environment setup, step-by-step guide and instructions, please refer to this [blog](https://medium.com/snowflake/build-a-natural-language-data-assistant-in-vs-code-with-copilot-mcp-and-snowflake-cortex-ai-04a22a3b0f17).
+
+<img src="images/dash-dark-mcp-copilot.gif" width="800" height="500"/>
 
 # Troubleshooting
 
