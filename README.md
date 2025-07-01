@@ -110,7 +110,7 @@ Register the MCP server in cursor by opening Cursor and navigating to Settings -
 
 Add the MCP server as context in the chat.
 
-<img src="/images/Cursor.gif" width="800" height="500"/>
+<img src="https://sfquickstarts.s3.us-west-1.amazonaws.com/misc/mcp/Cursor.gif" width="800" height="500"/>
 
 For troubleshooting Cursor server issues, view the logs by opening the Output panel and selecting Cursor MCP from the dropdown menu.
 
@@ -137,13 +137,13 @@ mcp:
                 SNOWFLAKE_USER: <add-snowflake-username>
 ```
 
-<img src="/images/fast-agent.gif" width="800" height="500"/>
+<img src="https://sfquickstarts.s3.us-west-1.amazonaws.com/misc/mcp/fast-agent.gif" width="800" height="500"/>
 
 ## Microsoft Visual Studio Code + GitHub Copilot
 
 For prerequisites, environment setup, step-by-step guide and instructions, please refer to this [blog](https://medium.com/snowflake/build-a-natural-language-data-assistant-in-vs-code-with-copilot-mcp-and-snowflake-cortex-ai-04a22a3b0f17).
 
-<img src="images/dash-dark-mcp-copilot.gif" width="800" height="500"/>
+<img src="https://sfquickstarts.s3.us-west-1.amazonaws.com/misc/mcp/dash-dark-mcp-copilot.gif" width="800" height="500"/>
 
 # Troubleshooting
 
