@@ -15,20 +15,19 @@ import requests
 from pydantic import Field
 
 import mcp_server_snowflake.prompts as prompts
+from mcp_server_snowflake.environment import construct_snowflake_post
 from mcp_server_snowflake.utils import SnowflakeException, SnowflakeResponse
 
-sfse = SnowflakeResponse()  # For parsing Snowflake responses
+sfse = SnowflakeResponse()
 
 
-# Cortex Search Service
 @sfse.snowflake_response(api="search")
 async def query_cortex_search(
-    account_identifier: str,
+    auth_manager,
     service_name: str,
     database_name: str,
     schema_name: str,
     query: str,
-    PAT: str,
     columns: Optional[list[str]] = None,
     filter_query: Optional[dict] = {},
     limit: Optional[int] = 10,
@@ -42,8 +41,8 @@ async def query_cortex_search(
 
     Parameters
     ----------
-    account_identifier : str
-        Snowflake account identifier
+    auth_manager : SnowflakeAuthManager
+        Authentication manager for handling credentials
     service_name : str
         Name of the Cortex Search Service
     database_name : str
@@ -52,8 +51,6 @@ async def query_cortex_search(
         Target schema containing the search service
     query : str
         The search query string to submit to Cortex Search
-    PAT : str
-        Programmatic Access Token for authentication
     columns : list[str], optional
         List of columns to return for each relevant result, by default None
     filter_query : dict, optional
@@ -76,14 +73,10 @@ async def query_cortex_search(
     Snowflake Cortex Search REST API:
     https://docs.snowflake.com/developer-guide/snowflake-rest-api/reference/cortex-search-service
     """
-    base_url = f"https://{account_identifier}.snowflakecomputing.com/api/v2/databases/{database_name}/schemas/{schema_name}/cortex-search-services/{service_name}:query"
-
-    headers = {
-        "X-Snowflake-Authorization-Token-Type": "PROGRAMMATIC_ACCESS_TOKEN",
-        "Authorization": f"Bearer {PAT}",
-        "Content-Type": "application/json",
-        "Accept": "application/json, text/event-stream",
-    }
+    host, headers = construct_snowflake_post(
+        auth_manager=auth_manager,
+        api_path=f"/api/v2/databases/{database_name}/schemas/{schema_name}/cortex-search-services/{service_name}:query",
+    )
 
     if filter_query is None:
         filter_query = {}
@@ -97,7 +90,7 @@ async def query_cortex_search(
     if isinstance(columns, list) and len(columns) > 0:
         payload["columns"] = columns
 
-    response = requests.post(base_url, headers=headers, json=payload)
+    response = requests.post(host, headers=headers, json=payload)
 
     if response.status_code == 200:
         return response
@@ -157,28 +150,25 @@ def create_search_wrapper(**kwargs):
             service_details = kwargs.get("service_details")
 
             return await query_cortex_search(
+                auth_manager=snowflake_service,
                 query=query,
                 columns=columns,
                 filter_query=filter_query,
-                account_identifier=snowflake_service.account_identifier,
                 service_name=service_details.get("service_name"),
                 database_name=service_details.get("database_name"),
                 schema_name=service_details.get("schema_name"),
-                PAT=snowflake_service.pat,
                 limit=default_limit,
             )
 
     return search_wrapper
 
 
-# Cortex Analyst Service
 @sfse.snowflake_response(api="analyst")
 async def query_cortex_analyst(
-    account_identifier: str,
+    auth_manager,
     semantic_model: str,
     query: str,
     username: str,
-    PAT: str,
 ) -> dict:
     """
     Query Snowflake Cortex Analyst service for natural language to SQL conversion.
@@ -189,8 +179,8 @@ async def query_cortex_analyst(
 
     Parameters
     ----------
-    account_identifier : str
-        Snowflake account identifier
+    auth_manager : SnowflakeAuthManager
+        Authentication manager for handling credentials
     semantic_model : str
         Fully qualified path to YAML semantic file or Snowflake Semantic View.
         Examples:
@@ -201,8 +191,6 @@ async def query_cortex_analyst(
     username : str
         Snowflake username for authentication.
         This is used in the decorator to execute the query via SnowflakeConnectionManager.
-    PAT : str
-        Programmatic Access Token for authentication
 
     Returns
     -------
@@ -221,14 +209,10 @@ async def query_cortex_analyst(
     refers to a YAML file (starts with @ and ends with .yaml) or a semantic view.
     Currently configured for non-streaming responses.
     """
-    base_url = f"https://{account_identifier}.snowflakecomputing.com/api/v2/cortex/analyst/message"
-
-    headers = {
-        "X-Snowflake-Authorization-Token-Type": "PROGRAMMATIC_ACCESS_TOKEN",
-        "Authorization": f"Bearer {PAT}",
-        "Content-Type": "application/json",
-        "Accept": "application/json, text/event-stream",
-    }
+    host, headers = construct_snowflake_post(
+        auth_manager=auth_manager,
+        api_path="/api/v2/cortex/analyst/message",
+    )
 
     if semantic_model.startswith("@") and semantic_model.endswith(".yaml"):
         semantic_type = "semantic_model_file"
@@ -251,7 +235,7 @@ async def query_cortex_analyst(
         "stream": False,
     }
 
-    response = requests.post(base_url, headers=headers, json=payload)
+    response = requests.post(host, headers=headers, json=payload)
 
     if response.status_code == 200:
         return response
@@ -297,11 +281,10 @@ def create_cortex_analyst_wrapper(**kwargs):
             service_details = kwargs.get("service_details")
 
             return await query_cortex_analyst(
-                account_identifier=snowflake_service.account_identifier,
+                auth_manager=snowflake_service,
                 semantic_model=service_details.get("semantic_model"),
                 query=query,
                 username=snowflake_service.username,
-                PAT=snowflake_service.pat,
             )
 
     return cortex_analyst_wrapper

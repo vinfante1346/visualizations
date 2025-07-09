@@ -16,6 +16,8 @@ from typing import Any, Dict, Generator, Optional, Tuple
 
 from snowflake.connector import DictCursor, connect
 
+from mcp_server_snowflake.auth import SnowflakeAuthManager
+
 logger = logging.getLogger(__name__)
 
 
@@ -25,16 +27,13 @@ class SnowflakeConnectionManager:
 
     This class provides a centralized way to establish connections to Snowflake
     with consistent configuration, session parameters, and error handling.
-    It supports both regular and dictionary cursor connections.
+    It automatically detects when running inside a Snowflake container to use OAuth
+    authentication.
 
     Attributes
     ----------
-    account_identifier : str
-        Snowflake account identifier
-    username : str
-        Snowflake username for authentication
-    pat : str
-        Programmatic Access Token for authentication
+    auth_manager : SnowflakeAuthManager
+        Authentication manager for handling credentials
     default_session_parameters : dict
         Default session parameters to apply to all connections
     """
@@ -54,16 +53,34 @@ class SnowflakeConnectionManager:
         account_identifier : str
             Snowflake account identifier
         username : str
-            Snowflake username for authentication
+            Snowflake username for authentication (not used in container environment)
         pat : str
-            Programmatic Access Token for authentication
+            Programmatic Access Token for authentication (not used in container environment)
         default_session_parameters : dict, optional
             Default session parameters to apply to all connections
         """
-        self.account_identifier = account_identifier
-        self.username = username
-        self.pat = pat
+        self.auth_manager = SnowflakeAuthManager(
+            account_identifier=account_identifier,
+            username=username,
+            pat=pat,
+        )
         self.default_session_parameters = default_session_parameters or {}
+
+    def _get_connection_params(self, **kwargs: Any) -> Dict[str, Any]:
+        """
+        Get connection parameters based on the environment (container vs external).
+
+        Parameters
+        ----------
+        **kwargs : Any
+            Additional connection parameters
+
+        Returns
+        -------
+        dict
+            Connection parameters for snowflake.connector.connect()
+        """
+        return self.auth_manager.get_connection_params(**kwargs)
 
     def set_query_tag(self, query_tag: dict) -> None:
         """
@@ -87,6 +104,7 @@ class SnowflakeConnectionManager:
         Get a Snowflake connection with the specified configuration.
 
         This context manager ensures proper connection handling and cleanup.
+        It automatically detects the environment and uses appropriate authentication.
 
         Parameters
         ----------
@@ -116,14 +134,11 @@ class SnowflakeConnectionManager:
             merged_params.update(session_parameters)
 
         try:
-            # Pass all kwargs to connect() along with base parameters
-            connection = connect(
-                account=self.account_identifier,
-                user=self.username,
-                password=self.pat,
-                session_parameters=merged_params,
-                **kwargs,
-            )
+            # Get connection parameters based on environment
+            connection_params = self._get_connection_params(**kwargs)
+            connection_params["session_parameters"] = merged_params
+
+            connection = connect(**connection_params)
 
             cursor = (
                 connection.cursor(DictCursor)
