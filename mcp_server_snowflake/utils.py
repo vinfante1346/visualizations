@@ -10,6 +10,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 import json
+import logging
 from functools import wraps
 from textwrap import dedent
 from typing import Awaitable, Callable, Optional, TypeVar, Union
@@ -18,6 +19,8 @@ import requests
 import yaml
 from pydantic import BaseModel
 from typing_extensions import ParamSpec
+
+logger = logging.getLogger(__name__)
 
 P = ParamSpec("P")
 R = TypeVar("R")
@@ -122,7 +125,10 @@ class SnowflakeResponse:
             If connection fails or SQL execution encounters an error
         """
         # Forward any remaining kwargs to get_connection
-        with service.get_connection(use_dict_cursor=True, **kwargs) as (
+        # with service.get_connection(use_dict_cursor=True, **kwargs) as (
+        with service.get_connection(
+            use_dict_cursor=True, session_parameters=service.get_query_tag_param()
+        ) as (
             con,
             cur,
         ):
@@ -226,11 +232,11 @@ class SnowflakeResponse:
             @wraps(func)
             async def response_parsers(*args: P.args, **kwargs: P.kwargs) -> R:
                 raw_sse = await func(*args, **kwargs)
-                auth_manager = kwargs.get("auth_manager")
+                snowflake_service = kwargs.get("snowflake_service")
                 match api:
                     case "analyst":
                         parsed = self.parse_analyst_response(
-                            response=raw_sse, service=auth_manager
+                            response=raw_sse, service=snowflake_service
                         )
                     case "search":
                         parsed = self.parse_search_response(response=raw_sse)
@@ -323,7 +329,7 @@ class MissingArgumentsException(Exception):
         super().__init__(missing)
 
     def __str__(self):
-        missing_str = "\n\t\t".join([f"--{i}" for i in self.missing])
+        missing_str = "\n\t\t".join([f"{i}" for i in self.missing])
         message = f"""
         -----------------------------------------------------------------------------------
         Required arguments missing:
@@ -332,6 +338,27 @@ class MissingArgumentsException(Exception):
         -----------------------------------------------------------------------------------"""
 
         return dedent(message)
+
+
+def cleanup_snowflake_service(snowflake_service):
+    """
+    Clean up Snowflake service resources.
+
+    Parameters
+    ----------
+    snowflake_service : SnowflakeService
+        The service instance to clean up
+    """
+    # This if for the case if the service fails to initialize it will not need to cleanup.
+    if not snowflake_service:
+        return
+
+    try:
+        if hasattr(snowflake_service, "connection") and snowflake_service.connection:
+            logger.info("Closing Snowflake connection...")
+            snowflake_service.connection.close()
+    except Exception as e:
+        logger.error(f"Error closing Snowflake connection: {e}")
 
 
 async def load_tools_config_resource(file_path: str) -> str:
