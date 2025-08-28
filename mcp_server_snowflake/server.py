@@ -22,17 +22,22 @@ import yaml
 from fastmcp import FastMCP
 from fastmcp.tools import Tool
 from snowflake.connector import DictCursor, connect
+from snowflake.core import Root
 
-import mcp_server_snowflake.tools as tools
+import mcp_server_snowflake.cortex_services.tools as cortex_tools
 from mcp_server_snowflake.environment import (
     get_spcs_container_token,
     is_running_in_spcs_container,
 )
+from mcp_server_snowflake.object_manager.tools import initialize_object_manager_tools
+from mcp_server_snowflake.query_manager.tools import initialize_query_manager_tool
+from mcp_server_snowflake.server_utils import initialize_middleware
 from mcp_server_snowflake.utils import (
     cleanup_snowflake_service,
     get_login_params,
     load_tools_config_resource,
     sanitize_tool_name,
+    unpack_sql_statement_permissions,
 )
 
 # Used to quantify Snowflake usage
@@ -78,6 +83,10 @@ class SnowflakeService:
         List of configured analyst service specifications
     agent_services : list
         List of configured agent service specifications
+    sql_statement_allowed : list
+        List of allowed SQL statement types
+    sql_statement_disallowed : list
+        List of disallowed SQL statement types
     connection : snowflake.connector.Connection
         Snowflake connection object
     """
@@ -95,6 +104,8 @@ class SnowflakeService:
         self.search_services = []
         self.analyst_services = []
         self.agent_services = []
+        self.sql_statement_allowed = []
+        self.sql_statement_disallowed = []
         self.default_session_parameters: Dict[str, Any] = {}
         self.query_tag = query_tag if query_tag is not None else None
         self.tag_major_version = (
@@ -110,6 +121,7 @@ class SnowflakeService:
         self.unpack_service_specs()
         # Persist connection to avoid closing it after each request
         self.connection = self._get_persistent_connection()
+        self.root = Root(self.connection)
 
     def unpack_service_specs(self) -> None:
         """
@@ -140,6 +152,12 @@ class SnowflakeService:
             self.agent_services = service_config.get(
                 "agent_services", []
             )  # Not supported yet
+            self.sql_statement_allowed, self.sql_statement_disallowed = (
+                unpack_sql_statement_permissions(
+                    service_config.get("sql_statement_permissions", [])
+                )
+            )
+
         except Exception as e:
             logger.error(f"Error extracting service specifications: {e}")
             raise
@@ -330,7 +348,6 @@ class SnowflakeService:
                 yield self.connection, cursor
             finally:
                 cursor.close()
-                # connection.close()
 
         except Exception as e:
             logger.error(f"Error establishing Snowflake connection: {e}")
@@ -472,6 +489,7 @@ def create_lifespan(args):
             # Initialize tools and resources now that we have the service
             logger.info("Initializing tools and resources...")
             initialize_tools(snowflake_service, server)
+            initialize_middleware(server, snowflake_service)
             initialize_resources(snowflake_service, server)
 
             yield snowflake_service
@@ -502,10 +520,14 @@ def initialize_resources(snowflake_service: SnowflakeService, server: FastMCP):
 
 def initialize_tools(snowflake_service: SnowflakeService, server: FastMCP):
     if snowflake_service is not None:
+        # Add tools for object manager
+        initialize_object_manager_tools(server, snowflake_service.root)
+        # Add tool for query manager
+        initialize_query_manager_tool(server, snowflake_service)
         # Add tools for each configured search service
         if snowflake_service.search_services:
             for service in snowflake_service.search_services:
-                search_wrapper = tools.create_search_wrapper(
+                search_wrapper = cortex_tools.create_search_wrapper(
                     snowflake_service=snowflake_service, service_details=service
                 )
                 server.add_tool(
@@ -521,7 +543,7 @@ def initialize_tools(snowflake_service: SnowflakeService, server: FastMCP):
 
         if snowflake_service.analyst_services:
             for service in snowflake_service.analyst_services:
-                cortex_analyst_wrapper = tools.create_cortex_analyst_wrapper(
+                cortex_analyst_wrapper = cortex_tools.create_cortex_analyst_wrapper(
                     snowflake_service=snowflake_service, service_details=service
                 )
                 server.add_tool(

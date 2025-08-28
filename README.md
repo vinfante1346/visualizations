@@ -4,18 +4,24 @@
     <img src="https://github.com/user-attachments/assets/aa206d11-1d86-4f32-8a6d-49fe9715b098" alt="image" width="150" align="right";">
 </a>
 
-This Snowflake MCP server provides tooling for Snowflake Cortex AI features, bringing these capabilities to the MCP ecosystem. When connected to an MCP Client (e.g. [Claude for Desktop](https://claude.ai/download), [fast-agent](https://fast-agent.ai/), [Agentic Orchestration Framework](https://github.com/Snowflake-Labs/orchestration-framework/blob/main/README.md)), users can leverage these Cortex AI features.
+This Snowflake MCP server provides tooling for Snowflake Cortex AI, object management, and SQL orchestration, bringing these capabilities to the MCP ecosystem. When connected to an MCP Client (e.g. [Claude for Desktop](https://claude.ai/download), [fast-agent](https://fast-agent.ai/), [Agentic Orchestration Framework](https://github.com/Snowflake-Labs/orchestration-framework/blob/main/README.md)), users can leverage these features.
 
-The MCP server currently supports the below Cortex AI capabilities:
+The MCP server currently supports the below capabilities:
 - **[Cortex Search](https://docs.snowflake.com/en/user-guide/snowflake-cortex/cortex-search/cortex-search-overview)**: Query unstructured data in Snowflake as commonly used in Retrieval Augmented Generation (RAG) applications.
 - **[Cortex Analyst](https://docs.snowflake.com/en/user-guide/snowflake-cortex/cortex-analyst)**: Query structured data in Snowflake via rich semantic modeling.
 - **[Cortex Agent](https://docs.snowflake.com/en/user-guide/snowflake-cortex/cortex-agents)**: (**Coming Soon**) Agentic orchestrator across structured and unstructured data retrieval
+- **Object Management**: Perform basic operations against Snowflake's most common objects such as creation, dropping, updating, and more.
+- **SQL Execution**: Run LLM-generated SQL managed by user-configured permissions.
 
 # Getting Started
 
 ## Service Configuration
 
-A simple configuration file is used to create tooling for the various Cortex AI features. An example can be seen at [services/tools_config.yaml](services/tools_config.yaml) and a template is below. Many Cortex Search and Cortex Analyst services can be added. Ideal descriptions are both highly descriptive and mutually exclusive. The path to this configuration file will be passed to the server and the contents used to create MCP server tools at startup.
+A simple configuration file is used to create tooling for the various Cortex AI features and manage permitted capabilities in the SQL tool. An example can be seen at [services/tools_config.yaml](services/configuration.yaml) and a template is below. The path to this configuration file will be passed to the server and the contents used to create MCP server tools at startup.
+
+Many Cortex Search and Cortex Analyst services can be added. Ideal descriptions are both highly descriptive and mutually exclusive.
+
+In addition, the `sql_statement_permissions` section ensures that only approved statements. The list contains SQL expression types. Those marked with True are permitted while those marked with False are not permitted. Please see [SQL Execution](#sql-execution) for examples of each expression type.
 
 ```
 search_services: # List all Cortex Search services
@@ -42,11 +48,32 @@ analyst_services: # List all Cortex Analyst semantic models/views
     semantic_model: "<semantic_yaml_or_view>" # Fully-qualify semantic YAML model or Semantic View
     description: > # Should start with "Analyst service that ..."
       "<Analyst service that ...>"
+sql_statement_permissions: # List SQL statements to explicitly allow (True) or disallow (False).
+  # - All: True # To allow everything, uncomment and set All: True.
+  - Alter: True
+  - Command: True
+  - Comment: True
+  - Commit: True
+  - Create: True
+  - Delete: True
+  - Describe: True
+  - Drop: True
+  - Insert: True
+  - Merge: True
+  - Rollback: True
+  - Select: True
+  - Transaction: True
+  - TruncateTable: True
+  # - Unknown: True # To allow unknown or unmapped statement types, uncomment and set Unknown: True.
+  - Update: True
+  - Use: True
 ```
 
 ## Connecting to Snowflake
 
 The MCP server uses the [Snowflake Python Connector](https://docs.snowflake.com/en/developer-guide/python-connector/python-connector-connect) for all authentication and connection methods. **Please refer to the official Snowflake documentation for comprehensive authentication options and best practices.**
+
+**The MCP server honors the RBAC permissions assigned to the specified role (as passed in the connection parameters) or default role of the user (if no role is passed to connect).**
 
 Connection parameters can be passed as CLI arguments and/or environment variables. The server supports all authentication methods available in the Snowflake Python Connector, including:
 
@@ -154,6 +181,63 @@ mcp:
 For prerequisites, environment setup, step-by-step guide and instructions, please refer to this [blog](https://medium.com/snowflake/build-a-natural-language-data-assistant-in-vs-code-with-copilot-mcp-and-snowflake-cortex-ai-04a22a3b0f17).
 
 <img src="https://sfquickstarts.s3.us-west-1.amazonaws.com/misc/mcp/dash-dark-mcp-copilot.gif"/>
+
+# Object Management
+
+The MCP server includes dozens of tools narrowly scoped to fulfill basic operation management. It is recommended to use Snowsight directly for advanced object management.
+
+The MCP server currently supports **creating**, **dropping**, **creating or altering**, **describing**, and **listing** the below object types.
+
+```
+- Database
+- Schema
+- Table
+- View
+- Warehouse
+- Compute Pool
+- Role
+- Stage
+- User
+- Image Repository
+```
+
+Please note that these tools are also governed by those captured in the configuration file under `sql_statement_permissions`.
+Object management tools to create and create or alter objects are governed by the `Create` permission. Object dropping is governed by the `Drop` permission.
+
+It is likely that more actions and objects will be included in future releases.
+
+# SQL Execution
+
+The general SQL tool will provide a way to execute generic SQL statements generated by the MCP client. Users have full control over the types of SQL statement that are approved by setting the allowed and/or disallowed statement types in the configuration file.
+
+Listed in the configuration file under `sql_statement_permissions` are [sqlglot expression types](https://sqlglot.com/sqlglot/expressions.html). Those marked as False will be stopped before execution. Those marked with True will be executed (or prompt the user for execution based on the MCP client settings).
+
+**To allow all SQL expressions to pass the additional validation, set `All` to True.**
+
+Not all Snowflake SQL commands are mapped in sqlglot and you may find some obscure commands have yet to be captured in the configuration file.
+**Setting `Unknown` to True will allow these uncaptured commands to pass the additional validation.** You may also add new expression types directly to honor specific ones.
+
+Below are some examples of sqlglot expression types with accompanying Snowflake SQL command examples:
+
+| SQLGlot Expression Type | SQL Command |
+|------------------------|-------------|
+| Alter | `ALTER TABLE my_table ADD COLUMN new_column VARCHAR(50);` |
+| Command | `CALL my_procedure('param1_value', 123);`<br/>`GRANT ROLE analyst TO USER user1;`<br/>`SHOW TABLES IN SCHEMA my_database.my_schema;` |
+| Comment | `COMMENT ON TABLE my_table IS 'This table stores customer data.';` |
+| Commit | `COMMIT;` |
+| Create | `CREATE TABLE my_table ( id INT, name VARCHAR(255), email VARCHAR(255) );`<br/>`CREATE OR ALTER VIEW my_schema.my_new_view AS SELECT id, name, created_at FROM my_schema.my_table WHERE created_at >= '2023-01-01';` |
+| Delete | `DELETE FROM my_table WHERE id = 101;` |
+| Describe | `DESCRIBE TABLE my_table;` |
+| Drop | `DROP TABLE my_table;` |
+| Error | `COPY INTO my_table FROM @my_stage/data/customers.csv FILE_FORMAT = (TYPE = CSV SKIP_HEADER = 1 FIELD_DELIMITER = ',');`<br/>`REVOKE ROLE analyst FROM USER user1;`<br/>`UNDROP TABLE my_table;` |
+| Insert | `INSERT INTO my_table (id, name, email) VALUES (102, 'Jane Doe', 'jane.doe@example.com');` |
+| Merge | `MERGE INTO my_table AS target USING (SELECT 103 AS id, 'John Smith' AS name, 'john.smith@example.com' AS email) AS source ON target.id = source.id WHEN MATCHED THEN UPDATE SET target.name = source.name, target.email = source.email WHEN NOT MATCHED THEN INSERT (id, name, email) VALUES (source.id, source.name, source.email);` |
+| Rollback | `ROLLBACK;` |
+| Select | `SELECT id, name FROM my_table WHERE id < 200 ORDER BY name;` |
+| Transaction | `BEGIN;` |
+| TruncateTable | `TRUNCATE TABLE my_table;` |
+| Update | `UPDATE my_table SET email = 'new.email@example.com' WHERE name = 'Jane Doe';` |
+| Use | `USE DATABASE my_database;` |
 
 # Troubleshooting
 
