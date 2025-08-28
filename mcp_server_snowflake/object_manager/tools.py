@@ -61,6 +61,7 @@ def create_or_alter_object(object_type: ObjectMetadata, root: Root):
     try:
         # First need to fetch the existing object
         existing_object = core_path[core_object.name].fetch()
+
         # Then update the existing object with the new properties
         data = object_type.model_dump(exclude_unset=True)
         # Update only non-None values
@@ -230,6 +231,7 @@ def validate_object_tool(
     # User has not added any permissions, so we default to disallowing all object actions
     if len(sql_allow_list) == 0 and len(sql_disallow_list) == 0:
         valid = False
+
     if func_type in sql_allow_list:
         valid = True
     elif func_type in sql_disallow_list:
