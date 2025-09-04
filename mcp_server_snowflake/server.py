@@ -100,6 +100,11 @@ class SnowflakeService:
         transport: str,
         connection_params: dict,
     ):
+        if service_config_file is None:
+            raise ValueError(
+                "service_config_file cannot be None. Please provide a path to the service configuration file."
+            )
+
         self.service_config_file = str(Path(service_config_file).expanduser().resolve())
         self.config_path_uri = Path(self.service_config_file).as_uri()
         self.transport = cast(Literal["stdio", "sse", "streamable-http"], transport)
