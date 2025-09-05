@@ -46,7 +46,7 @@ from mcp_server_snowflake.utils import (
 # Used to quantify Snowflake usage
 server_name = "mcp-server-snowflake"
 tag_major_version = 1
-tag_minor_version = 0
+tag_minor_version = 1
 query_tag = {"origin": "sf_sit", "name": "mcp_server"}
 
 logger = logging.getLogger(server_name)
@@ -537,7 +537,7 @@ def initialize_tools(snowflake_service: SnowflakeService, server: FastMCP):
     if snowflake_service is not None:
         # Add tools for object manager
         if snowflake_service.object_manager:
-            initialize_object_manager_tools(server, snowflake_service.root)
+            initialize_object_manager_tools(server, snowflake_service)
 
         # Add tools for query manager
         if snowflake_service.query_manager:
