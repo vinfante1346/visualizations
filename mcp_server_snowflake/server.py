@@ -24,6 +24,7 @@ from snowflake.connector import DictCursor, connect
 from snowflake.core import Root
 
 from mcp_server_snowflake.cortex_services.tools import (
+    initialize_cortex_agent_tool,
     initialize_cortex_analyst_tool,
     initialize_cortex_search_tool,
 )
@@ -47,7 +48,7 @@ from mcp_server_snowflake.utils import (
 # Used to quantify Snowflake usage
 server_name = "mcp-server-snowflake"
 tag_major_version = 1
-tag_minor_version = 2
+tag_minor_version = 3
 query_tag = {"origin": "sf_sit", "name": "mcp_server"}
 
 logger = logging.getLogger(server_name)
@@ -564,6 +565,10 @@ def initialize_tools(snowflake_service: SnowflakeService, server: FastMCP):
         # Add tools for semantic manager
         if snowflake_service.semantic_manager:
             initialize_semantic_manager_tools(server, snowflake_service)
+
+        # Add tool for agent service
+        if snowflake_service.agent_services:
+            initialize_cortex_agent_tool(server, snowflake_service)
 
         # Add tool for search service
         if snowflake_service.search_services:
