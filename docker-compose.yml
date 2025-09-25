@@ -16,13 +16,13 @@ services:
       dockerfile: docker/server/Dockerfile
       platforms:
         - linux/amd64
-    image: ${SNOWFLAKE_ACCOUNT}.registry.snowflakecomputing.com/cube_testing/public/awesome_images/mcp-server:latest
+    image: mcp-server-snowflake:latest
     container_name: mcp-server-snowflake
     environment:
       - SNOWFLAKE_ACCOUNT=${SNOWFLAKE_ACCOUNT}
       - SNOWFLAKE_USER=${SNOWFLAKE_USER}
     volumes:
-      - ${HOME}/.mcp/snowflake_mcp_config.yaml:/app/services/custom_config.yaml:ro
+      - ${HOME}/.mcp/tools_config.yaml:/app/services/tools_config.yaml:ro
     ports:
       - "9000:9000"
     restart: unless-stopped
