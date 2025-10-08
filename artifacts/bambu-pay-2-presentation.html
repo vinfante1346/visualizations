@@ -28,6 +28,129 @@
         @media (min-width: 769px) {
             body {
                 overflow: hidden;
+                cursor: default;
+            }
+
+            .desktop-view .slide-content {
+                box-shadow: 0 40px 120px rgba(39, 251, 107, 0.2);
+                transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            }
+
+            .desktop-view .slide-content:hover {
+                box-shadow: 0 50px 140px rgba(39, 251, 107, 0.25);
+                transform: translateY(-2px);
+            }
+
+            /* Desktop controls - larger and more prominent */
+            .desktop-view .controls {
+                background: rgba(255, 255, 255, 0.98);
+                backdrop-filter: blur(30px);
+                padding: 22px 40px;
+                border-radius: 70px;
+                box-shadow: 0 25px 70px rgba(0, 0, 0, 0.25);
+            }
+
+            .desktop-view .btn {
+                padding: 16px 32px;
+                font-size: 16px;
+                transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            }
+
+            .desktop-view .btn:hover:not(:disabled) {
+                transform: translateY(-3px);
+            }
+
+            .desktop-view .counter {
+                font-size: 18px;
+                padding: 0 25px;
+            }
+
+            /* Desktop keyboard shortcuts hint */
+            .keyboard-hint {
+                position: fixed;
+                bottom: 120px;
+                right: 50px;
+                background: rgba(0, 5, 46, 0.95);
+                color: white;
+                padding: 20px 30px;
+                border-radius: 16px;
+                font-size: 14px;
+                font-weight: 600;
+                z-index: 999;
+                opacity: 0;
+                transition: opacity 0.3s ease;
+                pointer-events: none;
+                border: 2px solid rgba(39, 251, 107, 0.3);
+            }
+
+            .keyboard-hint.show {
+                opacity: 1;
+            }
+
+            .keyboard-hint kbd {
+                background: rgba(255, 255, 255, 0.15);
+                padding: 4px 10px;
+                border-radius: 6px;
+                font-family: 'Courier New', monospace;
+                font-size: 12px;
+                margin: 0 4px;
+                border: 1px solid rgba(255, 255, 255, 0.2);
+            }
+
+            /* Fullscreen mode support */
+            .desktop-view:-webkit-full-screen .slide-content {
+                max-width: 100vw;
+                width: 95vw;
+                height: 95vh;
+            }
+
+            .desktop-view:-moz-full-screen .slide-content {
+                max-width: 100vw;
+                width: 95vw;
+                height: 95vh;
+            }
+
+            .desktop-view:fullscreen .slide-content {
+                max-width: 100vw;
+                width: 95vw;
+                height: 95vh;
+            }
+
+            /* Desktop hover effects */
+            .desktop-view .metric-card:hover {
+                transform: translateY(-8px) scale(1.03);
+            }
+
+            .desktop-view .payment-logo:hover {
+                transform: scale(1.15) rotate(2deg);
+            }
+
+            .desktop-view .timeline-item:hover {
+                transform: translateX(15px);
+            }
+
+            .desktop-view .problem-item:hover {
+                transform: translateX(8px);
+            }
+
+            /* Desktop progress bar - more prominent */
+            .desktop-view .progress-bar {
+                height: 5px;
+                box-shadow: 0 0 30px rgba(39, 251, 107, 0.6);
+            }
+
+            /* Desktop logo and slide number - larger */
+            .desktop-view .logo {
+                font-size: 32px;
+                top: 45px;
+                left: 55px;
+            }
+
+            .desktop-view .slide-num {
+                font-size: 16px;
+                padding: 14px 28px;
+                top: 45px;
+                right: 55px;
             }
         }
 
@@ -1639,6 +1762,74 @@
 
         if (isAndroid) {
             document.body.classList.add('android-device');
+        }
+
+        // Desktop detection and features
+        const isDesktop = !isMobile;
+        if (isDesktop) {
+            document.body.classList.add('desktop-view');
+
+            // Add keyboard shortcuts hint
+            const keyboardHint = document.createElement('div');
+            keyboardHint.className = 'keyboard-hint';
+            keyboardHint.innerHTML = `
+                <div style="margin-bottom: 8px; font-size: 16px; color: #27FB6B;">⌨️ Keyboard Shortcuts</div>
+                <div><kbd>←</kbd> <kbd>→</kbd> Navigate slides</div>
+                <div><kbd>Space</kbd> Next slide</div>
+                <div><kbd>Home</kbd> First slide</div>
+                <div><kbd>End</kbd> Last slide</div>
+                <div><kbd>F</kbd> Fullscreen</div>
+                <div><kbd>?</kbd> Toggle help</div>
+            `;
+            document.body.appendChild(keyboardHint);
+
+            // Show keyboard hint on first load
+            setTimeout(() => {
+                keyboardHint.classList.add('show');
+                setTimeout(() => {
+                    keyboardHint.classList.remove('show');
+                }, 4000);
+            }, 1000);
+
+            // Toggle keyboard hint with '?' key
+            document.addEventListener('keydown', (e) => {
+                if (e.key === '?' || e.key === '/') {
+                    e.preventDefault();
+                    keyboardHint.classList.toggle('show');
+                }
+
+                // Fullscreen toggle with 'F' key
+                if (e.key === 'f' || e.key === 'F') {
+                    e.preventDefault();
+                    toggleFullscreen();
+                }
+            });
+
+            // Fullscreen function
+            function toggleFullscreen() {
+                if (!document.fullscreenElement) {
+                    document.documentElement.requestFullscreen().catch(err => {
+                        console.log('Fullscreen request failed:', err);
+                    });
+                } else {
+                    if (document.exitFullscreen) {
+                        document.exitFullscreen();
+                    }
+                }
+            }
+
+            // Mouse wheel navigation (optional)
+            let wheelTimeout;
+            document.addEventListener('wheel', (e) => {
+                clearTimeout(wheelTimeout);
+                wheelTimeout = setTimeout(() => {
+                    if (e.deltaY > 30) {
+                        navigate(1); // Scroll down = next slide
+                    } else if (e.deltaY < -30) {
+                        navigate(-1); // Scroll up = previous slide
+                    }
+                }, 150);
+            }, { passive: true });
         }
 
         updateSlide();
