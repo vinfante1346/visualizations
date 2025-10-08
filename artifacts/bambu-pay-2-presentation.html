@@ -21,6 +21,22 @@
             overflow: hidden;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
+            touch-action: pan-y;
+        }
+
+        /* Desktop-specific styles */
+        @media (min-width: 769px) {
+            body {
+                overflow: hidden;
+            }
+        }
+
+        /* Mobile-specific styles */
+        @media (max-width: 768px) {
+            body {
+                overflow-x: hidden;
+                overflow-y: auto;
+            }
         }
 
         .slide {
@@ -52,6 +68,28 @@
             box-shadow: 0 30px 90px rgba(39, 251, 107, 0.15);
             position: relative;
             color: #00052E;
+        }
+
+        /* Mobile slide content */
+        @media (max-width: 768px) {
+            .slide-content {
+                width: 100%;
+                height: auto;
+                min-height: 100vh;
+                padding: 80px 20px 100px 20px;
+                border-radius: 0;
+                overflow-y: visible;
+            }
+
+            .slide {
+                position: relative;
+                height: auto;
+                min-height: 100vh;
+            }
+
+            .slide.active {
+                display: block;
+            }
         }
 
         .slide-content::-webkit-scrollbar {
@@ -567,11 +605,192 @@
         }
 
         @media (max-width: 768px) {
-            h1 { font-size: 40px; }
-            h2 { font-size: 32px; }
-            .big-stat { font-size: 60px; }
-            .slide-content { padding: 40px 30px; }
-            .metrics { grid-template-columns: 1fr; }
+            /* Typography */
+            h1 {
+                font-size: 36px !important;
+                margin-bottom: 20px !important;
+                line-height: 1.2 !important;
+            }
+            h2 {
+                font-size: 28px !important;
+                margin-bottom: 30px !important;
+                flex-wrap: wrap;
+            }
+            h2 i {
+                width: 32px !important;
+                height: 32px !important;
+            }
+            .subtitle {
+                font-size: 20px !important;
+                margin-bottom: 15px !important;
+            }
+            .caption {
+                font-size: 16px !important;
+            }
+            .big-stat {
+                font-size: 72px !important;
+                margin: 30px 0 !important;
+            }
+            .big-stat-label {
+                font-size: 18px !important;
+                margin-bottom: 30px !important;
+            }
+
+            /* Layout */
+            .slide-content {
+                padding: 80px 20px 100px 20px !important;
+            }
+            .metrics {
+                grid-template-columns: 1fr !important;
+                gap: 20px !important;
+                margin: 30px 0 !important;
+            }
+
+            /* Logo */
+            .logo {
+                top: 20px !important;
+                left: 20px !important;
+                font-size: 20px !important;
+            }
+
+            /* Slide number */
+            .slide-num {
+                top: 20px !important;
+                right: 20px !important;
+                padding: 8px 16px !important;
+                font-size: 12px !important;
+            }
+
+            /* Controls */
+            .controls {
+                bottom: 20px !important;
+                padding: 15px 20px !important;
+                gap: 15px !important;
+                width: calc(100% - 40px);
+                border-radius: 50px !important;
+            }
+
+            .btn {
+                padding: 12px 20px !important;
+                font-size: 14px !important;
+            }
+
+            .counter {
+                padding: 0 10px !important;
+                font-size: 14px !important;
+            }
+
+            /* Cards */
+            .metric-card {
+                padding: 30px 20px !important;
+            }
+
+            .metric-number {
+                font-size: 48px !important;
+            }
+
+            .metric-icon {
+                width: 40px !important;
+                height: 40px !important;
+            }
+
+            /* Tables */
+            table {
+                font-size: 14px !important;
+            }
+
+            th, td {
+                padding: 16px 12px !important;
+                font-size: 14px !important;
+            }
+
+            th {
+                font-size: 12px !important;
+            }
+
+            /* Timeline */
+            .timeline-item {
+                padding: 20px 25px !important;
+                font-size: 16px !important;
+                flex-direction: column;
+                text-align: center;
+                gap: 15px !important;
+            }
+
+            .timeline-icon {
+                width: 32px !important;
+                height: 32px !important;
+            }
+
+            /* Problem items */
+            .problem-item {
+                padding: 20px 25px !important;
+                font-size: 16px !important;
+                flex-direction: column;
+                text-align: center;
+                gap: 15px !important;
+            }
+
+            .problem-icon {
+                width: 28px !important;
+                height: 28px !important;
+            }
+
+            /* Highlight boxes */
+            .highlight {
+                padding: 25px 20px !important;
+                font-size: 16px !important;
+            }
+
+            /* Payment logos */
+            .payment-logos {
+                flex-direction: column;
+                gap: 15px !important;
+                margin: 25px 0 !important;
+            }
+
+            .payment-logo {
+                padding: 15px 25px !important;
+                width: 100%;
+            }
+
+            /* Float icon */
+            .float-icon {
+                font-size: 60px !important;
+                margin-bottom: 20px !important;
+            }
+
+            /* Mobile navigation hints */
+            body::after {
+                content: '👆 Swipe to navigate';
+                position: fixed;
+                bottom: 100px;
+                left: 50%;
+                transform: translateX(-50%);
+                background: rgba(0, 5, 46, 0.9);
+                color: white;
+                padding: 10px 20px;
+                border-radius: 20px;
+                font-size: 12px;
+                font-weight: 600;
+                z-index: 999;
+                opacity: 0;
+                animation: fadeInOut 3s ease-in-out;
+                pointer-events: none;
+            }
+
+            @keyframes fadeInOut {
+                0%, 100% { opacity: 0; }
+                10%, 90% { opacity: 1; }
+            }
+
+            /* Adjust dark slide for mobile */
+            .dark-slide .slide-content {
+                min-height: 100vh;
+                display: flex !important;
+                flex-direction: column;
+                justify-content: center;
+            }
         }
 
         /* Color utilities */
@@ -1255,6 +1474,41 @@
                 updateSlide();
             }
         });
+
+        // Mobile touch/swipe support
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        document.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        }, { passive: true });
+
+        document.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        }, { passive: true });
+
+        function handleSwipe() {
+            const swipeThreshold = 50;
+            const swipeDistance = touchEndX - touchStartX;
+
+            if (Math.abs(swipeDistance) > swipeThreshold) {
+                if (swipeDistance > 0) {
+                    // Swipe right - go to previous slide
+                    navigate(-1);
+                } else {
+                    // Swipe left - go to next slide
+                    navigate(1);
+                }
+            }
+        }
+
+        // Detect mobile device
+        const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+        if (isMobile) {
+            // Add mobile-specific optimizations
+            document.body.classList.add('mobile-view');
+        }
 
         updateSlide();
 
