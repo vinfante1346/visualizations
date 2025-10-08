@@ -807,7 +807,12 @@
                 margin-bottom: 0 !important;
             }
 
-            /* Mobile navigation hints - removed to avoid clutter */
+            /* Hide any extra navigation hints */
+            .swipe-hint,
+            [class*="swipe"],
+            [class*="navigate-hint"] {
+                display: none !important;
+            }
 
             /* Adjust dark slide for mobile */
             .dark-slide .slide-content {
@@ -815,6 +820,13 @@
                 display: flex !important;
                 flex-direction: column;
                 justify-content: center;
+            }
+
+            /* Hide desktop-only elements on mobile */
+            @media (max-width: 768px) {
+                .desktop-only {
+                    display: none !important;
+                }
             }
         }
 
