@@ -197,15 +197,15 @@
         @media (max-width: 768px) {
             .slide-content {
                 width: 100vw;
-                height: 100vh;
+                height: auto;
                 min-height: 100vh;
-                padding: 60px 20px 130px 20px;
+                padding: 60px 20px 180px 20px;
                 border-radius: 0;
                 overflow-y: auto;
                 overflow-x: hidden;
                 display: flex !important;
                 flex-direction: column;
-                justify-content: center;
+                justify-content: flex-start;
                 align-items: center;
                 text-align: center;
                 -webkit-overflow-scrolling: touch;
@@ -784,11 +784,11 @@
 
             /* Layout */
             .slide-content {
-                padding: 60px 20px 130px 20px !important;
+                padding: 60px 20px 180px 20px !important;
                 text-align: center !important;
                 display: flex !important;
                 flex-direction: column !important;
-                justify-content: center !important;
+                justify-content: flex-start !important;
                 align-items: center !important;
             }
 
@@ -800,10 +800,11 @@
 
             /* First slide specific */
             .dark-slide .slide-content {
-                padding: 60px 20px 130px 20px !important;
+                padding: 60px 20px 180px 20px !important;
                 justify-content: center !important;
                 align-items: center !important;
                 display: flex !important;
+                min-height: 100vh !important;
             }
 
             /* Force center alignment on all elements */
@@ -1043,7 +1044,7 @@
         @media (max-width: 768px) {
             /* iOS optimizations */
             .ios-device .slide-content {
-                padding-bottom: 160px !important; /* Extra space for iPhone notch */
+                padding-bottom: 200px !important; /* Extra space for iPhone home indicator */
             }
 
             .ios-device .controls {
@@ -1065,7 +1066,7 @@
 
             /* Android optimizations */
             .android-device .slide-content {
-                padding-bottom: 140px !important;
+                padding-bottom: 180px !important;
             }
 
             .android-device .controls {
