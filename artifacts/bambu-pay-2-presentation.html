@@ -458,8 +458,35 @@
         .text-red { color: #dc2626; }
         .text-amber { color: #f59e0b; }
         .bg-green { background: #00ff41; }
-        .bg-amber { background: linear-gradient(135deg, #fef3c7, #fed7aa); }
-        .bg-red { background: linear-gradient(135deg, #fee, #fdd); }
+        .bg-amber {
+            background: linear-gradient(135deg, #fef3c7, #fed7aa);
+        }
+        .bg-amber h2,
+        .bg-amber .slide-num {
+            color: #78350f !important;
+            border-color: #f59e0b !important;
+            background: rgba(254, 243, 199, 0.5) !important;
+        }
+        .bg-red {
+            background: linear-gradient(135deg, #fee, #fdd);
+        }
+        .bg-red h2,
+        .bg-red .slide-num,
+        .bg-red .problem-item {
+            color: #7f1d1d !important;
+        }
+        .bg-red .slide-num {
+            border-color: #dc2626 !important;
+            background: rgba(254, 226, 226, 0.5) !important;
+        }
+
+        /* Ensure dark text on light green backgrounds */
+        .slide-content[style*="e8f5e9"] h2,
+        .slide-content[style*="e8f5e9"] td,
+        .slide-content[style*="c6f6d5"] h2,
+        .slide-content[style*="c6f6d5"] td {
+            color: #1a237e !important;
+        }
     </style>
 </head>
 <body>
