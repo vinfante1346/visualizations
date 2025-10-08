@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bambu Pay 2.0 - Investment Presentation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+            background: #1a1a1a;
+            overflow: hidden;
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.98); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        
+        .slide-content {
+            width: 95%;
+            max-width: 1400px;
+            height: 90vh;
+            background: white;
+            padding: 80px;
+            border-radius: 20px;
+            margin: 0 auto;
+            animation: fadeIn 0.4s ease;
+            overflow-y: auto;
+            display: none;
+        }
+        
+        .slide-content.active {
+            display: block;
+        }
+        
+        .slide-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            padding: 20px;
+        }
+        
+        .progress-bar-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 6px;
+            background: rgba(0,0,0,0.2);
+            z-index: 1000;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background: #00ff41;
+            width: 0;
+            transition: width 0.4s ease;
+        }
+        
+        .controls {
+            position: fixed;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            background: white;
+            padding: 20px 40px;
+            border-radius: 50px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            z-index: 1000;
+        }
+        
+        .btn {
+            background: #1a237e;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 30px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .btn:hover {
+            transform: scale(1.05);
+        }
+        
+        .btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: scale(1);
+        }
+        
+        .btn.next {
+            background: #00ff41;
+            color: #1a237e;
+        }
+        
+        .counter {
+            font-weight: 600;
+            font-size: 1.1em;
+            padding: 0 20px;
+        }
+        
+        .logo {
+            position: absolute;
+            top: 40px;
+            left: 40px;
+            font-size: 2em;
+            font-weight: 900;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .logo-green { color: #00ff41; }
+        .logo-navy { color: #1a237e; }
+        .logo-white { color: white; }
+        
+        .slide-num {
+            position: absolute;
+            top: 40px;
+            right: 40px;
+            background: #e8f5e9;
+            color: #00ff41;
+            padding: 12px 24px;
+            border-radius: 25px;
+            font-weight: 600;
+        }
+        
+        .title-slide {
+            background: linear-gradient(135deg, #1a237e 0%, #0d47a1 100%);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+        
+        .rocket {
+            font-size: 100px;
+            margin-bottom: 40px;
+            animation: bounce 2s infinite;
+        }
+        
+        h1 {
+            font-size: 5.5em;
+            font-weight: 900;
+            margin-bottom: 30px;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.2);
+        }
+        
+        h2 {
+            font-size: 3.5em;
+            color: #1a237e;
+            margin-bottom: 60px;
+            font-weight: 800;
+        }
+        
+        .big-stat {
+            font-size: 8em;
+            font-weight: 900;
+            color: #00ff41;
+            text-align: center;
+            margin: 40px 0;
+            text-shadow: 2px 2px 4px rgba(0,255,65,0.2);
+        }
+        
+        .big-stat-label {
+            font-size: 2.2em;
+            color: #666;
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        
+        .metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            margin: 40px 0;
+        }
+        
+        .metric-card {
+            background: #f8f8f8;
+            padding: 40px;
+            text-align: center;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+        
+        .metric-icon {
+            font-size: 3em;
+            margin-bottom: 20px;
+        }
+        
+        .metric-number {
+            font-size: 3.5em;
+            font-weight: 800;
+            margin-bottom: 10px;
+        }
+        
+        .metric-label {
+            font-size: 1.3em;
+            color: #666;
+        }
+        
+        .highlight {
+            background: linear-gradient(135deg, #e8f5e9, #f0f9f4);
+            border-left: 6px solid #00ff41;
+            padding: 50px;
+            font-size: 1.6em;
+            font-weight: 500;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+        
+        .problem-items {
+            font-size: 1.8em;
+            line-height: 2;
+            margin-bottom: 60px;
+        }
+        
+        .problem-item {
+            background: white;
+            padding: 30px;
+            margin-bottom: 20px;
+            border-radius: 15px;
+            border-left: 6px solid #f43f5e;
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            box-shadow: 0 4px 15px rgba(244,63,94,0.1);
+        }
+        
+        .problem-icon {
+            font-size: 2em;
+        }
+        
+        table {
+            width: 100%;
+            font-size: 1.4em;
+            border-collapse: separate;
+            border-spacing: 0 15px;
+        }
+        
+        th {
+            background: #1a237e;
+            color: white;
+            padding: 25px;
+            font-weight: 700;
+            border-radius: 10px 10px 0 0;
+        }
+        
+        td {
+            background: #f8f8f8;
+            padding: 25px;
+            border-radius: 10px;
+        }
+        
+        .timeline-item {
+            background: linear-gradient(to right, var(--color), transparent);
+            padding: 35px;
+            margin-bottom: 25px;
+            border-radius: 15px;
+            color: white;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        
+        .timeline-icon {
+            font-size: 2.5em;
+        }
+    </style>
+</head>
+<body>
+    <div class="progress-bar-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <div class="slide-container">
+        <!-- Slide 1: Title -->
+        <div class="slide-content active title-slide" data-slide="1">
+            <div class="logo">
+                <span class="logo-green">My</span><span class="logo-white">Bambu</span>
+            </div>
+            <div class="rocket">🚀</div>
+            <h1>Bambu <span style="color: #00ff41;">Pay</span> 2.0</h1>
+            <p style="font-size: 2.5em; font-weight: 300; margin-bottom: 40px;">
+                Conservative Path to Activating Dormant Users
+            </p>
+            <p style="font-size: 1.6em; opacity: 0.95;">
+                💰 Investment Proposal | October 2025
+            </p>
+        </div>
+
+        <!-- Slide 2: The Opportunity -->
+        <div class="slide-content" data-slide="2">
+            <div class="logo">
+                <span class="logo-green">My</span><span class="logo-navy">Bambu</span>
+            </div>
+            <div class="slide-num">2 / 15</div>
+            <h2>🎯 The Opportunity</h2>
+            <div class="big-stat">183,734</div>
+            <div class="big-stat-label">😴 Users enrolled but never transacted</div>
+            <div class="highlight">
+                ✨ These users already want our service. They signed up. They accepted our terms. 
+                They're just stuck at the payment step.
+            </div>
+        </div>
+
+        <!-- Slide 3: Current State -->
+        <div class="slide-content" data-slide="3">
+            <div class="logo">
+                <span class="logo-green">My</span><span class="logo-navy">Bambu</span>
+            </div>
+            <div class="slide-num">3 / 15</div>
+            <h2>📊 Current Reality Check</h2>
+            <div class="metrics">
+                <div class="metric-card" style="border-left: 5px solid #1a237e;">
+                    <div class="metric-icon">👥</div>
+                    <div class="metric-number" style="color: #1a237e;">194,572</div>
+                    <div class="metric-label">Total Enrolled</div>
+                </div>
+                <div class="metric-card" style="border-left: 5px solid #00ff41;">
+                    <div class="metric-icon">✅</div>
+                    <div class="metric-number" style="color: #00ff41;">10,838</div>
+                    <div class="metric-label">Active Users</div>
+                </div>
+                <div class="metric-card" style="border-left: 5px solid #f43f5e;">
+                    <div class="metric-icon">😰</div>
+                    <div class="metric-number" style="color: #f43f5e;">5.6%</div>
+                    <div class="metric-label">Activation Rate</div>
+                </div>
+            </div>
+            <div style="background: linear-gradient(135deg, #fef3c7, #fde68a); border-left: 6px solid #f59e0b; padding: 40px; font-size: 1.6em; font-weight: 600; border-radius: 10px; text-align: center; margin-top: 60px;">
+                🏆 Industry standard: 35-45% activation with instant funding
+            </div>
+        </div>
+
+        <!-- Slide 4: The Problem -->
+        <div class="slide-content" data-slide="4" style="background: linear-gradient(135deg, #fee, #fdd);">
+            <div class="logo">
+                <span class="logo-green">My</span><span class="logo-navy">Bambu</span>
+            </div>
+            <div class="slide-num">4 / 15</div>
+            <h2 style="color: #f43f5e;">⚠️ The Single Point of Failure</h2>
+            <div class="problem-items">
+                <div class="problem-item">
+                    <span class="problem-icon">⏱️</span>
+                    <span>Manual card entry: 8-10 steps</span>
+                </div>
+                <div class="problem-item">
+                    <span class="problem-icon">🐌</span>
+                    <span>Average time: 3-5 minutes</span>
+                </div>
+                <div class="problem-item">
+                    <span class="problem-icon">❌</span>
+                    <span>Failure rate: 30%+</span>
+                </div>
+                <div class="problem-item">
+                    <span class="problem-icon">😤</span>
+                    <span>User frustration: Maximum</span>
+                </div>
+            </div>
+            <div style="background: linear-gradient(135deg, #fee2e2, #fecaca); border-left: 6px solid #f43f5e; padding: 50px; font-size: 2em; font-weight: 700; border-radius: 15px; text-align: center; color: #991b1b;">
+                💔 94.4% of users abandon at this exact point
+            </div>
+        </div>
+
+        <!-- Slide 5: The Solution -->
+        <div class="slide-content" data-slide="5">
+            <div class="logo">
+                <span class="logo-green">My</span><span class="logo-navy">Bambu</span>
+            </div>
+            <div class="slide-num">5 / 15</div>
+            <h2>✨ Bambu <span style="color: #00ff41;">Pay</span> 2.0 Solution</h2>
+            <table>
+                <tr>
+                    <th>Feature</th>
+                    <th>😴 Before</th>
+                    <th>✨ After</th>
+                </tr>
+                <tr>
+                    <td>⚡ Time to Fund</td>
+                    <td style="opacity: 0.7;">3-5 minutes</td>
+                    <td style="background: linear-gradient(135deg, #e8f5e9, #c6f6d5); color: #00ff41; font-weight: 800; font-size: 1.3em;">30 seconds 🚀</td>
+                </tr>
+                <tr>
+                    <td>📝 Steps Required</td>
+                    <td style="opacity: 0.7;">8-10</td>
+                    <td style="background: linear-gradient(135deg, #e8f5e9, #c6f6d5); color: #00ff41; font-weight: 800; font-size: 1.3em;">2-3 ✂️</td>
+                </tr>
+                <tr>
+                    <td>✅ Success Rate</td>
+                    <td style="opacity: 0.7;">70%</td>
+                    <td style="background: linear-gradient(135deg, #e8f5e9, #c6f6d5); color: #00ff41; font-weight: 800; font-size: 1.3em;">95%+ 🎯</td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- Slide 6: Investment -->
+        <div class="slide-content" data-slide="6" style="background: linear-gradient(135deg, #fef3c7, #fed7aa);">
+            <div class="logo">
+                <span class="logo-green">My</span><span class="logo-navy">Bambu</span>
+            </div>
+            <div class="slide-num">6 / 15</div>
+            <h2 style="color: #f59e0b;">💰 Investment Required</h2>
+            <div style="font-size: 8em; font-weight: 900; color: #f59e0b; text-align: center; margin: 60px 0; text-shadow: 3px 3px 6px rgba(245,158,11,0.3);">
+                $243,480
+            </div>
+            <div style="font-size: 2.2em; color: #78350f; text-align: center; margin-bottom: 80px; font-weight: 600;">
+                Total promotional investment
+            </div>
+            <div class="metrics" style="grid-template-columns: 1fr 1fr;">
+                <div style="background: white; padding: 50px; text-align: center; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.15);">
+                    <div style="font-size: 3em; margin-bottom: 20px;">💵</div>
+                    <div style="font-size: 4em; font-weight: 800; color: #f59e0b; margin-bottom: 15px;">$4.49</div>
+                    <div style="font-size: 1.4em; color: #666;">Per User Cost</div>
+                </div>
+                <div style="background: white; padding: 50px; text-align: center; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.15);">
+                    <div style="font-size: 3em; margin-bottom: 20px;">🎯</div>
+                    <div style="font-size: 4em; font-weight: 800; color: #f59e0b; margin-bottom: 15px;">36,000</div>
+                    <div style="font-size: 1.4em; color: #666;">Expected Active Users</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 7: Breakdown -->
+        <div class="slide-content" data-slide="7">
+            <div class="logo">
+                <span class="logo-green">My</span><span class="logo-navy">Bambu</span>
+            </div>
+            <div class="slide-num">7 / 15</div>
+            <h2>📊 Investment Allocation</h2>
+            <table>
+                <tr>
+                    <th style="text-align: left;">Segment 🎯</th>
+                    <th style="text-align: center;">Users 👥</th>
+                    <th style="text-align: center;">Investment 💰</th>
+                    <th style="text-align: center;">Target ✅</th>
+                </tr>
+                <tr style="background: #e8f5e9;">
+                    <td style="font-weight: 700; font-size: 1.1em;">😴 Dormant Users</td>
+                    <td style="text-align: center; font-weight: 700;">183,734</td>
+                    <td style="text-align: center; font-weight: 700;">$110,240</td>
+                    <td style="text-align: center; font-weight: 700;">18,000</td>
+                </tr>
+                <tr>
+                    <td>📱 Lost Zelle</td>
+                    <td style="text-align: center;">19,623</td>
+                    <td style="text-align: center;">$19,625</td>
+                    <td style="text-align: center;">2,000</td>
+                </tr>
+                <tr>
+                    <td>🤝 P2P Users</td>
+                    <td style="text-align: center;">43,877</td>
+                    <td style="text-align: center;">$43,875</td>
+                    <td style="text-align: center;">4,400</td>
+                </tr>
+                <tr>
+                    <td>📌 Other</td>
+                    <td style="text-align: center;">90,036</td>
+                    <td style="text-align: center;">$69,740</td>
+                    <td style="text-align: center;">9,000</td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- Slide 8: Growth -->
+        <div class="slide-content" data-slide="8" style="background: linear-gradient(135deg, #e8f5e9, #c6f6d5);">
+            <div class="logo">
+                <span class="logo-green">My</span><span class="logo-navy">Bambu</span>
+            </div>
+            <div class="slide-num" style="background: #1a237e; color: white;">8 / 15</div>
+            <h2>📈 Conservative Growth Path</h2>
+            <table>
+                <tr>
+                    <th style="text-align: center;">Month 📅</th>
+                    <th style="text-align: center;">Active Users 👥</th>
+                    <th style="text-align: center;">Growth 📈</th>
+                    <th style="text-align: center;">Rate %</th>
+                </tr>
+                <tr>
+                    <td style="text-align: center; background: white;">September</td>
+                    <td style="text-align: center; background: white;">10,838</td>
+                    <td style="text-align: center; background: white;">—</td>
+                    <td style="text-align: center; background: white;">5.6%</td>
+                </tr>
+                <tr>
+                    <td style="text-align: center; background: white;">October</td>
+                    <td style="text-align: center; background: white;">20,000</td>
+                    <td style="text-align: center; background: white;">+85%</td>
+                    <td style="text-align: center; background: white;">6.5%</td>
+                </tr>
+                <tr>
+                    <td style="text-align: center; background: white;">November</td>
+                    <td style="text-align: center; background: white;">32,000</td>
+                    <td style="text-align: center; background: white;">+195%</td>
+                    <td style="text-align: center; background: white;">8%</td>
+                </tr>
+                <tr>
+                    <td style="text-align: center; background: #1a237e; color: white; font-weight: 800; font-size: 1.2em;">🎯 December</td>
+                    <td style="text-align: center; background: #1a237e; color: white; font-weight: 800; font-size: 1.2em;">47,000</td>
+                    <td style="text-align: center; background: #1a237e; color: white; font-weight: 800; font-size: 1.2em;">+335%</td>
+                    <td style="text-align: center; background: #1a237e; color: white; font-weight: 800; font-size: 1.2em;">10%</td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- Slide 9: ROI -->
+        <div class="slide-content title-slide" data-slide="9">
+            <div class="logo">
+                <span class="logo-green">My</span><span class="logo-white">Bambu</span>
+            </div>
+            <div class="slide-num" style="background: rgba(255,255,255,0.3); color: white;">9 / 15</div>
+            <h2 style="color: white; text-align: center; margin-bottom: 80px;">💎 Return on Investment</h2>
+            <div class="metrics" style="grid-template-columns: repeat(3, 1fr);">
+                <div style="background: rgba(255,255,255,0.95); padding: 50px; text-align: center; border-radius: 20px; box-shadow: 0 20px 60px rgba(0,0,0,0.3);">
+                    <div style="font-size: 4em; margin-bottom: 20px;">📊</div>
+                    <div style="font-size: 4.5em; font-weight: 900; color: #00ff41; margin-bottom: 20px;">45%</div>
+                    <div style="font-size: 1.4em; color: #666; font-weight: 600;">Year 1 ROI</div>
+                </div>
+                <div style="background: rgba(255,255,255,0.95); padding: 50px; text-align: center; border-radius: 20px; box-shadow: 0 20px 60px rgba(0,0,0,0.3);">
+                    <div style="font-size: 4em; margin-bottom: 20px;">⏰</div>
+                    <div style="font-size: 4.5em; font-weight: 900; color: #00ff41; margin-bottom: 20px;">9 mo</div>
+                    <div style="font-size: 1.4em; color: #666; font-weight: 600;">Payback Period</div>
+                </div>
+                <div style="background: rgba(255,255,255,0.95); padding: 50px; text-align: center; border-radius: 20px; box-shadow: 0 20px 60px rgba(0,0,0,0.3);">
+                    <div style="font-size: 4em; margin-bottom: 20px;">💰</div>
+                    <div style="font-size: 4.5em; font-weight: 900; color: #00ff41; margin-bottom: 20px;">$27M</div>
+                    <div style="font-size: 1.4em; color: #666; font-weight: 600;">New Deposits</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 10: Conservative -->
+        <div class="slide-content" data-slide="10">
+            <div class="logo">
+                <span class="logo-green">My</span><span class="logo-navy">Bambu</span>
+            </div>
+            <div class="slide-num">10 / 15</div>
+            <h2>🤔 Why This is Conservative</h2>
+            <div class="metrics" style="grid-template-columns: 1fr 1fr; margin-bottom: 80px;">
+                <div style="background: white; padding: 60px; text-align: center; border-radius: 20px; border: 4px solid #1a237e; box-shadow: 0 10px 40px rgba(0,0,0,0.1);">
+                    <div style="font-size: 4em; margin-bottom: 30px;">🏆</div>
+                    <div style="font-size: 5em; font-weight: 900; color: #1a237e; margin-bottom: 20px;">35-45%</div>
+                    <div style="font-size: 1.6em; color: #666; font-weight: 600;">Industry Standard</div>
+                </div>
+                <div style="background: white; padding: 60px; text-align: center; border-radius: 20px; border: 4px solid #00ff41; box-shadow: 0 10px 40px rgba(0,0,0,0.1);">
+                    <div style="font-size: 4em; margin-bottom: 30px;">🎯</div>
+                    <div style="font-size: 5em; font-weight: 900; color: #00ff41; margin-bottom: 20px;">10%</div>
+                    <div style="font-size: 1.6em; color: #666; font-weight: 600;">Our Target</div>
+                </div>
+            </div>
+            <div style="background: linear-gradient(135deg, #fef3c7, #fde68a); border-left: 6px solid #f59e0b; padding: 50px; font-size: 1.8em; font-weight: 600; border-radius: 15px; text-align: center;">
+                📉 We're targeting less than ONE-THIRD of what competitors achieve
+            </div>
+        </div>
+
+        <!-- Slide 11: Timeline -->
+        <div class="slide-content" data-slide="11">
+            <div class="logo">
+                <span class="logo-green">My</span><span class="logo-navy">Bambu</span>
+            </div>
+            <div class="slide-num">11 / 15</div>
+            <h2>🚀 Launch Timeline</h2>
+            <div style="font-size: 1.6em; line-height: 1.8;">
+                <div class="timeline-item" style="--color: #1a237e;">
+                    <span class="timeline-icon">🧪</span>
+                    <div>
+                        <div style="font-size: 1.3em; margin-bottom: 10px;">October 1-7</div>
+                        <div style="font-size: 0.9em; opacity: 0.95;">Soft launch (5,000 users)</div>
+                    </div>
+                </div>
+                <div class="timeline-item" style="--color: #1565c0;">
+                    <span class="timeline-icon">📈</span>
+                    <div>
+                        <div style="font-size: 1.3em; margin-bottom: 10px;">October 8-14</div>
+                        <div style="font-size: 0.9em; opacity: 0.95;">Scale (15,000 users)</div>
+                    </div>
+                </div>
+                <div class="timeline-item" style="--color: #1976d2;">
+                    <span class="timeline-icon">🚀</span>
+                    <div>
+                        <div style="font-size: 1.3em; margin-bottom: 10px;">October 15-31</div>
+                        <div style="font-size: 0.9em; opacity: 0.95;">Full rollout</div>
+                    </div>
+                </div>
+                <div class="timeline-item" style="--color: #2196f3;">
+                    <span class="timeline-icon">⚙️</span>
+                    <div>
+                        <div style="font-size: 1.3em; margin-bottom: 10px;">November</div>
+                        <div style="font-size: 0.9em; opacity: 0.95;">Optimization</div>
+                    </div>
+                </div>
+                <div class="timeline-item" style="--color: #00ff41;">
+                    <span class="timeline-icon">🎉</span>
+                    <div>
+                        <div style="font-size: 1.3em; margin-bottom: 10px;">December</div>
+                        <div style="font-size: 0.9em; opacity: 0.95;">47,000+ active users</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 12: Scenarios -->
+        <div class="slide-content" data-slide="12">
+            <div class="logo">
+                <span class="logo-green">My</span><span class="logo-navy">Bambu</span>
+            </div>
+            <div class="slide-num">12 / 15</div>
+            <h2>🎲 Three Scenarios</h2>
+            <table style="margin-bottom: 60px;">
+                <tr>
+                    <th style="text-align: center;">Scenario 🎯</th>
+                    <th style="text-align: center;">Conversion %</th>
+                    <th style="text-align: center;">New Users 👥</th>
+                    <th style="text-align: center;">ROI 💰</th>
+                </tr>
+                <tr>
+                    <td style="text-align: center;">😐 Conservative</td>
+                    <td style="text-align: center;">7%</td>
+                    <td style="text-align: center;">19,000</td>
+                    <td style="text-align: center;">20%</td>
+                </tr>
+                <tr style="background: #e8f5e9;">
+                    <td style="text-align: center; font-weight: 800; font-size: 1.2em; color: #00ff41;">🎯 Target</td>
+                    <td style="text-align: center; font-weight: 800; font-size: 1.2em; color: #00ff41;">10%</td>
+                    <td style="text-align: center; font-weight: 800; font-size: 1.2em; color: #00ff41;">36,000</td>
+                    <td style="text-align: center; font-weight: 800; font-size: 1.2em; color: #00ff41;">45%</td>
+                </tr>
+                <tr>
+                    <td style="text-align: center;">🚀 Optimistic</td>
+                    <td style="text-align: center;">13%</td>
+                    <td style="text-align: center;">47,000</td>
+                    <td style="text-align: center;">70%</td>
+                </tr>
+            </table>
+            <div style="background: linear-gradient(135deg, #e8f5e9, #c6f6d5); border-left: 6px solid #00ff41; padding: 40px; font-size: 1.6em; font-weight: 600; border-radius: 15px; text-align: center;">
+                ✅ ALL scenarios are ROI positive!
+            </div>
+        </div>
+
+        <!-- Slide 13: Cost of Delay -->
+        <div class="slide-content" data-slide="13" style="background: linear-gradient(135deg, #fee, #fdd);">
+            <div class="logo">
+                <span class="logo-green">My</span><span class="logo-navy">Bambu</span>
+            </div>
+            <div class="slide-num">13 / 15</div>
+            <h2 style="color: #f43f5e;">⏰ The Cost of Waiting</h2>
+            <div style="font-size: 8em; font-weight: 900; color: #f43f5e; text-align: center; margin: 60px 0; text-shadow: 3px 3px 6px rgba(244,63,94,0.3);">
+                2,500
+            </div>
+            <div style="font-size: 2.2em; color: #991b1b; text-align: center; margin-bottom: 80px; font-weight: 600;">
+                😰 Users lost EVERY WEEK we delay
+            </div>
+            <div class="metrics" style="grid-template-columns: 1fr 1fr;">
+                <div style="background: white; padding: 50px; text-align: center; border-radius: 20px; border: 4px solid #f43f5e; box-shadow: 0 10px 30px rgba(244,63,94,0.2);">
+                    <div style="font-size: 3em; margin-bottom: 20px;">📉</div>
+                    <div style="font-size: 4em; font-weight: 800; color: #f43f5e; margin-bottom: 15px;">$1.9M</div>
+                    <div style="font-size: 1.4em; color: #666;">Weekly deposit loss</div>
+                </div>
+                <div style="background: white; padding: 50px; text-align: center; border-radius: 20px; border: 4px solid #f43f5e; box-shadow: 0 10px 30px rgba(244,63,94,0.2);">
+                    <div style="font-size: 3em; margin-bottom: 20px;">💸</div>
+                    <div style="font-size: 4em; font-weight: 800; color: #f43f5e; margin-bottom: 15px;">$7.5M</div>
+                    <div style="font-size: 1.4em; color: #666;">Monthly opportunity cost</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 14: Decision -->
+        <div class="slide-content" data-slide="14">
+            <div class="logo">
+                <span class="logo-green">My</span><span class="logo-navy">Bambu</span>
+            </div>
+            <div class="slide-num">14 / 15</div>
+            <h2>🎯 Board Decision Required</h2>
+            <div style="background: linear-gradient(135deg, #fef3c7, #fde68a); padding: 70px; font-size: 2.2em; text-align: center; border-radius: 20px; font-weight: 700; margin-bottom: 60px; box-shadow: 0 20px 60px rgba(245,158,11,0.2);">
+                💰 Approve $243,480 promotional investment
+            </div>
+            <div class="metrics" style="grid-template-columns: repeat(3, 1fr);">
+                <div class="metric-card" style="border-left: 5px solid #1a237e;">
+                    <div style="font-size: 2.5em; margin-bottom: 20px;">📊</div>
+                    <div style="font-size: 3.5em; font-weight: 800; color: #1a237e; margin-bottom: 10px;">27K</div>
+                    <div class="metric-label">Minimum outcome</div>
+                </div>
+                <div class="metric-card" style="border-left: 5px solid #00ff41;">
+                    <div style="font-size: 2.5em; margin-bottom: 20px;">🎯</div>
+                    <div style="font-size: 3.5em; font-weight: 800; color: #00ff41; margin-bottom: 10px;">47K</div>
+                    <div class="metric-label">Target outcome</div>
+                </div>
+                <div class="metric-card" style="border-left: 5px solid #f59e0b;">
+                    <div style="font-size: 2.5em; margin-bottom: 20px;">🚀</div>
+                    <div style="font-size: 3.5em; font-weight: 800; color: #f59e0b; margin-bottom: 10px;">60K+</div>
+                    <div class="metric-label">Upside potential</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 15: Closing -->
+        <div class="slide-content title-slide" data-slide="15">
+            <div class="logo">
+                <span class="logo-green">My</span><span class="logo-white">Bambu</span>
+            </div>
+            <h1 style="font-size: 4.5em; margin-bottom: 40px;">
+                We have the users. ✅
+            </h1>
+            <p style="font-size: 3em; margin-bottom: 30px;">
+                We have the solution. ✅
+            </p>
+            <p style="font-size: 3em; margin-bottom: 80px;">
+                We just need to connect them. 🔗
+            </p>
+            <div style="background: rgba(255,255,255,0.2); backdrop-filter: blur(10px); padding: 50px 80px; border-radius: 30px; font-size: 2em; font-weight: 700; margin-bottom: 60px; border: 3px solid rgba(255,255,255,0.3);">
+                💰 $243,480 → 47,000 users → $27M deposits
+            </div>
+            <div style="font-size: 2em; font-weight: 600;">
+                ⏰ Decision needed today.
+            </div>
+        </div>
+    </div>
+
+    <!-- Controls -->
+    <div class="controls">
+        <button class="btn" id="prevBtn" onclick="navigate(-1)">← Previous</button>
+        <span class="counter">
+            <span id="current">1</span> / <span id="total">15</span>
+        </span>
+        <button class="btn next" id="nextBtn" onclick="navigate(1)">Next →</button>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const totalSlides = 15;
+        
+        function updateSlide() {
+            document.querySelectorAll('.slide-content').forEach((slide, index) => {
+                slide.classList.toggle('active', index === currentSlide);
+            });
+            
+            document.getElementById('current').textContent = currentSlide + 1;
+            document.getElementById('progressBar').style.width = 
+                ((currentSlide + 1) / totalSlides * 100) + '%';
+            
+            document.getElementById('prevBtn').disabled = currentSlide === 0;
+            document.getElementById('nextBtn').disabled = currentSlide === totalSlides - 1;
+        }
+        
+        function navigate(direction) {
+            currentSlide = Math.max(0, Math.min(totalSlides - 1, currentSlide + direction));
+            updateSlide();
+        }
+        
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ') {
+                e.preventDefault();
+                navigate(1);
+            }
+            if (e.key === 'ArrowLeft') {
+                e.preventDefault();
+                navigate(-1);
+            }
+            if (e.key === 'Home') {
+                currentSlide = 0;
+                updateSlide();
+            }
+            if (e.key === 'End') {
+                currentSlide = totalSlides - 1;
+                updateSlide();
+            }
+        });
+        
+        updateSlide();
+    </script>
+</body>
+</html>
