@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bambu Pay 2.0 - Investment Presentation</title>
+    <title>Bambu Pay 2.0 - Investment Proposal</title>
+    <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         * {
             margin: 0;
@@ -11,39 +12,63 @@
             box-sizing: border-box;
         }
 
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
-            background: #1a1a1a;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #0a0a0a;
+            color: #fff;
             overflow: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
         .slide {
             display: none;
             width: 100vw;
             height: 100vh;
-            position: absolute;
+            position: fixed;
             top: 0;
             left: 0;
+            opacity: 0;
+            transition: opacity 0.5s ease;
         }
 
         .slide.active {
             display: flex;
+            opacity: 1;
             align-items: center;
             justify-content: center;
         }
 
         .slide-content {
-            width: 90%;
-            max-width: 1200px;
-            height: 85vh;
-            background: white;
-            padding: 60px;
-            border-radius: 20px;
+            width: 92%;
+            max-width: 1400px;
+            height: 88vh;
+            background: #ffffff;
+            padding: 70px 80px;
+            border-radius: 24px;
             overflow-y: auto;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+            box-shadow: 0 30px 90px rgba(0, 255, 65, 0.15);
+            position: relative;
         }
 
-        .title-slide .slide-content {
+        .slide-content::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .slide-content::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+
+        .slide-content::-webkit-scrollbar-thumb {
+            background: #00ff41;
+            border-radius: 10px;
+        }
+
+        /* Dark Slides */
+        .dark-slide .slide-content {
             background: linear-gradient(135deg, #1a237e 0%, #0d47a1 100%);
             color: white;
             display: flex;
@@ -51,198 +76,409 @@
             align-items: center;
             justify-content: center;
             text-align: center;
+            box-shadow: 0 30px 90px rgba(0, 255, 65, 0.25);
         }
 
+        /* Progress Bar */
         .progress-bar {
             position: fixed;
             top: 0;
             left: 0;
-            height: 6px;
-            background: #00ff41;
-            transition: width 0.3s ease;
-            z-index: 1000;
+            height: 4px;
+            background: linear-gradient(90deg, #00ff41, #00cc33);
+            transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 2000;
+            box-shadow: 0 0 20px rgba(0, 255, 65, 0.5);
         }
 
+        /* Logo */
+        .logo {
+            position: absolute;
+            top: 40px;
+            left: 50px;
+            font-size: 28px;
+            font-weight: 900;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .logo-green {
+            color: #00ff41;
+            text-shadow: 0 0 20px rgba(0, 255, 65, 0.4);
+        }
+        .logo-navy { color: #1a237e; }
+        .logo-white {
+            color: white;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+        }
+
+        /* Slide Number */
+        .slide-num {
+            position: absolute;
+            top: 40px;
+            right: 50px;
+            background: rgba(0, 255, 65, 0.1);
+            color: #00ff41;
+            padding: 12px 24px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 14px;
+            letter-spacing: 0.5px;
+            border: 2px solid rgba(0, 255, 65, 0.3);
+            z-index: 100;
+        }
+
+        /* Typography */
+        h1 {
+            font-size: 72px;
+            font-weight: 900;
+            margin-bottom: 30px;
+            line-height: 1.1;
+            letter-spacing: -2px;
+        }
+
+        h2 {
+            font-size: 48px;
+            color: #1a237e;
+            margin-bottom: 50px;
+            font-weight: 800;
+            letter-spacing: -1px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        h2 i {
+            width: 48px;
+            height: 48px;
+        }
+
+        .subtitle {
+            font-size: 28px;
+            font-weight: 400;
+            opacity: 0.95;
+            margin-bottom: 20px;
+            letter-spacing: -0.5px;
+        }
+
+        .caption {
+            font-size: 18px;
+            opacity: 0.8;
+            font-weight: 500;
+        }
+
+        /* Stats */
+        .big-stat {
+            font-size: 120px;
+            font-weight: 900;
+            color: #00ff41;
+            text-align: center;
+            margin: 40px 0;
+            letter-spacing: -4px;
+            text-shadow: 0 0 40px rgba(0, 255, 65, 0.3);
+        }
+
+        .big-stat-label {
+            font-size: 24px;
+            color: #666;
+            text-align: center;
+            margin-bottom: 50px;
+            font-weight: 600;
+        }
+
+        /* Cards & Metrics */
+        .metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+        }
+
+        .metric-card {
+            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+            padding: 40px;
+            text-align: center;
+            border-radius: 20px;
+            border: 1px solid #e9ecef;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .metric-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent-color), transparent);
+        }
+
+        .metric-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .metric-icon {
+            width: 56px;
+            height: 56px;
+            margin: 0 auto 20px;
+            color: var(--accent-color);
+        }
+
+        .metric-number {
+            font-size: 56px;
+            font-weight: 900;
+            margin: 15px 0;
+            letter-spacing: -2px;
+        }
+
+        .metric-label {
+            font-size: 16px;
+            color: #666;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Highlight Box */
+        .highlight {
+            background: linear-gradient(135deg, #e8f5e9 0%, #f1f8f4 100%);
+            border-left: 6px solid #00ff41;
+            padding: 40px;
+            font-size: 20px;
+            border-radius: 16px;
+            margin: 30px 0;
+            font-weight: 500;
+            line-height: 1.6;
+            box-shadow: 0 10px 30px rgba(0, 255, 65, 0.1);
+        }
+
+        /* Tables */
+        table {
+            width: 100%;
+            font-size: 18px;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin: 30px 0;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        }
+
+        th {
+            background: linear-gradient(135deg, #1a237e, #0d47a1);
+            color: white;
+            padding: 24px;
+            font-weight: 700;
+            text-align: left;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 14px;
+        }
+
+        td {
+            background: #ffffff;
+            padding: 24px;
+            border-bottom: 1px solid #e9ecef;
+            font-weight: 500;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr.highlight-row {
+            background: linear-gradient(135deg, #e8f5e9, #f1f8f4);
+        }
+
+        tr.highlight-row td {
+            background: transparent;
+            font-weight: 700;
+            color: #00aa33;
+        }
+
+        /* Timeline */
+        .timeline-item {
+            background: linear-gradient(135deg, var(--timeline-color) 0%, transparent 100%);
+            padding: 30px 40px;
+            margin-bottom: 20px;
+            border-radius: 16px;
+            color: white;
+            font-weight: 600;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            gap: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            transition: all 0.3s ease;
+        }
+
+        .timeline-item:hover {
+            transform: translateX(10px);
+        }
+
+        .timeline-icon {
+            width: 40px;
+            height: 40px;
+            flex-shrink: 0;
+        }
+
+        /* Problem Items */
+        .problem-list {
+            font-size: 22px;
+            line-height: 1.8;
+        }
+
+        .problem-item {
+            background: white;
+            padding: 30px 35px;
+            margin-bottom: 20px;
+            border-radius: 16px;
+            border-left: 6px solid #dc2626;
+            display: flex;
+            align-items: center;
+            gap: 25px;
+            box-shadow: 0 10px 30px rgba(220, 38, 38, 0.08);
+            transition: all 0.3s ease;
+        }
+
+        .problem-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 15px 40px rgba(220, 38, 38, 0.15);
+        }
+
+        .problem-icon {
+            width: 36px;
+            height: 36px;
+            color: #dc2626;
+            flex-shrink: 0;
+        }
+
+        /* Controls */
         .controls {
             position: fixed;
-            bottom: 40px;
+            bottom: 50px;
             left: 50%;
             transform: translateX(-50%);
             display: flex;
             gap: 20px;
             align-items: center;
-            background: white;
-            padding: 15px 30px;
-            border-radius: 50px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 20px 35px;
+            border-radius: 60px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
             z-index: 1000;
+            border: 1px solid rgba(255, 255, 255, 0.3);
         }
 
         .btn {
             background: #1a237e;
             color: white;
             border: none;
-            padding: 12px 25px;
-            border-radius: 25px;
-            font-size: 1em;
-            font-weight: 600;
+            padding: 14px 28px;
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: 700;
             cursor: pointer;
-            transition: all 0.2s;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
         .btn:hover:not(:disabled) {
-            transform: scale(1.05);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(26, 35, 126, 0.3);
         }
 
         .btn:disabled {
             background: #ccc;
             cursor: not-allowed;
+            opacity: 0.5;
         }
 
         .btn.next {
-            background: #00ff41;
+            background: linear-gradient(135deg, #00ff41, #00cc33);
             color: #1a237e;
+        }
+
+        .btn.next:hover:not(:disabled) {
+            box-shadow: 0 10px 25px rgba(0, 255, 65, 0.4);
+        }
+
+        .btn i {
+            width: 20px;
+            height: 20px;
         }
 
         .counter {
-            font-weight: 600;
-            padding: 0 15px;
-        }
-
-        .logo {
-            position: absolute;
-            top: 30px;
-            left: 30px;
-            font-size: 1.8em;
-            font-weight: 900;
-            z-index: 100;
-        }
-
-        .logo-green { color: #00ff41; }
-        .logo-navy { color: #1a237e; }
-        .logo-white { color: white; }
-
-        .slide-num {
-            position: absolute;
-            top: 30px;
-            right: 30px;
-            background: #e8f5e9;
-            color: #00ff41;
-            padding: 10px 20px;
-            border-radius: 20px;
-            font-weight: 600;
-            z-index: 100;
-        }
-
-        h1 {
-            font-size: 4em;
-            font-weight: 900;
-            margin-bottom: 20px;
-        }
-
-        h2 {
-            font-size: 2.5em;
-            color: #1a237e;
-            margin-bottom: 40px;
-            font-weight: 800;
-        }
-
-        .big-stat {
-            font-size: 6em;
-            font-weight: 900;
-            color: #00ff41;
-            text-align: center;
-            margin: 30px 0;
-        }
-
-        .big-stat-label {
-            font-size: 1.8em;
-            color: #666;
-            text-align: center;
-            margin-bottom: 40px;
-        }
-
-        .metrics {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-            margin: 30px 0;
-        }
-
-        .metric-card {
-            background: #f8f8f8;
-            padding: 30px;
-            text-align: center;
-            border-radius: 10px;
-        }
-
-        .metric-number {
-            font-size: 2.5em;
-            font-weight: 800;
-            margin: 10px 0;
-        }
-
-        .metric-label {
-            font-size: 1.1em;
-            color: #666;
-        }
-
-        table {
-            width: 100%;
-            font-size: 1.2em;
-            border-collapse: separate;
-            border-spacing: 0 10px;
-        }
-
-        th {
-            background: #1a237e;
-            color: white;
-            padding: 20px;
             font-weight: 700;
+            padding: 0 20px;
+            font-size: 16px;
+            color: #1a237e;
+            letter-spacing: 0.5px;
         }
 
-        td {
-            background: #f8f8f8;
-            padding: 20px;
+        /* Animations */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
         }
 
-        .highlight {
-            background: linear-gradient(135deg, #e8f5e9, #f0f9f4);
-            border-left: 6px solid #00ff41;
-            padding: 30px;
-            font-size: 1.3em;
-            border-radius: 10px;
-            margin: 20px 0;
+        .float-icon {
+            animation: float 3s ease-in-out infinite;
+            font-size: 100px;
+            margin-bottom: 40px;
         }
 
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-20px); }
+        /* Responsive */
+        @media (max-width: 1200px) {
+            h1 { font-size: 56px; }
+            h2 { font-size: 40px; }
+            .big-stat { font-size: 90px; }
+            .slide-content { padding: 50px 60px; }
         }
 
-        .rocket {
-            font-size: 80px;
-            margin-bottom: 30px;
-            animation: bounce 2s infinite;
+        @media (max-width: 768px) {
+            h1 { font-size: 40px; }
+            h2 { font-size: 32px; }
+            .big-stat { font-size: 60px; }
+            .slide-content { padding: 40px 30px; }
+            .metrics { grid-template-columns: 1fr; }
         }
+
+        /* Color utilities */
+        .text-green { color: #00ff41; }
+        .text-navy { color: #1a237e; }
+        .text-red { color: #dc2626; }
+        .text-amber { color: #f59e0b; }
+        .bg-green { background: #00ff41; }
+        .bg-amber { background: linear-gradient(135deg, #fef3c7, #fed7aa); }
+        .bg-red { background: linear-gradient(135deg, #fee, #fdd); }
     </style>
 </head>
 <body>
     <div class="progress-bar" id="progressBar"></div>
 
     <!-- Slide 1: Title -->
-    <div class="slide active title-slide">
+    <div class="slide active dark-slide">
         <div class="slide-content">
             <div class="logo">
                 <span class="logo-green">My</span><span class="logo-white">Bambu</span>
             </div>
-            <div class="rocket">🚀</div>
-            <h1>Bambu <span style="color: #00ff41;">Pay</span> 2.0</h1>
-            <p style="font-size: 2em; font-weight: 300; margin-bottom: 30px;">
-                Conservative Path to Activating Dormant Users
-            </p>
-            <p style="font-size: 1.3em; opacity: 0.9;">
-                💰 Investment Proposal | October 2025
+            <div class="float-icon">
+                <i data-lucide="rocket" style="width: 100px; height: 100px;"></i>
+            </div>
+            <h1>Bambu <span class="text-green">Pay</span> 2.0</h1>
+            <p class="subtitle">Conservative Path to Activating Dormant Users</p>
+            <p class="caption">
+                <i data-lucide="coins" style="width: 20px; height: 20px; display: inline-block; vertical-align: middle; margin-right: 8px;"></i>
+                Investment Proposal | October 2025
             </p>
         </div>
     </div>
@@ -254,12 +490,18 @@
                 <span class="logo-green">My</span><span class="logo-navy">Bambu</span>
             </div>
             <div class="slide-num">2 / 15</div>
-            <h2>🎯 The Opportunity</h2>
+            <h2>
+                <i data-lucide="target"></i>
+                The Opportunity
+            </h2>
             <div class="big-stat">183,734</div>
-            <div class="big-stat-label">😴 Users enrolled but never transacted</div>
+            <div class="big-stat-label">
+                <i data-lucide="users" style="width: 28px; height: 28px; display: inline-block; vertical-align: middle; margin-right: 10px;"></i>
+                Users enrolled but never transacted
+            </div>
             <div class="highlight">
-                ✨ These users already want our service. They signed up. They accepted our terms.
-                They're just stuck at the payment step.
+                <i data-lucide="sparkles" style="width: 24px; height: 24px; display: inline-block; vertical-align: middle; margin-right: 12px;"></i>
+                These users already want our service. They signed up. They accepted our terms. They're just stuck at the payment step.
             </div>
         </div>
     </div>
@@ -271,54 +513,66 @@
                 <span class="logo-green">My</span><span class="logo-navy">Bambu</span>
             </div>
             <div class="slide-num">3 / 15</div>
-            <h2>📊 Current Reality Check</h2>
+            <h2>
+                <i data-lucide="bar-chart-3"></i>
+                Current Reality Check
+            </h2>
             <div class="metrics">
-                <div class="metric-card" style="border-left: 5px solid #1a237e;">
-                    <div style="font-size: 2em;">👥</div>
+                <div class="metric-card" style="--accent-color: #1a237e;">
+                    <i data-lucide="users" class="metric-icon"></i>
                     <div class="metric-number" style="color: #1a237e;">194,572</div>
                     <div class="metric-label">Total Enrolled</div>
                 </div>
-                <div class="metric-card" style="border-left: 5px solid #00ff41;">
-                    <div style="font-size: 2em;">✅</div>
+                <div class="metric-card" style="--accent-color: #00ff41;">
+                    <i data-lucide="user-check" class="metric-icon"></i>
                     <div class="metric-number" style="color: #00ff41;">10,838</div>
                     <div class="metric-label">Active Users</div>
                 </div>
-                <div class="metric-card" style="border-left: 5px solid #f43f5e;">
-                    <div style="font-size: 2em;">😰</div>
-                    <div class="metric-number" style="color: #f43f5e;">5.6%</div>
+                <div class="metric-card" style="--accent-color: #dc2626;">
+                    <i data-lucide="alert-circle" class="metric-icon"></i>
+                    <div class="metric-number" style="color: #dc2626;">5.6%</div>
                     <div class="metric-label">Activation Rate</div>
                 </div>
             </div>
-            <div style="background: linear-gradient(135deg, #fef3c7, #fde68a); border-left: 6px solid #f59e0b; padding: 30px; font-size: 1.3em; font-weight: 600; border-radius: 10px; text-align: center; margin-top: 40px;">
-                🏆 Industry standard: 35-45% activation with instant funding
+            <div style="background: linear-gradient(135deg, #fef3c7, #fde68a); border-left: 6px solid #f59e0b; padding: 35px; font-size: 20px; font-weight: 600; border-radius: 16px; text-align: center; margin-top: 50px; box-shadow: 0 10px 30px rgba(245, 158, 11, 0.15);">
+                <i data-lucide="trophy" style="width: 28px; height: 28px; display: inline-block; vertical-align: middle; margin-right: 12px;"></i>
+                Industry standard: 35-45% activation with instant funding
             </div>
         </div>
     </div>
 
     <!-- Slide 4: Problem -->
     <div class="slide">
-        <div class="slide-content" style="background: linear-gradient(135deg, #fee, #fdd);">
+        <div class="slide-content bg-red">
             <div class="logo">
                 <span class="logo-green">My</span><span class="logo-navy">Bambu</span>
             </div>
             <div class="slide-num">4 / 15</div>
-            <h2 style="color: #f43f5e;">⚠️ The Single Point of Failure</h2>
-            <div style="font-size: 1.5em; line-height: 2;">
-                <div style="background: white; padding: 20px; margin: 15px 0; border-radius: 10px; border-left: 6px solid #f43f5e;">
-                    ⏱️ Manual card entry: 8-10 steps
+            <h2 style="color: #dc2626;">
+                <i data-lucide="alert-triangle"></i>
+                The Single Point of Failure
+            </h2>
+            <div class="problem-list">
+                <div class="problem-item">
+                    <i data-lucide="clock" class="problem-icon"></i>
+                    <span>Manual card entry: 8-10 steps</span>
                 </div>
-                <div style="background: white; padding: 20px; margin: 15px 0; border-radius: 10px; border-left: 6px solid #f43f5e;">
-                    🐌 Average time: 3-5 minutes
+                <div class="problem-item">
+                    <i data-lucide="timer" class="problem-icon"></i>
+                    <span>Average time: 3-5 minutes</span>
                 </div>
-                <div style="background: white; padding: 20px; margin: 15px 0; border-radius: 10px; border-left: 6px solid #f43f5e;">
-                    ❌ Failure rate: 30%+
+                <div class="problem-item">
+                    <i data-lucide="x-circle" class="problem-icon"></i>
+                    <span>Failure rate: 30%+</span>
                 </div>
-                <div style="background: white; padding: 20px; margin: 15px 0; border-radius: 10px; border-left: 6px solid #f43f5e;">
-                    😤 User frustration: Maximum
+                <div class="problem-item">
+                    <i data-lucide="frown" class="problem-icon"></i>
+                    <span>User frustration: Maximum</span>
                 </div>
             </div>
-            <div style="background: white; padding: 30px; font-size: 1.8em; font-weight: 700; border-radius: 15px; text-align: center; color: #991b1b; margin-top: 30px;">
-                💔 94.4% of users abandon at this exact point
+            <div style="background: white; padding: 40px; font-size: 26px; font-weight: 700; border-radius: 20px; text-align: center; color: #991b1b; margin-top: 40px; box-shadow: 0 15px 40px rgba(220, 38, 38, 0.2);">
+                <i data-lucide="heart-crack" style="width: 32px; height: 32px; display: inline-block; vertical-align: middle; margin-right: 12px;"></i>
+                94.4% of users abandon at this exact point
             </div>
         </div>
     </div>
@@ -330,27 +584,36 @@
                 <span class="logo-green">My</span><span class="logo-navy">Bambu</span>
             </div>
             <div class="slide-num">5 / 15</div>
-            <h2>✨ Bambu <span style="color: #00ff41;">Pay</span> 2.0 Solution</h2>
+            <h2>
+                <i data-lucide="sparkles"></i>
+                Bambu <span class="text-green">Pay</span> 2.0 Solution
+            </h2>
             <table>
                 <tr>
                     <th>Feature</th>
-                    <th>😴 Before</th>
-                    <th>✨ After</th>
+                    <th style="text-align: center;">Before</th>
+                    <th style="text-align: center;">After</th>
                 </tr>
                 <tr>
-                    <td>⚡ Time to Fund</td>
-                    <td>3-5 minutes</td>
-                    <td style="background: #e8f5e9; color: #00ff41; font-weight: 800; font-size: 1.2em;">30 seconds 🚀</td>
+                    <td><i data-lucide="zap" style="width: 20px; height: 20px; display: inline-block; vertical-align: middle; margin-right: 10px;"></i> Time to Fund</td>
+                    <td style="text-align: center; opacity: 0.6;">3-5 minutes</td>
+                    <td style="background: linear-gradient(135deg, #e8f5e9, #c6f6d5); text-align: center; color: #00aa33; font-weight: 800; font-size: 22px;">
+                        30 seconds <i data-lucide="rocket" style="width: 22px; height: 22px; display: inline-block; vertical-align: middle;"></i>
+                    </td>
                 </tr>
                 <tr>
-                    <td>📝 Steps Required</td>
-                    <td>8-10</td>
-                    <td style="background: #e8f5e9; color: #00ff41; font-weight: 800; font-size: 1.2em;">2-3 ✂️</td>
+                    <td><i data-lucide="list" style="width: 20px; height: 20px; display: inline-block; vertical-align: middle; margin-right: 10px;"></i> Steps Required</td>
+                    <td style="text-align: center; opacity: 0.6;">8-10</td>
+                    <td style="background: linear-gradient(135deg, #e8f5e9, #c6f6d5); text-align: center; color: #00aa33; font-weight: 800; font-size: 22px;">
+                        2-3 <i data-lucide="scissors" style="width: 22px; height: 22px; display: inline-block; vertical-align: middle;"></i>
+                    </td>
                 </tr>
                 <tr>
-                    <td>✅ Success Rate</td>
-                    <td>70%</td>
-                    <td style="background: #e8f5e9; color: #00ff41; font-weight: 800; font-size: 1.2em;">95%+ 🎯</td>
+                    <td><i data-lucide="check-circle" style="width: 20px; height: 20px; display: inline-block; vertical-align: middle; margin-right: 10px;"></i> Success Rate</td>
+                    <td style="text-align: center; opacity: 0.6;">70%</td>
+                    <td style="background: linear-gradient(135deg, #e8f5e9, #c6f6d5); text-align: center; color: #00aa33; font-weight: 800; font-size: 22px;">
+                        95%+ <i data-lucide="target" style="width: 22px; height: 22px; display: inline-block; vertical-align: middle;"></i>
+                    </td>
                 </tr>
             </table>
         </div>
@@ -358,28 +621,31 @@
 
     <!-- Slide 6: Investment -->
     <div class="slide">
-        <div class="slide-content" style="background: linear-gradient(135deg, #fef3c7, #fed7aa);">
+        <div class="slide-content bg-amber">
             <div class="logo">
                 <span class="logo-green">My</span><span class="logo-navy">Bambu</span>
             </div>
             <div class="slide-num">6 / 15</div>
-            <h2 style="color: #f59e0b;">💰 Investment Required</h2>
-            <div style="font-size: 6em; font-weight: 900; color: #f59e0b; text-align: center; margin: 40px 0;">
+            <h2 style="color: #f59e0b;">
+                <i data-lucide="coins"></i>
+                Investment Required
+            </h2>
+            <div style="font-size: 100px; font-weight: 900; color: #f59e0b; text-align: center; margin: 50px 0; letter-spacing: -4px; text-shadow: 0 0 40px rgba(245, 158, 11, 0.3);">
                 $243,480
             </div>
-            <div style="font-size: 1.8em; color: #78350f; text-align: center; margin-bottom: 50px; font-weight: 600;">
+            <div style="font-size: 24px; color: #78350f; text-align: center; margin-bottom: 60px; font-weight: 700;">
                 Total promotional investment
             </div>
             <div class="metrics" style="grid-template-columns: 1fr 1fr;">
-                <div style="background: white; padding: 40px; text-align: center; border-radius: 15px;">
-                    <div style="font-size: 2.5em;">💵</div>
-                    <div style="font-size: 3em; font-weight: 800; color: #f59e0b; margin: 15px 0;">$4.49</div>
-                    <div style="font-size: 1.2em; color: #666;">Per User Cost</div>
+                <div style="background: white; padding: 50px; text-align: center; border-radius: 20px; box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);">
+                    <i data-lucide="dollar-sign" style="width: 56px; height: 56px; margin: 0 auto 20px; color: #f59e0b;"></i>
+                    <div style="font-size: 56px; font-weight: 900; color: #f59e0b; margin: 20px 0; letter-spacing: -2px;">$4.49</div>
+                    <div style="font-size: 16px; color: #666; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;">Per User Cost</div>
                 </div>
-                <div style="background: white; padding: 40px; text-align: center; border-radius: 15px;">
-                    <div style="font-size: 2.5em;">🎯</div>
-                    <div style="font-size: 3em; font-weight: 800; color: #f59e0b; margin: 15px 0;">36,000</div>
-                    <div style="font-size: 1.2em; color: #666;">Expected Active Users</div>
+                <div style="background: white; padding: 50px; text-align: center; border-radius: 20px; box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);">
+                    <i data-lucide="target" style="width: 56px; height: 56px; margin: 0 auto 20px; color: #f59e0b;"></i>
+                    <div style="font-size: 56px; font-weight: 900; color: #f59e0b; margin: 20px 0; letter-spacing: -2px;">36,000</div>
+                    <div style="font-size: 16px; color: #666; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;">Expected Active Users</div>
                 </div>
             </div>
         </div>
@@ -392,37 +658,52 @@
                 <span class="logo-green">My</span><span class="logo-navy">Bambu</span>
             </div>
             <div class="slide-num">7 / 15</div>
-            <h2>📊 Investment Allocation</h2>
+            <h2>
+                <i data-lucide="pie-chart"></i>
+                Investment Allocation
+            </h2>
             <table>
                 <tr>
-                    <th>Segment 🎯</th>
-                    <th>Users 👥</th>
-                    <th>Investment 💰</th>
-                    <th>Target ✅</th>
+                    <th>Segment</th>
+                    <th style="text-align: center;">Users</th>
+                    <th style="text-align: center;">Investment</th>
+                    <th style="text-align: center;">Target</th>
                 </tr>
-                <tr style="background: #e8f5e9;">
-                    <td style="font-weight: 700;">😴 Dormant Users</td>
-                    <td style="font-weight: 700;">183,734</td>
-                    <td style="font-weight: 700;">$110,240</td>
-                    <td style="font-weight: 700;">18,000</td>
-                </tr>
-                <tr>
-                    <td>📱 Lost Zelle</td>
-                    <td>19,623</td>
-                    <td>$19,625</td>
-                    <td>2,000</td>
+                <tr class="highlight-row">
+                    <td style="font-weight: 800;">
+                        <i data-lucide="users" style="width: 20px; height: 20px; display: inline-block; vertical-align: middle; margin-right: 10px;"></i>
+                        Dormant Users
+                    </td>
+                    <td style="text-align: center; font-weight: 800;">183,734</td>
+                    <td style="text-align: center; font-weight: 800;">$110,240</td>
+                    <td style="text-align: center; font-weight: 800;">18,000</td>
                 </tr>
                 <tr>
-                    <td>🤝 P2P Users</td>
-                    <td>43,877</td>
-                    <td>$43,875</td>
-                    <td>4,400</td>
+                    <td>
+                        <i data-lucide="smartphone" style="width: 20px; height: 20px; display: inline-block; vertical-align: middle; margin-right: 10px;"></i>
+                        Lost Zelle
+                    </td>
+                    <td style="text-align: center;">19,623</td>
+                    <td style="text-align: center;">$19,625</td>
+                    <td style="text-align: center;">2,000</td>
                 </tr>
                 <tr>
-                    <td>📌 Other</td>
-                    <td>90,036</td>
-                    <td>$69,740</td>
-                    <td>9,000</td>
+                    <td>
+                        <i data-lucide="user-plus" style="width: 20px; height: 20px; display: inline-block; vertical-align: middle; margin-right: 10px;"></i>
+                        P2P Users
+                    </td>
+                    <td style="text-align: center;">43,877</td>
+                    <td style="text-align: center;">$43,875</td>
+                    <td style="text-align: center;">4,400</td>
+                </tr>
+                <tr>
+                    <td>
+                        <i data-lucide="more-horizontal" style="width: 20px; height: 20px; display: inline-block; vertical-align: middle; margin-right: 10px;"></i>
+                        Other
+                    </td>
+                    <td style="text-align: center;">90,036</td>
+                    <td style="text-align: center;">$69,740</td>
+                    <td style="text-align: center;">9,000</td>
                 </tr>
             </table>
         </div>
@@ -434,66 +715,75 @@
             <div class="logo">
                 <span class="logo-green">My</span><span class="logo-navy">Bambu</span>
             </div>
-            <div class="slide-num" style="background: #1a237e; color: white;">8 / 15</div>
-            <h2>📈 Conservative Growth Path</h2>
+            <div class="slide-num" style="background: #1a237e; color: white; border-color: #1a237e;">8 / 15</div>
+            <h2>
+                <i data-lucide="trending-up"></i>
+                Conservative Growth Path
+            </h2>
             <table>
                 <tr>
-                    <th>Month 📅</th>
-                    <th>Active Users 👥</th>
-                    <th>Growth 📈</th>
-                    <th>Rate %</th>
+                    <th>Month</th>
+                    <th style="text-align: center;">Active Users</th>
+                    <th style="text-align: center;">Growth</th>
+                    <th style="text-align: center;">Rate</th>
                 </tr>
                 <tr>
                     <td>September</td>
-                    <td>10,838</td>
-                    <td>—</td>
-                    <td>5.6%</td>
+                    <td style="text-align: center;">10,838</td>
+                    <td style="text-align: center;">—</td>
+                    <td style="text-align: center;">5.6%</td>
                 </tr>
                 <tr>
                     <td>October</td>
-                    <td>20,000</td>
-                    <td>+85%</td>
-                    <td>6.5%</td>
+                    <td style="text-align: center;">20,000</td>
+                    <td style="text-align: center;">+85%</td>
+                    <td style="text-align: center;">6.5%</td>
                 </tr>
                 <tr>
                     <td>November</td>
-                    <td>32,000</td>
-                    <td>+195%</td>
-                    <td>8%</td>
+                    <td style="text-align: center;">32,000</td>
+                    <td style="text-align: center;">+195%</td>
+                    <td style="text-align: center;">8%</td>
                 </tr>
-                <tr style="background: #1a237e; color: white; font-weight: 800;">
-                    <td>🎯 December</td>
-                    <td>47,000</td>
-                    <td>+335%</td>
-                    <td>10%</td>
+                <tr style="background: #1a237e; color: white;">
+                    <td style="background: #1a237e; font-weight: 800; border: none;">
+                        <i data-lucide="target" style="width: 20px; height: 20px; display: inline-block; vertical-align: middle; margin-right: 10px;"></i>
+                        December
+                    </td>
+                    <td style="background: #1a237e; text-align: center; font-weight: 800; border: none;">47,000</td>
+                    <td style="background: #1a237e; text-align: center; font-weight: 800; border: none;">+335%</td>
+                    <td style="background: #1a237e; text-align: center; font-weight: 800; border: none;">10%</td>
                 </tr>
             </table>
         </div>
     </div>
 
     <!-- Slide 9: ROI -->
-    <div class="slide title-slide">
+    <div class="slide dark-slide">
         <div class="slide-content">
             <div class="logo">
                 <span class="logo-green">My</span><span class="logo-white">Bambu</span>
             </div>
-            <div class="slide-num" style="background: rgba(255,255,255,0.3); color: white;">9 / 15</div>
-            <h2 style="color: white;">💎 Return on Investment</h2>
-            <div class="metrics" style="grid-template-columns: repeat(3, 1fr);">
-                <div style="background: white; padding: 40px; text-align: center; border-radius: 15px;">
-                    <div style="font-size: 3em;">📊</div>
-                    <div style="font-size: 3.5em; font-weight: 900; color: #00ff41; margin: 15px 0;">45%</div>
-                    <div style="font-size: 1.1em; color: #666; font-weight: 600;">Year 1 ROI</div>
+            <div class="slide-num" style="background: rgba(255,255,255,0.15); color: white; border-color: rgba(255,255,255,0.3);">9 / 15</div>
+            <h2 style="color: white;">
+                <i data-lucide="gem"></i>
+                Return on Investment
+            </h2>
+            <div class="metrics" style="grid-template-columns: repeat(3, 1fr); margin-top: 60px;">
+                <div style="background: rgba(255,255,255,0.95); padding: 50px; text-align: center; border-radius: 20px; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);">
+                    <i data-lucide="bar-chart-3" style="width: 56px; height: 56px; margin: 0 auto 20px; color: #00ff41;"></i>
+                    <div style="font-size: 64px; font-weight: 900; color: #00ff41; margin: 20px 0; letter-spacing: -2px; text-shadow: 0 0 30px rgba(0, 255, 65, 0.3);">45%</div>
+                    <div style="font-size: 16px; color: #666; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;">Year 1 ROI</div>
                 </div>
-                <div style="background: white; padding: 40px; text-align: center; border-radius: 15px;">
-                    <div style="font-size: 3em;">⏰</div>
-                    <div style="font-size: 3.5em; font-weight: 900; color: #00ff41; margin: 15px 0;">9 mo</div>
-                    <div style="font-size: 1.1em; color: #666; font-weight: 600;">Payback Period</div>
+                <div style="background: rgba(255,255,255,0.95); padding: 50px; text-align: center; border-radius: 20px; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);">
+                    <i data-lucide="clock" style="width: 56px; height: 56px; margin: 0 auto 20px; color: #00ff41;"></i>
+                    <div style="font-size: 64px; font-weight: 900; color: #00ff41; margin: 20px 0; letter-spacing: -2px; text-shadow: 0 0 30px rgba(0, 255, 65, 0.3);">9 mo</div>
+                    <div style="font-size: 16px; color: #666; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;">Payback Period</div>
                 </div>
-                <div style="background: white; padding: 40px; text-align: center; border-radius: 15px;">
-                    <div style="font-size: 3em;">💰</div>
-                    <div style="font-size: 3.5em; font-weight: 900; color: #00ff41; margin: 15px 0;">$27M</div>
-                    <div style="font-size: 1.1em; color: #666; font-weight: 600;">New Deposits</div>
+                <div style="background: rgba(255,255,255,0.95); padding: 50px; text-align: center; border-radius: 20px; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);">
+                    <i data-lucide="dollar-sign" style="width: 56px; height: 56px; margin: 0 auto 20px; color: #00ff41;"></i>
+                    <div style="font-size: 64px; font-weight: 900; color: #00ff41; margin: 20px 0; letter-spacing: -2px; text-shadow: 0 0 30px rgba(0, 255, 65, 0.3);">$27M</div>
+                    <div style="font-size: 16px; color: #666; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;">New Deposits</div>
                 </div>
             </div>
         </div>
@@ -506,21 +796,25 @@
                 <span class="logo-green">My</span><span class="logo-navy">Bambu</span>
             </div>
             <div class="slide-num">10 / 15</div>
-            <h2>🤔 Why This is Conservative</h2>
-            <div class="metrics" style="grid-template-columns: 1fr 1fr; margin-bottom: 50px;">
-                <div style="background: white; padding: 50px; text-align: center; border-radius: 15px; border: 4px solid #1a237e;">
-                    <div style="font-size: 3em; margin-bottom: 20px;">🏆</div>
-                    <div style="font-size: 4em; font-weight: 900; color: #1a237e; margin-bottom: 15px;">35-45%</div>
-                    <div style="font-size: 1.3em; color: #666; font-weight: 600;">Industry Standard</div>
+            <h2>
+                <i data-lucide="shield-check"></i>
+                Why This is Conservative
+            </h2>
+            <div class="metrics" style="grid-template-columns: 1fr 1fr; margin-bottom: 60px;">
+                <div style="background: white; padding: 60px; text-align: center; border-radius: 20px; border: 4px solid #1a237e; box-shadow: 0 15px 40px rgba(26, 35, 126, 0.15);">
+                    <i data-lucide="trophy" style="width: 56px; height: 56px; margin: 0 auto 25px; color: #1a237e;"></i>
+                    <div style="font-size: 72px; font-weight: 900; color: #1a237e; margin-bottom: 20px; letter-spacing: -3px;">35-45%</div>
+                    <div style="font-size: 18px; color: #666; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;">Industry Standard</div>
                 </div>
-                <div style="background: white; padding: 50px; text-align: center; border-radius: 15px; border: 4px solid #00ff41;">
-                    <div style="font-size: 3em; margin-bottom: 20px;">🎯</div>
-                    <div style="font-size: 4em; font-weight: 900; color: #00ff41; margin-bottom: 15px;">10%</div>
-                    <div style="font-size: 1.3em; color: #666; font-weight: 600;">Our Target</div>
+                <div style="background: white; padding: 60px; text-align: center; border-radius: 20px; border: 4px solid #00ff41; box-shadow: 0 15px 40px rgba(0, 255, 65, 0.15);">
+                    <i data-lucide="target" style="width: 56px; height: 56px; margin: 0 auto 25px; color: #00ff41;"></i>
+                    <div style="font-size: 72px; font-weight: 900; color: #00ff41; margin-bottom: 20px; letter-spacing: -3px; text-shadow: 0 0 30px rgba(0, 255, 65, 0.3);">10%</div>
+                    <div style="font-size: 18px; color: #666; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;">Our Target</div>
                 </div>
             </div>
-            <div style="background: linear-gradient(135deg, #fef3c7, #fde68a); border-left: 6px solid #f59e0b; padding: 40px; font-size: 1.5em; font-weight: 600; border-radius: 10px; text-align: center;">
-                📉 We're targeting less than ONE-THIRD of what competitors achieve
+            <div style="background: linear-gradient(135deg, #fef3c7, #fde68a); border-left: 6px solid #f59e0b; padding: 45px; font-size: 22px; font-weight: 700; border-radius: 16px; text-align: center; box-shadow: 0 10px 30px rgba(245, 158, 11, 0.15);">
+                <i data-lucide="trending-down" style="width: 28px; height: 28px; display: inline-block; vertical-align: middle; margin-right: 12px;"></i>
+                We're targeting less than ONE-THIRD of what competitors achieve
             </div>
         </div>
     </div>
@@ -532,22 +826,45 @@
                 <span class="logo-green">My</span><span class="logo-navy">Bambu</span>
             </div>
             <div class="slide-num">11 / 15</div>
-            <h2>🚀 Launch Timeline</h2>
-            <div style="font-size: 1.4em; line-height: 1.8;">
-                <div style="background: linear-gradient(to right, #1a237e, transparent); padding: 25px; margin: 15px 0; border-radius: 10px; color: white; font-weight: 600;">
-                    🧪 October 1-7: Soft launch (5,000 users)
+            <h2>
+                <i data-lucide="calendar"></i>
+                Launch Timeline
+            </h2>
+            <div style="margin-top: 40px;">
+                <div class="timeline-item" style="--timeline-color: #1a237e;">
+                    <i data-lucide="flask-conical" class="timeline-icon"></i>
+                    <div>
+                        <div style="font-size: 24px; font-weight: 800; margin-bottom: 8px;">October 1-7</div>
+                        <div style="opacity: 0.95;">Soft launch (5,000 users)</div>
+                    </div>
                 </div>
-                <div style="background: linear-gradient(to right, #1565c0, transparent); padding: 25px; margin: 15px 0; border-radius: 10px; color: white; font-weight: 600;">
-                    📈 October 8-14: Scale (15,000 users)
+                <div class="timeline-item" style="--timeline-color: #1565c0;">
+                    <i data-lucide="trending-up" class="timeline-icon"></i>
+                    <div>
+                        <div style="font-size: 24px; font-weight: 800; margin-bottom: 8px;">October 8-14</div>
+                        <div style="opacity: 0.95;">Scale (15,000 users)</div>
+                    </div>
                 </div>
-                <div style="background: linear-gradient(to right, #1976d2, transparent); padding: 25px; margin: 15px 0; border-radius: 10px; color: white; font-weight: 600;">
-                    🚀 October 15-31: Full rollout
+                <div class="timeline-item" style="--timeline-color: #1976d2;">
+                    <i data-lucide="rocket" class="timeline-icon"></i>
+                    <div>
+                        <div style="font-size: 24px; font-weight: 800; margin-bottom: 8px;">October 15-31</div>
+                        <div style="opacity: 0.95;">Full rollout</div>
+                    </div>
                 </div>
-                <div style="background: linear-gradient(to right, #2196f3, transparent); padding: 25px; margin: 15px 0; border-radius: 10px; color: white; font-weight: 600;">
-                    ⚙️ November: Optimization
+                <div class="timeline-item" style="--timeline-color: #2196f3;">
+                    <i data-lucide="settings" class="timeline-icon"></i>
+                    <div>
+                        <div style="font-size: 24px; font-weight: 800; margin-bottom: 8px;">November</div>
+                        <div style="opacity: 0.95;">Optimization</div>
+                    </div>
                 </div>
-                <div style="background: linear-gradient(to right, #00ff41, transparent); padding: 25px; margin: 15px 0; border-radius: 10px; color: #1a237e; font-weight: 600;">
-                    🎉 December: 47,000+ active users
+                <div class="timeline-item" style="--timeline-color: #00ff41;">
+                    <i data-lucide="party-popper" class="timeline-icon"></i>
+                    <div style="color: #1a237e;">
+                        <div style="font-size: 24px; font-weight: 800; margin-bottom: 8px;">December</div>
+                        <div style="opacity: 0.95; font-weight: 700;">47,000+ active users</div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -560,63 +877,80 @@
                 <span class="logo-green">My</span><span class="logo-navy">Bambu</span>
             </div>
             <div class="slide-num">12 / 15</div>
-            <h2>🎲 Three Scenarios</h2>
-            <table style="margin-bottom: 40px;">
+            <h2>
+                <i data-lucide="layers"></i>
+                Three Scenarios
+            </h2>
+            <table style="margin-bottom: 50px;">
                 <tr>
-                    <th>Scenario 🎯</th>
-                    <th>Conversion %</th>
-                    <th>New Users 👥</th>
-                    <th>ROI 💰</th>
+                    <th>Scenario</th>
+                    <th style="text-align: center;">Conversion</th>
+                    <th style="text-align: center;">New Users</th>
+                    <th style="text-align: center;">ROI</th>
                 </tr>
                 <tr>
-                    <td>😐 Conservative</td>
-                    <td>7%</td>
-                    <td>19,000</td>
-                    <td>20%</td>
+                    <td>
+                        <i data-lucide="cloud" style="width: 20px; height: 20px; display: inline-block; vertical-align: middle; margin-right: 10px;"></i>
+                        Conservative
+                    </td>
+                    <td style="text-align: center;">7%</td>
+                    <td style="text-align: center;">19,000</td>
+                    <td style="text-align: center;">20%</td>
                 </tr>
-                <tr style="background: #e8f5e9;">
-                    <td style="font-weight: 800; color: #00ff41;">🎯 Target</td>
-                    <td style="font-weight: 800; color: #00ff41;">10%</td>
-                    <td style="font-weight: 800; color: #00ff41;">36,000</td>
-                    <td style="font-weight: 800; color: #00ff41;">45%</td>
+                <tr class="highlight-row">
+                    <td style="font-weight: 800;">
+                        <i data-lucide="target" style="width: 20px; height: 20px; display: inline-block; vertical-align: middle; margin-right: 10px;"></i>
+                        Target
+                    </td>
+                    <td style="text-align: center; font-weight: 800;">10%</td>
+                    <td style="text-align: center; font-weight: 800;">36,000</td>
+                    <td style="text-align: center; font-weight: 800;">45%</td>
                 </tr>
                 <tr>
-                    <td>🚀 Optimistic</td>
-                    <td>13%</td>
-                    <td>47,000</td>
-                    <td>70%</td>
+                    <td>
+                        <i data-lucide="sparkles" style="width: 20px; height: 20px; display: inline-block; vertical-align: middle; margin-right: 10px;"></i>
+                        Optimistic
+                    </td>
+                    <td style="text-align: center;">13%</td>
+                    <td style="text-align: center;">47,000</td>
+                    <td style="text-align: center;">70%</td>
                 </tr>
             </table>
-            <div style="background: linear-gradient(135deg, #e8f5e9, #c6f6d5); border-left: 6px solid #00ff41; padding: 30px; font-size: 1.4em; font-weight: 600; border-radius: 10px; text-align: center;">
-                ✅ ALL scenarios are ROI positive!
+            <div style="background: linear-gradient(135deg, #e8f5e9, #c6f6d5); border-left: 6px solid #00ff41; padding: 40px; font-size: 22px; font-weight: 700; border-radius: 16px; text-align: center; box-shadow: 0 10px 30px rgba(0, 255, 65, 0.1);">
+                <i data-lucide="check-circle" style="width: 28px; height: 28px; display: inline-block; vertical-align: middle; margin-right: 12px;"></i>
+                ALL scenarios are ROI positive!
             </div>
         </div>
     </div>
 
     <!-- Slide 13: Cost of Delay -->
     <div class="slide">
-        <div class="slide-content" style="background: linear-gradient(135deg, #fee, #fdd);">
+        <div class="slide-content bg-red">
             <div class="logo">
                 <span class="logo-green">My</span><span class="logo-navy">Bambu</span>
             </div>
             <div class="slide-num">13 / 15</div>
-            <h2 style="color: #f43f5e;">⏰ The Cost of Waiting</h2>
-            <div style="font-size: 6em; font-weight: 900; color: #f43f5e; text-align: center; margin: 40px 0;">
+            <h2 style="color: #dc2626;">
+                <i data-lucide="alarm-clock"></i>
+                The Cost of Waiting
+            </h2>
+            <div style="font-size: 100px; font-weight: 900; color: #dc2626; text-align: center; margin: 50px 0; letter-spacing: -4px; text-shadow: 0 0 40px rgba(220, 38, 38, 0.3);">
                 2,500
             </div>
-            <div style="font-size: 1.8em; color: #991b1b; text-align: center; margin-bottom: 50px; font-weight: 600;">
-                😰 Users lost EVERY WEEK we delay
+            <div style="font-size: 24px; color: #991b1b; text-align: center; margin-bottom: 60px; font-weight: 700;">
+                <i data-lucide="user-x" style="width: 28px; height: 28px; display: inline-block; vertical-align: middle; margin-right: 10px;"></i>
+                Users lost EVERY WEEK we delay
             </div>
             <div class="metrics" style="grid-template-columns: 1fr 1fr;">
-                <div style="background: white; padding: 40px; text-align: center; border-radius: 15px; border: 4px solid #f43f5e;">
-                    <div style="font-size: 2.5em; margin-bottom: 15px;">📉</div>
-                    <div style="font-size: 3em; font-weight: 800; color: #f43f5e; margin-bottom: 15px;">$1.9M</div>
-                    <div style="font-size: 1.2em; color: #666;">Weekly deposit loss</div>
+                <div style="background: white; padding: 50px; text-align: center; border-radius: 20px; border: 4px solid #dc2626; box-shadow: 0 15px 40px rgba(220, 38, 38, 0.2);">
+                    <i data-lucide="trending-down" style="width: 56px; height: 56px; margin: 0 auto 20px; color: #dc2626;"></i>
+                    <div style="font-size: 56px; font-weight: 900; color: #dc2626; margin: 20px 0; letter-spacing: -2px;">$1.9M</div>
+                    <div style="font-size: 16px; color: #666; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;">Weekly deposit loss</div>
                 </div>
-                <div style="background: white; padding: 40px; text-align: center; border-radius: 15px; border: 4px solid #f43f5e;">
-                    <div style="font-size: 2.5em; margin-bottom: 15px;">💸</div>
-                    <div style="font-size: 3em; font-weight: 800; color: #f43f5e; margin-bottom: 15px;">$7.5M</div>
-                    <div style="font-size: 1.2em; color: #666;">Monthly opportunity cost</div>
+                <div style="background: white; padding: 50px; text-align: center; border-radius: 20px; border: 4px solid #dc2626; box-shadow: 0 15px 40px rgba(220, 38, 38, 0.2);">
+                    <i data-lucide="circle-dollar-sign" style="width: 56px; height: 56px; margin: 0 auto 20px; color: #dc2626;"></i>
+                    <div style="font-size: 56px; font-weight: 900; color: #dc2626; margin: 20px 0; letter-spacing: -2px;">$7.5M</div>
+                    <div style="font-size: 16px; color: #666; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;">Monthly opportunity cost</div>
                 </div>
             </div>
         </div>
@@ -629,24 +963,28 @@
                 <span class="logo-green">My</span><span class="logo-navy">Bambu</span>
             </div>
             <div class="slide-num">14 / 15</div>
-            <h2>🎯 Board Decision Required</h2>
-            <div style="background: linear-gradient(135deg, #fef3c7, #fde68a); padding: 50px; font-size: 1.8em; text-align: center; border-radius: 15px; font-weight: 700; margin-bottom: 40px;">
-                💰 Approve $243,480 promotional investment
+            <h2>
+                <i data-lucide="briefcase"></i>
+                Board Decision Required
+            </h2>
+            <div style="background: linear-gradient(135deg, #fef3c7, #fde68a); padding: 55px; font-size: 26px; text-align: center; border-radius: 20px; font-weight: 800; margin-bottom: 50px; box-shadow: 0 15px 40px rgba(245, 158, 11, 0.2);">
+                <i data-lucide="coins" style="width: 32px; height: 32px; display: inline-block; vertical-align: middle; margin-right: 12px;"></i>
+                Approve $243,480 promotional investment
             </div>
             <div class="metrics" style="grid-template-columns: repeat(3, 1fr);">
-                <div class="metric-card" style="border-left: 5px solid #1a237e;">
-                    <div style="font-size: 2em; margin-bottom: 15px;">📊</div>
-                    <div style="font-size: 2.8em; font-weight: 800; color: #1a237e; margin-bottom: 10px;">27K</div>
+                <div class="metric-card" style="--accent-color: #1a237e;">
+                    <i data-lucide="bar-chart" class="metric-icon"></i>
+                    <div class="metric-number" style="color: #1a237e;">27K</div>
                     <div class="metric-label">Minimum outcome</div>
                 </div>
-                <div class="metric-card" style="border-left: 5px solid #00ff41;">
-                    <div style="font-size: 2em; margin-bottom: 15px;">🎯</div>
-                    <div style="font-size: 2.8em; font-weight: 800; color: #00ff41; margin-bottom: 10px;">47K</div>
+                <div class="metric-card" style="--accent-color: #00ff41;">
+                    <i data-lucide="target" class="metric-icon"></i>
+                    <div class="metric-number" style="color: #00ff41;">47K</div>
                     <div class="metric-label">Target outcome</div>
                 </div>
-                <div class="metric-card" style="border-left: 5px solid #f59e0b;">
-                    <div style="font-size: 2em; margin-bottom: 15px;">🚀</div>
-                    <div style="font-size: 2.8em; font-weight: 800; color: #f59e0b; margin-bottom: 10px;">60K+</div>
+                <div class="metric-card" style="--accent-color: #f59e0b;">
+                    <i data-lucide="trending-up" class="metric-icon"></i>
+                    <div class="metric-number" style="color: #f59e0b;">60K+</div>
                     <div class="metric-label">Upside potential</div>
                 </div>
             </div>
@@ -654,39 +992,54 @@
     </div>
 
     <!-- Slide 15: Closing -->
-    <div class="slide title-slide">
+    <div class="slide dark-slide">
         <div class="slide-content">
             <div class="logo">
                 <span class="logo-green">My</span><span class="logo-white">Bambu</span>
             </div>
-            <h1 style="font-size: 3.5em; margin-bottom: 30px;">
-                We have the users. ✅
+            <h1 style="font-size: 56px; margin-bottom: 35px; display: flex; align-items: center; justify-content: center; gap: 15px;">
+                We have the users. <i data-lucide="check-circle" style="width: 56px; height: 56px; color: #00ff41;"></i>
             </h1>
-            <p style="font-size: 2.5em; margin-bottom: 25px;">
-                We have the solution. ✅
+            <p style="font-size: 40px; margin-bottom: 30px; display: flex; align-items: center; justify-content: center; gap: 15px;">
+                We have the solution. <i data-lucide="check-circle" style="width: 40px; height: 40px; color: #00ff41;"></i>
             </p>
-            <p style="font-size: 2.5em; margin-bottom: 60px;">
-                We just need to connect them. 🔗
+            <p style="font-size: 40px; margin-bottom: 70px; display: flex; align-items: center; justify-content: center; gap: 15px;">
+                We just need to connect them. <i data-lucide="link" style="width: 40px; height: 40px; color: #00ff41;"></i>
             </p>
-            <div style="background: rgba(255,255,255,0.2); backdrop-filter: blur(10px); padding: 40px 60px; border-radius: 25px; font-size: 1.6em; font-weight: 700; margin-bottom: 50px; border: 3px solid rgba(255,255,255,0.3);">
-                💰 $243,480 → 47,000 users → $27M deposits
+            <div style="background: rgba(255,255,255,0.15); backdrop-filter: blur(20px); padding: 45px 70px; border-radius: 30px; font-size: 22px; font-weight: 800; margin-bottom: 60px; border: 2px solid rgba(255,255,255,0.2); box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);">
+                <i data-lucide="arrow-right" style="width: 28px; height: 28px; display: inline-block; vertical-align: middle; margin: 0 12px;"></i>
+                $243,480
+                <i data-lucide="arrow-right" style="width: 28px; height: 28px; display: inline-block; vertical-align: middle; margin: 0 12px;"></i>
+                47,000 users
+                <i data-lucide="arrow-right" style="width: 28px; height: 28px; display: inline-block; vertical-align: middle; margin: 0 12px;"></i>
+                $27M deposits
             </div>
-            <div style="font-size: 1.8em; font-weight: 600;">
-                ⏰ Decision needed today.
+            <div style="font-size: 28px; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 12px;">
+                <i data-lucide="clock" style="width: 32px; height: 32px;"></i>
+                Decision needed today.
             </div>
         </div>
     </div>
 
     <!-- Controls -->
     <div class="controls">
-        <button class="btn" id="prevBtn">← Previous</button>
+        <button class="btn" id="prevBtn">
+            <i data-lucide="chevron-left"></i>
+            Previous
+        </button>
         <span class="counter">
             <span id="current">1</span> / <span id="total">15</span>
         </span>
-        <button class="btn next" id="nextBtn">Next →</button>
+        <button class="btn next" id="nextBtn">
+            Next
+            <i data-lucide="chevron-right"></i>
+        </button>
     </div>
 
     <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+
         let currentSlide = 0;
         const slides = document.querySelectorAll('.slide');
         const totalSlides = slides.length;
@@ -702,6 +1055,9 @@
 
             document.getElementById('prevBtn').disabled = currentSlide === 0;
             document.getElementById('nextBtn').disabled = currentSlide === totalSlides - 1;
+
+            // Re-initialize icons after slide change
+            setTimeout(() => lucide.createIcons(), 100);
         }
 
         function navigate(direction) {
@@ -722,10 +1078,12 @@
                 navigate(-1);
             }
             if (e.key === 'Home') {
+                e.preventDefault();
                 currentSlide = 0;
                 updateSlide();
             }
             if (e.key === 'End') {
+                e.preventDefault();
                 currentSlide = totalSlides - 1;
                 updateSlide();
             }
