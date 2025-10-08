@@ -5,7 +5,33 @@
 
 ---
 
-## 📝 Simple 3-Step Process
+## 🤖 EASIEST WAY: Automated with Claude Desktop (Recommended!)
+
+### One-Time Setup (5 minutes):
+See **[CLAUDE_DESKTOP_SETUP.md](CLAUDE_DESKTOP_SETUP.md)** for detailed instructions.
+
+**Quick version:**
+1. Open `~/Library/Application Support/Claude/claude_desktop_config.json`
+2. Copy the contents from `CLAUDE_INSTRUCTIONS.txt`
+3. Restart Claude Desktop
+
+### After Setup:
+Just say to Claude:
+```
+"Create a sales dashboard and give me a public link"
+```
+
+Claude will automatically:
+- ✅ Create the HTML file
+- ✅ Save it to the artifacts folder
+- ✅ Deploy it to GitHub Pages
+- ✅ Give you the public URL
+
+**That's it!** No manual deployment needed.
+
+---
+
+## 📝 Manual Method (If you prefer doing it yourself)
 
 ### Step 1: Create in Claude Desktop
 Ask Claude to create whatever you need (dashboard, report, visualization, etc.)

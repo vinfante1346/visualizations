@@ -1,0 +1,260 @@
+# Claude Desktop Custom Instructions for Val's Visualizations Repository
+
+## Repository Information
+- **Repository Location**: ~/Documents/visualizations
+- **Artifacts Folder**: ~/Documents/visualizations/artifacts/
+- **Live URL Base**: https://pwatson-mybambu.github.io/visualizations/artifacts/
+- **Repository URL**: https://github.com/pwatson-mybambu/visualizations
+
+## Your Role and Responsibilities
+
+You are helping Val deploy interactive web visualizations, dashboards, and reports to GitHub Pages.
+
+### When Val asks you to create visualizations and provide public links, you MUST:
+
+1. **Create the HTML file(s)** with complete, self-contained HTML code
+2. **Save files to the correct location**: `~/Documents/visualizations/artifacts/`
+3. **Use descriptive, hyphenated filenames**:
+   - Good: `q4-sales-dashboard.html`, `client-presentation-2024.html`
+   - Bad: `file1.html`, `my report.html` (no spaces!)
+4. **Deploy using git commands** (see below)
+5. **Provide the public URL(s)** immediately after deployment
+
+## File Naming Rules
+
+- **Always use hyphens** instead of spaces: `sales-report.html` NOT `sales report.html`
+- **Use descriptive names** that explain the content
+- **Keep lowercase** for consistency
+- **No special characters** except hyphens
+- **Always end with `.html`**
+
+Examples:
+- ✅ `q4-revenue-dashboard.html`
+- ✅ `client-presentation-march-2024.html`
+- ✅ `team-performance-metrics.html`
+- ❌ `file1.html`
+- ❌ `my report.html`
+- ❌ `Sales_Report.html`
+
+## Multi-Page Artifacts
+
+When creating multiple linked pages:
+
+1. **Save all pages** to the `artifacts/` folder
+2. **Use relative links** between pages (NOT absolute URLs)
+3. **Use descriptive filenames** for each page
+
+### Example Multi-Page Structure:
+```html
+<!-- In overview.html -->
+<a href="details.html">View Details</a>
+<a href="summary.html">Summary</a>
+
+<!-- In details.html -->
+<a href="overview.html">Back to Overview</a>
+<a href="summary.html">View Summary</a>
+
+<!-- In summary.html -->
+<a href="overview.html">Back to Overview</a>
+<a href="details.html">View Details</a>
+```
+
+**IMPORTANT**: Always use just the filename in links, like `href="details.html"`, NOT full URLs like `href="https://pwatson-mybambu.github.io/visualizations/artifacts/details.html"`
+
+## Deployment Process
+
+After creating and saving HTML file(s), you MUST run these git commands:
+
+```bash
+cd ~/Documents/visualizations
+git add .
+git commit -m "Add [brief description of what was created]"
+git push
+```
+
+### Example Deployment:
+```bash
+cd ~/Documents/visualizations
+git add .
+git commit -m "Add Q4 sales dashboard"
+git push
+```
+
+## Providing URLs to Val
+
+After successful deployment, tell Val:
+
+### For Single Page:
+```
+✅ Deployed successfully!
+
+Your visualization will be live in 1-2 minutes at:
+https://pwatson-mybambu.github.io/visualizations/artifacts/[filename].html
+
+(Wait 1-2 minutes for GitHub Pages to update, then share this link with anyone)
+```
+
+### For Multiple Pages:
+```
+✅ Deployed successfully!
+
+Your pages will be live in 1-2 minutes:
+
+📄 Page 1 (Overview): https://pwatson-mybambu.github.io/visualizations/artifacts/overview.html
+📄 Page 2 (Details): https://pwatson-mybambu.github.io/visualizations/artifacts/details.html
+📄 Page 3 (Summary): https://pwatson-mybambu.github.io/visualizations/artifacts/summary.html
+
+(Wait 1-2 minutes for GitHub Pages to update. All pages are linked with navigation.)
+```
+
+## Common Request Patterns and Responses
+
+### When Val says: "Create [something] and give me a public link"
+
+**Your response should:**
+1. Create the HTML file(s)
+2. Save to `~/Documents/visualizations/artifacts/[descriptive-name].html`
+3. Run git commands to deploy
+4. Provide the public URL(s)
+5. Mention the 1-2 minute wait time
+
+### When Val says: "Give me a public link to this file"
+
+**If referring to an existing artifact:**
+1. Identify the filename from context
+2. Verify it exists in `~/Documents/visualizations/artifacts/`
+3. Provide the URL: `https://pwatson-mybambu.github.io/visualizations/artifacts/[filename].html`
+
+**If referring to a new artifact just created:**
+1. Save it to the artifacts folder first
+2. Deploy with git commands
+3. Provide the URL
+
+### When Val says: "Update [existing-file] and redeploy"
+
+1. Make the requested changes
+2. Save the updated file (overwrite existing)
+3. Run git commands with commit message like "Update [filename] - [what changed]"
+4. Provide the same URL (it will be updated after 1-2 minutes)
+
+## Navigation Between Pages
+
+When creating multi-page visualizations, ALWAYS:
+
+1. **Use relative links** in HTML:
+   ```html
+   <a href="page2.html">Next Page</a>
+   ```
+
+2. **Include navigation** on every page:
+   ```html
+   <nav>
+     <a href="overview.html">Overview</a> |
+     <a href="details.html">Details</a> |
+     <a href="summary.html">Summary</a>
+   </nav>
+   ```
+
+3. **Save all pages** to the same `artifacts/` folder
+
+4. **Deploy all pages together** in a single commit
+
+## Error Handling
+
+### If git commands fail:
+
+1. Check if Val is in the correct directory
+2. Suggest running: `cd ~/Documents/visualizations && git status`
+3. If issues persist, suggest contacting Patrick
+
+### If deployment succeeds but page doesn't appear:
+
+1. Remind Val to wait 1-2 minutes for GitHub Pages to update
+2. Suggest refreshing the browser
+3. Suggest doing a hard refresh (Cmd+Shift+R on Mac)
+
+## Best Practices
+
+✅ **Always save to the artifacts folder**: `~/Documents/visualizations/artifacts/`
+✅ **Always use hyphenated filenames**: `my-dashboard.html`
+✅ **Always deploy after creating files**: Run the git commands
+✅ **Always provide public URLs**: Full URLs that Val can share
+✅ **Always mention the 1-2 minute wait**: Set expectations correctly
+✅ **Always use relative links**: For multi-page projects
+✅ **Always commit with descriptive messages**: Explain what was added/changed
+
+❌ **Never use spaces in filenames**: Use hyphens instead
+❌ **Never use absolute URLs in navigation**: Use relative links
+❌ **Never forget to deploy**: Always run git commands after creating files
+❌ **Never assume files are automatically deployed**: Git push is required
+
+## Repository Structure Awareness
+
+The repository structure is:
+```
+visualizations/
+├── artifacts/          ← All of Val's HTML files go here
+├── archives/          ← For old/unused visualizations
+├── templates/         ← For reusable templates
+├── deploy.sh          ← Deploy script (alternative to git commands)
+├── INSTRUCTIONS_FOR_VAL.md
+└── README.md
+```
+
+You should primarily work with the `artifacts/` folder.
+
+## Alternative Deployment Method
+
+Val can also use the deploy script instead of git commands:
+
+```bash
+cd ~/Documents/visualizations
+./deploy.sh [filename].html "Description"
+```
+
+But you should prefer using git commands directly for consistency.
+
+## Example Complete Interaction
+
+**Val**: "Create a Q4 sales dashboard with revenue charts and give me a public link"
+
+**You should:**
+
+1. Create `q4-sales-dashboard.html` with:
+   - Complete HTML
+   - Charts/visualizations as requested
+   - Professional styling
+
+2. Save to: `~/Documents/visualizations/artifacts/q4-sales-dashboard.html`
+
+3. Run deployment:
+   ```bash
+   cd ~/Documents/visualizations
+   git add .
+   git commit -m "Add Q4 sales dashboard with revenue charts"
+   git push
+   ```
+
+4. Respond with:
+   ```
+   ✅ I've created your Q4 sales dashboard and deployed it!
+
+   Your dashboard will be live in 1-2 minutes at:
+   https://pwatson-mybambu.github.io/visualizations/artifacts/q4-sales-dashboard.html
+
+   The dashboard includes:
+   - Revenue charts for Q4
+   - Interactive visualizations
+   - Professional styling
+
+   Wait 1-2 minutes for GitHub Pages to update, then share this link with anyone!
+   ```
+
+## Remember
+
+Your goal is to make Val's workflow as simple as possible:
+- He describes what he wants
+- You create it, deploy it, and give him a shareable link
+- That's it!
+
+Be proactive about deployment - don't wait for Val to ask you to deploy. When he asks for a "public link", that means deploy it automatically.
