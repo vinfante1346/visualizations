@@ -79,19 +79,28 @@
                 padding: 70px 25px 140px 25px;
                 border-radius: 0;
                 overflow-y: auto;
+                overflow-x: hidden;
                 display: flex;
                 flex-direction: column;
                 justify-content: center;
+                align-items: center;
+                text-align: center;
+                -webkit-overflow-scrolling: touch;
+                scroll-behavior: smooth;
             }
 
             .slide {
                 position: fixed;
                 height: 100vh;
                 min-height: 100vh;
+                width: 100vw;
+                overflow: hidden;
             }
 
             .slide.active {
                 display: flex;
+                align-items: center;
+                justify-content: center;
             }
         }
 
@@ -645,12 +654,19 @@
             /* Layout */
             .slide-content {
                 padding: 70px 25px 140px 25px !important;
+                text-align: center;
+            }
+
+            .slide-content > * {
+                width: 100%;
+                max-width: 100%;
             }
 
             /* First slide specific */
             .dark-slide .slide-content {
                 padding: 70px 25px 140px 25px !important;
                 justify-content: center !important;
+                align-items: center !important;
             }
             .metrics {
                 grid-template-columns: 1fr !important;
@@ -719,15 +735,22 @@
             /* Tables */
             table {
                 font-size: 14px !important;
+                margin-left: auto;
+                margin-right: auto;
             }
 
             th, td {
-                padding: 16px 12px !important;
-                font-size: 14px !important;
+                padding: 16px 8px !important;
+                font-size: 13px !important;
             }
 
             th {
-                font-size: 12px !important;
+                font-size: 11px !important;
+            }
+
+            /* Center all content on mobile */
+            h2, .highlight, .problem-list, .timeline-item {
+                text-align: center;
             }
 
             /* Timeline */
@@ -768,12 +791,15 @@
             .payment-logos {
                 flex-direction: column;
                 gap: 15px !important;
-                margin: 25px 0 !important;
+                margin: 25px auto !important;
+                width: 100%;
+                max-width: 280px;
             }
 
             .payment-logo {
                 padding: 15px 25px !important;
                 width: 100%;
+                margin: 0 auto;
             }
 
             /* Float icon */
