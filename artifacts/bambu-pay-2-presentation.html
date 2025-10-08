@@ -945,14 +945,19 @@
             }
 
             .payment-logo {
-                padding: 15px 20px !important;
+                padding: 18px 30px !important;
                 width: auto !important;
-                max-width: 90% !important;
+                max-width: 95% !important;
                 margin: 0 auto;
                 display: flex !important;
                 justify-content: center !important;
                 align-items: center !important;
                 overflow: visible !important;
+                min-height: 60px !important;
+            }
+
+            .payment-logo div {
+                line-height: 1.4 !important;
             }
 
             .payment-logo svg,
@@ -1245,14 +1250,14 @@
             <!-- Payment Methods -->
             <div class="payment-logos animated delay-1" style="animation-name: fadeInUp;">
                 <div class="payment-logo interactive-card">
-                    <svg width="120" height="40" viewBox="0 0 120 40"><text x="10" y="28" font-family="system-ui" font-size="24" font-weight="600">
-                        <tspan fill="#000">Apple</tspan><tspan fill="#000"> Pay</tspan>
-                    </text></svg>
+                    <div style="font-size: 24px; font-weight: 600; color: #000; white-space: nowrap; padding: 5px 0;">
+                        Apple Pay
+                    </div>
                 </div>
                 <div class="payment-logo interactive-card">
-                    <svg width="120" height="40" viewBox="0 0 120 40"><text x="10" y="28" font-family="Poppins" font-size="24" font-weight="600">
-                        <tspan fill="#4285F4">G</tspan><tspan fill="#EA4335">o</tspan><tspan fill="#FBBC04">o</tspan><tspan fill="#4285F4">g</tspan><tspan fill="#34A853">l</tspan><tspan fill="#EA4335">e</tspan><tspan fill="#666"> Pay</tspan>
-                    </text></svg>
+                    <div style="font-size: 24px; font-weight: 600; white-space: nowrap; padding: 5px 0;">
+                        <span style="color: #4285F4;">G</span><span style="color: #EA4335;">o</span><span style="color: #FBBC04;">o</span><span style="color: #4285F4;">g</span><span style="color: #34A853;">l</span><span style="color: #EA4335;">e</span><span style="color: #666;"> Pay</span>
+                    </div>
                 </div>
             </div>
 
