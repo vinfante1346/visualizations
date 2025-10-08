@@ -383,18 +383,33 @@
             </div>
 
             <div class="card">
-                <h2><span class="number">1</span>Create in Claude Desktop</h2>
+                <h2><span class="number">1</span>First-Time Setup: Clone Repository</h2>
+                <p><strong>⚠️ One-time only!</strong> If you haven't cloned the repository yet, open Terminal and run:</p>
+                <div class="code-block"><code>cd ~/Documents
+git clone https://github.com/pwatson-mybambu/visualizations.git
+cd visualizations
+chmod +x deploy.sh</code></div>
+                <p style="margin-top: 15px;">Configure git with your information:</p>
+                <div class="code-block"><code>git config user.name "Val Diaz"
+git config user.email "val@mybambu.com"</code></div>
+                <div class="alert alert-info" style="margin-top: 15px;">
+                    <strong>💡 Already done this?</strong> Skip to step 2!
+                </div>
+            </div>
+
+            <div class="card">
+                <h2><span class="number">2</span>Create in Claude Desktop</h2>
                 <p>Ask Claude to create whatever visualization, dashboard, or report you need.</p>
             </div>
 
             <div class="card">
-                <h2><span class="number">2</span>Get the HTML Code</h2>
+                <h2><span class="number">3</span>Get the HTML Code</h2>
                 <p>Tell Claude: <strong>"Show me the complete HTML code for this artifact"</strong></p>
                 <p>Copy all the code that Claude provides.</p>
             </div>
 
             <div class="card">
-                <h2><span class="number">3</span>Save the File</h2>
+                <h2><span class="number">4</span>Save the File</h2>
                 <p>Save the HTML code in your visualizations folder:</p>
                 <div class="code-block"><code>~/Documents/visualizations/artifacts/your-file-name.html</code></div>
                 <p><strong>Naming tips:</strong></p>
@@ -406,7 +421,7 @@
             </div>
 
             <div class="card">
-                <h2><span class="number">4</span>Deploy It (One Command!)</h2>
+                <h2><span class="number">5</span>Deploy It (One Command!)</h2>
                 <p>Open Terminal and run:</p>
                 <div class="code-block"><code>cd ~/Documents/visualizations
 ./deploy.sh your-file-name.html "Brief description"</code></div>
@@ -415,7 +430,7 @@
             </div>
 
             <div class="card">
-                <h2><span class="number">5</span>Share the Link</h2>
+                <h2><span class="number">6</span>Share the Link</h2>
                 <p>Wait 1-2 minutes for deployment, then share your link:</p>
                 <div class="code-block"><code>https://pwatson-mybambu.github.io/visualizations/artifacts/your-file-name.html</code></div>
             </div>
