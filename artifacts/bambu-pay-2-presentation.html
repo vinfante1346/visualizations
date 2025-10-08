@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Bambu Pay 2.0 - Investment Proposal</title>
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
@@ -856,6 +856,61 @@
             }
         }
 
+        /* iOS-specific styles */
+        .ios-device {
+            -webkit-tap-highlight-color: rgba(39, 251, 107, 0.2);
+        }
+
+        .ios-device .slide-content {
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .ios-device .btn {
+            -webkit-appearance: none;
+            appearance: none;
+            border-radius: 12px;
+        }
+
+        @media (max-width: 768px) {
+            /* iOS optimizations */
+            .ios-device .slide-content {
+                padding-bottom: 160px !important; /* Extra space for iPhone notch */
+            }
+
+            .ios-device .controls {
+                bottom: 30px !important; /* Account for iPhone home indicator */
+                padding: 14px 18px !important;
+            }
+
+            .ios-device .logo,
+            .ios-device .slide-num {
+                top: 50px !important; /* Account for iPhone notch */
+            }
+
+            .ios-device.mobile-view .slide-content {
+                height: calc(100vh - env(safe-area-inset-bottom)) !important;
+                padding-top: max(70px, env(safe-area-inset-top) + 20px) !important;
+            }
+
+            /* Android optimizations */
+            .android-device .slide-content {
+                padding-bottom: 140px !important;
+            }
+
+            .android-device .controls {
+                bottom: 20px !important;
+            }
+
+            .android-device .btn {
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+            }
+
+            .android-device .metric-card,
+            .android-device .payment-logo {
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            }
+        }
+
         /* Color utilities */
         .text-green { color: #27FB6B; }
         .text-navy { color: #00052E; }
@@ -1566,11 +1621,24 @@
             }
         }
 
-        // Detect mobile device
+        // Detect mobile device and platform
         const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+        const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+        const isAndroid = /Android/i.test(navigator.userAgent);
+
         if (isMobile) {
-            // Add mobile-specific optimizations
             document.body.classList.add('mobile-view');
+        }
+
+        if (isIOS) {
+            document.body.classList.add('ios-device');
+            // iOS-specific optimizations
+            document.body.style.webkitTouchCallout = 'none';
+            document.body.style.webkitUserSelect = 'none';
+        }
+
+        if (isAndroid) {
+            document.body.classList.add('android-device');
         }
 
         updateSlide();
