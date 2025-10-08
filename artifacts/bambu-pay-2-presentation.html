@@ -839,10 +839,12 @@
             /* Controls */
             .controls {
                 bottom: 15px !important;
-                left: 20px !important;
+                left: 50% !important;
+                transform: translateX(-50%) !important;
                 padding: 12px 16px !important;
                 gap: 12px !important;
-                width: calc(100% - 40px);
+                width: auto !important;
+                max-width: calc(100% - 40px) !important;
                 border-radius: 40px !important;
             }
 
@@ -938,13 +940,25 @@
                 gap: 15px !important;
                 margin: 25px auto !important;
                 width: 100%;
-                max-width: 280px;
+                max-width: 300px;
+                align-items: center !important;
             }
 
             .payment-logo {
-                padding: 15px 25px !important;
-                width: 100%;
+                padding: 15px 20px !important;
+                width: auto !important;
+                max-width: 90% !important;
                 margin: 0 auto;
+                display: flex !important;
+                justify-content: center !important;
+                align-items: center !important;
+                overflow: visible !important;
+            }
+
+            .payment-logo svg,
+            .payment-logo img {
+                max-width: 100% !important;
+                height: auto !important;
             }
 
             /* Float icon */
@@ -1029,6 +1043,8 @@
 
             .ios-device .controls {
                 bottom: 30px !important; /* Account for iPhone home indicator */
+                left: 50% !important;
+                transform: translateX(-50%) !important;
                 padding: 14px 18px !important;
             }
 
@@ -1049,6 +1065,8 @@
 
             .android-device .controls {
                 bottom: 20px !important;
+                left: 50% !important;
+                transform: translateX(-50%) !important;
             }
 
             .android-device .btn {
