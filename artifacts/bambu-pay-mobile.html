@@ -94,6 +94,11 @@
         .logo-navy { color: #00052E; }
         .logo-white { color: white; }
 
+        /* Make logo visible on all backgrounds */
+        .dark-slide ~ .logo .logo-navy {
+            color: white !important;
+        }
+
         /* Slide Number */
         .slide-num {
             position: fixed;
@@ -418,7 +423,7 @@
 <body>
     <div class="progress-bar" id="progressBar"></div>
     <div class="logo">
-        <span class="logo-green">My</span><span class="logo-white">Bambu</span>
+        <span class="logo-green">My</span><span class="logo-navy">Bambu</span>
     </div>
     <div class="slide-num" id="slideNum">1 / 15</div>
 
@@ -902,8 +907,13 @@
         const progressBar = document.getElementById('progressBar');
         const slideNum = document.getElementById('slideNum');
         const navHint = document.getElementById('navHint');
+        const logo = document.querySelector('.logo');
+        const logoBambu = document.querySelector('.logo-navy');
         const totalSlides = 15;
         let currentSlide = 0;
+
+        // Dark slide indices (0-based: slide 1, 9, 15)
+        const darkSlides = [0, 8, 14];
 
         // Update progress and slide number on scroll
         slideContainer.addEventListener('scroll', () => {
@@ -917,6 +927,13 @@
             const slideHeight = window.innerHeight;
             currentSlide = Math.round(scrollTop / slideHeight);
             slideNum.textContent = `${Math.min(currentSlide + 1, totalSlides)} / ${totalSlides}`;
+
+            // Change logo color based on slide background
+            if (darkSlides.includes(currentSlide)) {
+                logoBambu.style.color = 'white';
+            } else {
+                logoBambu.style.color = '#00052E';
+            }
 
             // Hide nav hint after first scroll
             if (scrollTop > 50) {
