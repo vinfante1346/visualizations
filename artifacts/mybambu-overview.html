@@ -645,6 +645,14 @@
             }
         }
 
+        /* Tablet roadmap responsive */
+        @media (max-width: 1024px) {
+            .slide:has(> div[style*="grid-template-columns: repeat(3, 1fr)"]) > div[style*="grid-template-columns: repeat(3, 1fr)"] {
+                grid-template-columns: 1fr !important;
+                gap: 24px !important;
+            }
+        }
+
         /* Small mobile devices */
         @media (max-width: 480px) {
             h1 {
@@ -776,28 +784,28 @@
             <!-- Featured Products -->
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; max-width: 1400px; margin: 0 auto 40px;">
                 <!-- Top Tier Products -->
-                <div class="product-card" style="background: linear-gradient(135deg, rgba(39, 251, 107, 0.2), rgba(39, 251, 107, 0.05)); border: 3px solid #27FB6B; position: relative; overflow: hidden;">
+                <div class="product-card" style="background: linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(255, 255, 255, 0.95)); border: 3px solid #27FB6B; position: relative; overflow: hidden; color: #00052E;">
                     <div style="position: absolute; top: 10px; right: 10px; background: #27FB6B; color: #00052E; padding: 6px 12px; border-radius: 20px; font-size: 11px; font-weight: 800;">⭐ NEW</div>
                     <div class="product-icon" style="font-size: 64px; margin-bottom: 16px;">💸</div>
                     <div class="product-content">
-                        <h3 style="font-size: 24px; margin-bottom: 12px;">Bambu Pay</h3>
-                        <p style="font-size: 15px;">Send or request funds to and from non-MyBambu users instantly.</p>
+                        <h3 style="font-size: 24px; margin-bottom: 12px; color: #00052E;">Bambu Pay</h3>
+                        <p style="font-size: 16px; color: #00052E; line-height: 1.6; font-weight: 500;">Send or request funds to and from non-MyBambu users instantly.</p>
                     </div>
                 </div>
 
-                <div class="product-card" style="background: linear-gradient(135deg, rgba(39, 251, 107, 0.2), rgba(39, 251, 107, 0.05)); border: 3px solid #27FB6B;">
+                <div class="product-card" style="background: linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(255, 255, 255, 0.95)); border: 3px solid #27FB6B; color: #00052E;">
                     <div class="product-icon" style="font-size: 64px; margin-bottom: 16px;">🌎</div>
                     <div class="product-content">
-                        <h3 style="font-size: 24px; margin-bottom: 12px;">International Transfers</h3>
-                        <p style="font-size: 15px;">Lightning-fast 35-minute transfers with competitive rates to <strong>17 countries</strong>.</p>
+                        <h3 style="font-size: 24px; margin-bottom: 12px; color: #00052E;">International Transfers</h3>
+                        <p style="font-size: 16px; color: #00052E; line-height: 1.6; font-weight: 500;">Lightning-fast 35-minute transfers with competitive rates to <strong>17 countries</strong>.</p>
                     </div>
                 </div>
 
-                <div class="product-card" style="background: linear-gradient(135deg, rgba(39, 251, 107, 0.2), rgba(39, 251, 107, 0.05)); border: 3px solid #27FB6B;">
+                <div class="product-card" style="background: linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(255, 255, 255, 0.95)); border: 3px solid #27FB6B; color: #00052E;">
                     <div class="product-icon" style="font-size: 64px; margin-bottom: 16px;">💳</div>
                     <div class="product-content">
-                        <h3 style="font-size: 24px; margin-bottom: 12px;">MyBambu Card</h3>
-                        <p style="font-size: 15px;">Digital and physical card for shopping online and in-stores everywhere.</p>
+                        <h3 style="font-size: 24px; margin-bottom: 12px; color: #00052E;">MyBambu Card</h3>
+                        <p style="font-size: 16px; color: #00052E; line-height: 1.6; font-weight: 500;">Digital and physical card for shopping online and in-stores everywhere.</p>
                     </div>
                 </div>
             </div>
@@ -879,52 +887,57 @@
 
         <!-- Slide 5: Product Roadmap 2025 -->
         <div class="slide light-slide">
-            <h2><span class="highlight-green">Product</span> Roadmap 2025</h2>
-            <div class="roadmap-timeline">
-                <div class="timeline-item">
-                    <div class="timeline-circle">Loans</div>
-                    <div class="timeline-sublevel">
-                        <div class="timeline-subitem">Installment Loans</div>
-                        <div class="timeline-subitem">Business Loans</div>
-                        <div class="timeline-subitem">Auto Loans</div>
+            <h2 style="margin-bottom: 16px;"><span class="highlight-green">Product</span> Roadmap 2025</h2>
+            <p style="font-size: 20px; color: #00052E; opacity: 0.8; margin-bottom: 50px;">Building the future of digital banking 🚀</p>
+
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; max-width: 1300px; margin: 0 auto;">
+
+                <!-- Lending & Credit -->
+                <div style="background: linear-gradient(135deg, #27FB6B 0%, #00cc33 100%); padding: 32px; border-radius: 24px; box-shadow: 0 12px 40px rgba(39, 251, 107, 0.3); position: relative; overflow: hidden;">
+                    <div style="position: absolute; top: -20px; right: -20px; width: 100px; height: 100px; background: rgba(255,255,255,0.1); border-radius: 50%;"></div>
+                    <div style="font-size: 48px; margin-bottom: 16px;">💰</div>
+                    <h3 style="font-size: 24px; color: #00052E; margin-bottom: 16px; font-weight: 800;">Lending & Credit</h3>
+                    <div style="display: flex; flex-direction: column; gap: 12px;">
+                        <div style="background: rgba(0,5,46,0.1); padding: 12px 16px; border-radius: 12px; color: #00052E; font-weight: 600; font-size: 14px;">✓ Installment Loans</div>
+                        <div style="background: rgba(0,5,46,0.1); padding: 12px 16px; border-radius: 12px; color: #00052E; font-weight: 600; font-size: 14px;">✓ Business Loans</div>
+                        <div style="background: rgba(0,5,46,0.1); padding: 12px 16px; border-radius: 12px; color: #00052E; font-weight: 600; font-size: 14px;">✓ Auto Loans</div>
+                        <div style="background: rgba(0,5,46,0.1); padding: 12px 16px; border-radius: 12px; color: #00052E; font-weight: 600; font-size: 14px;">✓ Buy Now Pay Later</div>
+                        <div style="background: rgba(0,5,46,0.1); padding: 12px 16px; border-radius: 12px; color: #00052E; font-weight: 600; font-size: 14px;">✓ Business Credit Cards</div>
                     </div>
                 </div>
-                <div class="timeline-connector"></div>
-                <div class="timeline-item">
-                    <div class="timeline-circle">Buy Now Pay Later</div>
-                </div>
-                <div class="timeline-connector"></div>
-                <div class="timeline-item">
-                    <div class="timeline-circle">Business Credit Cards</div>
-                </div>
-                <div class="timeline-connector"></div>
-                <div class="timeline-item">
-                    <div class="timeline-circle">IMT Network expansion</div>
-                </div>
-                <div class="timeline-connector"></div>
-                <div class="timeline-item">
-                    <div class="timeline-circle">LATAM Cards</div>
-                    <div class="timeline-sublevel">
-                        <div class="timeline-subitem">México</div>
-                        <div class="timeline-subitem">Colombia</div>
+
+                <!-- Payments & Transfers -->
+                <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 32px; border-radius: 24px; box-shadow: 0 12px 40px rgba(102, 126, 234, 0.3); position: relative; overflow: hidden;">
+                    <div style="position: absolute; top: -20px; right: -20px; width: 100px; height: 100px; background: rgba(255,255,255,0.1); border-radius: 50%;"></div>
+                    <div style="font-size: 48px; margin-bottom: 16px;">⚡</div>
+                    <h3 style="font-size: 24px; color: white; margin-bottom: 16px; font-weight: 800;">Payments & Transfers</h3>
+                    <div style="display: flex; flex-direction: column; gap: 12px;">
+                        <div style="background: rgba(255,255,255,0.2); padding: 12px 16px; border-radius: 12px; color: white; font-weight: 600; font-size: 14px;">✓ P2P Real Time Payments</div>
+                        <div style="background: rgba(255,255,255,0.2); padding: 12px 16px; border-radius: 12px; color: white; font-weight: 600; font-size: 14px;">✓ P2B Real Time Payments</div>
+                        <div style="background: rgba(255,255,255,0.2); padding: 12px 16px; border-radius: 12px; color: white; font-weight: 600; font-size: 14px;">✓ Early ACH Access</div>
+                        <div style="background: rgba(255,255,255,0.2); padding: 12px 16px; border-radius: 12px; color: white; font-weight: 600; font-size: 14px;">✓ Visa Direct Domestic</div>
+                        <div style="background: rgba(255,255,255,0.2); padding: 12px 16px; border-radius: 12px; color: white; font-weight: 600; font-size: 14px;">✓ Visa Direct XBorder</div>
                     </div>
                 </div>
-                <div class="timeline-connector"></div>
-                <div class="timeline-item">
-                    <div class="timeline-circle">Early ACH Deposit Access</div>
+
+                <!-- Global Expansion -->
+                <div style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); padding: 32px; border-radius: 24px; box-shadow: 0 12px 40px rgba(240, 147, 251, 0.3); position: relative; overflow: hidden;">
+                    <div style="position: absolute; top: -20px; right: -20px; width: 100px; height: 100px; background: rgba(255,255,255,0.1); border-radius: 50%;"></div>
+                    <div style="font-size: 48px; margin-bottom: 16px;">🌎</div>
+                    <h3 style="font-size: 24px; color: white; margin-bottom: 16px; font-weight: 800;">Global Expansion</h3>
+                    <div style="display: flex; flex-direction: column; gap: 12px;">
+                        <div style="background: rgba(255,255,255,0.2); padding: 12px 16px; border-radius: 12px; color: white; font-weight: 600; font-size: 14px;">✓ IMT Network Expansion</div>
+                        <div style="background: rgba(255,255,255,0.2); padding: 12px 16px; border-radius: 12px; color: white; font-weight: 600; font-size: 14px;">✓ LATAM Cards - México</div>
+                        <div style="background: rgba(255,255,255,0.2); padding: 12px 16px; border-radius: 12px; color: white; font-weight: 600; font-size: 14px;">✓ LATAM Cards - Colombia</div>
+                        <div style="background: rgba(255,255,255,0.2); padding: 12px 16px; border-radius: 12px; color: white; font-weight: 600; font-size: 14px;">✓ Crypto Wallet Domestic</div>
+                        <div style="background: rgba(255,255,255,0.2); padding: 12px 16px; border-radius: 12px; color: white; font-weight: 600; font-size: 14px;">✓ Crypto Wallet XBorder</div>
+                    </div>
                 </div>
-                <div class="timeline-connector"></div>
-                <div class="timeline-item">
-                    <div class="timeline-circle">P2P & P2B Real Time Payments</div>
-                </div>
-                <div class="timeline-connector"></div>
-                <div class="timeline-item">
-                    <div class="timeline-circle">Visa Direct Domestic & XBorder</div>
-                </div>
-                <div class="timeline-connector"></div>
-                <div class="timeline-item">
-                    <div class="timeline-circle">Crypto Wallet Domestic & XBorder</div>
-                </div>
+
+            </div>
+
+            <div style="margin-top: 40px; text-align: center; padding: 20px; background: rgba(39, 251, 107, 0.1); border-radius: 16px; max-width: 900px; margin-left: auto; margin-right: auto;">
+                <p style="font-size: 18px; color: #00052E; font-weight: 700;">🎯 All products launching throughout 2025</p>
             </div>
         </div>
 
