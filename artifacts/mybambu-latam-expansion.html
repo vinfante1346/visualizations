@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyBambu LATAM Expansion Roadmap</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #141d38 0%, #0a1128 100%);
+            color: #ffffff;
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 60px;
+            animation: fadeInDown 1s ease-out;
+        }
+
+        .logo {
+            font-size: 48px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .logo .my {
+            color: #00ff7a;
+        }
+
+        .logo .bambu {
+            color: #ffffff;
+        }
+
+        h1 {
+            font-size: 56px;
+            margin-bottom: 20px;
+            background: linear-gradient(90deg, #00ff7a 0%, #00cc61 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            font-size: 24px;
+            color: #00ff7a;
+            font-weight: 300;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+            animation: fadeInUp 1s ease-out 0.3s backwards;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid #00ff7a;
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(0, 255, 122, 0.3);
+            background: rgba(0, 255, 122, 0.1);
+        }
+
+        .stat-number {
+            font-size: 42px;
+            font-weight: bold;
+            color: #00ff7a;
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            font-size: 16px;
+            color: #ffffff;
+            opacity: 0.9;
+        }
+
+        .roadmap-section {
+            margin-top: 60px;
+            animation: fadeInUp 1s ease-out 0.6s backwards;
+        }
+
+        .section-title {
+            font-size: 36px;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        .section-title .highlight {
+            color: #00ff7a;
+        }
+
+        .timeline {
+            position: relative;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(180deg, #00ff7a 0%, #00cc61 100%);
+            border-radius: 2px;
+        }
+
+        .timeline-item {
+            margin-bottom: 50px;
+            position: relative;
+            animation: slideIn 0.8s ease-out backwards;
+        }
+
+        .timeline-item:nth-child(odd) {
+            padding-right: 55%;
+            animation-delay: calc(var(--index) * 0.2s);
+        }
+
+        .timeline-item:nth-child(even) {
+            padding-left: 55%;
+            animation-delay: calc(var(--index) * 0.2s);
+        }
+
+        .timeline-content {
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid #00ff7a;
+            border-radius: 15px;
+            padding: 30px;
+            position: relative;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .timeline-content:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 40px rgba(0, 255, 122, 0.4);
+            background: rgba(0, 255, 122, 0.1);
+        }
+
+        .timeline-item:nth-child(odd) .timeline-content::before {
+            content: '';
+            position: absolute;
+            right: -20px;
+            top: 30px;
+            width: 0;
+            height: 0;
+            border-left: 20px solid #00ff7a;
+            border-top: 10px solid transparent;
+            border-bottom: 10px solid transparent;
+        }
+
+        .timeline-item:nth-child(even) .timeline-content::before {
+            content: '';
+            position: absolute;
+            left: -20px;
+            top: 30px;
+            width: 0;
+            height: 0;
+            border-right: 20px solid #00ff7a;
+            border-top: 10px solid transparent;
+            border-bottom: 10px solid transparent;
+        }
+
+        .timeline-marker {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 24px;
+            height: 24px;
+            background: #00ff7a;
+            border: 4px solid #141d38;
+            border-radius: 50%;
+            top: 30px;
+            z-index: 10;
+            box-shadow: 0 0 20px rgba(0, 255, 122, 0.6);
+            animation: pulse 2s infinite;
+        }
+
+        .country-name {
+            font-size: 32px;
+            font-weight: bold;
+            color: #00ff7a;
+            margin-bottom: 10px;
+        }
+
+        .timeline-date {
+            font-size: 20px;
+            color: #ffffff;
+            opacity: 0.8;
+            margin-bottom: 15px;
+        }
+
+        .country-flag {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+
+        .services-list {
+            margin-top: 20px;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+        }
+
+        .services-list h4 {
+            color: #00ff7a;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+
+        .services-list ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .services-list li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+            color: #ffffff;
+            opacity: 0.9;
+        }
+
+        .services-list li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #00ff7a;
+            font-weight: bold;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        .status-active {
+            background: #00ff7a;
+            color: #141d38;
+        }
+
+        .status-planned {
+            background: rgba(255, 255, 255, 0.1);
+            color: #00ff7a;
+            border: 1px solid #00ff7a;
+        }
+
+        .offerings-section {
+            margin-top: 80px;
+            padding: 40px;
+            background: rgba(0, 255, 122, 0.05);
+            border: 2px solid #00ff7a;
+            border-radius: 20px;
+            text-align: center;
+            animation: fadeInUp 1s ease-out 1s backwards;
+        }
+
+        .offerings-section h3 {
+            font-size: 28px;
+            color: #00ff7a;
+            margin-bottom: 20px;
+        }
+
+        .offerings-section p {
+            font-size: 18px;
+            line-height: 1.6;
+            opacity: 0.9;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                box-shadow: 0 0 20px rgba(0, 255, 122, 0.6);
+            }
+            50% {
+                box-shadow: 0 0 40px rgba(0, 255, 122, 1);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .timeline::before {
+                left: 30px;
+            }
+
+            .timeline-item:nth-child(odd),
+            .timeline-item:nth-child(even) {
+                padding-left: 80px;
+                padding-right: 0;
+            }
+
+            .timeline-marker {
+                left: 30px;
+            }
+
+            .timeline-item:nth-child(odd) .timeline-content::before {
+                left: -20px;
+                right: auto;
+                border-right: 20px solid #00ff7a;
+                border-left: none;
+            }
+
+            h1 {
+                font-size: 36px;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <span class="my">My</span><span class="bambu">Bambu</span>
+            </div>
+            <h1>LATAM Expansion Roadmap</h1>
+            <p class="subtitle">Growing Financial Inclusion Across Latin America</p>
+        </header>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number">929,000+</div>
+                <div class="stat-label">Customers Acquired</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">40.56M+</div>
+                <div class="stat-label">Total Transactions</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">15+</div>
+                <div class="stat-label">Products & Services</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">6</div>
+                <div class="stat-label">LATAM Markets</div>
+            </div>
+        </div>
+
+        <div class="roadmap-section">
+            <h2 class="section-title">
+                <span class="highlight">Expansion</span> Timeline
+            </h2>
+
+            <div class="timeline">
+                <div class="timeline-item" style="--index: 1">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <div class="country-flag">🇲🇽</div>
+                        <div class="country-name">Mexico</div>
+                        <div class="timeline-date">Q2 2025</div>
+                        <span class="status-badge status-active">Active Planning</span>
+                        <div class="services-list">
+                            <h4>MyBambu Services:</h4>
+                            <ul>
+                                <li>Mobile Money Transfers</li>
+                                <li>International Remittances</li>
+                                <li>Cash Loading Network</li>
+                                <li>Digital Banking Services</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item" style="--index: 2">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <div class="country-flag">🇨🇴</div>
+                        <div class="country-name">Colombia</div>
+                        <div class="timeline-date">Q3 2025</div>
+                        <span class="status-badge status-active">Active Planning</span>
+                        <div class="services-list">
+                            <h4>MyBambu Services:</h4>
+                            <ul>
+                                <li>Cross-border Payments</li>
+                                <li>Mobile Wallet Solutions</li>
+                                <li>Microfinance Products</li>
+                                <li>Financial Inclusion Tools</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item" style="--index: 3">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <div class="country-flag">🇭🇳</div>
+                        <div class="country-name">Honduras</div>
+                        <div class="timeline-date">Q4 2025</div>
+                        <span class="status-badge status-planned">Planned</span>
+                        <div class="services-list">
+                            <h4>MyBambu Services:</h4>
+                            <ul>
+                                <li>Remittance Corridors</li>
+                                <li>Digital Account Opening</li>
+                                <li>Cash Deposit Network</li>
+                                <li>Community Banking</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item" style="--index: 4">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <div class="country-flag">🇬🇹</div>
+                        <div class="country-name">Guatemala</div>
+                        <div class="timeline-date">Q1 2026</div>
+                        <span class="status-badge status-planned">Planned</span>
+                        <div class="services-list">
+                            <h4>MyBambu Services:</h4>
+                            <ul>
+                                <li>Mobile Banking Platform</li>
+                                <li>International Transfers</li>
+                                <li>Prepaid Card Services</li>
+                                <li>Merchant Solutions</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item" style="--index: 5">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <div class="country-flag">🇳🇮</div>
+                        <div class="country-name">Nicaragua</div>
+                        <div class="timeline-date">Q2 2026</div>
+                        <span class="status-badge status-planned">Planned</span>
+                        <div class="services-list">
+                            <h4>MyBambu Services:</h4>
+                            <ul>
+                                <li>Digital Wallet Services</li>
+                                <li>Bill Payment Solutions</li>
+                                <li>Savings Accounts</li>
+                                <li>Peer-to-Peer Transfers</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item" style="--index: 6">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <div class="country-flag">🇸🇻</div>
+                        <div class="country-name">El Salvador</div>
+                        <div class="timeline-date">Q3 2026</div>
+                        <span class="status-badge status-planned">Planned</span>
+                        <div class="services-list">
+                            <h4>MyBambu Services:</h4>
+                            <ul>
+                                <li>Cryptocurrency Integration</li>
+                                <li>Remittance Services</li>
+                                <li>Mobile Money Platform</li>
+                                <li>Financial Education</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="offerings-section">
+            <h3>Our Mission in Latin America</h3>
+            <p>
+                MyBambu is committed to providing comprehensive digital banking services across Latin America,
+                offering mobile money transfers, cash loading facilities, international remittances, and
+                financial inclusion tools for underserved communities. We're breaking down barriers and
+                empowering millions with accessible, secure, and convenient financial services regardless
+                of immigration status or traditional banking requirements.
+            </p>
+        </div>
+    </div>
+</body>
+</html>
