@@ -425,7 +425,7 @@
     <div class="logo">
         <span class="logo-green">My</span><span class="logo-navy">Bambu</span>
     </div>
-    <div class="slide-num" id="slideNum">1 / 15</div>
+    <div class="slide-num" id="slideNum">1 / 17</div>
 
     <div class="slide-container" id="slideContainer">
         <!-- Slide 1: Title -->
@@ -643,7 +643,76 @@
             </div>
         </div>
 
-        <!-- Slide 8: Growth -->
+        <!-- Slide 8: Transition Plan -->
+        <div class="slide light-slide">
+            <h2>
+                <i data-lucide="refresh-cw"></i>
+                Transition Plan: Migrating Active Users
+            </h2>
+            <div class="highlight" style="background: linear-gradient(135deg, #e3f2fd, #bbdefb); border-left-color: #1976d2; margin-bottom: 24px;">
+                <strong>22,847 active users</strong> need to migrate from manual card entry to instant deposits
+            </div>
+
+            <div class="timeline-item" style="--timeline-color: #1976d2;">
+                <i data-lucide="mail" class="timeline-icon"></i>
+                <div>
+                    <div style="font-size: 18px; font-weight: 800; margin-bottom: 4px;">Phase 1: Communication</div>
+                    <div style="opacity: 0.95; font-size: 14px;">Email + push notification: "Upgrade to instant deposits, get $1 bonus"</div>
+                </div>
+            </div>
+
+            <div class="timeline-item" style="--timeline-color: #1976d2;">
+                <i data-lucide="unlink" class="timeline-icon"></i>
+                <div>
+                    <div style="font-size: 18px; font-weight: 800; margin-bottom: 4px;">Phase 2: Disconnect (24hrs)</div>
+                    <div style="opacity: 0.95; font-size: 14px;">Remove old payment method, maintain account balance & history</div>
+                </div>
+            </div>
+
+            <div class="timeline-item" style="--timeline-color: #27FB6B;">
+                <i data-lucide="link-2" class="timeline-icon"></i>
+                <div>
+                    <div style="font-size: 18px; font-weight: 800; margin-bottom: 4px;">Phase 3: Reconnect</div>
+                    <div style="opacity: 0.95; font-size: 14px;">One-tap setup with Apple Pay or Google Pay + instant $1 bonus</div>
+                </div>
+            </div>
+
+            <div class="metrics" style="margin-top: 24px;">
+                <div class="metric-card" style="--accent-color: #1976d2;">
+                    <i data-lucide="clock" class="metric-icon"></i>
+                    <div class="metric-number" style="color: #1976d2;">48hrs</div>
+                    <div class="metric-label">Total Migration Time</div>
+                </div>
+                <div class="metric-card" style="--accent-color: #27FB6B;">
+                    <i data-lucide="zap" class="metric-icon"></i>
+                    <div class="metric-number" style="color: #27FB6B;">30 sec</div>
+                    <div class="metric-label">New Setup Time</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 9: Marketing Visuals -->
+        <div class="slide light-slide" style="padding: 40px 20px;">
+            <h2 style="margin-bottom: 32px;">
+                <i data-lucide="image"></i>
+                Marketing Campaign
+            </h2>
+
+            <div style="width: 100%; max-width: 350px; margin: 0 auto 24px;">
+                <img src="bambu-pay-promo-1.png" alt="Bambu Pay Marketing 1" style="width: 100%; height: auto; border-radius: 12px; box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);">
+            </div>
+
+            <div style="width: 100%; max-width: 350px; margin: 0 auto 24px;">
+                <img src="bambu-pay-promo-2.png" alt="Bambu Pay Marketing 2" style="width: 100%; height: auto; border-radius: 12px; box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);">
+            </div>
+
+            <div class="highlight">
+                <i data-lucide="megaphone" style="width: 20px; height: 20px; display: inline-block; vertical-align: middle; margin-right: 8px;"></i>
+                Multi-channel campaign: In-app banners, email, push notifications, SMS
+            </div>
+        </div>
+
+        <!-- Slide 10: Growth -->
         <div class="slide green-slide">
             <h2>
                 <i data-lucide="trending-up"></i>
@@ -909,11 +978,11 @@
         const navHint = document.getElementById('navHint');
         const logo = document.querySelector('.logo');
         const logoBambu = document.querySelector('.logo-navy');
-        const totalSlides = 15;
+        const totalSlides = 17;
         let currentSlide = 0;
 
-        // Dark slide indices (0-based: slide 1, 9, 15)
-        const darkSlides = [0, 8, 14];
+        // Dark slide indices (0-based: slide 1, 11, 17)
+        const darkSlides = [0, 10, 16];
 
         // Update progress and slide number on scroll
         slideContainer.addEventListener('scroll', () => {
