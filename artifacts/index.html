@@ -334,21 +334,21 @@
                 </div>
             </div>
 
-            <!-- MyBambu Overview Card -->
+            <!-- MyBambu Overview Card - Desktop -->
             <div class="card">
                 <div class="card-header">
                     <div class="card-icon">
-                        <i data-lucide="building-2" style="width: 32px; height: 32px;"></i>
+                        <i data-lucide="monitor" style="width: 32px; height: 32px;"></i>
                     </div>
-                    <div class="card-title">MyBambu Overview</div>
+                    <div class="card-title">MyBambu Overview (Desktop)</div>
                 </div>
                 <div class="card-description">
-                    Comprehensive company overview including LATAM expansion roadmap with MiBambu launches across México, Colombia, Honduras, Guatemala, Nicaragua, and El Salvador. Features all products, metrics, funding details, and board members.
+                    Comprehensive company overview optimized for desktop viewing. Includes LATAM expansion roadmap with MiBambu launches across México, Colombia, Honduras, Guatemala, Nicaragua, and El Salvador. Features all products, metrics, funding details, and board members.
                 </div>
                 <div class="card-meta">
                     <div class="meta-item">
                         <i data-lucide="layers"></i>
-                        <span>18 Slides</span>
+                        <span>16 Slides</span>
                     </div>
                     <div class="meta-item">
                         <i data-lucide="calendar"></i>
@@ -362,9 +362,46 @@
                 <div class="card-actions">
                     <a href="mybambu-overview.html" class="btn btn-primary" target="_blank">
                         <i data-lucide="external-link" style="width: 18px; height: 18px;"></i>
-                        View Live
+                        View Desktop
                     </a>
                     <a href="#" onclick="editProject('mybambu-overview.html'); return false;" class="btn btn-secondary">
+                        <i data-lucide="edit" style="width: 18px; height: 18px;"></i>
+                        Edit
+                    </a>
+                </div>
+            </div>
+
+            <!-- MyBambu Overview Card - Mobile -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon">
+                        <i data-lucide="smartphone" style="width: 32px; height: 32px;"></i>
+                    </div>
+                    <div class="card-title">MyBambu Overview (Mobile)</div>
+                </div>
+                <div class="card-description">
+                    Mobile-optimized vertical layout specifically designed for portrait viewing on iOS and Android. All content stacks vertically for optimal mobile experience. Same comprehensive content as desktop version.
+                </div>
+                <div class="card-meta">
+                    <div class="meta-item">
+                        <i data-lucide="layers"></i>
+                        <span>16 Slides</span>
+                    </div>
+                    <div class="meta-item">
+                        <i data-lucide="calendar"></i>
+                        <span>Updated Oct 9, 2025</span>
+                    </div>
+                    <div class="meta-item">
+                        <i data-lucide="tag"></i>
+                        <span>Company Overview</span>
+                    </div>
+                </div>
+                <div class="card-actions">
+                    <a href="mybambu-overview-mobile.html" class="btn btn-primary" target="_blank">
+                        <i data-lucide="external-link" style="width: 18px; height: 18px;"></i>
+                        View Mobile
+                    </a>
+                    <a href="#" onclick="editProject('mybambu-overview-mobile.html'); return false;" class="btn btn-secondary">
                         <i data-lucide="edit" style="width: 18px; height: 18px;"></i>
                         Edit
                     </a>
@@ -464,7 +501,7 @@
         // Update stats
         const projects = document.querySelectorAll('.card').length;
         document.getElementById('totalProjects').textContent = projects;
-        document.getElementById('totalSlides').textContent = projects * 18;
+        document.getElementById('totalSlides').textContent = '50+'; // 18 (Bambu Pay) + 16 (Desktop) + 16 (Mobile)
 
         function editProject(filename) {
             alert(`To edit "${filename}", simply ask Claude in the conversation:\n\n"Edit ${filename}" or "Update the ${filename.replace('.html', '')} presentation"`);
