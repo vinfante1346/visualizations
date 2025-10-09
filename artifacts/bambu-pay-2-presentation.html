@@ -18,10 +18,8 @@
             font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
             background: #000312;
             color: #00052E;
-            overflow: hidden;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
-            touch-action: pan-y;
         }
 
         /* Desktop-specific styles */
@@ -157,8 +155,7 @@
         /* Mobile-specific styles */
         @media (max-width: 768px) {
             body {
-                overflow-x: hidden;
-                overflow-y: auto;
+                overflow: visible;
             }
         }
 
@@ -201,7 +198,7 @@
                 min-height: 100vh;
                 padding: 60px 20px 180px 20px;
                 border-radius: 0;
-                overflow-y: auto;
+                overflow-y: visible;
                 overflow-x: hidden;
                 display: flex !important;
                 flex-direction: column;
@@ -218,15 +215,17 @@
                 height: 100vh;
                 min-height: 100vh;
                 width: 100vw;
-                overflow: hidden;
+                overflow-y: auto;
+                overflow-x: hidden;
                 display: flex;
-                align-items: center;
+                align-items: flex-start;
                 justify-content: center;
+                -webkit-overflow-scrolling: touch;
             }
 
             .slide.active {
                 display: flex !important;
-                align-items: center;
+                align-items: flex-start;
                 justify-content: center;
             }
         }
@@ -1767,25 +1766,31 @@
             }
         });
 
-        // Mobile touch/swipe support
+        // Mobile touch/swipe support - only for horizontal swipes, not vertical scrolling
         let touchStartX = 0;
         let touchEndX = 0;
+        let touchStartY = 0;
+        let touchEndY = 0;
 
         document.addEventListener('touchstart', (e) => {
             touchStartX = e.changedTouches[0].screenX;
+            touchStartY = e.changedTouches[0].screenY;
         }, { passive: true });
 
         document.addEventListener('touchend', (e) => {
             touchEndX = e.changedTouches[0].screenX;
+            touchEndY = e.changedTouches[0].screenY;
             handleSwipe();
         }, { passive: true });
 
         function handleSwipe() {
             const swipeThreshold = 50;
-            const swipeDistance = touchEndX - touchStartX;
+            const swipeDistanceX = touchEndX - touchStartX;
+            const swipeDistanceY = touchEndY - touchStartY;
 
-            if (Math.abs(swipeDistance) > swipeThreshold) {
-                if (swipeDistance > 0) {
+            // Only trigger slide navigation if horizontal swipe is greater than vertical swipe
+            if (Math.abs(swipeDistanceX) > swipeThreshold && Math.abs(swipeDistanceX) > Math.abs(swipeDistanceY)) {
+                if (swipeDistanceX > 0) {
                     // Swipe right - go to previous slide
                     navigate(-1);
                 } else {
@@ -1793,6 +1798,7 @@
                     navigate(1);
                 }
             }
+            // If vertical swipe is greater, allow normal scrolling (do nothing)
         }
 
         // Detect mobile device and platform
