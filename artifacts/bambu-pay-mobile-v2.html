@@ -211,6 +211,60 @@
             transform: scale(0.98);
         }
 
+        /* Interactive animations */
+        .pulse-animate {
+            animation: pulseGlow 2s infinite;
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% {
+                box-shadow: 0 8px 24px rgba(39, 251, 107, 0.2);
+                transform: scale(1);
+            }
+            50% {
+                box-shadow: 0 12px 32px rgba(39, 251, 107, 0.4);
+                transform: scale(1.02);
+            }
+        }
+
+        /* Tap to reveal */
+        .tap-reveal {
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .tap-reveal:active {
+            transform: scale(0.98);
+        }
+
+        .tap-reveal-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease, opacity 0.5s ease;
+            opacity: 0;
+        }
+
+        .tap-reveal-content.revealed {
+            max-height: 1000px;
+            opacity: 1;
+        }
+
+        .tap-hint {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 20px;
+            background: rgba(39, 251, 107, 0.1);
+            border: 2px dashed #27FB6B;
+            border-radius: 12px;
+            font-size: 14px;
+            color: #27FB6B;
+            font-weight: 700;
+            animation: bounce 2s infinite;
+            margin: 16px auto;
+            text-align: center;
+        }
+
         .metric-icon {
             width: 48px;
             height: 48px;
@@ -591,10 +645,57 @@
                     <div class="metric-number" style="color: #27FB6B;">$5</div>
                     <div class="metric-label">Promotional Bonus</div>
                 </div>
-                <div class="metric-card" style="--accent-color: #27FB6B;">
+                <div class="metric-card pulse-animate" style="--accent-color: #27FB6B;">
                     <i data-lucide="users-round" class="metric-icon"></i>
-                    <div class="metric-number" style="color: #27FB6B;">20,000</div>
-                    <div class="metric-label">Users to Activate</div>
+                    <div class="metric-number" style="color: #27FB6B;">38,000</div>
+                    <div class="metric-label">Total Users to Activate</div>
+                </div>
+            </div>
+
+            <!-- Interactive ROI Calculator -->
+            <div class="tap-reveal" onclick="this.querySelector('.tap-reveal-content').classList.toggle('revealed'); this.querySelector('.tap-hint').style.display = this.querySelector('.tap-reveal-content').classList.contains('revealed') ? 'none' : 'flex';" style="width: 100%; max-width: 400px; margin-top: 32px;">
+                <div class="tap-hint">
+                    <i data-lucide="calculator" style="width: 20px; height: 20px;"></i>
+                    Tap to see the math
+                </div>
+                <div class="tap-reveal-content">
+                    <div style="background: white; padding: 24px; border-radius: 12px; box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15); margin-top: 16px;">
+                        <div style="font-size: 16px; font-weight: 700; color: #00052E; margin-bottom: 16px; text-align: center; border-bottom: 2px solid #27FB6B; padding-bottom: 12px;">
+                            <i data-lucide="trending-up" style="width: 20px; height: 20px; display: inline-block; vertical-align: middle; margin-right: 8px; color: #27FB6B;"></i>
+                            Investment Breakdown
+                        </div>
+                        <div style="color: #00052E; font-size: 14px; line-height: 2;">
+                            <div style="display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #e9ecef;">
+                                <span>Dormant users (9K × $5)</span>
+                                <strong>$45,000</strong>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #e9ecef;">
+                                <span>Active migration (23K × $1)</span>
+                                <strong>$23,000</strong>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #e9ecef;">
+                                <span>Migration support</span>
+                                <strong>$2,000</strong>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #e9ecef;">
+                                <span>Lost Zelle (2K × $5)</span>
+                                <strong>$10,000</strong>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 2px solid #27FB6B;">
+                                <span>New users (4K × $5)</span>
+                                <strong>$20,000</strong>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; padding: 12px 0; font-size: 18px; font-weight: 900; color: #27FB6B;">
+                                <span>TOTAL INVESTMENT</span>
+                                <span>$100,000</span>
+                            </div>
+                        </div>
+                        <div style="background: linear-gradient(135deg, #e8f5e9, #c6f6d5); padding: 16px; border-radius: 8px; margin-top: 16px; text-align: center; font-weight: 700; color: #00052E;">
+                            <div style="font-size: 12px; margin-bottom: 4px;">Expected Return</div>
+                            <div style="font-size: 24px; color: #27FB6B;">$27,000,000 deposits</div>
+                            <div style="font-size: 14px; margin-top: 8px;">270× return on investment</div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -773,10 +874,62 @@
                     <div class="metric-number" style="color: #27FB6B;">9</div>
                     <div class="metric-label">Payback Period (mo)</div>
                 </div>
-                <div class="metric-card" style="--accent-color: #27FB6B;">
+                <div class="metric-card pulse-animate" style="--accent-color: #27FB6B;">
                     <i data-lucide="dollar-sign" class="metric-icon"></i>
                     <div class="metric-number" style="color: #27FB6B;">$27M</div>
                     <div class="metric-label">New Deposits</div>
+                </div>
+            </div>
+
+            <!-- Tap to Reveal Deposit Breakdown -->
+            <div class="tap-reveal" onclick="this.querySelector('.tap-reveal-content').classList.toggle('revealed'); this.querySelector('.tap-hint').style.display = this.querySelector('.tap-reveal-content').classList.contains('revealed') ? 'none' : 'flex';" style="width: 100%; max-width: 400px; margin-top: 32px;">
+                <div class="tap-hint">
+                    <i data-lucide="hand-metal" style="width: 20px; height: 20px;"></i>
+                    Tap to see deposit breakdown
+                </div>
+                <div class="tap-reveal-content">
+                    <table style="background: rgba(255, 255, 255, 0.95); border-radius: 12px; overflow: hidden; margin-top: 16px; box-shadow: 0 12px 32px rgba(0, 0, 0, 0.2);">
+                        <tr>
+                            <th style="background: #27FB6B; color: #00052E;">Segment</th>
+                            <th style="background: #27FB6B; color: #00052E; text-align: center;">Users</th>
+                            <th style="background: #27FB6B; color: #00052E; text-align: center;">Avg Deposit</th>
+                            <th style="background: #27FB6B; color: #00052E; text-align: center;">Total</th>
+                        </tr>
+                        <tr>
+                            <td style="color: #00052E;">Dormant</td>
+                            <td style="text-align: center; color: #00052E;">9,000</td>
+                            <td style="text-align: center; color: #00052E;">$750</td>
+                            <td style="text-align: center; font-weight: 800; color: #27FB6B;">$6.8M</td>
+                        </tr>
+                        <tr>
+                            <td style="color: #00052E;">Active Migration</td>
+                            <td style="text-align: center; color: #00052E;">23,000</td>
+                            <td style="text-align: center; color: #00052E;">$737</td>
+                            <td style="text-align: center; font-weight: 800; color: #27FB6B;">$16.9M</td>
+                        </tr>
+                        <tr>
+                            <td style="color: #00052E;">Lost Zelle</td>
+                            <td style="text-align: center; color: #00052E;">2,000</td>
+                            <td style="text-align: center; color: #00052E;">$600</td>
+                            <td style="text-align: center; font-weight: 800; color: #27FB6B;">$1.2M</td>
+                        </tr>
+                        <tr>
+                            <td style="color: #00052E;">New Users</td>
+                            <td style="text-align: center; color: #00052E;">4,000</td>
+                            <td style="text-align: center; color: #00052E;">$550</td>
+                            <td style="text-align: center; font-weight: 800; color: #27FB6B;">$2.2M</td>
+                        </tr>
+                        <tr style="background: linear-gradient(135deg, #e8f5e9, #c6f6d5);">
+                            <td style="font-weight: 900; color: #00052E; background: transparent;">TOTAL</td>
+                            <td style="text-align: center; font-weight: 900; color: #00052E; background: transparent;">38,000</td>
+                            <td style="text-align: center; font-weight: 900; color: #00052E; background: transparent;">$711</td>
+                            <td style="text-align: center; font-weight: 900; color: #00aa33; font-size: 18px; background: transparent;">$27.0M</td>
+                        </tr>
+                    </table>
+                    <div style="background: rgba(255, 255, 255, 0.1); padding: 16px; border-radius: 8px; margin-top: 16px; font-size: 14px; line-height: 1.6;">
+                        <i data-lucide="info" style="width: 16px; height: 16px; display: inline-block; vertical-align: middle; margin-right: 6px;"></i>
+                        Based on current average deposits of $737/user from 22,847 active users ($16.8M total)
+                    </div>
                 </div>
             </div>
         </div>
