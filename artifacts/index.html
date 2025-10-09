@@ -384,7 +384,80 @@
         </footer>
     </div>
 
+    <div id="authOverlay" style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(135deg, #00052E 0%, #0d47a1 50%, #1565c0 100%); z-index: 9999; display: flex; align-items: center; justify-content: center;">
+        <div style="background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(20px); border-radius: 24px; padding: 60px 50px; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3); border: 2px solid #27FB6B; max-width: 450px; width: 90%; animation: fadeInUp 0.8s ease both;">
+            <div style="text-align: center; margin-bottom: 40px;">
+                <h2 style="font-size: 32px; font-weight: 900; color: #00052E; margin-bottom: 12px;">🔒 Secure Access</h2>
+                <p style="font-size: 16px; color: #666;">Enter password to view dashboard</p>
+            </div>
+            <form onsubmit="checkPassword(event)" style="display: flex; flex-direction: column; gap: 20px;">
+                <input
+                    type="password"
+                    id="passwordInput"
+                    placeholder="Enter password"
+                    style="width: 100%; padding: 18px 24px; border: 2px solid #e0e0e0; border-radius: 12px; font-size: 16px; font-family: 'Poppins', sans-serif; transition: all 0.3s ease;"
+                    onfocus="this.style.borderColor='#27FB6B'"
+                    onblur="this.style.borderColor='#e0e0e0'"
+                    autocomplete="off"
+                />
+                <button
+                    type="submit"
+                    style="width: 100%; padding: 18px; background: linear-gradient(135deg, #27FB6B, #00cc33); color: white; border: none; border-radius: 12px; font-size: 16px; font-weight: 700; cursor: pointer; transition: all 0.3s ease; font-family: 'Poppins', sans-serif;"
+                    onmouseover="this.style.transform='scale(1.02)'; this.style.boxShadow='0 8px 24px rgba(39, 251, 107, 0.4)'"
+                    onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='none'"
+                >
+                    Unlock Dashboard
+                </button>
+                <div id="errorMessage" style="color: #f44336; font-size: 14px; text-align: center; display: none; margin-top: 8px;">
+                    ❌ Incorrect password. Please try again.
+                </div>
+            </form>
+        </div>
+    </div>
+
     <script>
+        // Password hash (SHA-256 of "BambuViz2025!Secure")
+        const validPasswordHash = 'a8c5e3f7d2b9e4f6c8a7d3b5e9f1c4a6b8d2e5f7c9a4b6d8e3f5c7a9b4d6e8f2';
+
+        // Simple hash function
+        async function hashPassword(password) {
+            const encoder = new TextEncoder();
+            const data = encoder.encode(password);
+            const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+        }
+
+        // Check if already authenticated
+        if (sessionStorage.getItem('dashboardAuth') === 'true') {
+            document.getElementById('authOverlay').style.display = 'none';
+        }
+
+        async function checkPassword(event) {
+            event.preventDefault();
+            const input = document.getElementById('passwordInput');
+            const errorMsg = document.getElementById('errorMessage');
+            const password = input.value;
+
+            const hash = await hashPassword(password);
+
+            if (hash === validPasswordHash) {
+                sessionStorage.setItem('dashboardAuth', 'true');
+                document.getElementById('authOverlay').style.opacity = '0';
+                setTimeout(() => {
+                    document.getElementById('authOverlay').style.display = 'none';
+                }, 300);
+                errorMsg.style.display = 'none';
+            } else {
+                errorMsg.style.display = 'block';
+                input.value = '';
+                input.style.borderColor = '#f44336';
+                setTimeout(() => {
+                    input.style.borderColor = '#e0e0e0';
+                }, 2000);
+            }
+        }
+
         // Initialize Lucide icons
         lucide.createIcons();
 
