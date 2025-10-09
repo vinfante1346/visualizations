@@ -552,6 +552,13 @@
                 justify-content: center;
                 min-height: auto;
             }
+            /* Fix title slide cutoff on mobile */
+            .slide.dark-slide:first-of-type {
+                padding-top: 25vh !important;
+                min-height: 100vh;
+                display: flex;
+                justify-content: center;
+            }
             .stats-grid {
                 grid-template-columns: 1fr;
                 gap: 20px;
@@ -733,12 +740,7 @@
             </div>
         </div>
 
-        <!-- Slide 2: Overview -->
-        <div class="slide dark-slide">
-            <h2><span class="highlight-green">Overview</span></h2>
-        </div>
-
-        <!-- Slide 3: At a Glance -->
+        <!-- Slide 2: At a Glance -->
         <div class="slide light-slide">
             <h2><span class="highlight-green">MyBambu</span> at a Glance</h2>
             <p style="max-width: 900px; text-align: center; font-size: 18px; margin-bottom: 60px; line-height: 1.8;">
@@ -766,97 +768,110 @@
 
         <!-- Slide 4: Products and Services -->
         <div class="slide dark-slide">
-            <h2>Products and <span class="highlight-green">Services</span></h2>
-            <div class="products-grid">
-                <div class="product-card">
-                    <div class="product-icon">💸</div>
+            <h2 style="margin-bottom: 20px;">Products and <span class="highlight-green">Services</span></h2>
+            <p style="font-size: 20px; opacity: 0.9; margin-bottom: 50px; max-width: 800px; text-align: center;">
+                🚀 Everything you need in one powerful app
+            </p>
+
+            <!-- Featured Products -->
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; max-width: 1400px; margin: 0 auto 40px;">
+                <!-- Top Tier Products -->
+                <div class="product-card" style="background: linear-gradient(135deg, rgba(39, 251, 107, 0.2), rgba(39, 251, 107, 0.05)); border: 3px solid #27FB6B; position: relative; overflow: hidden;">
+                    <div style="position: absolute; top: 10px; right: 10px; background: #27FB6B; color: #00052E; padding: 6px 12px; border-radius: 20px; font-size: 11px; font-weight: 800;">⭐ NEW</div>
+                    <div class="product-icon" style="font-size: 64px; margin-bottom: 16px;">💸</div>
                     <div class="product-content">
-                        <h3>Bambu Pay</h3>
-                        <p>Send or request funds to and from non-MyBambu users.</p>
+                        <h3 style="font-size: 24px; margin-bottom: 12px;">Bambu Pay</h3>
+                        <p style="font-size: 15px;">Send or request funds to and from non-MyBambu users instantly.</p>
                     </div>
                 </div>
-                <div class="product-card">
-                    <div class="product-icon">🏪</div>
+
+                <div class="product-card" style="background: linear-gradient(135deg, rgba(39, 251, 107, 0.2), rgba(39, 251, 107, 0.05)); border: 3px solid #27FB6B;">
+                    <div class="product-icon" style="font-size: 64px; margin-bottom: 16px;">🌎</div>
                     <div class="product-content">
-                        <h3>Shop on US</h3>
-                        <p>Build or boost your credit while shopping for everyday essentials.</p>
+                        <h3 style="font-size: 24px; margin-bottom: 12px;">International Transfers</h3>
+                        <p style="font-size: 15px;">Lightning-fast 35-minute transfers with competitive rates to <strong>17 countries</strong>.</p>
                     </div>
                 </div>
+
+                <div class="product-card" style="background: linear-gradient(135deg, rgba(39, 251, 107, 0.2), rgba(39, 251, 107, 0.05)); border: 3px solid #27FB6B;">
+                    <div class="product-icon" style="font-size: 64px; margin-bottom: 16px;">💳</div>
+                    <div class="product-content">
+                        <h3 style="font-size: 24px; margin-bottom: 12px;">MyBambu Card</h3>
+                        <p style="font-size: 15px;">Digital and physical card for shopping online and in-stores everywhere.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Core Banking Features -->
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; max-width: 1400px; margin: 0 auto;">
                 <div class="product-card">
                     <div class="product-icon">💰</div>
                     <div class="product-content">
                         <h3>Add Cash</h3>
-                        <p>Deposit money into your account at more than 120,000 locations across the US.</p>
-                    </div>
-                </div>
-                <div class="product-card">
-                    <div class="product-icon">💳</div>
-                    <div class="product-content">
-                        <h3>MyBambu Card</h3>
-                        <p>Use your digital and physical card to shop online and in-stores.</p>
-                    </div>
-                </div>
-                <div class="product-card">
-                    <div class="product-icon">🌎</div>
-                    <div class="product-content">
-                        <h3>International Transfers</h3>
-                        <p>Quick 35-minute transfers with competitive rates to 17 countries.</p>
-                    </div>
-                </div>
-                <div class="product-card">
-                    <div class="product-icon">📱</div>
-                    <div class="product-content">
-                        <h3>Top-Ups</h3>
-                        <p>Add minutes and data to mobile phones in the USA and Latin America.</p>
-                    </div>
-                </div>
-                <div class="product-card">
-                    <div class="product-icon">🎁</div>
-                    <div class="product-content">
-                        <h3>Digital Gift Cards</h3>
-                        <p>Purchase gifts cards, services, and subscriptions from many brands.</p>
-                    </div>
-                </div>
-                <div class="product-card">
-                    <div class="product-icon">💱</div>
-                    <div class="product-content">
-                        <h3>User-to-User Transfers</h3>
-                        <p>Transfer funds between MyBambu users easily and at no cost.</p>
+                        <p><strong>120,000+</strong> locations across the US</p>
                     </div>
                 </div>
                 <div class="product-card">
                     <div class="product-icon">⬇️</div>
                     <div class="product-content">
                         <h3>Direct Deposit</h3>
-                        <p>Set up direct deposit for your paycheck.</p>
+                        <p>Easy paycheck setup</p>
                     </div>
                 </div>
                 <div class="product-card">
-                    <div class="product-icon">🛡️</div>
+                    <div class="product-icon">💱</div>
                     <div class="product-content">
-                        <h3>Insurance Marketplace</h3>
-                        <p>Tailored policies for your needs, all in one place.</p>
-                    </div>
-                </div>
-                <div class="product-card">
-                    <div class="product-icon">👥</div>
-                    <div class="product-content">
-                        <h3>Refer a Friend</h3>
-                        <p>Invite your friends to use MyBambu and receive amazing rewards.</p>
+                        <h3>User Transfers</h3>
+                        <p>Free instant transfers</p>
                     </div>
                 </div>
                 <div class="product-card">
                     <div class="product-icon">💎</div>
                     <div class="product-content">
                         <h3>Cash-back Rewards</h3>
-                        <p>Every time you use your MyBambu card at participating stores, you'll earn money back!</p>
+                        <p>Earn on every purchase</p>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-icon">🏪</div>
+                    <div class="product-content">
+                        <h3>Shop on US</h3>
+                        <p>Build credit shopping</p>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-icon">📱</div>
+                    <div class="product-content">
+                        <h3>Top-Ups</h3>
+                        <p>USA & LATAM mobile</p>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-icon">🎁</div>
+                    <div class="product-content">
+                        <h3>Gift Cards</h3>
+                        <p>Digital gift cards</p>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-icon">🛡️</div>
+                    <div class="product-content">
+                        <h3>Insurance</h3>
+                        <p>Tailored policies</p>
                     </div>
                 </div>
                 <div class="product-card">
                     <div class="product-icon">🍱</div>
                     <div class="product-content">
                         <h3>Food Delivery</h3>
-                        <p>Send supplies to your family's doorstep in Cuba and Venezuela.</p>
+                        <p>Cuba & Venezuela</p>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-icon">👥</div>
+                    <div class="product-content">
+                        <h3>Refer & Earn</h3>
+                        <p>Get rewards</p>
                     </div>
                 </div>
             </div>
@@ -1511,7 +1526,7 @@
         const slideContainer = document.getElementById('slideContainer');
         const progressBar = document.getElementById('progressBar');
         const slideNum = document.getElementById('slideNum');
-        const totalSlides = 18;
+        const totalSlides = 17;
         let currentSlide = 0;
 
         // Update progress and slide number on scroll
