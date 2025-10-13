@@ -1,0 +1,2733 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyBambu 2025-2026 Forecast Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #1a202c;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .header h1 {
+            color: #2d3748;
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        .header .subtitle {
+            color: #718096;
+            font-size: 16px;
+        }
+
+        .tabs {
+            background: white;
+            border-radius: 12px;
+            padding: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            display: flex;
+            gap: 10px;
+        }
+
+        .tab {
+            flex: 1;
+            padding: 15px 30px;
+            border: none;
+            background: transparent;
+            color: #718096;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+
+        .tab:hover {
+            background: #f7fafc;
+        }
+
+        .tab.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .controls {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .control-group label {
+            font-size: 12px;
+            font-weight: 600;
+            color: #4a5568;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        select, input {
+            padding: 10px 15px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 14px;
+            background: white;
+            color: #2d3748;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        select:hover, input:hover {
+            border-color: #667eea;
+        }
+
+        select:focus, input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .metric-card {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .metric-card .label {
+            font-size: 12px;
+            font-weight: 600;
+            color: #718096;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 10px;
+        }
+
+        .metric-card .value {
+            font-size: 32px;
+            font-weight: 700;
+            color: #2d3748;
+            margin-bottom: 10px;
+        }
+
+        .metric-card .comparison {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+        }
+
+        .metric-card .badge {
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 12px;
+        }
+
+        .badge.positive {
+            background: #c6f6d5;
+            color: #22543d;
+        }
+
+        .badge.negative {
+            background: #fed7d7;
+            color: #742a2a;
+        }
+
+        .badge.neutral {
+            background: #e2e8f0;
+            color: #4a5568;
+        }
+
+        .chart-container {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .chart-container h2 {
+            color: #2d3748;
+            font-size: 20px;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+
+        .chart-wrapper {
+            position: relative;
+            height: 400px;
+        }
+
+        .data-table {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow-x: auto;
+        }
+
+        .data-table h2 {
+            color: #2d3748;
+            font-size: 20px;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            background: #f7fafc;
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+            color: #4a5568;
+            border-bottom: 2px solid #e2e8f0;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #e2e8f0;
+            color: #2d3748;
+        }
+
+        tr:hover {
+            background: #f7fafc;
+        }
+
+        .editable {
+            background: #fef5e7;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .editable:hover {
+            background: #fce8b2;
+        }
+
+        input.actual-input {
+            width: 100%;
+            padding: 6px 10px;
+            border: 2px solid #667eea;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        .footer {
+            text-align: center;
+            color: white;
+            margin-top: 40px;
+            padding: 20px;
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .monthly-scroll {
+            overflow-x: auto;
+            max-width: 100%;
+        }
+
+        .monthly-table {
+            min-width: 1800px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>MyBambu 2025-2026 Forecast Dashboard</h1>
+            <div class="subtitle">Interactive forecast comparison with actual performance tracking</div>
+        </div>
+
+        <div class="tabs">
+            <button class="tab active" onclick="switchTab('yearly')">Yearly Summary</button>
+            <button class="tab" onclick="switchTab('monthly')">Monthly Breakdown</button>
+            <button class="tab" onclick="switchTab('burnrate')">Burn Rate to Breakeven</button>
+        </div>
+
+        <!-- YEARLY TAB -->
+        <div id="yearlyTab" class="tab-content active">
+            <div class="controls">
+                <div class="control-group">
+                    <label>Forecast Version</label>
+                    <select id="forecastVersion" onchange="updateYearlyView()">
+                        <option value="revised">Revised Forecast (v9)</option>
+                        <option value="original">Original Forecast</option>
+                        <option value="075">75% Scenario</option>
+                        <option value="050">50% Scenario</option>
+                    </select>
+                </div>
+                <div class="control-group">
+                    <label>Year</label>
+                    <select id="yearSelect" onchange="updateYearlyView()">
+                        <option value="2025">2025</option>
+                        <option value="2026">2026</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="metrics-grid" id="metricsGrid">
+                <!-- Metrics will be populated by JavaScript -->
+            </div>
+
+            <div class="chart-container">
+                <h2>Revenue & Profitability Comparison</h2>
+                <div class="chart-wrapper">
+                    <canvas id="revenueChart"></canvas>
+                </div>
+            </div>
+
+            <div class="chart-container">
+                <h2>Net Income Trend (Quarterly Projection)</h2>
+                <div class="chart-wrapper">
+                    <canvas id="profitChart"></canvas>
+                </div>
+            </div>
+
+            <div class="chart-container">
+                <h2>Customer Growth Metrics</h2>
+                <div class="chart-wrapper">
+                    <canvas id="customerChart"></canvas>
+                </div>
+            </div>
+
+            <div class="data-table">
+                <h2>Revenue Breakdown (Click to add actuals)</h2>
+                <table id="revenueTable">
+                    <!-- Table will be populated by JavaScript -->
+                </table>
+            </div>
+
+            <div class="data-table">
+                <h2>Revenue Driver Assumptions & Utilization Rates</h2>
+                <div id="revenueDriversContainer">
+                    <!-- Tables will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+
+        <!-- MONTHLY TAB -->
+        <div id="monthlyTab" class="tab-content">
+            <div class="controls">
+                <div class="control-group">
+                    <label>Year</label>
+                    <select id="monthlyYearSelect" onchange="updateMonthlyView()">
+                        <option value="2025">2025</option>
+                        <option value="2026">2026</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="chart-container">
+                <h2>Monthly Revenue Trend <span style="font-size: 14px; color: #718096; font-weight: 400;">(Solid = Actual Jan-Sep 2025, Dashed = Forecast Oct-Dec 2025)</span></h2>
+                <div class="chart-wrapper">
+                    <canvas id="monthlyRevenueChart"></canvas>
+                </div>
+            </div>
+
+            <div class="chart-container">
+                <h2>Monthly Profit Analysis <span style="font-size: 14px; color: #718096; font-weight: 400;">(Solid = Actual Jan-Sep 2025, Dashed = Forecast Oct-Dec 2025)</span></h2>
+                <div class="chart-wrapper">
+                    <canvas id="monthlyProfitChart"></canvas>
+                </div>
+            </div>
+
+            <div class="chart-container">
+                <h2>Monthly Customer Growth</h2>
+                <div class="chart-wrapper">
+                    <canvas id="monthlyCustomerChart"></canvas>
+                </div>
+            </div>
+
+            <div class="chart-container">
+                <h2>Cash Burn Analysis - Path to Breakeven</h2>
+                <div class="chart-wrapper">
+                    <canvas id="cashBurnChart"></canvas>
+                </div>
+            </div>
+
+            <div class="data-table">
+                <h2>Cash Requirements Summary</h2>
+                <div class="metrics-grid" style="margin-bottom: 20px;">
+                    <div class="metric-card">
+                        <div class="label">Unpaid Sept 2025 Expenses</div>
+                        <div class="value" id="unpaidSept">$2,500,000</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="label">Q4 2025 Cash Required</div>
+                        <div class="value" id="q4Cash">$8,202,089</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="label">Q1 2026 Cash Required</div>
+                        <div class="value" id="q1Cash">$8,290,382</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="label">Q2 2026 Cash Required</div>
+                        <div class="value" id="q2Cash">$5,785,528</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="label">Q3 2026 Cash Required</div>
+                        <div class="value" id="q3Cash">$1,729,815</div>
+                    </div>
+                    <div class="metric-card" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                        <div class="label" style="color: white;">Total Cash to Break Even</div>
+                        <div class="value" style="color: white;" id="totalCash">$26,507,814</div>
+                        <div class="comparison">
+                            <span style="color: rgba(255,255,255,0.9); font-size: 12px;">Breakeven projected: Oct 2026</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="data-table">
+                <h2>Monthly Forecast Details (Click to add actuals)</h2>
+                <div class="monthly-scroll">
+                    <table id="monthlyTable" class="monthly-table">
+                        <!-- Table will be populated by JavaScript -->
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- BURN RATE TAB -->
+        <div id="burnrateTab" class="tab-content">
+            <div class="chart-container">
+                <h2>Cash Burn Analysis - Path to Breakeven</h2>
+                <div class="chart-wrapper">
+                    <canvas id="burnRateChart"></canvas>
+                </div>
+            </div>
+
+            <div class="data-table">
+                <h2>Cash Requirements Summary</h2>
+                <div class="metrics-grid" style="margin-bottom: 20px;">
+                    <div class="metric-card">
+                        <div class="label">Unpaid Sept 2025 Expenses</div>
+                        <div class="value">$2,500,000</div>
+                        <div class="comparison">
+                            <span class="badge negative">Outstanding</span>
+                        </div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="label">Q4 2025 Cash Required</div>
+                        <div class="value">$8,202,089</div>
+                        <div class="comparison">
+                            <span class="badge neutral">Oct-Dec 2025</span>
+                        </div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="label">Q1 2026 Cash Required</div>
+                        <div class="value">$8,290,382</div>
+                        <div class="comparison">
+                            <span class="badge neutral">Jan-Mar 2026</span>
+                        </div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="label">Q2 2026 Cash Required</div>
+                        <div class="value">$5,785,528</div>
+                        <div class="comparison">
+                            <span class="badge neutral">Apr-Jun 2026</span>
+                        </div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="label">Q3 2026 Cash Required</div>
+                        <div class="value">$1,729,815</div>
+                        <div class="comparison">
+                            <span class="badge positive">Final Push</span>
+                        </div>
+                    </div>
+                    <div class="metric-card" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                        <div class="label" style="color: white;">Total Cash to Break Even</div>
+                        <div class="value" style="color: white;">$26,507,814</div>
+                        <div class="comparison">
+                            <span style="color: rgba(255,255,255,0.9); font-size: 12px; font-weight: 600;">🎯 Breakeven: Oct 2026</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="chart-container">
+                <h2>Monthly Net Income - Path to Profitability</h2>
+                <div class="chart-wrapper">
+                    <canvas id="netIncomeChart"></canvas>
+                </div>
+            </div>
+
+            <div class="chart-container">
+                <h2>Cumulative Cash Flow</h2>
+                <div class="chart-wrapper">
+                    <canvas id="cumulativeFlowChart"></canvas>
+                </div>
+            </div>
+
+            <div class="data-table">
+                <h2>Monthly Cash Burn Breakdown</h2>
+                <div class="monthly-scroll">
+                    <table class="monthly-table">
+                        <thead>
+                            <tr>
+                                <th style="position: sticky; left: 0; background: #f7fafc; z-index: 20;">Month</th>
+                                <th>Revenue</th>
+                                <th>Cost of Services</th>
+                                <th>Gross Profit</th>
+                                <th>Marketing</th>
+                                <th>Other OpEx</th>
+                                <th>Total OpEx</th>
+                                <th>Net Income</th>
+                                <th>Cash Needed</th>
+                            </tr>
+                        </thead>
+                        <tbody id="burnRateTableBody">
+                            <!-- Will be populated by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            MyBambu Forecast Dashboard | Data from 2025 Bambu Forecast v9 (Gullane) & Gullane Cash Burn Summary (Oct 9, 2025)
+        </div>
+    </div>
+
+    <script>
+        // Tab switching
+        function switchTab(tab) {
+            const tabs = document.querySelectorAll('.tab');
+            const contents = document.querySelectorAll('.tab-content');
+
+            tabs.forEach(t => t.classList.remove('active'));
+            contents.forEach(c => c.classList.remove('active'));
+
+            if (tab === 'yearly') {
+                tabs[0].classList.add('active');
+                document.getElementById('yearlyTab').classList.add('active');
+            } else if (tab === 'monthly') {
+                tabs[1].classList.add('active');
+                document.getElementById('monthlyTab').classList.add('active');
+                updateMonthlyView();
+            } else if (tab === 'burnrate') {
+                tabs[2].classList.add('active');
+                document.getElementById('burnrateTab').classList.add('active');
+                updateBurnRateView();
+            }
+        }
+
+        // Forecast data extracted from Excel
+        const forecastData = {
+            revised: {
+                2025: {
+                    revenues: {
+                        'Foreign Remittance Fees': 2269783.50,
+                        'Foreign Exchange Fees': 2318552.73,
+                        'ATM Surcharges': 1155488.00,
+                        'Card & Interchange Fees - US': 5087282.51,
+                        'Load Fee Revenues': 506761.86,
+                        'Business Card & Interchange Fees': 0,
+                        'Business Credit Card Fees': 0,
+                        'Business Credit Card ISO Fees': 0,
+                        'Top-Up Fees': 412697.68,
+                        'Latam ATM Charges': 31343.60,
+                        'Co-branding Fees': 477694.16,
+                        'Latam Companion Card': 73444.95,
+                        'Unsecured Loans': 1305889.71,
+                        'Vehicle Loans': 0,
+                        'Unsecured Business Loan Fees': 0,
+                        'Home Mortgage Referral Fees': 0
+                    },
+                    totalRevenue: 13821942.74,
+                    costOfServices: 13101323.17,
+                    grossProfit: 720619.56,
+                    marketing: 18145115.52,
+                    otherOperatingExpenses: 35587600.50,
+                    operatingExpenses: 53732716.02,
+                    netIncome: -53012096.45,
+                    endingCustomers: 664225,
+                    activeCustomers: 124867
+                },
+                2026: {
+                    revenues: {
+                        'Foreign Remittance Fees': 7758387.26,
+                        'Foreign Exchange Fees': 10720743.98,
+                        'ATM Surcharges': 2274164.08,
+                        'Card & Interchange Fees - US': 18805831.82,
+                        'Load Fee Revenues': 1961483.81,
+                        'Business Card & Interchange Fees': 423678.90,
+                        'Business Credit Card Fees': 1142721.77,
+                        'Business Credit Card ISO Fees': 3595929.29,
+                        'Top-Up Fees': 640950.42,
+                        'Latam ATM Charges': 3813863.13,
+                        'Co-branding Fees': 3954647.75,
+                        'Latam Companion Card': 6221615.98,
+                        'Unsecured Loans': 11833528.39,
+                        'Vehicle Loans': 490103.21,
+                        'Unsecured Business Loan Fees': 598554.06,
+                        'Home Mortgage Referral Fees': 385238.22
+                    },
+                    totalRevenue: 75270418.74,
+                    costOfServices: 30206085.27,
+                    grossProfit: 45064333.46,
+                    marketing: 22659197.96,
+                    otherOperatingExpenses: 36326147.96,
+                    operatingExpenses: 58985345.92,
+                    netIncome: -13921012.45,
+                    endingCustomers: 933611,
+                    activeCustomers: 260219
+                }
+            },
+            original: {
+                2025: {
+                    totalRevenue: 55359325.30,
+                    costOfServices: 25776325.58,
+                    grossProfit: 29582999.72,
+                    marketing: 19955479.02,
+                    otherOperatingExpenses: 42290165.21,
+                    operatingExpenses: 62245644.23,
+                    netIncome: -32662644.51,
+                    endingCustomers: 712023,
+                    activeCustomers: 374204
+                },
+                2026: {
+                    totalRevenue: 307473100.89,
+                    costOfServices: 104093036.04,
+                    grossProfit: 203380064.84,
+                    marketing: 33655785.68,
+                    otherOperatingExpenses: 104491127.63,
+                    operatingExpenses: 138146913.31,
+                    netIncome: 65233151.53,
+                    endingCustomers: 1096412,
+                    activeCustomers: 646571
+                }
+            },
+            '075': {
+                2025: {
+                    totalRevenue: 44333199.13,
+                    costOfServices: 22104068.63,
+                    grossProfit: 22229130.49,
+                    marketing: 17876237.57,
+                    otherOperatingExpenses: 39290889.11,
+                    operatingExpenses: 57167126.68,
+                    netIncome: -34937996.18,
+                    endingCustomers: 673338,
+                    activeCustomers: 286668
+                },
+                2026: {
+                    totalRevenue: 163812188.26,
+                    costOfServices: 68972008.56,
+                    grossProfit: 94840179.70,
+                    marketing: 29675458.22,
+                    otherOperatingExpenses: 65104442.62,
+                    operatingExpenses: 94779900.84,
+                    netIncome: 60278.86,
+                    endingCustomers: 931814,
+                    activeCustomers: 565270
+                }
+            },
+            '050': {
+                2025: {
+                    totalRevenue: 33329229.14,
+                    costOfServices: 18650565.96,
+                    grossProfit: 14678663.18,
+                    marketing: 16813572.29,
+                    otherOperatingExpenses: 37834689.07,
+                    operatingExpenses: 54648261.36,
+                    netIncome: -39969598.18,
+                    endingCustomers: 655360,
+                    activeCustomers: 241298
+                },
+                2026: {
+                    totalRevenue: 109347977.85,
+                    costOfServices: 50754189.92,
+                    grossProfit: 58593787.93,
+                    marketing: 20175378.31,
+                    otherOperatingExpenses: 48501164.58,
+                    operatingExpenses: 68676542.89,
+                    netIncome: -10082754.95,
+                    endingCustomers: 901800,
+                    activeCustomers: 430936
+                }
+            }
+        };
+
+        // Revenue driver assumptions and utilization rates
+        const revenueDrivers = {
+            2025: {
+                customerMetrics: {
+                    'Latino Customer %': 80,
+                    'Active Customer Rate - Latino': 18.8,
+                    'Organic Growth %': 11,
+                    'Monthly Account Closure %': 0.5
+                },
+                utilizationRates: {
+                    'Foreign Remittance': 21,
+                    'ATM Usage': 14.7,
+                    'Foreign Exchange': 21,
+                    'Card & Interchange': 73,
+                    'Top-Up Fees': 12
+                },
+                frequencyPerMonth: {
+                    'Remittances': 3.0,
+                    'ATM Withdrawals': 2.3,
+                    'Card Transactions': 6.0,
+                    'Top-Ups': 3.0
+                },
+                avgTransactionAmount: {
+                    'FX per Transaction': 165,
+                    'Card Spend per Transaction': 40,
+                    'Top-Up Amount': 11
+                },
+                feeRates: {
+                    'Remittance Fee': 3.16,
+                    'ATM Surcharge Fee': 3.01,
+                    'FX Rate %': 0.75,
+                    'Card Interchange %': 1.15,
+                    'Top-Up Fee %': 10.5,
+                    'Unsecured Loan Fee': 250,
+                    'Vehicle Loan Fee': 295,
+                    'Mortgage Referral Fee': 500
+                }
+            },
+            2026: {
+                customerMetrics: {
+                    'Latino Customer %': 80,
+                    'Active Customer Rate - Latino': 27.9,
+                    'Organic Growth %': 11,
+                    'Monthly Account Closure %': 0.5
+                },
+                utilizationRates: {
+                    'Foreign Remittance': 24,
+                    'ATM Usage': 14,
+                    'Foreign Exchange': 24,
+                    'Card & Interchange': 73,
+                    'Top-Up Fees': 12
+                },
+                frequencyPerMonth: {
+                    'Remittances': 3.0,
+                    'ATM Withdrawals': 2.4,
+                    'Card Transactions': 6.0,
+                    'Top-Ups': 3.0
+                },
+                avgTransactionAmount: {
+                    'FX per Transaction': 165,
+                    'Card Spend per Transaction': 40,
+                    'Top-Up Amount': 11
+                },
+                feeRates: {
+                    'Remittance Fee': 3.16,
+                    'ATM Surcharge Fee': 3.01,
+                    'FX Rate %': 0.75,
+                    'Card Interchange %': 1.15,
+                    'Top-Up Fee %': 10.5,
+                    'Unsecured Loan Fee': 300,
+                    'Vehicle Loan Fee': 295,
+                    'Mortgage Referral Fee': 500
+                }
+            }
+        };
+
+        // Monthly data for 2025 & 2026 (from Gullane Cash Burn Summary Oct 9, 2025)
+        // Note: Jan-Sep 2025 are ACTUALS, Oct-Dec 2025 and all 2026 are FORECASTS
+        const monthlyData = {
+            2025: {
+                months: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                isActual: [true, true, true, true, true, true, true, true, true, false, false, false],
+                revenue: [
+                    { name: 'Foreign Remittance Fees', values: [90121, 974268, 0, 75868, 79072, 87552, 111580, 121547, 126195, 194106, 305178, 330513] },
+                    { name: 'Foreign Exchange Fees', values: [43742, 405073, 0, 56877, 58925, 74295, 82061, 149609, 170648, 154268, 228169, 300518] },
+                    { name: 'ATM Surcharges', values: [0, 0, 0, 0, 0, 0, 0, 0, 58590, 97809, 104760, 110298] },
+                    { name: 'Card & Interchange Fees', values: [98662, 1157991, 0, 157332, 139453, 160846, 237567, 264757, 289367, 455285, 506322, 571731] },
+                    { name: 'Top-Up Fees', values: [29986, 260645, 0, 20717, 20818, 25001, 26849, 29780, 30638, 32900, 33980, 35776] },
+                    { name: 'Co-branding Fees', values: [0, 0, 0, 0, 0, 25591, 22760, 18205, 23421, 106233, 19875, 90359] },
+                    { name: 'Unsecured Loans', values: [28162, 134577, 0, 0, 0, 0, 0, 0, 0, 0, 608400, 697490] },
+                    { name: 'Other Revenue', values: [77156, 287475, 0, 0, 0, 0, 0, 0, 0, 133818, 223546, 239280] }
+                ],
+                totalRevenue: [367829, 3220029, 0, 310794, 298268, 373285, 480817, 583898, 698859, 1074579, 2020230, 2375965],
+                costOfServices: [348000, 3050000, 0, 294000, 282000, 353000, 455000, 552000, 661000, 1082502, 1123089, 1274822],
+                grossProfit: [19829, 170029, 0, 16794, 16268, 20285, 25817, 31898, 37859, -7923, 897141, 1101143],
+                marketing: [1500000, 1500000, 1500000, 1500000, 1500000, 1500000, 1500000, 1500000, 1500000, 937953, 700000, 700000],
+                otherOperatingExpenses: [2980000, 2980000, 2980000, 2980000, 2980000, 2980000, 2980000, 2980000, 2980000, 2757746, 2525987, 2570765],
+                operatingExpenses: [4480000, 4480000, 4480000, 4480000, 4480000, 4480000, 4480000, 4480000, 4480000, 3695699, 3225987, 3270765],
+                netIncome: [-4460171, -4309971, -4480000, -4463206, -4463732, -4459715, -4454183, -4448102, -4442141, -3703622, -2328846, -2169622],
+                customers: [485000, 500000, 515000, 530000, 545000, 560000, 580000, 600000, 620000, 640000, 655000, 664225],
+                activeCustomers: [75000, 80000, 85000, 90000, 95000, 100000, 105000, 110000, 115000, 118000, 122000, 124867]
+            },
+            2026: {
+                months: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                revenue: [
+                    { name: 'Foreign Remittance Fees', values: [361385, 377892, 431307, 489817, 550103, 611433, 670379, 733779, 792301, 850479, 913253, 976259] },
+                    { name: 'Foreign Exchange Fees', values: [347680, 407321, 499773, 596547, 700222, 809501, 921849, 1040786, 1159407, 1282157, 1410756, 1544744] },
+                    { name: 'ATM Surcharges', values: [117266, 122756, 134763, 149328, 164856, 180091, 194762, 210693, 226151, 241239, 258037, 274222] },
+                    { name: 'Card & Interchange Fees', values: [709387, 847437, 1048120, 1295812, 1434511, 1555873, 1671541, 1799423, 1922269, 2040842, 2176134, 2304483] },
+                    { name: 'Load Fee Revenues', values: [112918, 115029, 123505, 134387, 146060, 157262, 167710, 179226, 190063, 200311, 212059, 222954] },
+                    { name: 'Business Revenue', values: [43310, 112079, 165392, 222402, 283590, 349536, 439681, 518316, 604273, 692606, 783801, 877676] },
+                    { name: 'Top-Up Fees', values: [36993, 37683, 40437, 43970, 47760, 51399, 54794, 58534, 62056, 65387, 69200, 72737] },
+                    { name: 'Latam Products', values: [175364, 270695, 352082, 423165, 498665, 720520, 845863, 990627, 1146067, 1299682, 1476058, 1673586] },
+                    { name: 'Co-branding & Loans', values: [263226, 762691, 804632, 916132, 992041, 1488658, 1666440, 1818838, 1938943, 2035402, 2174588, 2323757] }
+                ],
+                totalRevenue: [2559134, 3102998, 3717265, 4451641, 5052756, 5924673, 6633219, 7350222, 8041531, 8708105, 9473646, 10255230],
+                costOfServices: [1286483, 1466293, 1738716, 1990082, 2217369, 2438672, 2624968, 2857217, 3083483, 3320137, 3542460, 3740206],
+                grossProfit: [1272650, 1636705, 1978550, 2461559, 2835386, 3486001, 4008251, 4493005, 4958047, 5437369, 5961186, 6535024],
+                marketing: [1155740, 1825294, 1844974, 1880845, 1906664, 1931720, 1955442, 1981502, 2006382, 2030264, 2057390, 2082983],
+                otherOperatingExpenses: [2713347, 2797595, 2841337, 2913272, 2957914, 2978060, 3021662, 3084169, 3139962, 3194813, 3309878, 3374139],
+                operatingExpenses: [3869088, 4622889, 4686311, 4794116, 4864578, 4909780, 4977104, 5065670, 5146344, 5225077, 5367268, 5457121],
+                netIncome: [-2596437, -2986184, -2707761, -2332557, -2029192, -1423779, -968853, -572666, -188297, 212892, 593918, 1077903],
+                customers: [674638, 695432, 716794, 740744, 765205, 790154, 815539, 841338, 867417, 889392, 911467, 933611],
+                activeCustomers: [128928, 213253, 219826, 226578, 234149, 241881, 249768, 257792, 265947, 274190, 281137, 288115]
+            }
+        };
+
+        // Cash burn data (from Gullane Cash Burn Summary)
+        const cashBurnData = {
+            unpaidSept2025: 2500000,
+            q42025: 8202089,
+            q12026: 8290382,
+            q22026: 5785528,
+            q32026: 1729815,
+            totalToBreakeven: 26507814,
+            monthlyBurn: {
+                months: ['Oct-25', 'Nov-25', 'Dec-25', 'Jan-26', 'Feb-26', 'Mar-26', 'Apr-26', 'May-26', 'Jun-26', 'Jul-26', 'Aug-26', 'Sep-26'],
+                values: [-3703622, -2328846, -2169622, -2596437, -2986184, -2707761, -2332557, -2029192, -1423779, -968853, -572666, -188297]
+            }
+        };
+
+        // Store for actual data (can be edited by user)
+        let actualData = {
+            yearly: { 2025: {}, 2026: {} },
+            monthly: { 2025: {}, 2026: {} }
+        };
+
+        // Chart instances
+        let revenueChart, profitChart, customerChart;
+        let monthlyRevenueChart, monthlyProfitChart, monthlyCustomerChart, cashBurnChart;
+        let burnRateChart, netIncomeChart, cumulativeFlowChart;
+
+        // Format currency
+        function formatCurrency(value) {
+            return new Intl.NumberFormat('en-US', {
+                style: 'currency',
+                currency: 'USD',
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 0
+            }).format(value);
+        }
+
+        // Format number
+        function formatNumber(value) {
+            return new Intl.NumberFormat('en-US').format(Math.round(value));
+        }
+
+        // Calculate variance
+        function calculateVariance(actual, forecast) {
+            if (!actual || actual === 0) return null;
+            return ((actual - forecast) / forecast) * 100;
+        }
+
+        // Update yearly metrics
+        function updateMetrics() {
+            const version = document.getElementById('forecastVersion').value;
+            const year = document.getElementById('yearSelect').value;
+            const data = forecastData[version][year];
+
+            const metricsHTML = `
+                <div class="metric-card">
+                    <div class="label">Total Revenue</div>
+                    <div class="value">${formatCurrency(data.totalRevenue)}</div>
+                    <div class="comparison">
+                        <span class="badge neutral">Forecast</span>
+                        <span style="color: #718096;">Click table to add actuals</span>
+                    </div>
+                </div>
+                <div class="metric-card">
+                    <div class="label">Gross Profit</div>
+                    <div class="value">${formatCurrency(data.grossProfit)}</div>
+                    <div class="comparison">
+                        <span class="badge ${data.grossProfit > 0 ? 'positive' : 'negative'}">
+                            ${((data.grossProfit / data.totalRevenue) * 100).toFixed(1)}% margin
+                        </span>
+                    </div>
+                </div>
+                <div class="metric-card">
+                    <div class="label">Net Income</div>
+                    <div class="value">${formatCurrency(data.netIncome)}</div>
+                    <div class="comparison">
+                        <span class="badge ${data.netIncome > 0 ? 'positive' : 'negative'}">
+                            ${data.netIncome > 0 ? 'Profitable' : 'Loss'}
+                        </span>
+                    </div>
+                </div>
+                <div class="metric-card">
+                    <div class="label">Ending Customers</div>
+                    <div class="value">${formatNumber(data.endingCustomers)}</div>
+                    <div class="comparison">
+                        <span class="badge neutral">${formatNumber(data.activeCustomers)} active</span>
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('metricsGrid').innerHTML = metricsHTML;
+        }
+
+        // Update revenue chart
+        function updateRevenueChart() {
+            const version = document.getElementById('forecastVersion').value;
+            const data2025 = forecastData[version][2025];
+            const data2026 = forecastData[version][2026];
+
+            if (revenueChart) {
+                revenueChart.destroy();
+            }
+
+            const ctx = document.getElementById('revenueChart').getContext('2d');
+            revenueChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Total Revenue (All Active Users)', 'Cost of Services', 'Gross Profit', 'Marketing', 'Other OpEx'],
+                    datasets: [
+                        {
+                            label: '2025',
+                            data: [
+                                data2025.totalRevenue,
+                                data2025.costOfServices,
+                                data2025.grossProfit,
+                                data2025.marketing || data2025.operatingExpenses * 0.34,
+                                data2025.otherOperatingExpenses || data2025.operatingExpenses * 0.66
+                            ],
+                            backgroundColor: 'rgba(102, 126, 234, 0.8)',
+                            borderColor: 'rgba(102, 126, 234, 1)',
+                            borderWidth: 2,
+                            borderRadius: 8,
+                            borderSkipped: false
+                        },
+                        {
+                            label: '2026',
+                            data: [
+                                data2026.totalRevenue,
+                                data2026.costOfServices,
+                                data2026.grossProfit,
+                                data2026.marketing || data2026.operatingExpenses * 0.38,
+                                data2026.otherOperatingExpenses || data2026.operatingExpenses * 0.62
+                            ],
+                            backgroundColor: 'rgba(118, 75, 162, 0.8)',
+                            borderColor: 'rgba(118, 75, 162, 1)',
+                            borderWidth: 2,
+                            borderRadius: 8,
+                            borderSkipped: false
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    interaction: {
+                        mode: 'index',
+                        intersect: false
+                    },
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                            labels: {
+                                usePointStyle: true,
+                                padding: 15,
+                                font: { size: 13, weight: 'bold' }
+                            }
+                        },
+                        tooltip: {
+                            enabled: true,
+                            mode: 'index',
+                            intersect: false,
+                            backgroundColor: 'rgba(0, 0, 0, 0.9)',
+                            titleColor: '#fff',
+                            bodyColor: '#fff',
+                            borderColor: 'rgba(102, 126, 234, 0.5)',
+                            borderWidth: 1,
+                            padding: 15,
+                            displayColors: true,
+                            bodyFont: { size: 13 },
+                            titleFont: { size: 14, weight: 'bold' },
+                            callbacks: {
+                                label: function(context) {
+                                    return context.dataset.label + ': ' + formatCurrency(context.parsed.y);
+                                },
+                                footer: function(context) {
+                                    if (context[0].dataIndex === 2) { // Gross Profit
+                                        const margin2025 = (context[0].parsed.y / data2025.totalRevenue * 100).toFixed(1);
+                                        const margin2026 = (context[1].parsed.y / data2026.totalRevenue * 100).toFixed(1);
+                                        return '\nMargin 2025: ' + margin2025 + '%\nMargin 2026: ' + margin2026 + '%';
+                                    }
+                                    return '';
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            grid: {
+                                display: false
+                            },
+                            ticks: {
+                                font: { size: 12, weight: '600' }
+                            }
+                        },
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function(value) {
+                                    return '$' + (value / 1000000).toFixed(1) + 'M';
+                                },
+                                font: { size: 12 }
+                            },
+                            grid: {
+                                color: 'rgba(0, 0, 0, 0.05)'
+                            }
+                        }
+                    },
+                    animation: {
+                        duration: 1500,
+                        easing: 'easeInOutQuart',
+                        onComplete: function(animation) {
+                            const chart = animation.chart;
+                            const ctx = chart.ctx;
+
+                            chart.data.datasets.forEach((dataset, datasetIndex) => {
+                                const meta = chart.getDatasetMeta(datasetIndex);
+
+                                meta.data.forEach((bar, index) => {
+                                    const value = dataset.data[index];
+
+                                    ctx.save();
+                                    ctx.textAlign = 'center';
+                                    ctx.textBaseline = 'bottom';
+                                    ctx.fillStyle = '#2d3748';
+                                    ctx.font = 'bold 11px Arial';
+
+                                    if (value !== 0) {
+                                        const text = formatCurrency(value);
+                                        ctx.fillText(text, bar.x, bar.y - 5);
+                                    }
+                                    ctx.restore();
+                                });
+                            });
+                        }
+                    }
+                }
+            });
+        }
+
+        // Update profit chart
+        function updateProfitChart() {
+            const version = document.getElementById('forecastVersion').value;
+            const data2025 = forecastData[version][2025];
+            const data2026 = forecastData[version][2026];
+
+            if (profitChart) {
+                profitChart.destroy();
+            }
+
+            const ctx = document.getElementById('profitChart').getContext('2d');
+            profitChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['Q1', 'Q2', 'Q3', 'Q4'],
+                    datasets: [
+                        {
+                            label: '2025 Net Income',
+                            data: [
+                                data2025.netIncome * 0.2,
+                                data2025.netIncome * 0.45,
+                                data2025.netIncome * 0.75,
+                                data2025.netIncome
+                            ],
+                            borderColor: 'rgba(102, 126, 234, 1)',
+                            backgroundColor: 'rgba(102, 126, 234, 0.2)',
+                            borderWidth: 3,
+                            tension: 0.4,
+                            fill: true,
+                            pointRadius: 6,
+                            pointHoverRadius: 10,
+                            pointBackgroundColor: 'rgba(102, 126, 234, 1)',
+                            pointBorderColor: '#fff',
+                            pointBorderWidth: 3,
+                            pointHoverBackgroundColor: 'rgba(102, 126, 234, 1)',
+                            pointHoverBorderColor: '#fff',
+                            pointHoverBorderWidth: 3
+                        },
+                        {
+                            label: '2026 Net Income',
+                            data: [
+                                data2026.netIncome * 0.2,
+                                data2026.netIncome * 0.45,
+                                data2026.netIncome * 0.75,
+                                data2026.netIncome
+                            ],
+                            borderColor: 'rgba(118, 75, 162, 1)',
+                            backgroundColor: 'rgba(118, 75, 162, 0.2)',
+                            borderWidth: 3,
+                            tension: 0.4,
+                            fill: true,
+                            pointRadius: 6,
+                            pointHoverRadius: 10,
+                            pointBackgroundColor: 'rgba(118, 75, 162, 1)',
+                            pointBorderColor: '#fff',
+                            pointBorderWidth: 3,
+                            pointHoverBackgroundColor: 'rgba(118, 75, 162, 1)',
+                            pointHoverBorderColor: '#fff',
+                            pointHoverBorderWidth: 3
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    interaction: {
+                        mode: 'index',
+                        intersect: false
+                    },
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                            labels: {
+                                usePointStyle: true,
+                                padding: 15,
+                                font: { size: 13, weight: 'bold' }
+                            }
+                        },
+                        tooltip: {
+                            enabled: true,
+                            mode: 'index',
+                            intersect: false,
+                            backgroundColor: 'rgba(0, 0, 0, 0.9)',
+                            titleColor: '#fff',
+                            bodyColor: '#fff',
+                            borderColor: 'rgba(102, 126, 234, 0.5)',
+                            borderWidth: 1,
+                            padding: 15,
+                            displayColors: true,
+                            bodyFont: { size: 13 },
+                            titleFont: { size: 14, weight: 'bold' },
+                            callbacks: {
+                                label: function(context) {
+                                    return context.dataset.label + ': ' + formatCurrency(context.parsed.y);
+                                },
+                                footer: function(context) {
+                                    const diff = Math.abs(context[1].parsed.y - context[0].parsed.y);
+                                    const improvement = context[1].parsed.y > context[0].parsed.y;
+                                    return '\n' + (improvement ? 'Improvement' : 'Decline') + ': ' + formatCurrency(diff);
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            grid: {
+                                display: false
+                            },
+                            ticks: {
+                                font: { size: 12, weight: '600' }
+                            }
+                        },
+                        y: {
+                            ticks: {
+                                callback: function(value) {
+                                    return '$' + (value / 1000000).toFixed(1) + 'M';
+                                },
+                                font: { size: 12 }
+                            },
+                            grid: {
+                                color: 'rgba(0, 0, 0, 0.05)',
+                                drawBorder: false
+                            }
+                        }
+                    },
+                    animation: {
+                        duration: 2000,
+                        easing: 'easeInOutQuart'
+                    }
+                }
+            });
+        }
+
+        // Update customer chart
+        function updateCustomerChart() {
+            const version = document.getElementById('forecastVersion').value;
+            const data2025 = forecastData[version][2025];
+            const data2026 = forecastData[version][2026];
+
+            if (customerChart) {
+                customerChart.destroy();
+            }
+
+            const ctx = document.getElementById('customerChart').getContext('2d');
+            customerChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['2025', '2026'],
+                    datasets: [
+                        {
+                            label: 'Total Customers',
+                            data: [data2025.endingCustomers, data2026.endingCustomers],
+                            backgroundColor: 'rgba(102, 126, 234, 0.8)',
+                            borderColor: 'rgba(102, 126, 234, 1)',
+                            borderWidth: 2,
+                            borderRadius: 8,
+                            borderSkipped: false
+                        },
+                        {
+                            label: 'Active Customers',
+                            data: [data2025.activeCustomers, data2026.activeCustomers],
+                            backgroundColor: 'rgba(72, 187, 120, 0.8)',
+                            borderColor: 'rgba(72, 187, 120, 1)',
+                            borderWidth: 2,
+                            borderRadius: 8,
+                            borderSkipped: false
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    interaction: {
+                        mode: 'index',
+                        intersect: false
+                    },
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                            labels: {
+                                usePointStyle: true,
+                                padding: 15,
+                                font: { size: 13, weight: 'bold' }
+                            }
+                        },
+                        tooltip: {
+                            enabled: true,
+                            mode: 'index',
+                            intersect: false,
+                            backgroundColor: 'rgba(0, 0, 0, 0.9)',
+                            titleColor: '#fff',
+                            bodyColor: '#fff',
+                            borderColor: 'rgba(102, 126, 234, 0.5)',
+                            borderWidth: 1,
+                            padding: 15,
+                            displayColors: true,
+                            bodyFont: { size: 13 },
+                            titleFont: { size: 14, weight: 'bold' },
+                            callbacks: {
+                                label: function(context) {
+                                    return context.dataset.label + ': ' + formatNumber(context.parsed.y);
+                                },
+                                footer: function(context) {
+                                    const activeRate = (context[1].parsed.y / context[0].parsed.y * 100).toFixed(1);
+                                    const growth = context[0].dataIndex === 0 ? '' :
+                                        '\nYoY Growth: ' + (((context[0].parsed.y - data2025.endingCustomers) / data2025.endingCustomers * 100).toFixed(1)) + '%';
+                                    return '\nActive Rate: ' + activeRate + '%' + growth;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            grid: {
+                                display: false
+                            },
+                            ticks: {
+                                font: { size: 12, weight: '600' }
+                            }
+                        },
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function(value) {
+                                    return (value / 1000).toFixed(0) + 'K';
+                                },
+                                font: { size: 12 }
+                            },
+                            grid: {
+                                color: 'rgba(0, 0, 0, 0.05)'
+                            }
+                        }
+                    },
+                    animation: {
+                        duration: 1500,
+                        easing: 'easeInOutQuart',
+                        onComplete: function(animation) {
+                            const chart = animation.chart;
+                            const ctx = chart.ctx;
+
+                            chart.data.datasets.forEach((dataset, datasetIndex) => {
+                                const meta = chart.getDatasetMeta(datasetIndex);
+
+                                meta.data.forEach((bar, index) => {
+                                    const value = dataset.data[index];
+
+                                    ctx.save();
+                                    ctx.textAlign = 'center';
+                                    ctx.textBaseline = 'bottom';
+                                    ctx.fillStyle = '#2d3748';
+                                    ctx.font = 'bold 11px Arial';
+
+                                    if (value !== 0) {
+                                        const text = formatNumber(value);
+                                        ctx.fillText(text, bar.x, bar.y - 5);
+                                    }
+                                    ctx.restore();
+                                });
+                            });
+                        }
+                    }
+                }
+            });
+        }
+
+        // Update revenue table
+        function updateRevenueTable() {
+            const version = document.getElementById('forecastVersion').value;
+            const year = document.getElementById('yearSelect').value;
+            const data = forecastData[version][year];
+
+            if (!data.revenues) {
+                document.getElementById('revenueTable').innerHTML = `
+                    <thead>
+                        <tr>
+                            <th>Revenue Stream</th>
+                            <th>Forecast</th>
+                            <th>Actual</th>
+                            <th>Variance</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td colspan="4" style="text-align: center; color: #718096;">
+                                Detailed revenue breakdown only available for Revised forecast
+                            </td>
+                        </tr>
+                    </tbody>
+                `;
+                return;
+            }
+
+            let tableHTML = `
+                <thead>
+                    <tr>
+                        <th>Revenue Stream</th>
+                        <th>Forecast</th>
+                        <th>Actual (Click to edit)</th>
+                        <th>Variance</th>
+                    </tr>
+                </thead>
+                <tbody>
+            `;
+
+            for (const [key, value] of Object.entries(data.revenues)) {
+                const actualValue = actualData.yearly[year][key] || 0;
+                const variance = actualValue > 0 ? calculateVariance(actualValue, value) : null;
+
+                tableHTML += `
+                    <tr>
+                        <td>${key}</td>
+                        <td>${formatCurrency(value)}</td>
+                        <td class="editable" data-key="${key}" data-year="${year}">
+                            ${actualValue > 0 ? formatCurrency(actualValue) : 'Click to add'}
+                        </td>
+                        <td>
+                            ${variance !== null ?
+                                `<span class="badge ${variance >= 0 ? 'positive' : 'negative'}">
+                                    ${variance >= 0 ? '+' : ''}${variance.toFixed(1)}%
+                                </span>` :
+                                '-'
+                            }
+                        </td>
+                    </tr>
+                `;
+            }
+
+            tableHTML += '</tbody>';
+            document.getElementById('revenueTable').innerHTML = tableHTML;
+
+            // Add click handlers for editable cells
+            document.querySelectorAll('#revenueTable .editable').forEach(cell => {
+                cell.addEventListener('click', function() {
+                    const key = this.dataset.key;
+                    const year = this.dataset.year;
+                    const currentValue = actualData.yearly[year][key] || '';
+
+                    this.innerHTML = `<input type="number" class="actual-input" value="${currentValue}" step="0.01">`;
+                    const input = this.querySelector('input');
+                    input.focus();
+
+                    input.addEventListener('blur', function() {
+                        const newValue = parseFloat(this.value) || 0;
+                        actualData.yearly[year][key] = newValue;
+                        updateRevenueTable();
+                        updateMetrics();
+                    });
+
+                    input.addEventListener('keypress', function(e) {
+                        if (e.key === 'Enter') {
+                            this.blur();
+                        }
+                    });
+                });
+            });
+        }
+
+        // Update cash burn chart
+        function updateCashBurnChart() {
+            if (cashBurnChart) {
+                cashBurnChart.destroy();
+            }
+
+            const ctx = document.getElementById('cashBurnChart').getContext('2d');
+
+            // Calculate cumulative cash burn
+            const cumulativeBurn = [];
+            let cumulative = cashBurnData.unpaidSept2025;
+
+            cashBurnData.monthlyBurn.values.forEach(burn => {
+                cumulative += burn;
+                cumulativeBurn.push(cumulative);
+            });
+
+            cashBurnChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: cashBurnData.monthlyBurn.months,
+                    datasets: [
+                        {
+                            label: 'Monthly Cash Burn',
+                            data: cashBurnData.monthlyBurn.values,
+                            backgroundColor: 'rgba(237, 100, 166, 0.8)',
+                            borderColor: 'rgba(237, 100, 166, 1)',
+                            borderWidth: 2,
+                            borderRadius: 8,
+                            borderSkipped: false,
+                            yAxisID: 'y'
+                        },
+                        {
+                            label: 'Cumulative Cash Required',
+                            data: cumulativeBurn,
+                            type: 'line',
+                            borderColor: 'rgba(102, 126, 234, 1)',
+                            backgroundColor: 'rgba(102, 126, 234, 0.1)',
+                            borderWidth: 3,
+                            tension: 0.4,
+                            fill: true,
+                            pointRadius: 6,
+                            pointHoverRadius: 10,
+                            pointBackgroundColor: 'rgba(102, 126, 234, 1)',
+                            pointBorderColor: '#fff',
+                            pointBorderWidth: 3,
+                            yAxisID: 'y1'
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    interaction: {
+                        mode: 'index',
+                        intersect: false
+                    },
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                            labels: {
+                                usePointStyle: true,
+                                padding: 15,
+                                font: { size: 13, weight: 'bold' }
+                            }
+                        },
+                        tooltip: {
+                            enabled: true,
+                            mode: 'index',
+                            intersect: false,
+                            backgroundColor: 'rgba(0, 0, 0, 0.9)',
+                            titleColor: '#fff',
+                            bodyColor: '#fff',
+                            borderColor: 'rgba(102, 126, 234, 0.5)',
+                            borderWidth: 1,
+                            padding: 15,
+                            displayColors: true,
+                            bodyFont: { size: 13 },
+                            titleFont: { size: 14, weight: 'bold' },
+                            callbacks: {
+                                label: function(context) {
+                                    const label = context.dataset.label;
+                                    const value = context.parsed.y;
+                                    return label + ': ' + formatCurrency(Math.abs(value));
+                                },
+                                footer: function(context) {
+                                    const monthIndex = context[0].dataIndex;
+                                    if (monthIndex === 11) {
+                                        return '\n🎯 Approaching breakeven!';
+                                    } else if (monthIndex >= 9) {
+                                        return '\n✨ Path to profitability';
+                                    }
+                                    return '';
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            grid: {
+                                display: false
+                            },
+                            ticks: {
+                                font: { size: 11, weight: '600' }
+                            }
+                        },
+                        y: {
+                            type: 'linear',
+                            position: 'left',
+                            title: {
+                                display: true,
+                                text: 'Monthly Burn',
+                                font: { size: 12, weight: 'bold' }
+                            },
+                            ticks: {
+                                callback: function(value) {
+                                    return '$' + (Math.abs(value) / 1000000).toFixed(1) + 'M';
+                                },
+                                font: { size: 11 }
+                            },
+                            grid: {
+                                color: 'rgba(0, 0, 0, 0.05)'
+                            }
+                        },
+                        y1: {
+                            type: 'linear',
+                            position: 'right',
+                            title: {
+                                display: true,
+                                text: 'Cumulative Cash Required',
+                                font: { size: 12, weight: 'bold' }
+                            },
+                            ticks: {
+                                callback: function(value) {
+                                    return '$' + (Math.abs(value) / 1000000).toFixed(1) + 'M';
+                                },
+                                font: { size: 11 }
+                            },
+                            grid: {
+                                drawOnChartArea: false
+                            }
+                        }
+                    },
+                    animation: {
+                        duration: 1500,
+                        easing: 'easeInOutQuart',
+                        onComplete: function(animation) {
+                            const chart = animation.chart;
+                            const ctx = chart.ctx;
+                            const meta = chart.getDatasetMeta(0);
+
+                            meta.data.forEach((bar, index) => {
+                                const value = chart.data.datasets[0].data[index];
+
+                                ctx.save();
+                                ctx.textAlign = 'center';
+                                ctx.textBaseline = 'bottom';
+                                ctx.fillStyle = '#2d3748';
+                                ctx.font = 'bold 10px Arial';
+
+                                if (value !== 0) {
+                                    const text = '$' + (Math.abs(value) / 1000000).toFixed(1) + 'M';
+                                    ctx.fillText(text, bar.x, bar.y - 5);
+                                }
+                                ctx.restore();
+                            });
+                        }
+                    }
+                }
+            });
+        }
+
+        // Update monthly view
+        function updateMonthlyView() {
+            const year = document.getElementById('monthlyYearSelect').value;
+            const data = monthlyData[year];
+
+            updateMonthlyRevenueChart(data);
+            updateMonthlyProfitChart(data);
+            updateMonthlyCustomerChart(data);
+            updateCashBurnChart();
+            updateMonthlyTable(data, year);
+        }
+
+        // Update monthly revenue chart
+        function updateMonthlyRevenueChart(data) {
+            if (monthlyRevenueChart) {
+                monthlyRevenueChart.destroy();
+            }
+
+            const ctx = document.getElementById('monthlyRevenueChart').getContext('2d');
+
+            const datasets = [];
+            if (data.revenue) {
+                // 2025 with detailed breakdown
+                const colors = [
+                    'rgba(102, 126, 234, 0.8)',
+                    'rgba(118, 75, 162, 0.8)',
+                    'rgba(72, 187, 120, 0.8)',
+                    'rgba(237, 100, 166, 0.8)',
+                    'rgba(246, 173, 85, 0.8)',
+                    'rgba(84, 160, 255, 0.8)',
+                    'rgba(156, 136, 255, 0.8)',
+                    'rgba(255, 107, 107, 0.8)'
+                ];
+
+                data.revenue.forEach((item, index) => {
+                    // Split data into actuals and forecasts
+                    const actualData = item.values.map((val, i) => data.isActual && data.isActual[i] ? val : null);
+                    const forecastData = item.values.map((val, i) => data.isActual && !data.isActual[i] ? val : null);
+
+                    // Add actual data dataset
+                    datasets.push({
+                        label: item.name + ' (Actual)',
+                        data: actualData,
+                        backgroundColor: colors[index % colors.length],
+                        borderColor: colors[index % colors.length].replace('0.8', '1'),
+                        borderWidth: 2,
+                        stack: 'stack0'
+                    });
+
+                    // Add forecast data dataset with different styling
+                    datasets.push({
+                        label: item.name + ' (Forecast)',
+                        data: forecastData,
+                        backgroundColor: colors[index % colors.length].replace('0.8', '0.4'),
+                        borderColor: colors[index % colors.length].replace('0.8', '1'),
+                        borderWidth: 2,
+                        borderDash: [5, 5],
+                        stack: 'stack0'
+                    });
+                });
+            } else {
+                // 2026 total only (all forecast)
+                datasets.push({
+                    label: 'Total Revenue (Forecast)',
+                    data: data.totalRevenue,
+                    backgroundColor: 'rgba(102, 126, 234, 0.4)',
+                    borderColor: 'rgba(102, 126, 234, 1)',
+                    borderWidth: 2,
+                    borderDash: [5, 5]
+                });
+            }
+
+            monthlyRevenueChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: data.months,
+                    datasets: datasets
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    interaction: {
+                        mode: 'index',
+                        intersect: false
+                    },
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                            labels: {
+                                boxWidth: 12,
+                                font: { size: 11 },
+                                padding: 10,
+                                filter: function(item, chart) {
+                                    // Only show one entry per revenue type (hide duplicate Forecast entries)
+                                    return !item.text.includes('(Forecast)');
+                                },
+                                generateLabels: function(chart) {
+                                    const original = Chart.defaults.plugins.legend.labels.generateLabels(chart);
+                                    // Remove (Actual) suffix from labels
+                                    return original.map(label => {
+                                        if (label.text.includes('(Actual)')) {
+                                            label.text = label.text.replace(' (Actual)', '');
+                                        }
+                                        return label;
+                                    }).filter(label => !label.text.includes('(Forecast)'));
+                                }
+                            }
+                        },
+                        tooltip: {
+                            enabled: true,
+                            mode: 'index',
+                            intersect: false,
+                            backgroundColor: 'rgba(0, 0, 0, 0.9)',
+                            titleColor: '#fff',
+                            bodyColor: '#fff',
+                            borderColor: 'rgba(102, 126, 234, 0.5)',
+                            borderWidth: 1,
+                            padding: 12,
+                            displayColors: true,
+                            callbacks: {
+                                title: function(context) {
+                                    return context[0].label;
+                                },
+                                label: function(context) {
+                                    return context.dataset.label + ': ' + formatCurrency(context.parsed.y);
+                                },
+                                footer: function(context) {
+                                    let sum = 0;
+                                    context.forEach(item => {
+                                        sum += item.parsed.y;
+                                    });
+                                    return 'Total: ' + formatCurrency(sum);
+                                }
+                            }
+                        },
+                        datalabels: {
+                            display: true,
+                            color: '#fff',
+                            font: {
+                                weight: 'bold',
+                                size: 10
+                            },
+                            formatter: function(value, context) {
+                                // Only show label if value is significant (> 50k)
+                                if (value > 50000) {
+                                    return '$' + (value / 1000).toFixed(0) + 'K';
+                                }
+                                return '';
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            stacked: true,
+                            grid: {
+                                display: false
+                            }
+                        },
+                        y: {
+                            stacked: true,
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function(value) {
+                                    return '$' + (value / 1000000).toFixed(1) + 'M';
+                                }
+                            },
+                            grid: {
+                                color: 'rgba(0, 0, 0, 0.05)'
+                            }
+                        }
+                    },
+                    animation: {
+                        duration: 1500,
+                        easing: 'easeInOutQuart',
+                        onProgress: function(animation) {
+                            const chart = animation.chart;
+                            const ctx = chart.ctx;
+                            const meta = chart.getDatasetMeta(chart.data.datasets.length - 1);
+
+                            ctx.textAlign = 'center';
+                            ctx.textBaseline = 'bottom';
+                            ctx.fillStyle = '#2d3748';
+                            ctx.font = 'bold 12px Arial';
+
+                            meta.data.forEach((bar, index) => {
+                                let total = 0;
+                                chart.data.datasets.forEach(dataset => {
+                                    total += dataset.data[index] || 0;
+                                });
+
+                                if (total > 0) {
+                                    const text = formatCurrency(total);
+                                    ctx.fillText(text, bar.x, bar.y - 5);
+                                }
+                            });
+                        }
+                    }
+                }
+            });
+        }
+
+        // Update monthly profit chart
+        function updateMonthlyProfitChart(data) {
+            if (monthlyProfitChart) {
+                monthlyProfitChart.destroy();
+            }
+
+            const ctx = document.getElementById('monthlyProfitChart').getContext('2d');
+
+            // Calculate gross profit and net income
+            const grossProfit = data.totalRevenue.map((rev, i) => rev - data.costOfServices[i]);
+            const netIncome = grossProfit.map((gp, i) => gp - data.operatingExpenses[i]);
+
+            // Split data into actuals and forecasts
+            const revenueActual = data.totalRevenue.map((val, i) => data.isActual && data.isActual[i] ? val : null);
+            const revenueForecast = data.totalRevenue.map((val, i) => data.isActual && !data.isActual[i] ? val : null);
+            const gpActual = grossProfit.map((val, i) => data.isActual && data.isActual[i] ? val : null);
+            const gpForecast = grossProfit.map((val, i) => data.isActual && !data.isActual[i] ? val : null);
+            const niActual = netIncome.map((val, i) => data.isActual && data.isActual[i] ? val : null);
+            const niForecast = netIncome.map((val, i) => data.isActual && !data.isActual[i] ? val : null);
+
+            monthlyProfitChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: data.months,
+                    datasets: [
+                        {
+                            label: 'Revenue (Actual)',
+                            data: revenueActual,
+                            borderColor: 'rgba(102, 126, 234, 1)',
+                            backgroundColor: 'rgba(102, 126, 234, 0.1)',
+                            borderWidth: 3,
+                            tension: 0.4,
+                            fill: false,
+                            pointRadius: 5,
+                            pointHoverRadius: 8,
+                            pointBackgroundColor: 'rgba(102, 126, 234, 1)',
+                            pointBorderColor: '#fff',
+                            pointBorderWidth: 2
+                        },
+                        {
+                            label: 'Revenue (Forecast)',
+                            data: revenueForecast,
+                            borderColor: 'rgba(102, 126, 234, 0.6)',
+                            backgroundColor: 'rgba(102, 126, 234, 0.05)',
+                            borderWidth: 3,
+                            borderDash: [8, 4],
+                            tension: 0.4,
+                            fill: false,
+                            pointRadius: 4,
+                            pointHoverRadius: 7,
+                            pointBackgroundColor: 'rgba(102, 126, 234, 0.6)',
+                            pointBorderColor: '#fff',
+                            pointBorderWidth: 2,
+                            pointStyle: 'rectRot'
+                        },
+                        {
+                            label: 'Gross Profit (Actual)',
+                            data: gpActual,
+                            borderColor: 'rgba(72, 187, 120, 1)',
+                            backgroundColor: 'rgba(72, 187, 120, 0.1)',
+                            borderWidth: 3,
+                            tension: 0.4,
+                            fill: false,
+                            pointRadius: 5,
+                            pointHoverRadius: 8,
+                            pointBackgroundColor: 'rgba(72, 187, 120, 1)',
+                            pointBorderColor: '#fff',
+                            pointBorderWidth: 2
+                        },
+                        {
+                            label: 'Gross Profit (Forecast)',
+                            data: gpForecast,
+                            borderColor: 'rgba(72, 187, 120, 0.6)',
+                            backgroundColor: 'rgba(72, 187, 120, 0.05)',
+                            borderWidth: 3,
+                            borderDash: [8, 4],
+                            tension: 0.4,
+                            fill: false,
+                            pointRadius: 4,
+                            pointHoverRadius: 7,
+                            pointBackgroundColor: 'rgba(72, 187, 120, 0.6)',
+                            pointBorderColor: '#fff',
+                            pointBorderWidth: 2,
+                            pointStyle: 'rectRot'
+                        },
+                        {
+                            label: 'Net Income (Actual)',
+                            data: niActual,
+                            borderColor: 'rgba(237, 100, 166, 1)',
+                            backgroundColor: 'rgba(237, 100, 166, 0.2)',
+                            borderWidth: 3,
+                            tension: 0.4,
+                            fill: true,
+                            pointRadius: 5,
+                            pointHoverRadius: 8,
+                            pointBackgroundColor: 'rgba(237, 100, 166, 1)',
+                            pointBorderColor: '#fff',
+                            pointBorderWidth: 2
+                        },
+                        {
+                            label: 'Net Income (Forecast)',
+                            data: niForecast,
+                            borderColor: 'rgba(237, 100, 166, 0.6)',
+                            backgroundColor: 'rgba(237, 100, 166, 0.1)',
+                            borderWidth: 3,
+                            borderDash: [8, 4],
+                            tension: 0.4,
+                            fill: true,
+                            pointRadius: 4,
+                            pointHoverRadius: 7,
+                            pointBackgroundColor: 'rgba(237, 100, 166, 0.6)',
+                            pointBorderColor: '#fff',
+                            pointBorderWidth: 2,
+                            pointStyle: 'rectRot'
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    interaction: {
+                        mode: 'index',
+                        intersect: false
+                    },
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                            labels: {
+                                usePointStyle: true,
+                                padding: 15,
+                                generateLabels: function(chart) {
+                                    const original = Chart.defaults.plugins.legend.labels.generateLabels(chart);
+                                    // Only show Actual versions (solid lines), hide Forecast duplicates
+                                    const filtered = original.filter(label => label.text.includes('(Actual)'));
+                                    // Remove (Actual) suffix for cleaner display
+                                    return filtered.map(label => {
+                                        label.text = label.text.replace(' (Actual)', '');
+                                        return label;
+                                    });
+                                }
+                            }
+                        },
+                        tooltip: {
+                            enabled: true,
+                            mode: 'index',
+                            intersect: false,
+                            backgroundColor: 'rgba(0, 0, 0, 0.9)',
+                            titleColor: '#fff',
+                            bodyColor: '#fff',
+                            borderColor: 'rgba(102, 126, 234, 0.5)',
+                            borderWidth: 1,
+                            padding: 12,
+                            displayColors: true,
+                            callbacks: {
+                                label: function(context) {
+                                    return context.dataset.label + ': ' + formatCurrency(context.parsed.y);
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            grid: {
+                                display: false
+                            }
+                        },
+                        y: {
+                            ticks: {
+                                callback: function(value) {
+                                    return '$' + (value / 1000000).toFixed(1) + 'M';
+                                }
+                            },
+                            grid: {
+                                color: 'rgba(0, 0, 0, 0.05)'
+                            }
+                        }
+                    },
+                    animation: {
+                        duration: 1500,
+                        easing: 'easeInOutQuart'
+                    }
+                }
+            });
+        }
+
+        // Update monthly customer chart
+        function updateMonthlyCustomerChart(data) {
+            if (monthlyCustomerChart) {
+                monthlyCustomerChart.destroy();
+            }
+
+            const ctx = document.getElementById('monthlyCustomerChart').getContext('2d');
+
+            monthlyCustomerChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: data.months,
+                    datasets: [
+                        {
+                            label: 'Total Customers',
+                            data: data.customers,
+                            borderColor: 'rgba(102, 126, 234, 1)',
+                            backgroundColor: 'rgba(102, 126, 234, 0.2)',
+                            borderWidth: 3,
+                            tension: 0.4,
+                            fill: true,
+                            yAxisID: 'y',
+                            pointRadius: 5,
+                            pointHoverRadius: 8,
+                            pointBackgroundColor: 'rgba(102, 126, 234, 1)',
+                            pointBorderColor: '#fff',
+                            pointBorderWidth: 2
+                        },
+                        {
+                            label: 'Active Customers',
+                            data: data.activeCustomers,
+                            borderColor: 'rgba(72, 187, 120, 1)',
+                            backgroundColor: 'rgba(72, 187, 120, 0.2)',
+                            borderWidth: 3,
+                            tension: 0.4,
+                            fill: true,
+                            yAxisID: 'y',
+                            pointRadius: 5,
+                            pointHoverRadius: 8,
+                            pointBackgroundColor: 'rgba(72, 187, 120, 1)',
+                            pointBorderColor: '#fff',
+                            pointBorderWidth: 2
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    interaction: {
+                        mode: 'index',
+                        intersect: false
+                    },
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                            labels: {
+                                usePointStyle: true,
+                                padding: 15
+                            }
+                        },
+                        tooltip: {
+                            enabled: true,
+                            mode: 'index',
+                            intersect: false,
+                            backgroundColor: 'rgba(0, 0, 0, 0.9)',
+                            titleColor: '#fff',
+                            bodyColor: '#fff',
+                            borderColor: 'rgba(102, 126, 234, 0.5)',
+                            borderWidth: 1,
+                            padding: 12,
+                            displayColors: true,
+                            callbacks: {
+                                label: function(context) {
+                                    return context.dataset.label + ': ' + formatNumber(context.parsed.y);
+                                },
+                                afterBody: function(context) {
+                                    const activeRate = (context[1].parsed.y / context[0].parsed.y * 100).toFixed(1);
+                                    return '\nActive Rate: ' + activeRate + '%';
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            grid: {
+                                display: false
+                            }
+                        },
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function(value) {
+                                    return (value / 1000).toFixed(0) + 'K';
+                                }
+                            },
+                            grid: {
+                                color: 'rgba(0, 0, 0, 0.05)'
+                            }
+                        }
+                    },
+                    animation: {
+                        duration: 1500,
+                        easing: 'easeInOutQuart'
+                    }
+                }
+            });
+        }
+
+        // Update monthly table
+        function updateMonthlyTable(data, year) {
+            let tableHTML = `
+                <thead>
+                    <tr>
+                        <th style="position: sticky; left: 0; background: #f7fafc; z-index: 20;">Metric</th>
+            `;
+
+            data.months.forEach(month => {
+                tableHTML += `<th>${month}</th>`;
+            });
+            tableHTML += `<th>Total</th></tr></thead><tbody>`;
+
+            // Revenue rows
+            if (data.revenue) {
+                data.revenue.forEach((item, idx) => {
+                    tableHTML += `<tr><td style="position: sticky; left: 0; background: white; font-weight: 600;">${item.name}</td>`;
+                    let total = 0;
+                    item.values.forEach((val, i) => {
+                        total += val;
+                        const key = `${item.name}_${i}`;
+                        const actualValue = actualData.monthly[year][key] || 0;
+                        tableHTML += `<td class="editable" data-key="${key}" data-year="${year}">
+                            ${actualValue > 0 ? formatCurrency(actualValue) : (val > 0 ? formatCurrency(val) : '-')}
+                        </td>`;
+                    });
+                    tableHTML += `<td style="font-weight: 600; background: #f7fafc;">${formatCurrency(total)}</td></tr>`;
+                });
+            }
+
+            // Total Revenue row
+            tableHTML += `<tr style="background: #edf2f7;"><td style="position: sticky; left: 0; background: #edf2f7; font-weight: 700;">Total Revenue</td>`;
+            let yearTotal = 0;
+            data.totalRevenue.forEach(val => {
+                yearTotal += val;
+                tableHTML += `<td style="font-weight: 700;">${formatCurrency(val)}</td>`;
+            });
+            tableHTML += `<td style="font-weight: 700;">${formatCurrency(yearTotal)}</td></tr>`;
+
+            // Cost of Services
+            tableHTML += `<tr><td style="position: sticky; left: 0; background: white; font-weight: 600;">Cost of Services</td>`;
+            let cosTotal = 0;
+            data.costOfServices.forEach(val => {
+                cosTotal += val;
+                tableHTML += `<td>${formatCurrency(val)}</td>`;
+            });
+            tableHTML += `<td style="font-weight: 600; background: #f7fafc;">${formatCurrency(cosTotal)}</td></tr>`;
+
+            // Gross Profit
+            tableHTML += `<tr><td style="position: sticky; left: 0; background: white; font-weight: 600;">Gross Profit</td>`;
+            let gpTotal = 0;
+            data.totalRevenue.forEach((val, i) => {
+                const gp = val - data.costOfServices[i];
+                gpTotal += gp;
+                tableHTML += `<td style="color: ${gp >= 0 ? '#22543d' : '#742a2a'};">${formatCurrency(gp)}</td>`;
+            });
+            tableHTML += `<td style="font-weight: 600; background: #f7fafc; color: ${gpTotal >= 0 ? '#22543d' : '#742a2a'};">${formatCurrency(gpTotal)}</td></tr>`;
+
+            // Operating Expenses
+            tableHTML += `<tr><td style="position: sticky; left: 0; background: white; font-weight: 600;">Operating Expenses</td>`;
+            let opexTotal = 0;
+            data.operatingExpenses.forEach(val => {
+                opexTotal += val;
+                tableHTML += `<td>${formatCurrency(val)}</td>`;
+            });
+            tableHTML += `<td style="font-weight: 600; background: #f7fafc;">${formatCurrency(opexTotal)}</td></tr>`;
+
+            // Net Income
+            tableHTML += `<tr style="background: #edf2f7;"><td style="position: sticky; left: 0; background: #edf2f7; font-weight: 700;">Net Income</td>`;
+            let niTotal = 0;
+            data.totalRevenue.forEach((val, i) => {
+                const ni = val - data.costOfServices[i] - data.operatingExpenses[i];
+                niTotal += ni;
+                tableHTML += `<td style="font-weight: 700; color: ${ni >= 0 ? '#22543d' : '#742a2a'};">${formatCurrency(ni)}</td>`;
+            });
+            tableHTML += `<td style="font-weight: 700; color: ${niTotal >= 0 ? '#22543d' : '#742a2a'};">${formatCurrency(niTotal)}</td></tr>`;
+
+            // Customers
+            tableHTML += `<tr><td style="position: sticky; left: 0; background: white; font-weight: 600;">Total Customers</td>`;
+            data.customers.forEach(val => {
+                tableHTML += `<td>${formatNumber(val)}</td>`;
+            });
+            tableHTML += `<td style="font-weight: 600; background: #f7fafc;">${formatNumber(data.customers[data.customers.length - 1])}</td></tr>`;
+
+            tableHTML += `<tr><td style="position: sticky; left: 0; background: white; font-weight: 600;">Active Customers</td>`;
+            data.activeCustomers.forEach(val => {
+                tableHTML += `<td>${formatNumber(val)}</td>`;
+            });
+            tableHTML += `<td style="font-weight: 600; background: #f7fafc;">${formatNumber(data.activeCustomers[data.activeCustomers.length - 1])}</td></tr>`;
+
+            tableHTML += '</tbody>';
+            document.getElementById('monthlyTable').innerHTML = tableHTML;
+
+            // Add click handlers for editable cells
+            document.querySelectorAll('#monthlyTable .editable').forEach(cell => {
+                cell.addEventListener('click', function() {
+                    const key = this.dataset.key;
+                    const year = this.dataset.year;
+                    const currentValue = actualData.monthly[year][key] || '';
+
+                    this.innerHTML = `<input type="number" class="actual-input" value="${currentValue}" step="0.01">`;
+                    const input = this.querySelector('input');
+                    input.focus();
+
+                    input.addEventListener('blur', function() {
+                        const newValue = parseFloat(this.value) || 0;
+                        actualData.monthly[year][key] = newValue;
+                        updateMonthlyView();
+                    });
+
+                    input.addEventListener('keypress', function(e) {
+                        if (e.key === 'Enter') {
+                            this.blur();
+                        }
+                    });
+                });
+            });
+        }
+
+        // Update revenue drivers table
+        function updateRevenueDriversTable() {
+            const year = document.getElementById('yearSelect').value;
+            const drivers = revenueDrivers[year];
+
+            let html = '<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">';
+
+            // Customer Metrics
+            html += '<div><h3 style="margin-bottom: 15px; color: #2d3748; font-size: 16px;">Customer Metrics</h3>';
+            html += '<table style="width: 100%;"><thead><tr><th>Metric</th><th>Value</th></tr></thead><tbody>';
+            for (const [key, value] of Object.entries(drivers.customerMetrics)) {
+                html += `<tr><td>${key}</td><td style="font-weight: 600;">${value}%</td></tr>`;
+            }
+            html += '</tbody></table></div>';
+
+            // Utilization Rates
+            html += '<div><h3 style="margin-bottom: 15px; color: #2d3748; font-size: 16px;">Utilization Rates</h3>';
+            html += '<table style="width: 100%;"><thead><tr><th>Product</th><th>Rate</th></tr></thead><tbody>';
+            for (const [key, value] of Object.entries(drivers.utilizationRates)) {
+                html += `<tr><td>${key}</td><td style="font-weight: 600;">${value}%</td></tr>`;
+            }
+            html += '</tbody></table></div>';
+
+            html += '</div>';
+
+            html += '<div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 30px; margin-top: 30px;">';
+
+            // Frequency Per Month
+            html += '<div><h3 style="margin-bottom: 15px; color: #2d3748; font-size: 16px;">Frequency Per Month</h3>';
+            html += '<table style="width: 100%;"><thead><tr><th>Activity</th><th>Times/Mo</th></tr></thead><tbody>';
+            for (const [key, value] of Object.entries(drivers.frequencyPerMonth)) {
+                html += `<tr><td>${key}</td><td style="font-weight: 600;">${value.toFixed(1)}x</td></tr>`;
+            }
+            html += '</tbody></table></div>';
+
+            // Average Transaction Amount
+            html += '<div><h3 style="margin-bottom: 15px; color: #2d3748; font-size: 16px;">Avg Transaction Amount</h3>';
+            html += '<table style="width: 100%;"><thead><tr><th>Type</th><th>Amount</th></tr></thead><tbody>';
+            for (const [key, value] of Object.entries(drivers.avgTransactionAmount)) {
+                html += `<tr><td>${key}</td><td style="font-weight: 600;">${formatCurrency(value)}</td></tr>`;
+            }
+            html += '</tbody></table></div>';
+
+            // Fee Rates
+            html += '<div><h3 style="margin-bottom: 15px; color: #2d3748; font-size: 16px;">Fee Rates</h3>';
+            html += '<table style="width: 100%;"><thead><tr><th>Fee Type</th><th>Rate</th></tr></thead><tbody>';
+            for (const [key, value] of Object.entries(drivers.feeRates)) {
+                let displayValue;
+                if (key.includes('%')) {
+                    displayValue = `${value}%`;
+                } else {
+                    displayValue = formatCurrency(value);
+                }
+                html += `<tr><td>${key}</td><td style="font-weight: 600;">${displayValue}</td></tr>`;
+            }
+            html += '</tbody></table></div>';
+
+            html += '</div>';
+
+            // Add explanation section
+            html += '<div style="margin-top: 30px; padding: 20px; background: #f7fafc; border-radius: 8px;">';
+            html += '<h4 style="margin-bottom: 10px; color: #2d3748;">Revenue Calculation Formula</h4>';
+            html += '<p style="color: #4a5568; line-height: 1.6; margin-bottom: 10px;">Revenue per product is calculated as:</p>';
+            html += '<p style="font-family: monospace; background: white; padding: 10px; border-radius: 4px; margin-bottom: 10px;">Revenue = Active Customers × Utilization Rate × Frequency per Month × (Transaction Amount × Fee Rate %)</p>';
+            html += '<p style="color: #718096; font-size: 14px; font-style: italic;">These assumptions drive the forecast. Adjust utilization rates and frequencies to model different scenarios.</p>';
+            html += '</div>';
+
+            document.getElementById('revenueDriversContainer').innerHTML = html;
+        }
+
+        // Update yearly view
+        function updateYearlyView() {
+            updateMetrics();
+            updateRevenueChart();
+            updateProfitChart();
+            updateCustomerChart();
+            updateRevenueTable();
+            updateRevenueDriversTable();
+        }
+
+        // Update burn rate view
+        function updateBurnRateView() {
+            updateBurnRateMainChart();
+            updateNetIncomeChart();
+            updateCumulativeFlowChart();
+            updateBurnRateTable();
+        }
+
+        // Main burn rate chart (combo chart)
+        function updateBurnRateMainChart() {
+            if (burnRateChart) {
+                burnRateChart.destroy();
+            }
+
+            const ctx = document.getElementById('burnRateChart').getContext('2d');
+
+            // Calculate cumulative cash burn
+            const cumulativeBurn = [];
+            let cumulative = cashBurnData.unpaidSept2025;
+
+            cashBurnData.monthlyBurn.values.forEach(burn => {
+                cumulative += burn;
+                cumulativeBurn.push(cumulative);
+            });
+
+            burnRateChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: cashBurnData.monthlyBurn.months,
+                    datasets: [
+                        {
+                            label: 'Monthly Cash Burn',
+                            data: cashBurnData.monthlyBurn.values,
+                            backgroundColor: 'rgba(237, 100, 166, 0.8)',
+                            borderColor: 'rgba(237, 100, 166, 1)',
+                            borderWidth: 2,
+                            borderRadius: 8,
+                            borderSkipped: false,
+                            yAxisID: 'y'
+                        },
+                        {
+                            label: 'Cumulative Cash Required',
+                            data: cumulativeBurn,
+                            type: 'line',
+                            borderColor: 'rgba(102, 126, 234, 1)',
+                            backgroundColor: 'rgba(102, 126, 234, 0.1)',
+                            borderWidth: 4,
+                            tension: 0.4,
+                            fill: true,
+                            pointRadius: 7,
+                            pointHoverRadius: 11,
+                            pointBackgroundColor: 'rgba(102, 126, 234, 1)',
+                            pointBorderColor: '#fff',
+                            pointBorderWidth: 3,
+                            yAxisID: 'y1'
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    interaction: {
+                        mode: 'index',
+                        intersect: false
+                    },
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                            labels: {
+                                usePointStyle: true,
+                                padding: 20,
+                                font: { size: 14, weight: 'bold' }
+                            }
+                        },
+                        tooltip: {
+                            enabled: true,
+                            mode: 'index',
+                            intersect: false,
+                            backgroundColor: 'rgba(0, 0, 0, 0.9)',
+                            titleColor: '#fff',
+                            bodyColor: '#fff',
+                            borderColor: 'rgba(102, 126, 234, 0.5)',
+                            borderWidth: 1,
+                            padding: 15,
+                            displayColors: true,
+                            bodyFont: { size: 13 },
+                            titleFont: { size: 14, weight: 'bold' },
+                            callbacks: {
+                                label: function(context) {
+                                    const label = context.dataset.label;
+                                    const value = context.parsed.y;
+                                    return label + ': ' + formatCurrency(Math.abs(value));
+                                },
+                                footer: function(context) {
+                                    const monthIndex = context[0].dataIndex;
+                                    if (monthIndex === 11) {
+                                        return '\n🎯 Final month before breakeven!';
+                                    } else if (monthIndex >= 9) {
+                                        return '\n✨ Approaching profitability';
+                                    }
+                                    return '';
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            grid: {
+                                display: false
+                            },
+                            ticks: {
+                                font: { size: 12, weight: '600' }
+                            }
+                        },
+                        y: {
+                            type: 'linear',
+                            position: 'left',
+                            title: {
+                                display: true,
+                                text: 'Monthly Burn',
+                                font: { size: 13, weight: 'bold' },
+                                color: 'rgba(237, 100, 166, 1)'
+                            },
+                            ticks: {
+                                callback: function(value) {
+                                    return '$' + (Math.abs(value) / 1000000).toFixed(1) + 'M';
+                                },
+                                font: { size: 12 },
+                                color: 'rgba(237, 100, 166, 1)'
+                            },
+                            grid: {
+                                color: 'rgba(0, 0, 0, 0.05)'
+                            }
+                        },
+                        y1: {
+                            type: 'linear',
+                            position: 'right',
+                            title: {
+                                display: true,
+                                text: 'Cumulative Cash Required',
+                                font: { size: 13, weight: 'bold' },
+                                color: 'rgba(102, 126, 234, 1)'
+                            },
+                            ticks: {
+                                callback: function(value) {
+                                    return '$' + (Math.abs(value) / 1000000).toFixed(1) + 'M';
+                                },
+                                font: { size: 12 },
+                                color: 'rgba(102, 126, 234, 1)'
+                            },
+                            grid: {
+                                drawOnChartArea: false
+                            }
+                        }
+                    },
+                    animation: {
+                        duration: 1500,
+                        easing: 'easeInOutQuart',
+                        onComplete: function(animation) {
+                            const chart = animation.chart;
+                            const ctx = chart.ctx;
+                            const meta = chart.getDatasetMeta(0);
+
+                            meta.data.forEach((bar, index) => {
+                                const value = chart.data.datasets[0].data[index];
+
+                                ctx.save();
+                                ctx.textAlign = 'center';
+                                ctx.textBaseline = 'bottom';
+                                ctx.fillStyle = '#2d3748';
+                                ctx.font = 'bold 11px Arial';
+
+                                if (value !== 0) {
+                                    const text = '$' + (Math.abs(value) / 1000000).toFixed(1) + 'M';
+                                    ctx.fillText(text, bar.x, bar.y - 5);
+                                }
+                                ctx.restore();
+                            });
+                        }
+                    }
+                }
+            });
+        }
+
+        // Net income chart
+        function updateNetIncomeChart() {
+            if (netIncomeChart) {
+                netIncomeChart.destroy();
+            }
+
+            const ctx = document.getElementById('netIncomeChart').getContext('2d');
+
+            netIncomeChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: cashBurnData.monthlyBurn.months,
+                    datasets: [
+                        {
+                            label: 'Monthly Net Income',
+                            data: cashBurnData.monthlyBurn.values,
+                            backgroundColor: function(context) {
+                                const value = context.parsed.y;
+                                return value < 0 ? 'rgba(237, 100, 166, 0.8)' : 'rgba(72, 187, 120, 0.8)';
+                            },
+                            borderColor: function(context) {
+                                const value = context.parsed.y;
+                                return value < 0 ? 'rgba(237, 100, 166, 1)' : 'rgba(72, 187, 120, 1)';
+                            },
+                            borderWidth: 2,
+                            borderRadius: 8,
+                            borderSkipped: false
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            enabled: true,
+                            backgroundColor: 'rgba(0, 0, 0, 0.9)',
+                            titleColor: '#fff',
+                            bodyColor: '#fff',
+                            padding: 15,
+                            bodyFont: { size: 13 },
+                            titleFont: { size: 14, weight: 'bold' },
+                            callbacks: {
+                                label: function(context) {
+                                    const value = context.parsed.y;
+                                    return (value < 0 ? 'Loss: ' : 'Profit: ') + formatCurrency(Math.abs(value));
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            grid: {
+                                display: false
+                            },
+                            ticks: {
+                                font: { size: 12, weight: '600' }
+                            }
+                        },
+                        y: {
+                            ticks: {
+                                callback: function(value) {
+                                    return '$' + (Math.abs(value) / 1000000).toFixed(1) + 'M';
+                                },
+                                font: { size: 12 }
+                            },
+                            grid: {
+                                color: 'rgba(0, 0, 0, 0.05)'
+                            }
+                        }
+                    },
+                    animation: {
+                        duration: 1500,
+                        easing: 'easeInOutQuart'
+                    }
+                }
+            });
+        }
+
+        // Cumulative flow chart
+        function updateCumulativeFlowChart() {
+            if (cumulativeFlowChart) {
+                cumulativeFlowChart.destroy();
+            }
+
+            const ctx = document.getElementById('cumulativeFlowChart').getContext('2d');
+
+            const cumulativeBurn = [];
+            let cumulative = cashBurnData.unpaidSept2025;
+
+            cashBurnData.monthlyBurn.values.forEach(burn => {
+                cumulative += burn;
+                cumulativeBurn.push(cumulative);
+            });
+
+            cumulativeFlowChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: cashBurnData.monthlyBurn.months,
+                    datasets: [
+                        {
+                            label: 'Cumulative Cash Flow',
+                            data: cumulativeBurn,
+                            borderColor: 'rgba(102, 126, 234, 1)',
+                            backgroundColor: function(context) {
+                                const ctx = context.chart.ctx;
+                                const gradient = ctx.createLinearGradient(0, 0, 0, 400);
+                                gradient.addColorStop(0, 'rgba(237, 100, 166, 0.3)');
+                                gradient.addColorStop(1, 'rgba(102, 126, 234, 0.1)');
+                                return gradient;
+                            },
+                            borderWidth: 4,
+                            tension: 0.4,
+                            fill: true,
+                            pointRadius: 7,
+                            pointHoverRadius: 11,
+                            pointBackgroundColor: 'rgba(102, 126, 234, 1)',
+                            pointBorderColor: '#fff',
+                            pointBorderWidth: 3
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            enabled: true,
+                            backgroundColor: 'rgba(0, 0, 0, 0.9)',
+                            titleColor: '#fff',
+                            bodyColor: '#fff',
+                            padding: 15,
+                            bodyFont: { size: 13 },
+                            titleFont: { size: 14, weight: 'bold' },
+                            callbacks: {
+                                label: function(context) {
+                                    return 'Total Cash Required: ' + formatCurrency(Math.abs(context.parsed.y));
+                                },
+                                afterLabel: function(context) {
+                                    const remaining = cashBurnData.totalToBreakeven - Math.abs(context.parsed.y);
+                                    return 'Remaining: ' + formatCurrency(remaining);
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            grid: {
+                                display: false
+                            },
+                            ticks: {
+                                font: { size: 12, weight: '600' }
+                            }
+                        },
+                        y: {
+                            ticks: {
+                                callback: function(value) {
+                                    return '$' + (Math.abs(value) / 1000000).toFixed(1) + 'M';
+                                },
+                                font: { size: 12 }
+                            },
+                            grid: {
+                                color: 'rgba(0, 0, 0, 0.05)'
+                            }
+                        }
+                    },
+                    animation: {
+                        duration: 2000,
+                        easing: 'easeInOutQuart'
+                    }
+                }
+            });
+        }
+
+        // Burn rate table
+        function updateBurnRateTable() {
+            const tbody = document.getElementById('burnRateTableBody');
+            let html = '';
+
+            // Q4 2025 data (Oct, Nov, Dec)
+            const q42025 = [
+                { month: 'Oct-25', revenue: 1074579, cos: 1082502, marketing: 937953, opex: 2757746, netIncome: -3703622 },
+                { month: 'Nov-25', revenue: 2020230, cos: 1123089, marketing: 700000, opex: 2525987, netIncome: -2328846 },
+                { month: 'Dec-25', revenue: 2375965, cos: 1274822, marketing: 700000, opex: 2570765, netIncome: -2169622 }
+            ];
+
+            // 2026 data (Jan-Sep)
+            const data2026 = monthlyData[2026];
+            for (let i = 0; i < 9; i++) {
+                q42025.push({
+                    month: cashBurnData.monthlyBurn.months[i + 3],
+                    revenue: data2026.totalRevenue[i],
+                    cos: data2026.costOfServices[i],
+                    marketing: data2026.marketing[i],
+                    opex: data2026.otherOperatingExpenses[i],
+                    netIncome: data2026.netIncome[i]
+                });
+            }
+
+            let cumulativeBurn = cashBurnData.unpaidSept2025;
+
+            q42025.forEach(row => {
+                const gp = row.revenue - row.cos;
+                const totalOpex = row.marketing + row.opex;
+                cumulativeBurn += row.netIncome;
+
+                const isLoss = row.netIncome < 0;
+                const rowColor = isLoss ? '' : 'style="background: #f0fdf4;"';
+
+                html += `
+                    <tr ${rowColor}>
+                        <td style="position: sticky; left: 0; background: ${isLoss ? 'white' : '#f0fdf4'}; font-weight: 600;">${row.month}</td>
+                        <td>${formatCurrency(row.revenue)}</td>
+                        <td>${formatCurrency(row.cos)}</td>
+                        <td style="color: ${gp >= 0 ? '#22543d' : '#742a2a'};">${formatCurrency(gp)}</td>
+                        <td>${formatCurrency(row.marketing)}</td>
+                        <td>${formatCurrency(row.opex)}</td>
+                        <td>${formatCurrency(totalOpex)}</td>
+                        <td style="font-weight: 600; color: ${isLoss ? '#742a2a' : '#22543d'};">${formatCurrency(row.netIncome)}</td>
+                        <td style="font-weight: 600; color: #667eea;">${formatCurrency(Math.abs(cumulativeBurn))}</td>
+                    </tr>
+                `;
+            });
+
+            tbody.innerHTML = html;
+        }
+
+        // Initialize dashboard
+        function init() {
+            updateYearlyView();
+        }
+
+        // Run on page load
+        init();
+    </script>
+</body>
+</html>
