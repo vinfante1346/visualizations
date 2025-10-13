@@ -312,6 +312,7 @@
             <button class="tab active" onclick="switchTab('yearly')">Yearly Summary</button>
             <button class="tab" onclick="switchTab('monthly')">Monthly Breakdown</button>
             <button class="tab" onclick="switchTab('burnrate')">Burn Rate to Breakeven</button>
+            <button class="tab" onclick="switchTab('scenario')">Scenario Planning 🔒</button>
         </div>
 
         <!-- YEARLY TAB -->
@@ -554,6 +555,176 @@
             </div>
         </div>
 
+        <!-- SCENARIO PLANNING TAB -->
+        <div id="scenarioTab" class="tab-content">
+            <div id="scenarioLocked" style="background: white; border-radius: 12px; padding: 60px; text-align: center; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);">
+                <h2 style="color: #667eea; margin-bottom: 20px;">🔒 Password Protected</h2>
+                <p style="color: #718096; margin-bottom: 30px;">Enter password to access scenario planning tools</p>
+                <input type="password" id="scenarioPassword" placeholder="Enter password"
+                    style="padding: 12px 20px; border: 2px solid #667eea; border-radius: 8px; font-size: 16px; width: 300px; margin-right: 10px;"
+                    onkeypress="if(event.key === 'Enter') unlockScenario()">
+                <button onclick="unlockScenario()"
+                    style="padding: 12px 30px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 8px; font-size: 16px; cursor: pointer; font-weight: 600;">
+                    Unlock
+                </button>
+                <p style="color: #e53e3e; margin-top: 15px; display: none;" id="wrongPassword">Incorrect password</p>
+            </div>
+
+            <div id="scenarioContent" style="display: none;">
+                <div class="chart-container">
+                    <h2>Scenario Planning - Adjust Assumptions</h2>
+                    <p style="color: #718096; margin-bottom: 20px;">Modify fee rates, utilization rates, and customer metrics to see how they impact the forecast.</p>
+
+                    <div class="metrics-grid" style="margin-bottom: 30px;">
+                        <div class="metric-card">
+                            <div class="label">Scenario Impact</div>
+                            <div class="value" id="scenarioImpact">$0</div>
+                            <div class="comparison">
+                                <span class="badge neutral" id="scenarioImpactBadge">vs. Base Forecast</span>
+                            </div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="label">2026 Projected Revenue</div>
+                            <div class="value" id="scenario2026Revenue">$75,270,419</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="label">Breakeven Month</div>
+                            <div class="value" id="scenarioBreakeven">Oct 2026</div>
+                        </div>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px;">
+                        <!-- Fee Rates -->
+                        <div style="background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);">
+                            <h3 style="color: #2d3748; margin-bottom: 20px; border-bottom: 2px solid #667eea; padding-bottom: 10px;">Fee Rates</h3>
+
+                            <div style="margin-bottom: 15px;">
+                                <label style="color: #4a5568; font-weight: 600; display: block; margin-bottom: 5px;">Remittance Fee ($)</label>
+                                <input type="number" id="remittanceFee" value="3.16" step="0.01" onchange="updateScenario()"
+                                    style="width: 100%; padding: 10px; border: 2px solid #e2e8f0; border-radius: 6px; font-size: 14px;">
+                            </div>
+
+                            <div style="margin-bottom: 15px;">
+                                <label style="color: #4a5568; font-weight: 600; display: block; margin-bottom: 5px;">ATM Surcharge ($)</label>
+                                <input type="number" id="atmFee" value="3.01" step="0.01" onchange="updateScenario()"
+                                    style="width: 100%; padding: 10px; border: 2px solid #e2e8f0; border-radius: 6px; font-size: 14px;">
+                            </div>
+
+                            <div style="margin-bottom: 15px;">
+                                <label style="color: #4a5568; font-weight: 600; display: block; margin-bottom: 5px;">FX Rate (%)</label>
+                                <input type="number" id="fxRate" value="0.75" step="0.01" onchange="updateScenario()"
+                                    style="width: 100%; padding: 10px; border: 2px solid #e2e8f0; border-radius: 6px; font-size: 14px;">
+                            </div>
+
+                            <div style="margin-bottom: 15px;">
+                                <label style="color: #4a5568; font-weight: 600; display: block; margin-bottom: 5px;">Card Interchange (%)</label>
+                                <input type="number" id="cardInterchange" value="1.15" step="0.01" onchange="updateScenario()"
+                                    style="width: 100%; padding: 10px; border: 2px solid #e2e8f0; border-radius: 6px; font-size: 14px;">
+                            </div>
+
+                            <div style="margin-bottom: 15px;">
+                                <label style="color: #4a5568; font-weight: 600; display: block; margin-bottom: 5px;">Unsecured Loan Fee ($)</label>
+                                <input type="number" id="loanFee" value="300" step="1" onchange="updateScenario()"
+                                    style="width: 100%; padding: 10px; border: 2px solid #e2e8f0; border-radius: 6px; font-size: 14px;">
+                            </div>
+                        </div>
+
+                        <!-- Utilization Rates -->
+                        <div style="background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);">
+                            <h3 style="color: #2d3748; margin-bottom: 20px; border-bottom: 2px solid #667eea; padding-bottom: 10px;">Utilization Rates (%)</h3>
+
+                            <div style="margin-bottom: 15px;">
+                                <label style="color: #4a5568; font-weight: 600; display: block; margin-bottom: 5px;">Foreign Remittance</label>
+                                <input type="number" id="remittanceUtil" value="24" step="1" onchange="updateScenario()"
+                                    style="width: 100%; padding: 10px; border: 2px solid #e2e8f0; border-radius: 6px; font-size: 14px;">
+                            </div>
+
+                            <div style="margin-bottom: 15px;">
+                                <label style="color: #4a5568; font-weight: 600; display: block; margin-bottom: 5px;">ATM Usage</label>
+                                <input type="number" id="atmUtil" value="14" step="1" onchange="updateScenario()"
+                                    style="width: 100%; padding: 10px; border: 2px solid #e2e8f0; border-radius: 6px; font-size: 14px;">
+                            </div>
+
+                            <div style="margin-bottom: 15px;">
+                                <label style="color: #4a5568; font-weight: 600; display: block; margin-bottom: 5px;">Foreign Exchange</label>
+                                <input type="number" id="fxUtil" value="24" step="1" onchange="updateScenario()"
+                                    style="width: 100%; padding: 10px; border: 2px solid #e2e8f0; border-radius: 6px; font-size: 14px;">
+                            </div>
+
+                            <div style="margin-bottom: 15px;">
+                                <label style="color: #4a5568; font-weight: 600; display: block; margin-bottom: 5px;">Card & Interchange</label>
+                                <input type="number" id="cardUtil" value="73" step="1" onchange="updateScenario()"
+                                    style="width: 100%; padding: 10px; border: 2px solid #e2e8f0; border-radius: 6px; font-size: 14px;">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                        <!-- Customer Metrics -->
+                        <div style="background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);">
+                            <h3 style="color: #2d3748; margin-bottom: 20px; border-bottom: 2px solid #667eea; padding-bottom: 10px;">Customer Metrics</h3>
+
+                            <div style="margin-bottom: 15px;">
+                                <label style="color: #4a5568; font-weight: 600; display: block; margin-bottom: 5px;">Latino Customer % (2026)</label>
+                                <input type="number" id="latinoPct" value="80" step="1" onchange="updateScenario()"
+                                    style="width: 100%; padding: 10px; border: 2px solid #e2e8f0; border-radius: 6px; font-size: 14px;">
+                            </div>
+
+                            <div style="margin-bottom: 15px;">
+                                <label style="color: #4a5568; font-weight: 600; display: block; margin-bottom: 5px;">Active Customer Rate - Latino (2026 %)</label>
+                                <input type="number" id="activeRate" value="27.9" step="0.1" onchange="updateScenario()"
+                                    style="width: 100%; padding: 10px; border: 2px solid #e2e8f0; border-radius: 6px; font-size: 14px;">
+                            </div>
+
+                            <div style="margin-bottom: 15px;">
+                                <label style="color: #4a5568; font-weight: 600; display: block; margin-bottom: 5px;">Organic Growth (%)</label>
+                                <input type="number" id="growthRate" value="11" step="0.5" onchange="updateScenario()"
+                                    style="width: 100%; padding: 10px; border: 2px solid #e2e8f0; border-radius: 6px; font-size: 14px;">
+                            </div>
+                        </div>
+
+                        <!-- Actions -->
+                        <div style="background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);">
+                            <h3 style="color: #2d3748; margin-bottom: 20px; border-bottom: 2px solid #667eea; padding-bottom: 10px;">Actions</h3>
+
+                            <button onclick="resetScenario()"
+                                style="width: 100%; padding: 12px; background: #718096; color: white; border: none; border-radius: 8px; font-size: 14px; cursor: pointer; font-weight: 600; margin-bottom: 10px;">
+                                Reset to Baseline
+                            </button>
+
+                            <button onclick="saveScenario()"
+                                style="width: 100%; padding: 12px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 8px; font-size: 14px; cursor: pointer; font-weight: 600; margin-bottom: 10px;">
+                                Save Scenario
+                            </button>
+
+                            <div style="margin-top: 20px; padding: 15px; background: #f7fafc; border-radius: 8px; border-left: 4px solid #667eea;">
+                                <h4 style="color: #2d3748; margin-bottom: 10px; font-size: 14px;">Quick Scenarios</h4>
+                                <button onclick="applyOptimisticScenario()"
+                                    style="width: 100%; padding: 8px; background: #48bb78; color: white; border: none; border-radius: 6px; font-size: 13px; cursor: pointer; margin-bottom: 5px;">
+                                    Optimistic (+20% engagement)
+                                </button>
+                                <button onclick="applyConservativeScenario()"
+                                    style="width: 100%; padding: 8px; background: #f6ad55; color: white; border: none; border-radius: 6px; font-size: 13px; cursor: pointer; margin-bottom: 5px;">
+                                    Conservative (-10% engagement)
+                                </button>
+                                <button onclick="applyHighFeeScenario()"
+                                    style="width: 100%; padding: 8px; background: #667eea; color: white; border: none; border-radius: 6px; font-size: 13px; cursor: pointer;">
+                                    Higher Fees (+10% rates)
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="chart-container">
+                    <h2>Scenario Comparison</h2>
+                    <div class="chart-wrapper">
+                        <canvas id="scenarioChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="footer">
             MyBambu Forecast Dashboard | Data from 2025 Bambu Forecast v9 (Gullane) & Gullane Cash Burn Summary (Oct 9, 2025)
         </div>
@@ -579,6 +750,9 @@
                 tabs[2].classList.add('active');
                 document.getElementById('burnrateTab').classList.add('active');
                 updateBurnRateView();
+            } else if (tab === 'scenario') {
+                tabs[3].classList.add('active');
+                document.getElementById('scenarioTab').classList.add('active');
             }
         }
 
@@ -2722,8 +2896,217 @@
         }
 
         // Initialize dashboard
+        // Scenario Planning Functions
+        let scenarioChart;
+        const SCENARIO_PASSWORD = 'bambu2026';
+        let scenarioAssumptions = {
+            remittanceFee: 3.16,
+            atmFee: 3.01,
+            fxRate: 0.75,
+            cardInterchange: 1.15,
+            loanFee: 300,
+            remittanceUtil: 24,
+            atmUtil: 14,
+            fxUtil: 24,
+            cardUtil: 73,
+            latinoPct: 80,
+            activeRate: 27.9,
+            growthRate: 11
+        };
+        const baselineRevenue2026 = 75270419;
+
+        function unlockScenario() {
+            const password = document.getElementById('scenarioPassword').value;
+            const wrongMsg = document.getElementById('wrongPassword');
+
+            if (password === SCENARIO_PASSWORD) {
+                document.getElementById('scenarioLocked').style.display = 'none';
+                document.getElementById('scenarioContent').style.display = 'block';
+                updateScenario();
+            } else {
+                wrongMsg.style.display = 'block';
+                setTimeout(() => wrongMsg.style.display = 'none', 3000);
+            }
+        }
+
+        function updateScenario() {
+            // Get current values
+            scenarioAssumptions.remittanceFee = parseFloat(document.getElementById('remittanceFee').value);
+            scenarioAssumptions.atmFee = parseFloat(document.getElementById('atmFee').value);
+            scenarioAssumptions.fxRate = parseFloat(document.getElementById('fxRate').value);
+            scenarioAssumptions.cardInterchange = parseFloat(document.getElementById('cardInterchange').value);
+            scenarioAssumptions.loanFee = parseFloat(document.getElementById('loanFee').value);
+            scenarioAssumptions.remittanceUtil = parseFloat(document.getElementById('remittanceUtil').value);
+            scenarioAssumptions.atmUtil = parseFloat(document.getElementById('atmUtil').value);
+            scenarioAssumptions.fxUtil = parseFloat(document.getElementById('fxUtil').value);
+            scenarioAssumptions.cardUtil = parseFloat(document.getElementById('cardUtil').value);
+            scenarioAssumptions.latinoPct = parseFloat(document.getElementById('latinoPct').value);
+            scenarioAssumptions.activeRate = parseFloat(document.getElementById('activeRate').value);
+            scenarioAssumptions.growthRate = parseFloat(document.getElementById('growthRate').value);
+
+            // Calculate impact (simplified model)
+            const baseAssumptions = {
+                remittanceFee: 3.16,
+                atmFee: 3.01,
+                fxRate: 0.75,
+                cardInterchange: 1.15,
+                loanFee: 300,
+                remittanceUtil: 24,
+                atmUtil: 14,
+                fxUtil: 24,
+                cardUtil: 73
+            };
+
+            // Estimate revenue impact
+            const feeImpact = (
+                (scenarioAssumptions.remittanceFee / baseAssumptions.remittanceFee - 1) * 7758387 +
+                (scenarioAssumptions.atmFee / baseAssumptions.atmFee - 1) * 2274164 +
+                (scenarioAssumptions.fxRate / baseAssumptions.fxRate - 1) * 10720744 +
+                (scenarioAssumptions.cardInterchange / baseAssumptions.cardInterchange - 1) * 18805832 +
+                (scenarioAssumptions.loanFee / baseAssumptions.loanFee - 1) * 11833528
+            );
+
+            const utilizationImpact = (
+                (scenarioAssumptions.remittanceUtil / baseAssumptions.remittanceUtil - 1) * 7758387 +
+                (scenarioAssumptions.atmUtil / baseAssumptions.atmUtil - 1) * 2274164 +
+                (scenarioAssumptions.fxUtil / baseAssumptions.fxUtil - 1) * 10720744 +
+                (scenarioAssumptions.cardUtil / baseAssumptions.cardUtil - 1) * 18805832
+            );
+
+            const totalImpact = feeImpact + utilizationImpact;
+            const newRevenue = baselineRevenue2026 + totalImpact;
+
+            // Update display
+            document.getElementById('scenarioImpact').textContent = formatCurrency(totalImpact);
+            document.getElementById('scenario2026Revenue').textContent = formatCurrency(newRevenue);
+
+            const badge = document.getElementById('scenarioImpactBadge');
+            if (totalImpact > 0) {
+                badge.className = 'badge positive';
+                badge.textContent = '+' + formatCurrency(totalImpact) + ' vs. Base';
+            } else if (totalImpact < 0) {
+                badge.className = 'badge negative';
+                badge.textContent = formatCurrency(totalImpact) + ' vs. Base';
+            } else {
+                badge.className = 'badge neutral';
+                badge.textContent = 'Same as Base';
+            }
+
+            // Estimate breakeven shift
+            const monthlyImpact = totalImpact / 12;
+            const monthsShift = Math.round(monthlyImpact / 1000000);
+            const breakevenMonth = 10 - monthsShift; // Base is Oct 2026
+            const breakevenMonths = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+            const breakevenIdx = Math.max(0, Math.min(11, breakevenMonth - 1));
+            document.getElementById('scenarioBreakeven').textContent = breakevenMonths[breakevenIdx] + ' 2026';
+
+            // Update chart
+            updateScenarioChart(newRevenue);
+        }
+
+        function updateScenarioChart(scenarioRevenue) {
+            if (scenarioChart) {
+                scenarioChart.destroy();
+            }
+
+            const ctx = document.getElementById('scenarioChart').getContext('2d');
+            scenarioChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Baseline Forecast', 'Your Scenario'],
+                    datasets: [{
+                        label: '2026 Revenue',
+                        data: [baselineRevenue2026, scenarioRevenue],
+                        backgroundColor: ['rgba(102, 126, 234, 0.8)', 'rgba(118, 75, 162, 0.8)'],
+                        borderColor: ['rgb(102, 126, 234)', 'rgb(118, 75, 162)'],
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        title: {
+                            display: true,
+                            text: '2026 Revenue Comparison'
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function(value) {
+                                    return '$' + (value / 1000000).toFixed(1) + 'M';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function resetScenario() {
+            document.getElementById('remittanceFee').value = 3.16;
+            document.getElementById('atmFee').value = 3.01;
+            document.getElementById('fxRate').value = 0.75;
+            document.getElementById('cardInterchange').value = 1.15;
+            document.getElementById('loanFee').value = 300;
+            document.getElementById('remittanceUtil').value = 24;
+            document.getElementById('atmUtil').value = 14;
+            document.getElementById('fxUtil').value = 24;
+            document.getElementById('cardUtil').value = 73;
+            document.getElementById('latinoPct').value = 80;
+            document.getElementById('activeRate').value = 27.9;
+            document.getElementById('growthRate').value = 11;
+            updateScenario();
+        }
+
+        function saveScenario() {
+            const scenarioData = JSON.stringify(scenarioAssumptions);
+            localStorage.setItem('bambuScenario', scenarioData);
+            alert('Scenario saved! It will be available next time you visit.');
+        }
+
+        function applyOptimisticScenario() {
+            document.getElementById('remittanceUtil').value = 24 * 1.2;
+            document.getElementById('atmUtil').value = 14 * 1.2;
+            document.getElementById('fxUtil').value = 24 * 1.2;
+            document.getElementById('cardUtil').value = Math.min(100, 73 * 1.2);
+            document.getElementById('activeRate').value = 27.9 * 1.2;
+            updateScenario();
+        }
+
+        function applyConservativeScenario() {
+            document.getElementById('remittanceUtil').value = 24 * 0.9;
+            document.getElementById('atmUtil').value = 14 * 0.9;
+            document.getElementById('fxUtil').value = 24 * 0.9;
+            document.getElementById('cardUtil').value = 73 * 0.9;
+            document.getElementById('activeRate').value = 27.9 * 0.9;
+            updateScenario();
+        }
+
+        function applyHighFeeScenario() {
+            document.getElementById('remittanceFee').value = 3.16 * 1.1;
+            document.getElementById('atmFee').value = 3.01 * 1.1;
+            document.getElementById('fxRate').value = 0.75 * 1.1;
+            document.getElementById('cardInterchange').value = 1.15 * 1.1;
+            document.getElementById('loanFee').value = 300 * 1.1;
+            updateScenario();
+        }
+
         function init() {
             updateYearlyView();
+
+            // Load saved scenario if exists
+            const savedScenario = localStorage.getItem('bambuScenario');
+            if (savedScenario) {
+                const saved = JSON.parse(savedScenario);
+                Object.keys(saved).forEach(key => {
+                    const element = document.getElementById(key);
+                    if (element) element.value = saved[key];
+                });
+            }
         }
 
         // Run on page load
