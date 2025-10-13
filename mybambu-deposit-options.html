@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyBambu - Cash Deposit Icon Options</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e9ecef 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+        }
+
+        .container {
+            max-width: 1600px;
+            width: 100%;
+        }
+
+        .header {
+            text-align: center;
+            color: #00052E;
+            margin-bottom: 60px;
+        }
+
+        .logo-text {
+            font-size: 56px;
+            font-weight: 800;
+            color: #00052E;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .logo-icon {
+            width: 60px;
+            height: 60px;
+            background: #27FB6B;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            font-weight: 800;
+            color: white;
+        }
+
+        .tagline {
+            font-size: 18px;
+            color: #27FB6B;
+            font-weight: 500;
+        }
+
+        .icon-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 40px;
+        }
+
+        .icon-scene {
+            background: white;
+            border-radius: 24px;
+            padding: 50px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 30px;
+            transition: all 0.3s ease;
+            border: 3px solid transparent;
+        }
+
+        .icon-scene:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.12);
+        }
+
+        .icon-wrapper {
+            width: 280px;
+            height: 280px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .deposit-scene {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        /* Base wallet styles */
+        .wallet {
+            width: 200px;
+            height: 140px;
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .wallet-body {
+            width: 100%;
+            height: 100%;
+            border-radius: 24px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .wallet-body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, transparent 100%);
+        }
+
+        .wallet-fold {
+            width: 100%;
+            height: 40%;
+            border-radius: 24px 24px 0 0;
+            position: absolute;
+            top: -10px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .wallet-accent {
+            position: absolute;
+            top: 50%;
+            left: 20px;
+            right: 20px;
+            height: 3px;
+            border-radius: 2px;
+        }
+
+        .wallet-button {
+            width: 28px;
+            height: 28px;
+            background: #27FB6B;
+            border-radius: 50%;
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            box-shadow: 0 4px 12px rgba(39, 251, 107, 0.4);
+        }
+
+        .wallet-button::after {
+            content: '';
+            width: 12px;
+            height: 12px;
+            background: white;
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        /* Cash bill base styles */
+        .cash-bill {
+            width: 160px;
+            height: 80px;
+            border-radius: 14px;
+            position: absolute;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            font-weight: 900;
+            top: 30px;
+            left: 50%;
+            transform: translateX(-50%) rotate(-5deg);
+        }
+
+        .cash-bill::before {
+            content: '$';
+        }
+
+        .cash-bill::after {
+            content: '';
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            width: 28px;
+            height: 28px;
+            border: 3px solid rgba(255, 255, 255, 0.4);
+            border-radius: 50%;
+        }
+
+        /* Option 1: Cyan Wallet + Green Cash */
+        .option-1 .wallet-body {
+            background: linear-gradient(135deg, #01CFFB 0%, #00B8E6 100%);
+            box-shadow: 0 20px 40px rgba(1, 207, 251, 0.3);
+        }
+
+        .option-1 .wallet-fold {
+            background: linear-gradient(135deg, #00B8E6 0%, #0097C7 100%);
+        }
+
+        .option-1 .wallet-accent {
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+        }
+
+        .option-1 .cash-bill {
+            background: linear-gradient(135deg, #27FB6B 0%, #20E65F 100%);
+            color: white;
+            box-shadow: 0 12px 35px rgba(39, 251, 107, 0.4);
+        }
+
+        /* Option 2: Green Wallet + Cyan Cash */
+        .option-2 .wallet-body {
+            background: linear-gradient(135deg, #27FB6B 0%, #20E65F 100%);
+            box-shadow: 0 20px 40px rgba(39, 251, 107, 0.3);
+        }
+
+        .option-2 .wallet-fold {
+            background: linear-gradient(135deg, #20E65F 0%, #17CA60 100%);
+        }
+
+        .option-2 .wallet-accent {
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+        }
+
+        .option-2 .wallet-button {
+            background: #01CFFB;
+            box-shadow: 0 4px 12px rgba(1, 207, 251, 0.4);
+        }
+
+        .option-2 .cash-bill {
+            background: linear-gradient(135deg, #01CFFB 0%, #00B8E6 100%);
+            color: white;
+            box-shadow: 0 12px 35px rgba(1, 207, 251, 0.4);
+        }
+
+        /* Option 3: Navy Wallet + Green Cash */
+        .option-3 .wallet-body {
+            background: linear-gradient(135deg, #00052E 0%, #001845 100%);
+            box-shadow: 0 20px 40px rgba(0, 5, 46, 0.4);
+        }
+
+        .option-3 .wallet-fold {
+            background: linear-gradient(135deg, #001845 0%, #002855 100%);
+        }
+
+        .option-3 .wallet-accent {
+            background: linear-gradient(90deg, transparent, #27FB6B, transparent);
+        }
+
+        .option-3 .cash-bill {
+            background: linear-gradient(135deg, #27FB6B 0%, #20E65F 100%);
+            color: #00052E;
+            box-shadow: 0 12px 35px rgba(39, 251, 107, 0.5);
+        }
+
+        /* Option 4: Purple Wallet + Green Cash */
+        .option-4 .wallet-body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            box-shadow: 0 20px 40px rgba(102, 126, 234, 0.3);
+        }
+
+        .option-4 .wallet-fold {
+            background: linear-gradient(135deg, #5a67d8 0%, #6b46c1 100%);
+        }
+
+        .option-4 .wallet-accent {
+            background: linear-gradient(90deg, transparent, #27FB6B, transparent);
+        }
+
+        .option-4 .cash-bill {
+            background: linear-gradient(135deg, #27FB6B 0%, #20E65F 100%);
+            color: white;
+            box-shadow: 0 12px 35px rgba(39, 251, 107, 0.4);
+        }
+
+        /* Option 5: Light Blue Wallet + Green Cash */
+        .option-5 .wallet-body {
+            background: linear-gradient(135deg, #4FC3F7 0%, #29B6F6 100%);
+            box-shadow: 0 20px 40px rgba(79, 195, 247, 0.3);
+        }
+
+        .option-5 .wallet-fold {
+            background: linear-gradient(135deg, #29B6F6 0%, #03A9F4 100%);
+        }
+
+        .option-5 .wallet-accent {
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+        }
+
+        .option-5 .cash-bill {
+            background: linear-gradient(135deg, #27FB6B 0%, #20E65F 100%);
+            color: white;
+            box-shadow: 0 12px 35px rgba(39, 251, 107, 0.4);
+        }
+
+        /* Option 6: Gradient Multi-color */
+        .option-6 .wallet-body {
+            background: linear-gradient(135deg, #667eea 0%, #01CFFB 50%, #27FB6B 100%);
+            box-shadow: 0 20px 40px rgba(39, 251, 107, 0.3);
+        }
+
+        .option-6 .wallet-fold {
+            background: linear-gradient(135deg, #5a67d8 0%, #00B8E6 100%);
+        }
+
+        .option-6 .wallet-accent {
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+        }
+
+        .option-6 .cash-bill {
+            background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+            color: white;
+            box-shadow: 0 12px 35px rgba(255, 215, 0, 0.4);
+        }
+
+        .icon-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #00052E;
+            text-align: center;
+        }
+
+        .icon-subtitle {
+            font-size: 13px;
+            color: #718096;
+            text-align: center;
+            margin-top: -15px;
+        }
+
+        .icon-scene:hover .wallet-fold {
+            top: -14px;
+            transition: top 0.3s ease;
+        }
+
+        @media (max-width: 768px) {
+            .icon-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .logo-text {
+                font-size: 40px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo-text">
+                <div class="logo-icon">B</div>
+                MyBambu
+            </div>
+            <div class="tagline">Cash Deposit Icon Options</div>
+        </div>
+
+        <div class="icon-grid">
+            <!-- Option 1: Cyan Wallet + Green Cash -->
+            <div class="icon-scene">
+                <div class="icon-wrapper">
+                    <div class="deposit-scene option-1">
+                        <div class="cash-bill"></div>
+                        <div class="wallet">
+                            <div class="wallet-fold"></div>
+                            <div class="wallet-body">
+                                <div class="wallet-accent"></div>
+                                <div class="wallet-button"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="icon-title">Option 1</div>
+                <div class="icon-subtitle">Cyan Wallet + Green Cash</div>
+            </div>
+
+            <!-- Option 2: Green Wallet + Cyan Cash -->
+            <div class="icon-scene">
+                <div class="icon-wrapper">
+                    <div class="deposit-scene option-2">
+                        <div class="cash-bill"></div>
+                        <div class="wallet">
+                            <div class="wallet-fold"></div>
+                            <div class="wallet-body">
+                                <div class="wallet-accent"></div>
+                                <div class="wallet-button"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="icon-title">Option 2</div>
+                <div class="icon-subtitle">Green Wallet + Cyan Cash</div>
+            </div>
+
+            <!-- Option 3: Navy Wallet + Green Cash -->
+            <div class="icon-scene">
+                <div class="icon-wrapper">
+                    <div class="deposit-scene option-3">
+                        <div class="cash-bill"></div>
+                        <div class="wallet">
+                            <div class="wallet-fold"></div>
+                            <div class="wallet-body">
+                                <div class="wallet-accent"></div>
+                                <div class="wallet-button"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="icon-title">Option 3</div>
+                <div class="icon-subtitle">Navy Wallet + Green Cash</div>
+            </div>
+
+            <!-- Option 4: Purple Wallet + Green Cash -->
+            <div class="icon-scene">
+                <div class="icon-wrapper">
+                    <div class="deposit-scene option-4">
+                        <div class="cash-bill"></div>
+                        <div class="wallet">
+                            <div class="wallet-fold"></div>
+                            <div class="wallet-body">
+                                <div class="wallet-accent"></div>
+                                <div class="wallet-button"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="icon-title">Option 4</div>
+                <div class="icon-subtitle">Purple Wallet + Green Cash</div>
+            </div>
+
+            <!-- Option 5: Light Blue Wallet + Green Cash -->
+            <div class="icon-scene">
+                <div class="icon-wrapper">
+                    <div class="deposit-scene option-5">
+                        <div class="cash-bill"></div>
+                        <div class="wallet">
+                            <div class="wallet-fold"></div>
+                            <div class="wallet-body">
+                                <div class="wallet-accent"></div>
+                                <div class="wallet-button"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="icon-title">Option 5</div>
+                <div class="icon-subtitle">Light Blue Wallet + Green Cash</div>
+            </div>
+
+            <!-- Option 6: Multi-color Gradient -->
+            <div class="icon-scene">
+                <div class="icon-wrapper">
+                    <div class="deposit-scene option-6">
+                        <div class="cash-bill"></div>
+                        <div class="wallet">
+                            <div class="wallet-fold"></div>
+                            <div class="wallet-body">
+                                <div class="wallet-accent"></div>
+                                <div class="wallet-button"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="icon-title">Option 6</div>
+                <div class="icon-subtitle">Rainbow Gradient + Gold Cash</div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
