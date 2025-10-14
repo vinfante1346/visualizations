@@ -1,0 +1,389 @@
+{
+  "by_country": [
+    {
+      "country": "CO",
+      "uniteller_sept": 4093,
+      "uniteller_oct_proj": 933,
+      "uniteller_change_pct": -77.19684013356137,
+      "transnetwork_sept": 4656,
+      "transnetwork_oct_proj": 6926,
+      "transnetwork_change_pct": 48.76861397479955
+    },
+    {
+      "country": "UY",
+      "uniteller_sept": 14,
+      "uniteller_oct_proj": 6,
+      "uniteller_change_pct": -52.38095238095239,
+      "transnetwork_sept": 0,
+      "transnetwork_oct_proj": 0,
+      "transnetwork_change_pct": NaN
+    },
+    {
+      "country": "SV",
+      "uniteller_sept": 2090,
+      "uniteller_oct_proj": 1173,
+      "uniteller_change_pct": -43.85964912280701,
+      "transnetwork_sept": 2044,
+      "transnetwork_oct_proj": 2603,
+      "transnetwork_change_pct": 27.364644487932168
+    },
+    {
+      "country": "NI",
+      "uniteller_sept": 6709,
+      "uniteller_oct_proj": 4000,
+      "uniteller_change_pct": -40.378595915933815,
+      "transnetwork_sept": 8815,
+      "transnetwork_oct_proj": 10733,
+      "transnetwork_change_pct": 21.762147854036687
+    },
+    {
+      "country": "MX",
+      "uniteller_sept": 13364,
+      "uniteller_oct_proj": 8623,
+      "uniteller_change_pct": -35.473411154345,
+      "transnetwork_sept": 14251,
+      "transnetwork_oct_proj": 16090,
+      "transnetwork_change_pct": 12.904357588941126
+    },
+    {
+      "country": "EC",
+      "uniteller_sept": 4047,
+      "uniteller_oct_proj": 2626,
+      "uniteller_change_pct": -35.095955852071484,
+      "transnetwork_sept": 1173,
+      "transnetwork_oct_proj": 2116,
+      "transnetwork_change_pct": 80.4489911906792
+    },
+    {
+      "country": "HN",
+      "uniteller_sept": 8924,
+      "uniteller_oct_proj": 6060,
+      "uniteller_change_pct": -32.09323173464814,
+      "transnetwork_sept": 10255,
+      "transnetwork_oct_proj": 12516,
+      "transnetwork_change_pct": 22.05428246383879
+    },
+    {
+      "country": "PE",
+      "uniteller_sept": 605,
+      "uniteller_oct_proj": 440,
+      "uniteller_change_pct": -27.27272727272727,
+      "transnetwork_sept": 313,
+      "transnetwork_oct_proj": 406,
+      "transnetwork_change_pct": 29.925452609158686
+    },
+    {
+      "country": "DO",
+      "uniteller_sept": 2571,
+      "uniteller_oct_proj": 1963,
+      "uniteller_change_pct": -23.635420718267852,
+      "transnetwork_sept": 935,
+      "transnetwork_oct_proj": 1373,
+      "transnetwork_change_pct": 46.88057040998219
+    },
+    {
+      "country": "GT",
+      "uniteller_sept": 2687,
+      "uniteller_oct_proj": 2083,
+      "uniteller_change_pct": -22.466195261133848,
+      "transnetwork_sept": 4321,
+      "transnetwork_oct_proj": 4523,
+      "transnetwork_change_pct": 4.6825580498341575
+    },
+    {
+      "country": "HT",
+      "uniteller_sept": 1162,
+      "uniteller_oct_proj": 1016,
+      "uniteller_change_pct": -12.507171543316115,
+      "transnetwork_sept": 0,
+      "transnetwork_oct_proj": 0,
+      "transnetwork_change_pct": NaN
+    },
+    {
+      "country": "CR",
+      "uniteller_sept": 1204,
+      "uniteller_oct_proj": 1120,
+      "uniteller_change_pct": -6.976744186046512,
+      "transnetwork_sept": 0,
+      "transnetwork_oct_proj": 0,
+      "transnetwork_change_pct": NaN
+    },
+    {
+      "country": "CL",
+      "uniteller_sept": 534,
+      "uniteller_oct_proj": 520,
+      "uniteller_change_pct": -2.6217228464419478,
+      "transnetwork_sept": 0,
+      "transnetwork_oct_proj": 0,
+      "transnetwork_change_pct": NaN
+    },
+    {
+      "country": "BR",
+      "uniteller_sept": 124,
+      "uniteller_oct_proj": 123,
+      "uniteller_change_pct": -0.5376344086021428,
+      "transnetwork_sept": 0,
+      "transnetwork_oct_proj": 0,
+      "transnetwork_change_pct": NaN
+    },
+    {
+      "country": "AR",
+      "uniteller_sept": 82,
+      "uniteller_oct_proj": 96,
+      "uniteller_change_pct": 17.886178861788622,
+      "transnetwork_sept": 0,
+      "transnetwork_oct_proj": 0,
+      "transnetwork_change_pct": NaN
+    },
+    {
+      "country": "BO",
+      "uniteller_sept": 4,
+      "uniteller_oct_proj": 6,
+      "uniteller_change_pct": 66.66666666666667,
+      "transnetwork_sept": 0,
+      "transnetwork_oct_proj": 0,
+      "transnetwork_change_pct": NaN
+    },
+    {
+      "country": "PY",
+      "uniteller_sept": 2,
+      "uniteller_oct_proj": 20,
+      "uniteller_change_pct": 900.0,
+      "transnetwork_sept": 0,
+      "transnetwork_oct_proj": 0,
+      "transnetwork_change_pct": NaN
+    },
+    {
+      "country": "PA",
+      "uniteller_sept": 0,
+      "uniteller_oct_proj": 0,
+      "uniteller_change_pct": NaN,
+      "transnetwork_sept": 34,
+      "transnetwork_oct_proj": 53,
+      "transnetwork_change_pct": 56.86274509803923
+    },
+    {
+      "country": "VE",
+      "uniteller_sept": 0,
+      "uniteller_oct_proj": 0,
+      "uniteller_change_pct": NaN,
+      "transnetwork_sept": 0,
+      "transnetwork_oct_proj": 0,
+      "transnetwork_change_pct": NaN
+    }
+  ],
+  "by_payer_losses": [
+    {
+      "country": "CO",
+      "payer": "CSA4-Bancolombia",
+      "sept": 3421,
+      "oct_proj": 390,
+      "change": -3031
+    },
+    {
+      "country": "NI",
+      "payer": "BCC99-BANCENTRO",
+      "sept": 3841,
+      "oct_proj": 1376,
+      "change": -2464
+    },
+    {
+      "country": "MX",
+      "payer": "BCP99-BanCoppel",
+      "sept": 3067,
+      "oct_proj": 636,
+      "change": -2430
+    },
+    {
+      "country": "HN",
+      "payer": "HCA6-Banco Atlantida",
+      "sept": 2527,
+      "oct_proj": 293,
+      "change": -2233
+    },
+    {
+      "country": "EC",
+      "payer": "GYQ99-Banco Guayaquil",
+      "sept": 3313,
+      "oct_proj": 2016,
+      "change": -1296
+    },
+    {
+      "country": "MX",
+      "payer": "BBV1-BBVA",
+      "sept": 2200,
+      "oct_proj": 1146,
+      "change": -1053
+    },
+    {
+      "country": "SV",
+      "payer": "SCA4-Banco Agricola",
+      "sept": 1347,
+      "oct_proj": 453,
+      "change": -893
+    },
+    {
+      "country": "HN",
+      "payer": "BNPS94-BANPAIS",
+      "sept": 1473,
+      "oct_proj": 936,
+      "change": -536
+    },
+    {
+      "country": "GT",
+      "payer": "GCA10-Banrural",
+      "sept": 1701,
+      "oct_proj": 1203,
+      "change": -497
+    },
+    {
+      "country": "DO",
+      "payer": "BANRES-Banreservas",
+      "sept": 824,
+      "oct_proj": 333,
+      "change": -490
+    },
+    {
+      "country": "MX",
+      "payer": "EK699_BANCO-Banco Azteca",
+      "sept": 2457,
+      "oct_proj": 2003,
+      "change": -453
+    },
+    {
+      "country": "NI",
+      "payer": "NCA2-BANCO PROMERICA",
+      "sept": 2818,
+      "oct_proj": 2580,
+      "change": -238
+    },
+    {
+      "country": "MX",
+      "payer": "EK699-Elektra Banco Azteca",
+      "sept": 766,
+      "oct_proj": 536,
+      "change": -229
+    },
+    {
+      "country": "PE",
+      "payer": "Interbank-Interbank",
+      "sept": 561,
+      "oct_proj": 413,
+      "change": -147
+    },
+    {
+      "country": "MX",
+      "payer": "BANAMEX00-Banamex",
+      "sept": 766,
+      "oct_proj": 620,
+      "change": -146
+    }
+  ],
+  "by_payer_gains": [
+    {
+      "country": "CO",
+      "payer": "BANCOLOMBIA",
+      "sept": 3779,
+      "oct_proj": 6100,
+      "change": 2321
+    },
+    {
+      "country": "HN",
+      "payer": "BANCO ATLANTIDA",
+      "sept": 4148,
+      "oct_proj": 6196,
+      "change": 2048
+    },
+    {
+      "country": "NI",
+      "payer": "BANCENTRO",
+      "sept": 3232,
+      "oct_proj": 5183,
+      "change": 1951
+    },
+    {
+      "country": "MX",
+      "payer": "BANCOPPEL",
+      "sept": 4910,
+      "oct_proj": 6646,
+      "change": 1736
+    },
+    {
+      "country": "EC",
+      "payer": "BANCO DE GUAYAQUIL",
+      "sept": 519,
+      "oct_proj": 1213,
+      "change": 694
+    },
+    {
+      "country": "SV",
+      "payer": "BANCO AGRICOLA",
+      "sept": 1368,
+      "oct_proj": 1953,
+      "change": 585
+    },
+    {
+      "country": "DO",
+      "payer": "BANRESERVAS",
+      "sept": 777,
+      "oct_proj": 1196,
+      "change": 419
+    },
+    {
+      "country": "GT",
+      "payer": "BANRURAL",
+      "sept": 946,
+      "oct_proj": 1230,
+      "change": 284
+    },
+    {
+      "country": "MX",
+      "payer": "BBVA BANCOMER",
+      "sept": 4086,
+      "oct_proj": 4346,
+      "change": 260
+    },
+    {
+      "country": "HN",
+      "payer": "BANPAIS SA",
+      "sept": 11,
+      "oct_proj": 270,
+      "change": 259
+    },
+    {
+      "country": "EC",
+      "payer": "BANCO PICHINCHA",
+      "sept": 445,
+      "oct_proj": 606,
+      "change": 161
+    },
+    {
+      "country": "MX",
+      "payer": "OXXO MX",
+      "sept": 313,
+      "oct_proj": 450,
+      "change": 137
+    },
+    {
+      "country": "PE",
+      "payer": "BANCO INTERBANK PERU",
+      "sept": 313,
+      "oct_proj": 406,
+      "change": 93
+    },
+    {
+      "country": "MX",
+      "payer": "Spin by OXXO",
+      "sept": 131,
+      "oct_proj": 173,
+      "change": 42
+    },
+    {
+      "country": "HN",
+      "payer": "BANCO FICOHSA",
+      "sept": 1131,
+      "oct_proj": 1163,
+      "change": 32
+    }
+  ]
+}
