@@ -1,0 +1,4706 @@
+[
+  {
+    "country": "MX",
+    "payer": "BANCOPPEL",
+    "uniteller": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "transnetwork": {
+      "amount": 410274.53,
+      "txCount": 1994,
+      "userCount": 1349
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 410274.53,
+    "totalTx": 1994
+  },
+  {
+    "country": "MX",
+    "payer": "ELEKTRA MEXICO",
+    "uniteller": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "transnetwork": {
+      "amount": 276323.48,
+      "txCount": 1271,
+      "userCount": 923
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 276323.48,
+    "totalTx": 1271
+  },
+  {
+    "country": "MX",
+    "payer": "BBVA BANCOMER",
+    "uniteller": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "transnetwork": {
+      "amount": 236617.79,
+      "txCount": 1304,
+      "userCount": 969
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 236617.79,
+    "totalTx": 1304
+  },
+  {
+    "country": "MX",
+    "payer": "EK699_BANCO-Banco Azteca",
+    "uniteller": {
+      "amount": 143659.74,
+      "txCount": 601,
+      "userCount": 415
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 143659.74,
+    "totalTx": 601
+  },
+  {
+    "country": "MX",
+    "payer": "BANORTE-Banorte",
+    "uniteller": {
+      "amount": 78201.37,
+      "txCount": 316,
+      "userCount": 247
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 78201.37,
+    "totalTx": 316
+  },
+  {
+    "country": "MX",
+    "payer": "BBV1-BBVA",
+    "uniteller": {
+      "amount": 61957.85,
+      "txCount": 344,
+      "userCount": 273
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 61957.85,
+    "totalTx": 344
+  },
+  {
+    "country": "MX",
+    "payer": "BCP99-BanCoppel",
+    "uniteller": {
+      "amount": 40335.99,
+      "txCount": 191,
+      "userCount": 161
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 40335.99,
+    "totalTx": 191
+  },
+  {
+    "country": "MX",
+    "payer": "BANAMEX00-Banamex",
+    "uniteller": {
+      "amount": 36155.16,
+      "txCount": 186,
+      "userCount": 149
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 36155.16,
+    "totalTx": 186
+  },
+  {
+    "country": "MX",
+    "payer": "SNTNDR00-Santander",
+    "uniteller": {
+      "amount": 35039.29,
+      "txCount": 224,
+      "userCount": 179
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 35039.29,
+    "totalTx": 224
+  },
+  {
+    "country": "MX",
+    "payer": "EK699-Elektra Banco Azteca",
+    "uniteller": {
+      "amount": 34616.89,
+      "txCount": 161,
+      "userCount": 136
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 34616.89,
+    "totalTx": 161
+  },
+  {
+    "country": "MX",
+    "payer": "NUMEX00-NU",
+    "uniteller": {
+      "amount": 23554.15,
+      "txCount": 122,
+      "userCount": 93
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 23554.15,
+    "totalTx": 122
+  },
+  {
+    "country": "MX",
+    "payer": "WMTAUR99-Bodega Aurrera",
+    "uniteller": {
+      "amount": 13302.23,
+      "txCount": 80,
+      "userCount": 63
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 13302.23,
+    "totalTx": 80
+  },
+  {
+    "country": "MX",
+    "payer": "BITAL00-HSBC",
+    "uniteller": {
+      "amount": 11316.08,
+      "txCount": 62,
+      "userCount": 52
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 11316.08,
+    "totalTx": 62
+  },
+  {
+    "country": "MX",
+    "payer": "OXXO MX",
+    "uniteller": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "transnetwork": {
+      "amount": 8720.52,
+      "txCount": 135,
+      "userCount": 115
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 8720.52,
+    "totalTx": 135
+  },
+  {
+    "country": "MX",
+    "payer": "COMPRTMS00-Compartamos Banco",
+    "uniteller": {
+      "amount": 7836.9,
+      "txCount": 42,
+      "userCount": 27
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 7836.9,
+    "totalTx": 42
+  },
+  {
+    "country": "MX",
+    "payer": "BANRGIO00_SPEI-HEY BANCO",
+    "uniteller": {
+      "amount": 7507.0,
+      "txCount": 13,
+      "userCount": 10
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 7507.0,
+    "totalTx": 13
+  },
+  {
+    "country": "MX",
+    "payer": "TELECOMM TELEGRAFOS",
+    "uniteller": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "transnetwork": {
+      "amount": 7207.0,
+      "txCount": 24,
+      "userCount": 19
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 7207.0,
+    "totalTx": 24
+  },
+  {
+    "country": "MX",
+    "payer": "Spin by OXXO",
+    "uniteller": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "transnetwork": {
+      "amount": 5156.08,
+      "txCount": 52,
+      "userCount": 38
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 5156.08,
+    "totalTx": 52
+  },
+  {
+    "country": "MX",
+    "payer": "MPAGO00-MERCADO PAGO",
+    "uniteller": {
+      "amount": 4069.15,
+      "txCount": 21,
+      "userCount": 15
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 4069.15,
+    "totalTx": 21
+  },
+  {
+    "country": "MX",
+    "payer": "SPIN00-SPIN BY OXXO",
+    "uniteller": {
+      "amount": 3945.91,
+      "txCount": 33,
+      "userCount": 21
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 3945.91,
+    "totalTx": 33
+  },
+  {
+    "country": "MX",
+    "payer": "BANRGIO00-BanRegio",
+    "uniteller": {
+      "amount": 3893.95,
+      "txCount": 18,
+      "userCount": 16
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 3893.95,
+    "totalTx": 18
+  },
+  {
+    "country": "MX",
+    "payer": "FRAGUA-Far Guadalajara",
+    "uniteller": {
+      "amount": 3829.34,
+      "txCount": 22,
+      "userCount": 15
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 3829.34,
+    "totalTx": 22
+  },
+  {
+    "country": "MX",
+    "payer": "STP01-STP",
+    "uniteller": {
+      "amount": 3778.0,
+      "txCount": 10,
+      "userCount": 8
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 3778.0,
+    "totalTx": 10
+  },
+  {
+    "country": "MX",
+    "payer": "Mercado Pago MX",
+    "uniteller": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "transnetwork": {
+      "amount": 3731.0,
+      "txCount": 17,
+      "userCount": 11
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 3731.0,
+    "totalTx": 17
+  },
+  {
+    "country": "MX",
+    "payer": "BAJIO00-Banco del Bajio",
+    "uniteller": {
+      "amount": 3679.0,
+      "txCount": 10,
+      "userCount": 7
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 3679.0,
+    "totalTx": 10
+  },
+  {
+    "country": "MX",
+    "payer": "PAGOS INTERMEX",
+    "uniteller": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "transnetwork": {
+      "amount": 3545.0,
+      "txCount": 16,
+      "userCount": 13
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 3545.0,
+    "totalTx": 16
+  },
+  {
+    "country": "MX",
+    "payer": "OXXOTN-OXXO",
+    "uniteller": {
+      "amount": 2363.24,
+      "txCount": 34,
+      "userCount": 30
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 2363.24,
+    "totalTx": 34
+  },
+  {
+    "country": "MX",
+    "payer": "SCOTBNK00-Scotiabank",
+    "uniteller": {
+      "amount": 2341.77,
+      "txCount": 17,
+      "userCount": 16
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 2341.77,
+    "totalTx": 17
+  },
+  {
+    "country": "MX",
+    "payer": "INTERMEX-Intermex",
+    "uniteller": {
+      "amount": 2100.0,
+      "txCount": 9,
+      "userCount": 8
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 2100.0,
+    "totalTx": 9
+  },
+  {
+    "country": "MX",
+    "payer": "WMT99-Walmart",
+    "uniteller": {
+      "amount": 1899.0,
+      "txCount": 11,
+      "userCount": 10
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 1899.0,
+    "totalTx": 11
+  },
+  {
+    "country": "MX",
+    "payer": "CPM-Caja Popular Mexicana",
+    "uniteller": {
+      "amount": 1821.0,
+      "txCount": 4,
+      "userCount": 4
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 1821.0,
+    "totalTx": 4
+  },
+  {
+    "country": "MX",
+    "payer": "CAJA POPULAR MEXICANA",
+    "uniteller": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "transnetwork": {
+      "amount": 1265.0,
+      "txCount": 4,
+      "userCount": 3
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 1265.0,
+    "totalTx": 4
+  },
+  {
+    "country": "MX",
+    "payer": "NVIO00-NVIO",
+    "uniteller": {
+      "amount": 1226.0,
+      "txCount": 9,
+      "userCount": 4
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 1226.0,
+    "totalTx": 9
+  },
+  {
+    "country": "MX",
+    "payer": "BSF99-Bansefi",
+    "uniteller": {
+      "amount": 1200.0,
+      "txCount": 2,
+      "userCount": 2
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 1200.0,
+    "totalTx": 2
+  },
+  {
+    "country": "MX",
+    "payer": "ALTERNA00-ALTERNATIVOS / KLAR",
+    "uniteller": {
+      "amount": 1096.98,
+      "txCount": 9,
+      "userCount": 5
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 1096.98,
+    "totalTx": 9
+  },
+  {
+    "country": "MX",
+    "payer": "CAJA BIENESTAR",
+    "uniteller": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "transnetwork": {
+      "amount": 775.0,
+      "txCount": 2,
+      "userCount": 2
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 775.0,
+    "totalTx": 2
+  },
+  {
+    "country": "MX",
+    "payer": "SORIANA-Soriana",
+    "uniteller": {
+      "amount": 659.0,
+      "txCount": 4,
+      "userCount": 3
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 659.0,
+    "totalTx": 4
+  },
+  {
+    "country": "MX",
+    "payer": "AFIRME00-Banco Afirme",
+    "uniteller": {
+      "amount": 605.6,
+      "txCount": 9,
+      "userCount": 6
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 605.6,
+    "totalTx": 9
+  },
+  {
+    "country": "MX",
+    "payer": "GBM00-G B M",
+    "uniteller": {
+      "amount": 600.0,
+      "txCount": 4,
+      "userCount": 3
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 600.0,
+    "totalTx": 4
+  },
+  {
+    "country": "MX",
+    "payer": "WLD97-WALDOS",
+    "uniteller": {
+      "amount": 555.0,
+      "txCount": 2,
+      "userCount": 1
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 555.0,
+    "totalTx": 2
+  },
+  {
+    "country": "MX",
+    "payer": "BANJRCT00-Banjercito",
+    "uniteller": {
+      "amount": 470.0,
+      "txCount": 6,
+      "userCount": 5
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 470.0,
+    "totalTx": 6
+  },
+  {
+    "country": "MX",
+    "payer": "TLC-FINABIEN",
+    "uniteller": {
+      "amount": 388.7,
+      "txCount": 3,
+      "userCount": 3
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 388.7,
+    "totalTx": 3
+  },
+  {
+    "country": "MX",
+    "payer": "QUE10-CAJA POPULAR LAS HUASTECAS",
+    "uniteller": {
+      "amount": 300.0,
+      "txCount": 1,
+      "userCount": 1
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 300.0,
+    "totalTx": 1
+  },
+  {
+    "country": "MX",
+    "payer": "DONDE00-DONDE",
+    "uniteller": {
+      "amount": 300.0,
+      "txCount": 1,
+      "userCount": 1
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 300.0,
+    "totalTx": 1
+  },
+  {
+    "country": "MX",
+    "payer": "Soriana MX",
+    "uniteller": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "transnetwork": {
+      "amount": 284.0,
+      "txCount": 4,
+      "userCount": 4
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 284.0,
+    "totalTx": 4
+  },
+  {
+    "country": "MX",
+    "payer": "NAFIN00-Nafin",
+    "uniteller": {
+      "amount": 212.0,
+      "txCount": 1,
+      "userCount": 1
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 212.0,
+    "totalTx": 1
+  },
+  {
+    "country": "MX",
+    "payer": "MPAGOW00-MERCADO PAGO W",
+    "uniteller": {
+      "amount": 200.0,
+      "txCount": 1,
+      "userCount": 1
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 200.0,
+    "totalTx": 1
+  },
+  {
+    "country": "MX",
+    "payer": "TIENDAS 3B",
+    "uniteller": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "transnetwork": {
+      "amount": 100.0,
+      "txCount": 1,
+      "userCount": 1
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 100.0,
+    "totalTx": 1
+  },
+  {
+    "country": "MX",
+    "payer": "ISSEG-ISSEG",
+    "uniteller": {
+      "amount": 95.0,
+      "txCount": 1,
+      "userCount": 1
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 95.0,
+    "totalTx": 1
+  },
+  {
+    "country": "MX",
+    "payer": "MONEY COOP",
+    "uniteller": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "transnetwork": {
+      "amount": 65.0,
+      "txCount": 2,
+      "userCount": 1
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 65.0,
+    "totalTx": 2
+  },
+  {
+    "country": "MX",
+    "payer": "FARMACIAS DEL AHORRO",
+    "uniteller": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "transnetwork": {
+      "amount": 50.0,
+      "txCount": 1,
+      "userCount": 1
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 50.0,
+    "totalTx": 1
+  },
+  {
+    "country": "MX",
+    "payer": "ABCCAP00-A B C Capital",
+    "uniteller": {
+      "amount": 38.0,
+      "txCount": 1,
+      "userCount": 1
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 38.0,
+    "totalTx": 1
+  },
+  {
+    "country": "MX",
+    "payer": "RAPPI00-RAPPI",
+    "uniteller": {
+      "amount": 25.0,
+      "txCount": 1,
+      "userCount": 1
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 25.0,
+    "totalTx": 1
+  },
+  {
+    "country": "MX",
+    "payer": "ARCUS00-ARCUS",
+    "uniteller": {
+      "amount": 25.0,
+      "txCount": 1,
+      "userCount": 1
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 25.0,
+    "totalTx": 1
+  },
+  {
+    "country": "HN",
+    "payer": "BANCO ATLANTIDA",
+    "uniteller": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "transnetwork": {
+      "amount": 382886.73,
+      "txCount": 1859,
+      "userCount": 1208
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 382886.73,
+    "totalTx": 1859
+  },
+  {
+    "country": "HN",
+    "payer": "HCA7-B. de Occidente",
+    "uniteller": {
+      "amount": 281472.13,
+      "txCount": 1022,
+      "userCount": 734
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 281472.13,
+    "totalTx": 1022
+  },
+  {
+    "country": "HN",
+    "payer": "ELEKTRA HONDURAS",
+    "uniteller": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "transnetwork": {
+      "amount": 128303.29,
+      "txCount": 839,
+      "userCount": 638
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 128303.29,
+    "totalTx": 839
+  },
+  {
+    "country": "HN",
+    "payer": "AGENTES ATLANTIDA",
+    "uniteller": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "transnetwork": {
+      "amount": 82146.63,
+      "txCount": 580,
+      "userCount": 433
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 82146.63,
+    "totalTx": 580
+  },
+  {
+    "country": "HN",
+    "payer": "BANCO FICOHSA",
+    "uniteller": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "transnetwork": {
+      "amount": 72315.03,
+      "txCount": 349,
+      "userCount": 282
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 72315.03,
+    "totalTx": 349
+  },
+  {
+    "country": "HN",
+    "payer": "BNPS94-BANPAIS",
+    "uniteller": {
+      "amount": 64908.81,
+      "txCount": 281,
+      "userCount": 219
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 64908.81,
+    "totalTx": 281
+  },
+  {
+    "country": "HN",
+    "payer": "HCA2-Banco FICOHSA",
+    "uniteller": {
+      "amount": 34922.13,
+      "txCount": 170,
+      "userCount": 133
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 34922.13,
+    "totalTx": 170
+  },
+  {
+    "country": "HN",
+    "payer": "EK499-Elektra",
+    "uniteller": {
+      "amount": 27191.81,
+      "txCount": 194,
+      "userCount": 159
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 27191.81,
+    "totalTx": 194
+  },
+  {
+    "country": "HN",
+    "payer": "BANPAIS SA",
+    "uniteller": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "transnetwork": {
+      "amount": 14837.21,
+      "txCount": 81,
+      "userCount": 73
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 14837.21,
+    "totalTx": 81
+  },
+  {
+    "country": "HN",
+    "payer": "HCA6-Banco Atlantida",
+    "uniteller": {
+      "amount": 13665.35,
+      "txCount": 88,
+      "userCount": 72
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 13665.35,
+    "totalTx": 88
+  },
+  {
+    "country": "HN",
+    "payer": "HCA9-Banrural",
+    "uniteller": {
+      "amount": 11837.77,
+      "txCount": 52,
+      "userCount": 46
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 11837.77,
+    "totalTx": 52
+  },
+  {
+    "country": "HN",
+    "payer": "DAVIVIENDA HONDURAS",
+    "uniteller": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "transnetwork": {
+      "amount": 10371.17,
+      "txCount": 34,
+      "userCount": 32
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 10371.17,
+    "totalTx": 34
+  },
+  {
+    "country": "HN",
+    "payer": "LAFISE HONDURAS S.A.",
+    "uniteller": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "transnetwork": {
+      "amount": 2599.19,
+      "txCount": 8,
+      "userCount": 6
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 2599.19,
+    "totalTx": 8
+  },
+  {
+    "country": "HN",
+    "payer": "B. TENGO",
+    "uniteller": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "transnetwork": {
+      "amount": 855.0,
+      "txCount": 5,
+      "userCount": 5
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 855.0,
+    "totalTx": 5
+  },
+  {
+    "country": "HN",
+    "payer": "FIC99-Ficohsa",
+    "uniteller": {
+      "amount": 633.47,
+      "txCount": 7,
+      "userCount": 6
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 633.47,
+    "totalTx": 7
+  },
+  {
+    "country": "HN",
+    "payer": "HCA10-Cooperativa Ahorro Cacil",
+    "uniteller": {
+      "amount": 265.0,
+      "txCount": 2,
+      "userCount": 2
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 265.0,
+    "totalTx": 2
+  },
+  {
+    "country": "HN",
+    "payer": "HCA11-Banco Popular S.A",
+    "uniteller": {
+      "amount": 60.0,
+      "txCount": 1,
+      "userCount": 1
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 60.0,
+    "totalTx": 1
+  },
+  {
+    "country": "HN",
+    "payer": "HSH99-Banco Davivienda Honduras",
+    "uniteller": {
+      "amount": 50.0,
+      "txCount": 1,
+      "userCount": 1
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 50.0,
+    "totalTx": 1
+  },
+  {
+    "country": "NI",
+    "payer": "BANCENTRO",
+    "uniteller": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "transnetwork": {
+      "amount": 376475.75,
+      "txCount": 1555,
+      "userCount": 1038
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 376475.75,
+    "totalTx": 1555
+  },
+  {
+    "country": "NI",
+    "payer": "BANPRO",
+    "uniteller": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "transnetwork": {
+      "amount": 315173.42,
+      "txCount": 1538,
+      "userCount": 981
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 315173.42,
+    "totalTx": 1538
+  },
+  {
+    "country": "NI",
+    "payer": "NCA2-BANCO PROMERICA",
+    "uniteller": {
+      "amount": 167851.99,
+      "txCount": 774,
+      "userCount": 505
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 167851.99,
+    "totalTx": 774
+  },
+  {
+    "country": "NI",
+    "payer": "BCC99-BANCENTRO",
+    "uniteller": {
+      "amount": 102898.96,
+      "txCount": 413,
+      "userCount": 316
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 102898.96,
+    "totalTx": 413
+  },
+  {
+    "country": "NI",
+    "payer": "BANCO CREDOMATIC NICARAGUA",
+    "uniteller": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "transnetwork": {
+      "amount": 37790.0,
+      "txCount": 127,
+      "userCount": 104
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 37790.0,
+    "totalTx": 127
+  },
+  {
+    "country": "NI",
+    "payer": "CRN99-CREDOMATIC",
+    "uniteller": {
+      "amount": 2700.0,
+      "txCount": 12,
+      "userCount": 12
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 2700.0,
+    "totalTx": 12
+  },
+  {
+    "country": "NI",
+    "payer": "CITN0198-CITI-FICOHSA",
+    "uniteller": {
+      "amount": 400.0,
+      "txCount": 1,
+      "userCount": 1
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 400.0,
+    "totalTx": 1
+  },
+  {
+    "country": "CO",
+    "payer": "BANCOLOMBIA",
+    "uniteller": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "transnetwork": {
+      "amount": 377327.53,
+      "txCount": 1830,
+      "userCount": 1122
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 377327.53,
+    "totalTx": 1830
+  },
+  {
+    "country": "CO",
+    "payer": "BANCO DAVIVIENDA",
+    "uniteller": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "transnetwork": {
+      "amount": 45950.67,
+      "txCount": 237,
+      "userCount": 170
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 45950.67,
+    "totalTx": 237
+  },
+  {
+    "country": "CO",
+    "payer": "CSA8-Davivienda",
+    "uniteller": {
+      "amount": 34559.57,
+      "txCount": 163,
+      "userCount": 116
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 34559.57,
+    "totalTx": 163
+  },
+  {
+    "country": "CO",
+    "payer": "CSA4-Bancolombia",
+    "uniteller": {
+      "amount": 21553.0,
+      "txCount": 117,
+      "userCount": 88
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 21553.0,
+    "totalTx": 117
+  },
+  {
+    "country": "CO",
+    "payer": "BBVA COLOMBIA",
+    "uniteller": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "transnetwork": {
+      "amount": 6335.0,
+      "txCount": 9,
+      "userCount": 6
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 6335.0,
+    "totalTx": 9
+  },
+  {
+    "country": "CO",
+    "payer": "FINANCIERA PAGOS INTERNACIONALES",
+    "uniteller": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "transnetwork": {
+      "amount": 665.0,
+      "txCount": 2,
+      "userCount": 2
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 665.0,
+    "totalTx": 2
+  },
+  {
+    "country": "EC",
+    "payer": "GYQ99-Banco Guayaquil",
+    "uniteller": {
+      "amount": 154704.59,
+      "txCount": 605,
+      "userCount": 385
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 154704.59,
+    "totalTx": 605
+  },
+  {
+    "country": "EC",
+    "payer": "BANCO DE GUAYAQUIL",
+    "uniteller": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "transnetwork": {
+      "amount": 86793.2,
+      "txCount": 364,
+      "userCount": 252
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 86793.2,
+    "totalTx": 364
+  },
+  {
+    "country": "EC",
+    "payer": "BANCO PICHINCHA",
+    "uniteller": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "transnetwork": {
+      "amount": 52146.65,
+      "txCount": 182,
+      "userCount": 156
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 52146.65,
+    "totalTx": 182
+  },
+  {
+    "country": "EC",
+    "payer": "ECU8-B. del Austro",
+    "uniteller": {
+      "amount": 34649.0,
+      "txCount": 92,
+      "userCount": 53
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 34649.0,
+    "totalTx": 92
+  },
+  {
+    "country": "EC",
+    "payer": "ECU6370113-COOP. JUVENTUD ECUATORIANA PROGRESISTA",
+    "uniteller": {
+      "amount": 13919.5,
+      "txCount": 37,
+      "userCount": 28
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 13919.5,
+    "totalTx": 37
+  },
+  {
+    "country": "EC",
+    "payer": "ECU6-B. Bolivariano",
+    "uniteller": {
+      "amount": 9326.0,
+      "txCount": 26,
+      "userCount": 20
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 9326.0,
+    "totalTx": 26
+  },
+  {
+    "country": "EC",
+    "payer": "BANCO DEL AUSTRO",
+    "uniteller": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "transnetwork": {
+      "amount": 7214.0,
+      "txCount": 31,
+      "userCount": 22
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 7214.0,
+    "totalTx": 31
+  },
+  {
+    "country": "EC",
+    "payer": "BANCO BOLIVARIANO",
+    "uniteller": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "transnetwork": {
+      "amount": 4911.0,
+      "txCount": 20,
+      "userCount": 18
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 4911.0,
+    "totalTx": 20
+  },
+  {
+    "country": "EC",
+    "payer": "ECU12-Cooperativa Jep",
+    "uniteller": {
+      "amount": 4165.5,
+      "txCount": 18,
+      "userCount": 15
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 4165.5,
+    "totalTx": 18
+  },
+  {
+    "country": "EC",
+    "payer": "COOP. JUVENTUD ECUATORIANA PROGRESISTA LTDA.",
+    "uniteller": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "transnetwork": {
+      "amount": 4050.0,
+      "txCount": 5,
+      "userCount": 5
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 4050.0,
+    "totalTx": 5
+  },
+  {
+    "country": "EC",
+    "payer": "COOP. JARDIN AZUAYO",
+    "uniteller": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "transnetwork": {
+      "amount": 2795.0,
+      "txCount": 6,
+      "userCount": 5
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 2795.0,
+    "totalTx": 6
+  },
+  {
+    "country": "EC",
+    "payer": "BANCO DEL PACIFICO",
+    "uniteller": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "transnetwork": {
+      "amount": 2105.0,
+      "txCount": 10,
+      "userCount": 9
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 2105.0,
+    "totalTx": 10
+  },
+  {
+    "country": "EC",
+    "payer": "BANCO DE LOJA",
+    "uniteller": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "transnetwork": {
+      "amount": 1920.0,
+      "txCount": 7,
+      "userCount": 5
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 1920.0,
+    "totalTx": 7
+  },
+  {
+    "country": "EC",
+    "payer": "ECU1-Mutualista Pichincha",
+    "uniteller": {
+      "amount": 1890.0,
+      "txCount": 7,
+      "userCount": 5
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 1890.0,
+    "totalTx": 7
+  },
+  {
+    "country": "EC",
+    "payer": "BANCO INTERNACIONAL",
+    "uniteller": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "transnetwork": {
+      "amount": 1523.0,
+      "txCount": 7,
+      "userCount": 4
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 1523.0,
+    "totalTx": 7
+  },
+  {
+    "country": "EC",
+    "payer": "ECU6370114-COOP. AHORRO Y CREDITO JARDIN AZUAYO",
+    "uniteller": {
+      "amount": 900.0,
+      "txCount": 2,
+      "userCount": 2
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 900.0,
+    "totalTx": 2
+  },
+  {
+    "country": "EC",
+    "payer": "PRODUBANCO",
+    "uniteller": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "transnetwork": {
+      "amount": 300.0,
+      "txCount": 1,
+      "userCount": 1
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 300.0,
+    "totalTx": 1
+  },
+  {
+    "country": "EC",
+    "payer": "ECU6797027-COOP.AHORRO Y CREDITO RIOBAMBA",
+    "uniteller": {
+      "amount": 125.0,
+      "txCount": 1,
+      "userCount": 1
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 125.0,
+    "totalTx": 1
+  },
+  {
+    "country": "EC",
+    "payer": "RED DE BARRIO",
+    "uniteller": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "transnetwork": {
+      "amount": 50.0,
+      "txCount": 1,
+      "userCount": 1
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 50.0,
+    "totalTx": 1
+  },
+  {
+    "country": "EC",
+    "payer": "B DE MACHALA",
+    "uniteller": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "transnetwork": {
+      "amount": 25.0,
+      "txCount": 1,
+      "userCount": 1
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 25.0,
+    "totalTx": 1
+  },
+  {
+    "country": "GT",
+    "payer": "BANCO DESARROLLO RURAL",
+    "uniteller": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "transnetwork": {
+      "amount": 109313.14,
+      "txCount": 653,
+      "userCount": 440
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 109313.14,
+    "totalTx": 653
+  },
+  {
+    "country": "GT",
+    "payer": "GCA10-Banrural",
+    "uniteller": {
+      "amount": 74117.74,
+      "txCount": 361,
+      "userCount": 261
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 74117.74,
+    "totalTx": 361
+  },
+  {
+    "country": "GT",
+    "payer": "BANRURAL",
+    "uniteller": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "transnetwork": {
+      "amount": 64888.53,
+      "txCount": 369,
+      "userCount": 274
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 64888.53,
+    "totalTx": 369
+  },
+  {
+    "country": "GT",
+    "payer": "BANCO INDUSTRIAL DE GUATEMALA",
+    "uniteller": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "transnetwork": {
+      "amount": 54265.3,
+      "txCount": 311,
+      "userCount": 240
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 54265.3,
+    "totalTx": 311
+  },
+  {
+    "country": "GT",
+    "payer": "GCA8-B. Industrial",
+    "uniteller": {
+      "amount": 25098.74,
+      "txCount": 141,
+      "userCount": 99
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 25098.74,
+    "totalTx": 141
+  },
+  {
+    "country": "GT",
+    "payer": "MCOOP94-MICOOPE",
+    "uniteller": {
+      "amount": 9850.69,
+      "txCount": 39,
+      "userCount": 34
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 9850.69,
+    "totalTx": 39
+  },
+  {
+    "country": "GT",
+    "payer": "BANTRAB-BANTRAB",
+    "uniteller": {
+      "amount": 6154.56,
+      "txCount": 29,
+      "userCount": 25
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 6154.56,
+    "totalTx": 29
+  },
+  {
+    "country": "GT",
+    "payer": "BAM-BAM",
+    "uniteller": {
+      "amount": 3812.71,
+      "txCount": 21,
+      "userCount": 16
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 3812.71,
+    "totalTx": 21
+  },
+  {
+    "country": "GT",
+    "payer": "GCA1-Gyt Continental",
+    "uniteller": {
+      "amount": 2888.0,
+      "txCount": 20,
+      "userCount": 18
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 2888.0,
+    "totalTx": 20
+  },
+  {
+    "country": "GT",
+    "payer": "EK299-Elektra-Banco Azteca Guatemala",
+    "uniteller": {
+      "amount": 2596.6,
+      "txCount": 8,
+      "userCount": 6
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 2596.6,
+    "totalTx": 8
+  },
+  {
+    "country": "GT",
+    "payer": "ELEKTRA GUATEMALA",
+    "uniteller": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "transnetwork": {
+      "amount": 1782.74,
+      "txCount": 17,
+      "userCount": 14
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 1782.74,
+    "totalTx": 17
+  },
+  {
+    "country": "GT",
+    "payer": "BANCO PROMERICA GUATEMALA",
+    "uniteller": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "transnetwork": {
+      "amount": 585.49,
+      "txCount": 7,
+      "userCount": 5
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 585.49,
+    "totalTx": 7
+  },
+  {
+    "country": "GT",
+    "payer": "FCV94-FARMACIAS CRUZ VERDE",
+    "uniteller": {
+      "amount": 170.0,
+      "txCount": 3,
+      "userCount": 3
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 170.0,
+    "totalTx": 3
+  },
+  {
+    "country": "GT",
+    "payer": "GCA3-B. Inmobiliario",
+    "uniteller": {
+      "amount": 153.0,
+      "txCount": 2,
+      "userCount": 2
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 153.0,
+    "totalTx": 2
+  },
+  {
+    "country": "GT",
+    "payer": "SR2495-SUPER 24",
+    "uniteller": {
+      "amount": 25.0,
+      "txCount": 1,
+      "userCount": 1
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 25.0,
+    "totalTx": 1
+  },
+  {
+    "country": "VE",
+    "payer": "0102-BANCO DE VENEZUELA",
+    "uniteller": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 138121.55,
+      "txCount": 1997,
+      "userCount": 1237
+    },
+    "total": 138121.55,
+    "totalTx": 1997
+  },
+  {
+    "country": "VE",
+    "payer": "0134-BANESCO",
+    "uniteller": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 32137.92,
+      "txCount": 484,
+      "userCount": 320
+    },
+    "total": 32137.92,
+    "totalTx": 484
+  },
+  {
+    "country": "VE",
+    "payer": "0105-MERCANTIL",
+    "uniteller": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 17722.7,
+      "txCount": 267,
+      "userCount": 188
+    },
+    "total": 17722.7,
+    "totalTx": 267
+  },
+  {
+    "country": "VE",
+    "payer": "0108-BANCO PROVINCIAL",
+    "uniteller": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 16823.55,
+      "txCount": 241,
+      "userCount": 179
+    },
+    "total": 16823.55,
+    "totalTx": 241
+  },
+  {
+    "country": "VE",
+    "payer": "0191-BANCO NACIONAL DE CREDITO",
+    "uniteller": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 12519.1,
+      "txCount": 161,
+      "userCount": 108
+    },
+    "total": 12519.1,
+    "totalTx": 161
+  },
+  {
+    "country": "VE",
+    "payer": "75826196-MoneyGram",
+    "uniteller": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 3351.0,
+      "txCount": 39,
+      "userCount": 33
+    },
+    "total": 3351.0,
+    "totalTx": 39
+  },
+  {
+    "country": "VE",
+    "payer": "0114-BANCO DEL CARIBE",
+    "uniteller": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 2596.0,
+      "txCount": 40,
+      "userCount": 30
+    },
+    "total": 2596.0,
+    "totalTx": 40
+  },
+  {
+    "country": "VE",
+    "payer": "0163-BANCO DEL TESORO",
+    "uniteller": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 2448.5,
+      "txCount": 32,
+      "userCount": 23
+    },
+    "total": 2448.5,
+    "totalTx": 32
+  },
+  {
+    "country": "VE",
+    "payer": "0175-BANCO BICENTENARIO DEL PUEBLO",
+    "uniteller": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 2160.0,
+      "txCount": 25,
+      "userCount": 23
+    },
+    "total": 2160.0,
+    "totalTx": 25
+  },
+  {
+    "country": "VE",
+    "payer": "0172-BANCAMIGA",
+    "uniteller": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 2040.0,
+      "txCount": 34,
+      "userCount": 24
+    },
+    "total": 2040.0,
+    "totalTx": 34
+  },
+  {
+    "country": "VE",
+    "payer": "0174-BANPLUS",
+    "uniteller": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 1310.0,
+      "txCount": 11,
+      "userCount": 7
+    },
+    "total": 1310.0,
+    "totalTx": 11
+  },
+  {
+    "country": "VE",
+    "payer": "0115-BANCO EXTERIOR",
+    "uniteller": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 962.0,
+      "txCount": 12,
+      "userCount": 9
+    },
+    "total": 962.0,
+    "totalTx": 12
+  },
+  {
+    "country": "VE",
+    "payer": "0128-BANCO CARONI",
+    "uniteller": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 738.0,
+      "txCount": 19,
+      "userCount": 11
+    },
+    "total": 738.0,
+    "totalTx": 19
+  },
+  {
+    "country": "VE",
+    "payer": "0104-VENEZOLANO DE CREDITO",
+    "uniteller": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 682.0,
+      "txCount": 9,
+      "userCount": 6
+    },
+    "total": 682.0,
+    "totalTx": 9
+  },
+  {
+    "country": "VE",
+    "payer": "0151-BFC BANCO FONDO COMUN",
+    "uniteller": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 376.0,
+      "txCount": 9,
+      "userCount": 6
+    },
+    "total": 376.0,
+    "totalTx": 9
+  },
+  {
+    "country": "VE",
+    "payer": "0156-100% BANCO",
+    "uniteller": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 185.0,
+      "txCount": 3,
+      "userCount": 3
+    },
+    "total": 185.0,
+    "totalTx": 3
+  },
+  {
+    "country": "VE",
+    "payer": "0169-MI BANCO",
+    "uniteller": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 141.0,
+      "txCount": 3,
+      "userCount": 3
+    },
+    "total": 141.0,
+    "totalTx": 3
+  },
+  {
+    "country": "VE",
+    "payer": "0168-BANCRECER",
+    "uniteller": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 100.0,
+      "txCount": 2,
+      "userCount": 1
+    },
+    "total": 100.0,
+    "totalTx": 2
+  },
+  {
+    "country": "VE",
+    "payer": "0157-DEL SUR BANCO UNIVERSAL",
+    "uniteller": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 55.0,
+      "txCount": 1,
+      "userCount": 1
+    },
+    "total": 55.0,
+    "totalTx": 1
+  },
+  {
+    "country": "VE",
+    "payer": "0137-BANCO SOFITASA",
+    "uniteller": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 55.0,
+      "txCount": 2,
+      "userCount": 2
+    },
+    "total": 55.0,
+    "totalTx": 2
+  },
+  {
+    "country": "VE",
+    "payer": "0171-BANCO ACTIVO",
+    "uniteller": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 50.0,
+      "txCount": 1,
+      "userCount": 1
+    },
+    "total": 50.0,
+    "totalTx": 1
+  },
+  {
+    "country": "VE",
+    "payer": "0138-BANCO PLAZA",
+    "uniteller": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 25.0,
+      "txCount": 1,
+      "userCount": 1
+    },
+    "total": 25.0,
+    "totalTx": 1
+  },
+  {
+    "country": "VE",
+    "payer": "0116-BANCO OCCIDENTAL DE DESCUENTO",
+    "uniteller": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 25.0,
+      "txCount": 1,
+      "userCount": 1
+    },
+    "total": 25.0,
+    "totalTx": 1
+  },
+  {
+    "country": "SV",
+    "payer": "BANCO AGRICOLA",
+    "uniteller": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "transnetwork": {
+      "amount": 108884.03,
+      "txCount": 586,
+      "userCount": 398
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 108884.03,
+    "totalTx": 586
+  },
+  {
+    "country": "SV",
+    "payer": "SCA4-Banco Agricola",
+    "uniteller": {
+      "amount": 36836.27,
+      "txCount": 136,
+      "userCount": 111
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 36836.27,
+    "totalTx": 136
+  },
+  {
+    "country": "SV",
+    "payer": "FEDECREDITO",
+    "uniteller": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "transnetwork": {
+      "amount": 24433.75,
+      "txCount": 119,
+      "userCount": 97
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 24433.75,
+    "totalTx": 119
+  },
+  {
+    "country": "SV",
+    "payer": "CUSC98-Banco Cuscatlan",
+    "uniteller": {
+      "amount": 19343.0,
+      "txCount": 94,
+      "userCount": 72
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 19343.0,
+    "totalTx": 94
+  },
+  {
+    "country": "SV",
+    "payer": "SCA2-Banco Promerica",
+    "uniteller": {
+      "amount": 8285.0,
+      "txCount": 33,
+      "userCount": 21
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 8285.0,
+    "totalTx": 33
+  },
+  {
+    "country": "SV",
+    "payer": "SCA10-Davivienda El Salvador",
+    "uniteller": {
+      "amount": 7078.0,
+      "txCount": 41,
+      "userCount": 32
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 7078.0,
+    "totalTx": 41
+  },
+  {
+    "country": "SV",
+    "payer": "BANCO CREDOMATIC SALVADOR",
+    "uniteller": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "transnetwork": {
+      "amount": 7049.0,
+      "txCount": 29,
+      "userCount": 17
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 7049.0,
+    "totalTx": 29
+  },
+  {
+    "country": "SV",
+    "payer": "SCA7-Fedecredito",
+    "uniteller": {
+      "amount": 6107.5,
+      "txCount": 28,
+      "userCount": 25
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 6107.5,
+    "totalTx": 28
+  },
+  {
+    "country": "SV",
+    "payer": "DAVIVIENDA SALVADORENO",
+    "uniteller": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "transnetwork": {
+      "amount": 5132.0,
+      "txCount": 28,
+      "userCount": 24
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 5132.0,
+    "totalTx": 28
+  },
+  {
+    "country": "SV",
+    "payer": "BANCO FEDECACES",
+    "uniteller": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "transnetwork": {
+      "amount": 4195.0,
+      "txCount": 17,
+      "userCount": 14
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 4195.0,
+    "totalTx": 17
+  },
+  {
+    "country": "SV",
+    "payer": "SCA5-Fedecaces",
+    "uniteller": {
+      "amount": 3440.0,
+      "txCount": 14,
+      "userCount": 10
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 3440.0,
+    "totalTx": 14
+  },
+  {
+    "country": "SV",
+    "payer": "BANCO ATLANTIDA EL SALVADOR",
+    "uniteller": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "transnetwork": {
+      "amount": 1025.0,
+      "txCount": 2,
+      "userCount": 2
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 1025.0,
+    "totalTx": 2
+  },
+  {
+    "country": "SV",
+    "payer": "CITS0298-B. F. A",
+    "uniteller": {
+      "amount": 875.0,
+      "txCount": 5,
+      "userCount": 5
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 875.0,
+    "totalTx": 5
+  },
+  {
+    "country": "SV",
+    "payer": "CRS99-Banco Credomatic",
+    "uniteller": {
+      "amount": 105.0,
+      "txCount": 1,
+      "userCount": 1
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 105.0,
+    "totalTx": 1
+  },
+  {
+    "country": "DO",
+    "payer": "BANRESERVAS",
+    "uniteller": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "transnetwork": {
+      "amount": 74273.51,
+      "txCount": 359,
+      "userCount": 205
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 74273.51,
+    "totalTx": 359
+  },
+  {
+    "country": "DO",
+    "payer": "DR_CARIBEX-Caribe Express",
+    "uniteller": {
+      "amount": 50961.77,
+      "txCount": 347,
+      "userCount": 217
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 50961.77,
+    "totalTx": 347
+  },
+  {
+    "country": "DO",
+    "payer": "BANRES-Banreservas",
+    "uniteller": {
+      "amount": 23931.79,
+      "txCount": 100,
+      "userCount": 66
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 23931.79,
+    "totalTx": 100
+  },
+  {
+    "country": "DO",
+    "payer": "BHD-BHD",
+    "uniteller": {
+      "amount": 14262.0,
+      "txCount": 72,
+      "userCount": 46
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 14262.0,
+    "totalTx": 72
+  },
+  {
+    "country": "DO",
+    "payer": "BANCO BHD",
+    "uniteller": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "transnetwork": {
+      "amount": 10011.5,
+      "txCount": 52,
+      "userCount": 35
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 10011.5,
+    "totalTx": 52
+  },
+  {
+    "country": "DO",
+    "payer": "DRCX000025-Banco Popular Dominicano",
+    "uniteller": {
+      "amount": 9274.5,
+      "txCount": 43,
+      "userCount": 36
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 9274.5,
+    "totalTx": 43
+  },
+  {
+    "country": "DO",
+    "payer": "DRCX000003-Asociacion Cibao De Ahorros Y Prestamos",
+    "uniteller": {
+      "amount": 3279.0,
+      "txCount": 11,
+      "userCount": 5
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 3279.0,
+    "totalTx": 11
+  },
+  {
+    "country": "DO",
+    "payer": "DRCX000016-Asociacion Popular De Ahorros Y Prestamos",
+    "uniteller": {
+      "amount": 2129.0,
+      "txCount": 9,
+      "userCount": 8
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 2129.0,
+    "totalTx": 9
+  },
+  {
+    "country": "DO",
+    "payer": "DRCX000012-Asociacion Mocana De Ahorros Y Prestamos",
+    "uniteller": {
+      "amount": 1000.0,
+      "txCount": 1,
+      "userCount": 1
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 1000.0,
+    "totalTx": 1
+  },
+  {
+    "country": "DO",
+    "payer": "DRCX000028-Scotiabank Dr",
+    "uniteller": {
+      "amount": 405.0,
+      "txCount": 1,
+      "userCount": 1
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 405.0,
+    "totalTx": 1
+  },
+  {
+    "country": "DO",
+    "payer": "BANCO UNION",
+    "uniteller": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "transnetwork": {
+      "amount": 397.0,
+      "txCount": 1,
+      "userCount": 1
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 397.0,
+    "totalTx": 1
+  },
+  {
+    "country": "DO",
+    "payer": "DR_BCU96-Banco Union",
+    "uniteller": {
+      "amount": 347.0,
+      "txCount": 2,
+      "userCount": 2
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 347.0,
+    "totalTx": 2
+  },
+  {
+    "country": "DO",
+    "payer": "DRCX000008-Asociacion La Nacional De Ahorros Y Prestamos",
+    "uniteller": {
+      "amount": 120.0,
+      "txCount": 2,
+      "userCount": 2
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 120.0,
+    "totalTx": 2
+  },
+  {
+    "country": "DO",
+    "payer": "DRCX000026-Banco Santa Cruz",
+    "uniteller": {
+      "amount": 65.0,
+      "txCount": 1,
+      "userCount": 1
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 65.0,
+    "totalTx": 1
+  },
+  {
+    "country": "CR",
+    "payer": "TELE000192-Banco Nacional",
+    "uniteller": {
+      "amount": 28833.0,
+      "txCount": 95,
+      "userCount": 69
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 28833.0,
+    "totalTx": 95
+  },
+  {
+    "country": "CR",
+    "payer": "TELE000592-BAC San Jose",
+    "uniteller": {
+      "amount": 18968.3,
+      "txCount": 70,
+      "userCount": 49
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 18968.3,
+    "totalTx": 70
+  },
+  {
+    "country": "CR",
+    "payer": "CCA5-Teledolar",
+    "uniteller": {
+      "amount": 14264.0,
+      "txCount": 81,
+      "userCount": 63
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 14264.0,
+    "totalTx": 81
+  },
+  {
+    "country": "CR",
+    "payer": "TELE004892-Banco De Costa Rica",
+    "uniteller": {
+      "amount": 13791.0,
+      "txCount": 65,
+      "userCount": 44
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 13791.0,
+    "totalTx": 65
+  },
+  {
+    "country": "CR",
+    "payer": "TELE000292-Banco Popular",
+    "uniteller": {
+      "amount": 2650.0,
+      "txCount": 10,
+      "userCount": 9
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 2650.0,
+    "totalTx": 10
+  },
+  {
+    "country": "CR",
+    "payer": "TELE000492-Banco Davivienda",
+    "uniteller": {
+      "amount": 2011.0,
+      "txCount": 3,
+      "userCount": 3
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 2011.0,
+    "totalTx": 3
+  },
+  {
+    "country": "CR",
+    "payer": "TELE001692-Banco Lafise",
+    "uniteller": {
+      "amount": 800.0,
+      "txCount": 4,
+      "userCount": 3
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 800.0,
+    "totalTx": 4
+  },
+  {
+    "country": "CR",
+    "payer": "TELE001292-Banco Mutual La Vivienda",
+    "uniteller": {
+      "amount": 615.0,
+      "txCount": 3,
+      "userCount": 3
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 615.0,
+    "totalTx": 3
+  },
+  {
+    "country": "CR",
+    "payer": "TELE001092-CoopeAlianza",
+    "uniteller": {
+      "amount": 380.0,
+      "txCount": 2,
+      "userCount": 2
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 380.0,
+    "totalTx": 2
+  },
+  {
+    "country": "CR",
+    "payer": "TELE002692-Coopenae",
+    "uniteller": {
+      "amount": 350.0,
+      "txCount": 2,
+      "userCount": 2
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 350.0,
+    "totalTx": 2
+  },
+  {
+    "country": "CR",
+    "payer": "EASYPY94-EASYPAY",
+    "uniteller": {
+      "amount": 50.0,
+      "txCount": 1,
+      "userCount": 1
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 50.0,
+    "totalTx": 1
+  },
+  {
+    "country": "HT",
+    "payer": "UNIBANK-Unitransfer",
+    "uniteller": {
+      "amount": 60439.37,
+      "txCount": 305,
+      "userCount": 193
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 60439.37,
+    "totalTx": 305
+  },
+  {
+    "country": "PE",
+    "payer": "BANCO INTERBANK PERU",
+    "uniteller": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "transnetwork": {
+      "amount": 27067.98,
+      "txCount": 122,
+      "userCount": 82
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 27067.98,
+    "totalTx": 122
+  },
+  {
+    "country": "PE",
+    "payer": "Interbank-Interbank",
+    "uniteller": {
+      "amount": 15837.0,
+      "txCount": 124,
+      "userCount": 88
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 15837.0,
+    "totalTx": 124
+  },
+  {
+    "country": "PE",
+    "payer": "BCDP-BCP Soles",
+    "uniteller": {
+      "amount": 1125.0,
+      "txCount": 8,
+      "userCount": 8
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 1125.0,
+    "totalTx": 8
+  },
+  {
+    "country": "CL",
+    "payer": "RTCH09-Banco Del Estado De Chile",
+    "uniteller": {
+      "amount": 23559.15,
+      "txCount": 94,
+      "userCount": 58
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 23559.15,
+    "totalTx": 94
+  },
+  {
+    "country": "CL",
+    "payer": "RTCH10-Banco Falabella",
+    "uniteller": {
+      "amount": 3258.0,
+      "txCount": 22,
+      "userCount": 19
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 3258.0,
+    "totalTx": 22
+  },
+  {
+    "country": "CL",
+    "payer": "RTCH08-Bci",
+    "uniteller": {
+      "amount": 2831.0,
+      "txCount": 8,
+      "userCount": 6
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 2831.0,
+    "totalTx": 8
+  },
+  {
+    "country": "CL",
+    "payer": "RTCH01-Banco Santander Chile",
+    "uniteller": {
+      "amount": 2426.15,
+      "txCount": 15,
+      "userCount": 12
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 2426.15,
+    "totalTx": 15
+  },
+  {
+    "country": "CL",
+    "payer": "RTCH06-Banco De Chile",
+    "uniteller": {
+      "amount": 2396.06,
+      "txCount": 11,
+      "userCount": 10
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 2396.06,
+    "totalTx": 11
+  },
+  {
+    "country": "CL",
+    "payer": "RTCH02-Scotiabank Chile",
+    "uniteller": {
+      "amount": 140.0,
+      "txCount": 2,
+      "userCount": 1
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 140.0,
+    "totalTx": 2
+  },
+  {
+    "country": "CL",
+    "payer": "MTCH0001-Banco Credito Inversiones",
+    "uniteller": {
+      "amount": 75.0,
+      "txCount": 3,
+      "userCount": 2
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 75.0,
+    "totalTx": 3
+  },
+  {
+    "country": "CL",
+    "payer": "RTCH12-Ripley",
+    "uniteller": {
+      "amount": 55.0,
+      "txCount": 1,
+      "userCount": 1
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 55.0,
+    "totalTx": 1
+  },
+  {
+    "country": "BR",
+    "payer": "BRPO00001-BANCO DO BRASIL SA BB",
+    "uniteller": {
+      "amount": 4869.0,
+      "txCount": 7,
+      "userCount": 2
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 4869.0,
+    "totalTx": 7
+  },
+  {
+    "country": "BR",
+    "payer": "BRPO00031-NUBANK",
+    "uniteller": {
+      "amount": 4138.0,
+      "txCount": 19,
+      "userCount": 14
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 4138.0,
+    "totalTx": 19
+  },
+  {
+    "country": "BR",
+    "payer": "BRPO00008-SANTANDER",
+    "uniteller": {
+      "amount": 580.0,
+      "txCount": 2,
+      "userCount": 1
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 580.0,
+    "totalTx": 2
+  },
+  {
+    "country": "BR",
+    "payer": "BRPO00015-Inter",
+    "uniteller": {
+      "amount": 192.0,
+      "txCount": 1,
+      "userCount": 1
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 192.0,
+    "totalTx": 1
+  },
+  {
+    "country": "BR",
+    "payer": "MERCADOBR-Mercado Pago",
+    "uniteller": {
+      "amount": 175.0,
+      "txCount": 2,
+      "userCount": 2
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 175.0,
+    "totalTx": 2
+  },
+  {
+    "country": "BR",
+    "payer": "BRPO00035-ITAU UNIBANCO",
+    "uniteller": {
+      "amount": 150.0,
+      "txCount": 1,
+      "userCount": 1
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 150.0,
+    "totalTx": 1
+  },
+  {
+    "country": "BR",
+    "payer": "BRPO00032-Pagseguro Internet",
+    "uniteller": {
+      "amount": 118.0,
+      "txCount": 2,
+      "userCount": 1
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 118.0,
+    "totalTx": 2
+  },
+  {
+    "country": "BR",
+    "payer": "BRPO00019-CAIXA (CEF)",
+    "uniteller": {
+      "amount": 114.0,
+      "txCount": 1,
+      "userCount": 1
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 114.0,
+    "totalTx": 1
+  },
+  {
+    "country": "BR",
+    "payer": "BRPO00026-BANCO BRADESCO",
+    "uniteller": {
+      "amount": 85.0,
+      "txCount": 2,
+      "userCount": 2
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 85.0,
+    "totalTx": 2
+  },
+  {
+    "country": "PA",
+    "payer": "LAFISE PANAMA S.A",
+    "uniteller": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "transnetwork": {
+      "amount": 2970.0,
+      "txCount": 9,
+      "userCount": 8
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 2970.0,
+    "totalTx": 9
+  },
+  {
+    "country": "PA",
+    "payer": "REDPLUS",
+    "uniteller": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "transnetwork": {
+      "amount": 1815.0,
+      "txCount": 7,
+      "userCount": 7
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 1815.0,
+    "totalTx": 7
+  },
+  {
+    "country": "AR",
+    "payer": "RTAR14-Banco Santander Rio",
+    "uniteller": {
+      "amount": 880.0,
+      "txCount": 4,
+      "userCount": 4
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 880.0,
+    "totalTx": 4
+  },
+  {
+    "country": "AR",
+    "payer": "RTAR02-Banco Nacion",
+    "uniteller": {
+      "amount": 475.0,
+      "txCount": 6,
+      "userCount": 4
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 475.0,
+    "totalTx": 6
+  },
+  {
+    "country": "AR",
+    "payer": "RTAR35-Banco Macro",
+    "uniteller": {
+      "amount": 285.0,
+      "txCount": 2,
+      "userCount": 2
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 285.0,
+    "totalTx": 2
+  },
+  {
+    "country": "AR",
+    "payer": "RTAR08-Banco Supervielle",
+    "uniteller": {
+      "amount": 270.0,
+      "txCount": 3,
+      "userCount": 3
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 270.0,
+    "totalTx": 3
+  },
+  {
+    "country": "AR",
+    "payer": "RTAR24-Banco Credicoop",
+    "uniteller": {
+      "amount": 200.0,
+      "txCount": 1,
+      "userCount": 1
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 200.0,
+    "totalTx": 1
+  },
+  {
+    "country": "AR",
+    "payer": "RTAR01-Banco Galicia",
+    "uniteller": {
+      "amount": 178.0,
+      "txCount": 3,
+      "userCount": 3
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 178.0,
+    "totalTx": 3
+  },
+  {
+    "country": "AR",
+    "payer": "RTAR47-Banco Industrial",
+    "uniteller": {
+      "amount": 115.0,
+      "txCount": 1,
+      "userCount": 1
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 115.0,
+    "totalTx": 1
+  },
+  {
+    "country": "AR",
+    "payer": "RTAR36-Banco Comafi",
+    "uniteller": {
+      "amount": 80.0,
+      "txCount": 2,
+      "userCount": 1
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 80.0,
+    "totalTx": 2
+  },
+  {
+    "country": "AR",
+    "payer": "RTAR20-Brubank S A U",
+    "uniteller": {
+      "amount": 78.0,
+      "txCount": 3,
+      "userCount": 1
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 78.0,
+    "totalTx": 3
+  },
+  {
+    "country": "AR",
+    "payer": "RTAR06-BBVA Frances",
+    "uniteller": {
+      "amount": 50.0,
+      "txCount": 1,
+      "userCount": 1
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 50.0,
+    "totalTx": 1
+  },
+  {
+    "country": "AR",
+    "payer": "RTAR79-Rapipago",
+    "uniteller": {
+      "amount": 45.0,
+      "txCount": 1,
+      "userCount": 1
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 45.0,
+    "totalTx": 1
+  },
+  {
+    "country": "AR",
+    "payer": "RTAR18-Banco De Corrientes",
+    "uniteller": {
+      "amount": 45.0,
+      "txCount": 1,
+      "userCount": 1
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 45.0,
+    "totalTx": 1
+  },
+  {
+    "country": "AR",
+    "payer": "RTAR09-Banco Ciudad",
+    "uniteller": {
+      "amount": 27.0,
+      "txCount": 1,
+      "userCount": 1
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 27.0,
+    "totalTx": 1
+  },
+  {
+    "country": "PY",
+    "payer": "MTMAX-Maxicambios",
+    "uniteller": {
+      "amount": 904.0,
+      "txCount": 4,
+      "userCount": 1
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 904.0,
+    "totalTx": 4
+  },
+  {
+    "country": "PY",
+    "payer": "MTAQP-Aqui Pago",
+    "uniteller": {
+      "amount": 730.0,
+      "txCount": 2,
+      "userCount": 2
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 730.0,
+    "totalTx": 2
+  },
+  {
+    "country": "BO",
+    "payer": "MTBO0015-Banco Fie",
+    "uniteller": {
+      "amount": 700.0,
+      "txCount": 1,
+      "userCount": 1
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 700.0,
+    "totalTx": 1
+  },
+  {
+    "country": "BO",
+    "payer": "MTBO0011-Banco Union",
+    "uniteller": {
+      "amount": 50.0,
+      "txCount": 1,
+      "userCount": 1
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 50.0,
+    "totalTx": 1
+  },
+  {
+    "country": "UY",
+    "payer": "MTUY0007-Banco Republica",
+    "uniteller": {
+      "amount": 220.0,
+      "txCount": 1,
+      "userCount": 1
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 220.0,
+    "totalTx": 1
+  },
+  {
+    "country": "UY",
+    "payer": "MTRED-MMT REDPAGOS",
+    "uniteller": {
+      "amount": 100.0,
+      "txCount": 1,
+      "userCount": 1
+    },
+    "transnetwork": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "moneygram": {
+      "amount": 0.0,
+      "txCount": 0,
+      "userCount": 0
+    },
+    "total": 100.0,
+    "totalTx": 1
+  }
+]
