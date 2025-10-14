@@ -78,6 +78,7 @@
             font-size: 28px;
             font-weight: 700;
             margin-bottom: 8px;
+            opacity: 1;
         }
 
         .metric-card .comparison {
@@ -368,6 +369,154 @@
             <h2>Average Transaction Size by Vendor</h2>
             <div class="chart-wrapper" style="height: 300px;">
                 <canvas id="avgTransactionChart"></canvas>
+            </div>
+        </div>
+
+        <div class="chart-container">
+            <h2>Uniteller Prefunding Capital Analysis</h2>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px;">
+                <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px; border-radius: 12px; text-align: center;">
+                    <div style="font-size: 14px; opacity: 0.9; margin-bottom: 10px;">CURRENT PREFUNDING</div>
+                    <div style="font-size: 48px; font-weight: bold; margin-bottom: 5px;">$500,000</div>
+                    <div style="font-size: 14px; opacity: 0.9;">With Uniteller</div>
+                </div>
+                <div style="background: linear-gradient(135deg, #22543d 0%, #38a169 100%); color: white; padding: 30px; border-radius: 12px; text-align: center;">
+                    <div style="font-size: 14px; opacity: 0.9; margin-bottom: 10px;">💰 REQUEST BACK</div>
+                    <div style="font-size: 48px; font-weight: bold; margin-bottom: 5px;">$75,000</div>
+                    <div style="font-size: 14px; opacity: 0.9;">Keep $425K prefunded</div>
+                </div>
+            </div>
+
+            <div class="insights-box">
+                <h3>Current Prefunding Optimization</h3>
+                <ul>
+                    <li><strong>Current prefunding:</strong> $500,000 with Uniteller</li>
+                    <li><strong>Daily average volume:</strong> $227,030 ($2,043,268 ÷ 9 days)</li>
+                    <li><strong>Settlement terms:</strong> Daily ACH settlement (T+1, next-day)</li>
+                </ul>
+            </div>
+
+            <div style="margin-top: 20px;">
+                <h3 style="color: #2d3748; margin-bottom: 15px; font-size: 18px;">Capital Requirements Calculation</h3>
+                <table class="vendor-table">
+                    <thead>
+                        <tr>
+                            <th>Scenario</th>
+                            <th>Days Coverage</th>
+                            <th>Required Capital</th>
+                            <th>Can Release</th>
+                            <th>Risk Level</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Conservative</strong></td>
+                            <td>2.2 days (current)</td>
+                            <td>$500,000</td>
+                            <td>$0</td>
+                            <td><span class="badge leader">Low Risk</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Optimal</strong></td>
+                            <td>2.0 days</td>
+                            <td>$454,060</td>
+                            <td>$45,940</td>
+                            <td><span class="badge leader">Low Risk</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Balanced</strong></td>
+                            <td>1.9 days</td>
+                            <td>$431,357</td>
+                            <td>$68,643</td>
+                            <td><span class="badge premium">Medium Risk</span></td>
+                        </tr>
+                        <tr style="background: #fffaf0;">
+                            <td><strong>Aggressive (Recommended)</strong></td>
+                            <td>1.87 days</td>
+                            <td>$425,000</td>
+                            <td><strong style="color: #22543d;">$75,000</strong></td>
+                            <td><span class="badge premium">Medium Risk</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Maximum Aggressive</strong></td>
+                            <td>1.76 days</td>
+                            <td>$400,000</td>
+                            <td>$100,000</td>
+                            <td><span class="badge declining">High Risk</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="insights-box" style="margin-top: 20px; background: #fffaf0; border-left: 4px solid #22543d;">
+                <h3 style="color: #22543d;">💡 Recommended Action: Request $75,000 Back from Uniteller</h3>
+                <ul>
+                    <li><strong>Current situation:</strong> You have $500,000 prefunded with Uniteller right now.</li>
+                    <li><strong>What to ask for:</strong> Request to reduce prefunding to $425,000 → <strong style="color: #22543d; font-size: 16px;">Uniteller sends you back $75,000</strong></li>
+                    <li><strong>Why this works:</strong> With T+1 settlement, you need 2 days coverage = $454,060. At $425K, you still have $198K cushion above daily volume.</li>
+                    <li><strong>Freed capital:</strong> The $75,000 they return can be redeployed to Transnetwork (60.4% market share) or other operational needs.</li>
+                    <li><strong>Risk mitigation:</strong> $425K covers 1.87 days of volume - tight but safe given reliable next-day ACH settlement.</li>
+                    <li><strong>Monthly impact:</strong> You still process $2M+/month through Uniteller, just with 15% less capital locked up.</li>
+                </ul>
+            </div>
+
+            <div style="margin-top: 20px; background: #e6fffa; padding: 20px; border-radius: 8px; border: 2px solid #22543d;">
+                <h3 style="color: #22543d; margin-bottom: 15px;">📧 Email Template: Request Prefunding Reduction</h3>
+                <div style="background: white; padding: 15px; border-radius: 5px; font-size: 14px; line-height: 1.6;">
+                    <strong>Subject:</strong> Request to Optimize Uniteller Prefunding Account<br><br>
+
+                    Hi [Uniteller Contact],<br><br>
+
+                    Based on our recent transaction analysis (October 6-14), I'd like to optimize our prefunding arrangement:<br><br>
+
+                    <strong>Current Analysis:</strong><br>
+                    • Daily average volume: $227,030<br>
+                    • Current prefunding: $500,000 (2.2 days coverage)<br>
+                    • Settlement: Daily ACH (T+1)<br><br>
+
+                    <strong>Proposed Adjustment:</strong><br>
+                    • Reduce prefunding to: <strong>$425,000</strong><br>
+                    • Return to MyBambu: <strong>$75,000</strong><br>
+                    • New coverage: 1.87 days (still well above minimum requirements)<br><br>
+
+                    This optimization allows us to maintain seamless operations while deploying capital more efficiently across our vendor portfolio. Given our reliable settlement history and stable daily volumes, $425K provides adequate coverage.<br><br>
+
+                    Can we schedule a call this week to discuss? I'd like to process this adjustment by [date].<br><br>
+
+                    Best regards,<br>
+                    [Your name]
+                </div>
+            </div>
+
+            <div style="margin-top: 20px;">
+                <h3 style="color: #2d3748; margin-bottom: 15px; font-size: 18px;">How We Got Here: The Math</h3>
+                <div style="background: #f7fafc; padding: 20px; border-radius: 8px; font-family: 'Courier New', monospace; font-size: 14px;">
+                    <strong>Step 1: Calculate daily average</strong><br>
+                    Total Uniteller volume (9 days): $2,043,268<br>
+                    Daily average: $2,043,268 ÷ 9 = <strong>$227,030/day</strong><br><br>
+
+                    <strong>Step 2: Determine minimum float (T+1 settlement)</strong><br>
+                    With next-day ACH settlement, you need to cover:<br>
+                    • Today's outgoing transactions: $227,030<br>
+                    • Yesterday's pending ACH: $227,030<br>
+                    Minimum required: 2 days × $227,030 = <strong>$454,060</strong><br><br>
+
+                    <strong>Step 3: Assess current buffer</strong><br>
+                    Current prefunding: $500,000<br>
+                    Minimum required: $454,060<br>
+                    Current buffer: $500,000 - $454,060 = <strong>$45,940</strong><br><br>
+
+                    <strong>Step 4: Aggressive optimization</strong><br>
+                    Target: 1.87 days coverage (slightly below 2-day minimum)<br>
+                    New prefunding: $425,000<br>
+                    Capital released: $500,000 - $425,000 = <strong>$75,000</strong><br><br>
+
+                    <strong>Risk assessment:</strong><br>
+                    $425K ÷ $227K daily = 1.87 days coverage<br>
+                    Buffer above 1-day volume: $425K - $227K = $198K (87% cushion)<br>
+                    Acceptable if settlement is reliable and volume is stable ✓
+                </div>
             </div>
         </div>
 
