@@ -245,6 +245,7 @@
             <button class="tab" onclick="switchTab('countries')">Countries / Corridors</button>
             <button class="tab" onclick="switchTab('payers')">Payers / Banks</button>
             <button class="tab" onclick="switchTab('trends')" style="background: linear-gradient(135deg, #fc8181 0%, #f56565 100%); color: white;">⚠️ Trend Analysis</button>
+            <button class="tab" onclick="switchTab('revenue')" style="background: linear-gradient(135deg, #38a169 0%, #2f855a 100%); color: white;">💰 Revenue Model</button>
         </div>
 
         <!-- VENDORS TAB -->
@@ -662,6 +663,90 @@
                     <a href="vendor-trend-analysis.html" style="display: inline-block; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 15px 30px; border-radius: 10px; text-decoration: none; font-weight: 600; font-size: 16px;">
                         View Full Trend Analysis with Charts →
                     </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- REVENUE MODEL TAB -->
+        <div id="revenue-tab" class="tab-content">
+            <div class="content-box">
+                <h2 style="color: #2d3748; margin-bottom: 20px;">💰 Transnetwork Revenue Model - September 2025</h2>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-bottom: 30px;">
+                    <div style="background: linear-gradient(135deg, #38a169 0%, #2f855a 100%); color: white; padding: 25px; border-radius: 12px;">
+                        <div style="font-size: 14px; opacity: 0.9; margin-bottom: 5px;">MYBAMBU TOTAL EARNINGS</div>
+                        <div style="font-size: 42px; font-weight: bold;" id="mybambu-total">$0.00</div>
+                        <div style="font-size: 14px; opacity: 0.9; margin-top: 10px;">From 47,036 transactions</div>
+                    </div>
+
+                    <div style="background: linear-gradient(135deg, #38a169 0%, #2f855a 100%); color: white; padding: 25px; border-radius: 12px;">
+                        <div style="font-size: 14px; opacity: 0.9; margin-bottom: 5px;">SPECTRUM COST</div>
+                        <div style="font-size: 42px; font-weight: bold;" id="spectrum-cost">$0.00</div>
+                        <div style="font-size: 14px; opacity: 0.9; margin-top: 10px;">✅ 100% revenue to MyBambu!</div>
+                    </div>
+
+                    <div style="background: linear-gradient(135deg, #3182ce 0%, #2c5282 100%); color: white; padding: 25px; border-radius: 12px;">
+                        <div style="font-size: 14px; opacity: 0.9; margin-bottom: 5px;">TOTAL VOLUME</div>
+                        <div style="font-size: 42px; font-weight: bold;" id="total-volume">$0.00</div>
+                        <div style="font-size: 14px; opacity: 0.9; margin-top: 10px;">Total remittances sent</div>
+                    </div>
+                </div>
+
+                <div style="background: #f7fafc; border-left: 4px solid #38a169; padding: 20px; border-radius: 8px; margin-bottom: 30px;">
+                    <h3 style="color: #2d3748; margin-bottom: 15px;">📊 Revenue Breakdown</h3>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                        <div>
+                            <div style="color: #4a5568; margin-bottom: 10px;"><strong>MyBambu Fee Share:</strong> <span id="mybambu-fee">$0.00</span></div>
+                            <div style="color: #4a5568; margin-bottom: 10px;"><strong>MyBambu Spread Share:</strong> <span id="mybambu-spread">$0.00</span></div>
+                        </div>
+                        <div>
+                            <div style="color: #4a5568; margin-bottom: 10px;"><strong>Spectrum Fee Share:</strong> <span id="spectrum-fee">$0.00</span></div>
+                            <div style="color: #4a5568; margin-bottom: 10px;"><strong>Spectrum Spread Share:</strong> <span id="spectrum-spread">$0.00</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <h3 style="color: #2d3748; margin-bottom: 20px;">Revenue by Country</h3>
+                <div style="overflow-x: auto;">
+                    <table class="data-table" style="width: 100%; border-collapse: collapse;">
+                        <thead>
+                            <tr>
+                                <th style="padding: 15px; text-align: left; background: #f7fafc; border-bottom: 2px solid #e2e8f0;">Country</th>
+                                <th style="padding: 15px; text-align: right; background: #f7fafc; border-bottom: 2px solid #e2e8f0;">Transactions</th>
+                                <th style="padding: 15px; text-align: right; background: #f7fafc; border-bottom: 2px solid #e2e8f0;">Volume</th>
+                                <th style="padding: 15px; text-align: right; background: #f7fafc; border-bottom: 2px solid #e2e8f0;">MyBambu Earnings</th>
+                                <th style="padding: 15px; text-align: right; background: #f7fafc; border-bottom: 2px solid #e2e8f0;">Spectrum Cost</th>
+                                <th style="padding: 15px; text-align: right; background: #f7fafc; border-bottom: 2px solid #e2e8f0;">Avg Per Transaction</th>
+                            </tr>
+                        </thead>
+                        <tbody id="country-revenue-table">
+                            <tr><td colspan="6" style="padding: 20px; text-align: center;">Loading...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3 style="color: #2d3748; margin: 40px 0 20px;">Top Payers/Banks by Revenue</h3>
+                <div style="overflow-x: auto;">
+                    <table class="data-table" style="width: 100%; border-collapse: collapse;">
+                        <thead>
+                            <tr>
+                                <th style="padding: 15px; text-align: left; background: #f7fafc; border-bottom: 2px solid #e2e8f0;">Payer/Bank</th>
+                                <th style="padding: 15px; text-align: right; background: #f7fafc; border-bottom: 2px solid #e2e8f0;">Transactions</th>
+                                <th style="padding: 15px; text-align: right; background: #f7fafc; border-bottom: 2px solid #e2e8f0;">Volume</th>
+                                <th style="padding: 15px; text-align: right; background: #f7fafc; border-bottom: 2px solid #e2e8f0;">MyBambu Earnings</th>
+                                <th style="padding: 15px; text-align: right; background: #f7fafc; border-bottom: 2px solid #e2e8f0;">Spectrum Cost</th>
+                                <th style="padding: 15px; text-align: right; background: #f7fafc; border-bottom: 2px solid #e2e8f0;">Avg Per Transaction</th>
+                            </tr>
+                        </thead>
+                        <tbody id="payer-revenue-table">
+                            <tr><td colspan="6" style="padding: 20px; text-align: center;">Loading...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div style="background: #fffaf0; border-left: 4px solid #ed8936; padding: 20px; border-radius: 8px; margin-top: 30px;">
+                    <h3 style="color: #c05621; margin-bottom: 10px;">⚠️ Note on Uniteller Data</h3>
+                    <p style="color: #4a5568; line-height: 1.6;">This analysis shows Transnetwork (Spectrum) revenue model only. Uniteller data will be added when transaction-level detail is provided. Currently we only have aggregated Uniteller data by payer.</p>
                 </div>
             </div>
         </div>
@@ -1127,9 +1212,64 @@
             }
         }
 
+        // Load revenue model data
+        async function loadRevenueData() {
+            try {
+                const response = await fetch('transnetwork_revenue_model.json');
+                const data = await response.json();
+
+                // Update summary cards
+                document.getElementById('mybambu-total').textContent = '$' + data.summary.mybambu_total_earnings.toLocaleString('en-US', {maximumFractionDigits: 2});
+                document.getElementById('spectrum-cost').textContent = '$' + data.summary.spectrum_cost.toLocaleString('en-US', {maximumFractionDigits: 2});
+                document.getElementById('total-volume').textContent = '$' + data.summary.total_amount_sent.toLocaleString('en-US', {maximumFractionDigits: 0});
+
+                // Update revenue breakdown
+                document.getElementById('mybambu-fee').textContent = '$' + data.summary.mybambu_fee_share.toLocaleString('en-US', {maximumFractionDigits: 2});
+                document.getElementById('mybambu-spread').textContent = '$' + data.summary.mybambu_spread_share.toLocaleString('en-US', {maximumFractionDigits: 2});
+                document.getElementById('spectrum-fee').textContent = '$' + data.summary.spectrum_fee_share.toLocaleString('en-US', {maximumFractionDigits: 2});
+                document.getElementById('spectrum-spread').textContent = '$' + data.summary.spectrum_spread_share.toLocaleString('en-US', {maximumFractionDigits: 2});
+
+                // Populate country table
+                const countryTable = document.getElementById('country-revenue-table');
+                countryTable.innerHTML = data.by_country.map(country => {
+                    const avgPerTx = country.mybambu_total_earnings / country.transactions;
+                    return `
+                        <tr style="border-bottom: 1px solid #e2e8f0;">
+                            <td style="padding: 15px;"><strong>${country.country}</strong></td>
+                            <td style="padding: 15px; text-align: right;">${country.transactions.toLocaleString()}</td>
+                            <td style="padding: 15px; text-align: right;">$${country.volume.toLocaleString('en-US', {maximumFractionDigits: 2})}</td>
+                            <td style="padding: 15px; text-align: right; color: #38a169; font-weight: 600;">$${country.mybambu_total_earnings.toLocaleString('en-US', {maximumFractionDigits: 2})}</td>
+                            <td style="padding: 15px; text-align: right; color: #667eea; font-weight: 600;">$${country.spectrum_cost.toLocaleString('en-US', {maximumFractionDigits: 2})}</td>
+                            <td style="padding: 15px; text-align: right;">$${avgPerTx.toFixed(2)}</td>
+                        </tr>
+                    `;
+                }).join('');
+
+                // Populate payer table (top 20)
+                const payerTable = document.getElementById('payer-revenue-table');
+                payerTable.innerHTML = data.by_payer.slice(0, 20).map(payer => {
+                    const avgPerTx = payer.mybambu_total_earnings / payer.transactions;
+                    return `
+                        <tr style="border-bottom: 1px solid #e2e8f0;">
+                            <td style="padding: 15px;"><strong>${payer.payer}</strong></td>
+                            <td style="padding: 15px; text-align: right;">${payer.transactions.toLocaleString()}</td>
+                            <td style="padding: 15px; text-align: right;">$${payer.volume.toLocaleString('en-US', {maximumFractionDigits: 2})}</td>
+                            <td style="padding: 15px; text-align: right; color: #38a169; font-weight: 600;">$${payer.mybambu_total_earnings.toLocaleString('en-US', {maximumFractionDigits: 2})}</td>
+                            <td style="padding: 15px; text-align: right; color: #667eea; font-weight: 600;">$${payer.spectrum_cost.toLocaleString('en-US', {maximumFractionDigits: 2})}</td>
+                            <td style="padding: 15px; text-align: right;">$${avgPerTx.toFixed(2)}</td>
+                        </tr>
+                    `;
+                }).join('');
+
+            } catch (error) {
+                console.error('Error loading revenue data:', error);
+            }
+        }
+
         // Initialize on page load
         loadData();
         loadPayerShifts();
+        loadRevenueData();
 
         // Create trend charts after a short delay to ensure DOM is ready
         setTimeout(createTrendCharts, 500);
