@@ -392,18 +392,18 @@
                     <div class="provider-card circle">
                         <div class="provider-header circle">Circle</div>
                         <p style="color: #4a5568; margin-bottom: 20px;">
-                            Leading global stablecoin infrastructure with Circle Payment Network (CPN) for instant USDC settlements
+                            Leading global stablecoin infrastructure - using Solution 2 (CPN) for streamlined USDC settlements via BFI partners
                         </p>
                         <ul class="feature-list">
                             <li><strong>Core Strength:</strong> Direct USDC issuer with deep liquidity</li>
                             <li><strong>Best For:</strong> High-volume cross-border payments</li>
                             <li><strong>Platform Fee:</strong> $0/month (pay per transaction)</li>
-                            <li><strong>Mexico Pricing:</strong> 10-15 bps + $0.23 (consumer)</li>
-                            <li><strong>Settlement:</strong> Real-time via CPN network</li>
-                            <li><strong>Coverage:</strong> 15+ countries including all LATAM</li>
-                            <li><strong>Integration:</strong> Mint & Redeem APIs, CPN wallets</li>
-                            <li class="cons"><strong>Limitation:</strong> Requires separate FX partner for some corridors</li>
-                            <li class="cons"><strong>Limitation:</strong> Complex multi-step flow for non-CPN corridors</li>
+                            <li><strong>Mexico Pricing:</strong> Consumer: 10 bps + $0.23 | Business: 15 bps + 3 MXN</li>
+                            <li><strong>Settlement:</strong> Instant via CPN to BFI partner's SPEI network</li>
+                            <li><strong>Coverage:</strong> 15+ countries via CPN including Mexico, Brazil, Colombia</li>
+                            <li><strong>Integration:</strong> Mint API + Circle Wallet + CPN (Solution 2)</li>
+                            <li><strong>Advantage:</strong> No separate FX partner needed with CPN flow</li>
+                            <li class="cons"><strong>Limitation:</strong> Requires BFI partnership for local payouts</li>
                         </ul>
                     </div>
 
@@ -469,38 +469,38 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td><strong>USD → MXN (Consumer)</strong></td>
-                            <td class="price-cell">10 bps + $0.23</td>
+                            <td><strong>USD → MXN (Consumer) - CPN</strong></td>
+                            <td class="price-cell">10 bps + $0.23*</td>
                             <td class="price-cell">13 bps</td>
-                            <td>$230 avg txn</td>
-                            <td class="winner">Circle</td>
+                            <td>$100-200 avg txn</td>
+                            <td class="winner">Circle (at typical volumes)</td>
                         </tr>
                         <tr>
-                            <td><strong>USD → MXN (Business)</strong></td>
-                            <td class="price-cell">15 bps + 3 MXN</td>
+                            <td><strong>USD → MXN (Business) - CPN</strong></td>
+                            <td class="price-cell">15 bps + 3 MXN (~$0.17)</td>
                             <td class="price-cell">15 bps</td>
-                            <td>High volume</td>
-                            <td class="winner">Circle</td>
+                            <td>$1,000+ avg txn</td>
+                            <td class="winner">Kira (at high volumes)</td>
                         </tr>
                         <tr>
                             <td><strong>USD → Brazil (PIX)</strong></td>
-                            <td class="price-cell">50 bps + 0.5 BRL</td>
+                            <td class="price-cell">50 bps + 0.5 BRL (incl tax)</td>
                             <td class="price-cell">N/A</td>
                             <td>-</td>
                             <td class="winner">Circle (only option)</td>
                         </tr>
                         <tr>
-                            <td><strong>USD → Colombia</strong></td>
-                            <td class="price-cell">85 bps + 900 COP</td>
+                            <td><strong>USD → Colombia (PSE)</strong></td>
+                            <td class="price-cell">85 bps + 900 COP (incl tax)</td>
                             <td class="price-cell">40-70 bps</td>
                             <td>Depends on volume</td>
-                            <td class="winner">Kira</td>
+                            <td class="winner">Kira (lower rates)</td>
                         </tr>
                         <tr>
-                            <td><strong>USD → Argentina</strong></td>
+                            <td><strong>USD → Argentina (COELSA)</strong></td>
                             <td class="price-cell">90 bps (incl tax)</td>
                             <td class="price-cell">1.15-1.35%</td>
-                            <td>-</td>
+                            <td>All volumes</td>
                             <td class="winner">Circle</td>
                         </tr>
                         <tr>
@@ -573,11 +573,12 @@
                 <div class="assumptions">
                     <h4>Pricing Notes</h4>
                     <ul>
-                        <li><strong>Circle:</strong> No platform fee, but may require separate contracts for FX, KYC, and banking partners</li>
+                        <li><strong>Circle CPN:</strong> No platform fee, streamlined flow through Circle Payment Network to BFI partner (Solution 2)</li>
+                        <li><strong>Consumer Fee Waiver:</strong> $0.23 fixed fee waived for transactions over $2,500</li>
                         <li><strong>Kira:</strong> Enterprise tier ($29,995/month) includes lower transaction rates but high fixed costs</li>
-                        <li><strong>Break-Even:</strong> For MyBambu's expected volume ($3-5M/month), Circle is significantly more cost-effective</li>
-                        <li><strong>Volume Discounts:</strong> Both providers offer lower rates at higher monthly volumes</li>
-                        <li><strong>Hidden Costs:</strong> Integration complexity for Circle may require more dev resources</li>
+                        <li><strong>Break-Even:</strong> For MyBambu's expected volume ($3-5M/month), Circle CPN is significantly more cost-effective</li>
+                        <li><strong>Volume Discounts:</strong> Circle offers lower rates at $10M+, $25M+, $40M+ monthly tiers</li>
+                        <li><strong>Integration:</strong> Solution 2 (CPN) eliminates need for separate FX partner</li>
                     </ul>
                 </div>
             </div>
@@ -677,22 +678,15 @@
 
                 <div class="corridor-grid">
                     <div class="corridor-card" style="border-color: #00D4AA;">
-                        <div class="corridor-header" style="color: #00D4AA;">Circle Non-CPN Flow</div>
+                        <div class="corridor-header" style="color: #00D4AA;">Circle CPN Flow (Solution 2)</div>
                         <p style="font-size: 13px; color: #4a5568; line-height: 1.6;">
-                            Sender → MyBambu Fiat US → Mint USDC → MyBambu Wallet MX → Redeem USD → FX Partner → Receiver MXN
+                            Sender → MyBambu Fiat US → Mint USDC → Circle Wallet → CPN Network → BFI Partner → Receiver MXN via SPEI
                         </p>
                         <div style="margin-top: 10px; font-size: 12px; color: #718096;">
-                            <strong>Steps:</strong> 6 | <strong>Partners:</strong> 3 | <strong>Time:</strong> Real-time to T+1
+                            <strong>Steps:</strong> 5 | <strong>Partners:</strong> 2 (Circle + BFI) | <strong>Time:</strong> Instant SPEI payout
                         </div>
-                    </div>
-
-                    <div class="corridor-card" style="border-color: #00D4AA;">
-                        <div class="corridor-header" style="color: #00D4AA;">Circle CPN Flow</div>
-                        <p style="font-size: 13px; color: #4a5568; line-height: 1.6;">
-                            Sender → MyBambu Fiat US → Mint USDC → Circle CPN → BFI Partner → Receiver MXN
-                        </p>
-                        <div style="margin-top: 10px; font-size: 12px; color: #718096;">
-                            <strong>Steps:</strong> 5 | <strong>Partners:</strong> 2 | <strong>Time:</strong> Real-time
+                        <div style="margin-top: 8px; padding: 8px; background: rgba(39, 251, 107, 0.1); border-radius: 6px; font-size: 11px; color: #4a5568;">
+                            ✓ Recommended approach - streamlined, no separate FX partner needed
                         </div>
                     </div>
 
@@ -716,25 +710,31 @@
 
                 <div class="corridor-grid">
                     <div class="corridor-card">
-                        <div class="corridor-header">🇲🇽 Mexico (SPEI)</div>
-                        <div class="corridor-price">Circle: 10-15 bps</div>
+                        <div class="corridor-header">🇲🇽 Mexico (SPEI via CPN)</div>
+                        <div class="corridor-price">Circle CPN Pricing:</div>
+                        <div style="font-size: 13px; color: #27FB6B; font-weight: 700; margin-bottom: 10px;">
+                            Consumer: 10 bps + $0.23<br>
+                            Business: 15 bps + 3 MXN (~$0.17)
+                        </div>
                         <div style="font-size: 14px; color: #4a5568; margin-bottom: 15px;">
                             <strong>Limits:</strong> $1.5M USD<br>
-                            <strong>Speed:</strong> Instant<br>
-                            <strong>Availability:</strong> 24/7
+                            <strong>Speed:</strong> Instant SPEI<br>
+                            <strong>Availability:</strong> 24/7<br>
+                            <strong>Note:</strong> $0.23 waived if txn > $2,500
                         </div>
                         <div style="background: rgba(39, 251, 107, 0.1); padding: 10px; border-radius: 8px; font-size: 13px;">
-                            <strong>✓ Best for MyBambu:</strong> Largest remittance corridor, Circle has best pricing and direct SPEI integration
+                            <strong>✓ Solution 2 (CPN):</strong> Streamlined flow through BFI partner, no separate FX partner needed
                         </div>
                     </div>
 
                     <div class="corridor-card">
                         <div class="corridor-header">🇧🇷 Brazil (PIX)</div>
-                        <div class="corridor-price">Circle: 50 bps</div>
+                        <div class="corridor-price">Circle: 50 bps + 0.5 BRL</div>
                         <div style="font-size: 14px; color: #4a5568; margin-bottom: 15px;">
                             <strong>Limits:</strong> $1.5M USD<br>
-                            <strong>Speed:</strong> Instant<br>
-                            <strong>Availability:</strong> 24/7
+                            <strong>Speed:</strong> Instant PIX<br>
+                            <strong>Availability:</strong> 24/7<br>
+                            <strong>Note:</strong> Inclusive of tax, volume discounts available
                         </div>
                         <div style="background: rgba(39, 251, 107, 0.1); padding: 10px; border-radius: 8px; font-size: 13px;">
                             <strong>✓ Circle Only:</strong> Kira doesn't support PIX. Circle required for Brazil expansion.
@@ -743,24 +743,26 @@
 
                     <div class="corridor-card">
                         <div class="corridor-header">🇨🇴 Colombia (PSE)</div>
-                        <div class="corridor-price">Circle: 85 bps</div>
+                        <div class="corridor-price">Circle: 85 bps + 900 COP</div>
                         <div style="font-size: 14px; color: #4a5568; margin-bottom: 15px;">
-                            <strong>Limits:</strong> 2.3M USD/day<br>
-                            <strong>Speed:</strong> T+0 before 1PM<br>
-                            <strong>Availability:</strong> 24/7
+                            <strong>Limits:</strong> ACH 2.3M USD daily, Nequi 23K USD<br>
+                            <strong>Speed:</strong> T+0 before 1PM, T+1 after<br>
+                            <strong>Availability:</strong> 24/7<br>
+                            <strong>Note:</strong> Inclusive of tax
                         </div>
                         <div style="background: rgba(199, 21, 133, 0.1); padding: 10px; border-radius: 8px; font-size: 13px;">
-                            <strong>↔ Competitive:</strong> Kira may offer better rates (60-70 bps) at volume
+                            <strong>↔ Competitive:</strong> Kira may offer better rates at high volume
                         </div>
                     </div>
 
                     <div class="corridor-card">
-                        <div class="corridor-header">🇦🇷 Argentina</div>
+                        <div class="corridor-header">🇦🇷 Argentina (COELSA)</div>
                         <div class="corridor-price">Circle: 90 bps</div>
                         <div style="font-size: 14px; color: #4a5568; margin-bottom: 15px;">
                             <strong>Limits:</strong> $1.5M USD<br>
                             <strong>Speed:</strong> Instant<br>
-                            <strong>Availability:</strong> 24/7
+                            <strong>Availability:</strong> 24/7<br>
+                            <strong>Note:</strong> Inclusive of tax, volume discounts available
                         </div>
                         <div style="background: rgba(39, 251, 107, 0.1); padding: 10px; border-radius: 8px; font-size: 13px;">
                             <strong>✓ Circle Wins:</strong> Lower fees than Kira (1.15-1.35%)
@@ -896,12 +898,12 @@
                 <div class="assumptions">
                     <h4>Cost Analysis Assumptions</h4>
                     <ul>
-                        <li><strong>Circle Pricing:</strong> 12.5 bps blended rate (10 bps consumer + 15 bps business mix) for Mexico corridor</li>
+                        <li><strong>Circle CPN Pricing:</strong> Consumer: 10 bps + $0.23 | Business: 15 bps + 3 MXN (~$0.17) - using Solution 2 (CPN flow)</li>
                         <li><strong>Kira Enterprise Pricing:</strong> 14 bps average + $29,995/month platform fee (Enterprise tier) + $4/month per virtual account</li>
                         <li><strong>KYC Costs:</strong> MyBambu handles KYC internally - not included in provider costs for either Circle or Kira</li>
                         <li><strong>Virtual Account Adoption:</strong> Assumed 30% of crypto users will want virtual USD accounts ($4/month each)</li>
                         <li><strong>User Growth:</strong> Starting with 1,000 users, growing 15% monthly (reaching 5,350 by Month 12)</li>
-                        <li><strong>Hidden Costs:</strong> Circle requires separate FX partner contracts, but no ongoing per-user fees</li>
+                        <li><strong>Solution 2 (CPN):</strong> Circle Payment Network - BFI partner handles local payout, NO separate FX partner needed</li>
                         <li><strong>Kira Platform Fee:</strong> Even when consumed through transactions, virtual account fees are additional</li>
                         <li><strong>Break-Even:</strong> Circle remains cheaper at ALL volume levels tested (even without KYC costs)</li>
                         <li><strong>MyBambu Volume:</strong> Currently ~$2-3M/month projected for crypto wallet feature</li>
@@ -911,8 +913,8 @@
                 <div class="assumptions" style="background: rgba(255, 193, 7, 0.1); border-left-color: #ffc107;">
                     <h4>⚠️ Important Considerations</h4>
                     <ul>
-                        <li><strong>Integration Time:</strong> Circle integration more complex (multiple APIs), may take 2-3 months vs 4-6 weeks for Kira</li>
-                        <li><strong>Maintenance:</strong> Circle requires managing multiple partner relationships (FX, banking, KYC)</li>
+                        <li><strong>Integration Time:</strong> Circle CPN integration requires Mint API + Circle Wallet setup, estimated 6-8 weeks</li>
+                        <li><strong>Maintenance:</strong> Circle CPN requires managing BFI partner relationship (simpler than Solution 1)</li>
                         <li><strong>Support:</strong> Kira includes 24/7 support at Enterprise tier; Circle support varies by relationship</li>
                         <li><strong>Flexibility:</strong> Circle allows starting with zero commitment; Kira Enterprise requires $29,995/month minimum</li>
                         <li><strong>Risk:</strong> Circle is battle-tested with 10+ years; Kira is new (launched 2024)</li>
