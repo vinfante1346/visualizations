@@ -1,0 +1,49 @@
+{
+  "september": {
+    "uniteller": {
+      "amount": 10209688.58,
+      "txCount": 48216,
+      "share": 50.74673991980044
+    },
+    "transnetwork": {
+      "amount": 9156132.66,
+      "txCount": 46797,
+      "share": 49.25326008019955
+    },
+    "moneygram": {
+      "amount": 675566.15,
+      "txCount": 9319
+    }
+  },
+  "october": {
+    "uniteller": {
+      "amount": 2043267.77,
+      "txCount": 9244,
+      "share": 34.952924717359245
+    },
+    "transnetwork": {
+      "amount": 3470067.840000001,
+      "txCount": 17203,
+      "share": 65.04707528264075
+    },
+    "moneygram": {
+      "amount": 234624.31999999998,
+      "txCount": 3394
+    },
+    "days": 9
+  },
+  "october_projected": {
+    "uniteller": {
+      "amount": 6810892.566666667,
+      "txCount": 30813
+    },
+    "transnetwork": {
+      "amount": 11566892.800000003,
+      "txCount": 57343
+    },
+    "moneygram": {
+      "amount": 782081.0666666667,
+      "txCount": 11313
+    }
+  }
+}
