@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Val's Visualizations Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        header {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            text-align: center;
+        }
+        h1 {
+            color: #667eea;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        .subtitle {
+            color: #666;
+            font-size: 1.1em;
+            margin-bottom: 20px;
+        }
+        .search-box {
+            margin: 20px auto 0;
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-size: 1em;
+            width: 100%;
+            max-width: 500px;
+        }
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            background: rgba(255,255,255,0.2);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+        .stat {
+            text-align: center;
+            color: white;
+        }
+        .stat-number {
+            font-size: 2.5em;
+            font-weight: bold;
+        }
+        .stat-label {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 20px;
+        }
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: transform 0.2s, box-shadow 0.2s;
+            cursor: pointer;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        }
+        .card h2 {
+            color: #333;
+            font-size: 1.3em;
+            margin-bottom: 10px;
+        }
+        .card-description {
+            color: #666;
+            margin-bottom: 15px;
+            line-height: 1.5;
+            font-size: 0.95em;
+        }
+        .card-link {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: opacity 0.2s;
+            font-size: 0.9em;
+        }
+        .card-link:hover {
+            opacity: 0.9;
+        }
+        .category-badge {
+            display: inline-block;
+            background: #e3f2fd;
+            color: #1976d2;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.8em;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        @media (max-width: 768px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            .stats {
+                flex-direction: column;
+                gap: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📊 Val's Visualizations</h1>
+            <p class="subtitle">Interactive dashboards, business models, and presentations</p>
+            <input type="text" class="search-box" id="searchBox" placeholder="🔍 Search visualizations...">
+        </header>
+
+        <div class="stats">
+            <div class="stat">
+                <div class="stat-number" id="totalCount">11</div>
+                <div class="stat-label">Total Projects</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number">📱</div>
+                <div class="stat-label">Mobile Friendly</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number">🔗</div>
+                <div class="stat-label">Public Links</div>
+            </div>
+        </div>
+
+        <div class="grid" id="projectGrid">
+            <!-- Apoyo Business Model -->
+            <div class="card" data-keywords="apoyo blockwyre business model calculator">
+                <span class="category-badge">Business Model</span>
+                <h2>💰 Apoyo + BlockWyre Calculator</h2>
+                <p class="card-description">
+                    Interactive calculator showing monthly MyBambu leverage, capital requirements, and ROI analysis.
+                </p>
+                <a href="https://vinfante1346.github.io/visualizations/apoyo-mybambu-leverage-calculator.html" class="card-link" target="_blank">View Calculator →</a>
+            </div>
+
+            <!-- MyBambu Overview Desktop -->
+            <div class="card" data-keywords="mybambu overview company presentation">
+                <span class="category-badge">Overview</span>
+                <h2>📱 MyBambu Overview</h2>
+                <p class="card-description">
+                    Comprehensive overview of MyBambu products and services (Desktop version).
+                </p>
+                <a href="https://vinfante1346.github.io/visualizations/mybambu-overview.html" class="card-link" target="_blank">View Overview →</a>
+            </div>
+
+            <!-- MyBambu Overview Mobile -->
+            <div class="card" data-keywords="mybambu overview company mobile">
+                <span class="category-badge">Overview</span>
+                <h2>📱 MyBambu Overview (Mobile)</h2>
+                <p class="card-description">
+                    Mobile-optimized MyBambu company overview.
+                </p>
+                <a href="https://vinfante1346.github.io/visualizations/mybambu-overview-mobile.html" class="card-link" target="_blank">View Mobile →</a>
+            </div>
+
+            <!-- Customer Stickiness -->
+            <div class="card" data-keywords="customer retention stickiness analytics">
+                <span class="category-badge">Analytics</span>
+                <h2>📊 Customer Stickiness</h2>
+                <p class="card-description">
+                    Analysis of customer retention and stickiness metrics (Desktop).
+                </p>
+                <a href="https://vinfante1346.github.io/visualizations/customer-stickiness.html" class="card-link" target="_blank">View Analysis →</a>
+            </div>
+
+            <!-- Customer Stickiness Mobile -->
+            <div class="card" data-keywords="customer retention stickiness mobile">
+                <span class="category-badge">Analytics</span>
+                <h2>📊 Customer Stickiness (Mobile)</h2>
+                <p class="card-description">
+                    Mobile-optimized customer retention analysis.
+                </p>
+                <a href="https://vinfante1346.github.io/visualizations/customer-stickiness-mobile.html" class="card-link" target="_blank">View Mobile →</a>
+            </div>
+
+            <!-- Bambu Pay Presentation -->
+            <div class="card" data-keywords="bambu pay presentation product">
+                <span class="category-badge">Presentation</span>
+                <h2>💳 Bambu Pay Presentation</h2>
+                <p class="card-description">
+                    Comprehensive Bambu Pay product presentation.
+                </p>
+                <a href="https://vinfante1346.github.io/visualizations/bambu-pay-2-presentation.html" class="card-link" target="_blank">View Presentation →</a>
+            </div>
+
+            <!-- Bambu Pay Mobile V2 -->
+            <div class="card" data-keywords="bambu pay mobile product">
+                <span class="category-badge">Presentation</span>
+                <h2>💳 Bambu Pay Mobile V2</h2>
+                <p class="card-description">
+                    Updated mobile Bambu Pay presentation.
+                </p>
+                <a href="https://vinfante1346.github.io/visualizations/bambu-pay-mobile-v2.html" class="card-link" target="_blank">View Mobile V2 →</a>
+            </div>
+
+            <!-- Bambu Pay Mobile -->
+            <div class="card" data-keywords="bambu pay mobile">
+                <span class="category-badge">Presentation</span>
+                <h2>💳 Bambu Pay Mobile</h2>
+                <p class="card-description">
+                    Mobile-optimized Bambu Pay presentation.
+                </p>
+                <a href="https://vinfante1346.github.io/visualizations/bambu-pay-mobile.html" class="card-link" target="_blank">View Mobile →</a>
+            </div>
+
+            <!-- Instructions -->
+            <div class="card" data-keywords="instructions help guide">
+                <span class="category-badge">Documentation</span>
+                <h2>📖 Instructions & Guide</h2>
+                <p class="card-description">
+                    Interactive guide for using this platform.
+                </p>
+                <a href="https://vinfante1346.github.io/visualizations/instructions.html" class="card-link" target="_blank">View Guide →</a>
+            </div>
+
+            <!-- Test Dashboard -->
+            <div class="card" data-keywords="test dashboard demo">
+                <span class="category-badge">Test</span>
+                <h2>🧪 Test Dashboard</h2>
+                <p class="card-description">
+                    Sample dashboard for development testing.
+                </p>
+                <a href="https://vinfante1346.github.io/visualizations/test-dashboard.html" class="card-link" target="_blank">View Test →</a>
+            </div>
+
+            <!-- Test Page -->
+            <div class="card" data-keywords="test page demo">
+                <span class="category-badge">Test</span>
+                <h2>🎨 Test Page</h2>
+                <p class="card-description">
+                    Simple test page with purple gradient.
+                </p>
+                <a href="https://vinfante1346.github.io/visualizations/test.html" class="card-link" target="_blank">View Test →</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const searchBox = document.getElementById('searchBox');
+        const cards = document.querySelectorAll('.card');
+        const totalCount = document.getElementById('totalCount');
+
+        searchBox.addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase();
+            let visibleCount = 0;
+
+            cards.forEach(card => {
+                const keywords = card.getAttribute('data-keywords') || '';
+                const title = card.querySelector('h2').textContent.toLowerCase();
+                const description = card.querySelector('.card-description').textContent.toLowerCase();
+
+                if (keywords.includes(searchTerm) || title.includes(searchTerm) || description.includes(searchTerm)) {
+                    card.style.display = 'block';
+                    visibleCount++;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+
+            totalCount.textContent = visibleCount;
+        });
+    </script>
+</body>
+</html>
