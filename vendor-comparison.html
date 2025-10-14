@@ -518,13 +518,65 @@
                 </div>
 
                 <div style="background: white; padding: 25px; border-radius: 12px; margin-top: 20px;">
-                    <h3 style="color: #2d3748; margin-bottom: 15px;">🏦 Top Payer Shifts (Transaction Changes)</h3>
+                    <h3 style="color: #2d3748; margin-bottom: 15px;">🏦 All Payer Shifts (43 Payers with Significant Changes)</h3>
 
-                    <div style="position: relative; height: 500px; margin-bottom: 30px;">
-                        <canvas id="payerShiftsChart"></canvas>
+                    <div style="background: #e6fffa; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+                        <p style="color: #234e52; margin: 0;">📊 Showing all payers with ≥50 transaction change. Use filters below to explore specific shifts.</p>
                     </div>
 
-                    <h4 style="color: #c53030; margin: 15px 0 10px 0;">Biggest Uniteller Losses:</h4>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; margin-bottom: 20px;">
+                        <div>
+                            <label style="display: block; font-weight: 600; margin-bottom: 5px; color: #2d3748;">Filter by Country</label>
+                            <select id="shift-country-filter" onchange="filterPayerShifts()" style="width: 100%; padding: 8px; border: 2px solid #e2e8f0; border-radius: 6px;">
+                                <option value="">All Countries</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label style="display: block; font-weight: 600; margin-bottom: 5px; color: #2d3748;">Filter by Shift Type</label>
+                            <select id="shift-type-filter" onchange="filterPayerShifts()" style="width: 100%; padding: 8px; border: 2px solid #e2e8f0; border-radius: 6px;">
+                                <option value="">All Shifts</option>
+                                <option value="uniteller_loss">Uniteller Losses Only</option>
+                                <option value="transnetwork_gain">Transnetwork Gains Only</option>
+                                <option value="both">Both Vendors Changed</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label style="display: block; font-weight: 600; margin-bottom: 5px; color: #2d3748;">Sort By</label>
+                            <select id="shift-sort" onchange="filterPayerShifts()" style="width: 100%; padding: 8px; border: 2px solid #e2e8f0; border-radius: 6px;">
+                                <option value="total">Total Change (Highest)</option>
+                                <option value="uniteller_loss">Uniteller Loss (Biggest)</option>
+                                <option value="transnetwork_gain">Transnetwork Gain (Biggest)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div style="max-height: 600px; overflow-y: auto; border: 1px solid #e2e8f0; border-radius: 8px;">
+                        <table class="data-table" style="margin: 0;">
+                            <thead>
+                                <tr>
+                                    <th style="position: sticky; top: 0; background: #f7fafc; z-index: 10;">Rank</th>
+                                    <th style="position: sticky; top: 0; background: #f7fafc; z-index: 10;">Country</th>
+                                    <th style="position: sticky; top: 0; background: #f7fafc; z-index: 10;">Payer</th>
+                                    <th style="position: sticky; top: 0; background: #f7fafc; z-index: 10;">Uniteller Sept</th>
+                                    <th style="position: sticky; top: 0; background: #f7fafc; z-index: 10;">Uniteller Oct (Proj)</th>
+                                    <th style="position: sticky; top: 0; background: #f7fafc; z-index: 10;">Uniteller Change</th>
+                                    <th style="position: sticky; top: 0; background: #f7fafc; z-index: 10;">Transnetwork Sept</th>
+                                    <th style="position: sticky; top: 0; background: #f7fafc; z-index: 10;">Transnetwork Oct (Proj)</th>
+                                    <th style="position: sticky; top: 0; background: #f7fafc; z-index: 10;">Transnetwork Change</th>
+                                </tr>
+                            </thead>
+                            <tbody id="all-shifts-tbody">
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div style="margin-top: 20px;">
+                        <div style="position: relative; height: 500px;">
+                            <canvas id="payerShiftsChart"></canvas>
+                        </div>
+                    </div>
+
+                    <h4 style="color: #c53030; margin: 30px 0 10px 0;">Summary: Biggest Uniteller Losses</h4>
                     <table class="data-table">
                         <thead>
                             <tr>
@@ -861,6 +913,91 @@
             });
         }
 
+        // Load all payer shifts data
+        let allPayerShifts = [];
+
+        async function loadPayerShifts() {
+            try {
+                const response = await fetch('all_payer_shifts.json');
+                allPayerShifts = await response.json();
+                populateShiftFilters();
+                filterPayerShifts();
+            } catch (error) {
+                console.error('Error loading payer shifts:', error);
+            }
+        }
+
+        function populateShiftFilters() {
+            const countries = [...new Set(allPayerShifts.map(s => s.country))].sort();
+            const countryFilter = document.getElementById('shift-country-filter');
+            countries.forEach(code => {
+                const option = document.createElement('option');
+                option.value = code;
+                option.textContent = countryNames[code] || code;
+                countryFilter.appendChild(option);
+            });
+        }
+
+        function filterPayerShifts() {
+            const countryFilter = document.getElementById('shift-country-filter')?.value || '';
+            const typeFilter = document.getElementById('shift-type-filter')?.value || '';
+            const sortBy = document.getElementById('shift-sort')?.value || 'total';
+
+            let filtered = [...allPayerShifts];
+
+            // Apply filters
+            if (countryFilter) {
+                filtered = filtered.filter(s => s.country === countryFilter);
+            }
+
+            if (typeFilter === 'uniteller_loss') {
+                filtered = filtered.filter(s => s.uniteller_change < 0);
+            } else if (typeFilter === 'transnetwork_gain') {
+                filtered = filtered.filter(s => s.transnetwork_change > 0);
+            } else if (typeFilter === 'both') {
+                filtered = filtered.filter(s => s.uniteller_change !== 0 && s.transnetwork_change !== 0);
+            }
+
+            // Apply sorting
+            if (sortBy === 'total') {
+                filtered.sort((a, b) => {
+                    const aTotal = Math.abs(a.uniteller_change) + Math.abs(a.transnetwork_change);
+                    const bTotal = Math.abs(b.uniteller_change) + Math.abs(b.transnetwork_change);
+                    return bTotal - aTotal;
+                });
+            } else if (sortBy === 'uniteller_loss') {
+                filtered.sort((a, b) => a.uniteller_change - b.uniteller_change);
+            } else if (sortBy === 'transnetwork_gain') {
+                filtered.sort((a, b) => b.transnetwork_change - a.transnetwork_change);
+            }
+
+            // Populate table
+            const tbody = document.getElementById('all-shifts-tbody');
+            if (!tbody) return;
+
+            tbody.innerHTML = '';
+            filtered.forEach((shift, index) => {
+                const row = `
+                    <tr>
+                        <td><strong>#${index + 1}</strong></td>
+                        <td>${countryNames[shift.country] || shift.country}</td>
+                        <td><strong>${shift.payer}</strong></td>
+                        <td>${shift.uniteller_sept.toLocaleString()}</td>
+                        <td>${shift.uniteller_oct_proj.toLocaleString()}</td>
+                        <td style="color: ${shift.uniteller_change < 0 ? '#e53e3e' : shift.uniteller_change > 0 ? '#38a169' : '#718096'}; font-weight: 600;">
+                            ${shift.uniteller_change > 0 ? '+' : ''}${shift.uniteller_change.toLocaleString()}
+                        </td>
+                        <td>${shift.transnetwork_sept.toLocaleString()}</td>
+                        <td>${shift.transnetwork_oct_proj.toLocaleString()}</td>
+                        <td style="color: ${shift.transnetwork_change > 0 ? '#38a169' : shift.transnetwork_change < 0 ? '#e53e3e' : '#718096'}; font-weight: 600;">
+                            ${shift.transnetwork_change > 0 ? '+' : ''}${shift.transnetwork_change.toLocaleString()}
+                        </td>
+                    </tr>
+                `;
+                tbody.innerHTML += row;
+            });
+        }
+
         // Trend Analysis Charts
         function createTrendCharts() {
             // Country Trend Chart
@@ -992,6 +1129,7 @@
 
         // Initialize on page load
         loadData();
+        loadPayerShifts();
 
         // Create trend charts after a short delay to ensure DOM is ready
         setTimeout(createTrendCharts, 500);

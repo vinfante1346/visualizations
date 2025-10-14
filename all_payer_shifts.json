@@ -1,0 +1,432 @@
+[
+  {
+    "country": "CO",
+    "payer": "CSA4-Bancolombia",
+    "uniteller_sept": 3421,
+    "uniteller_oct_proj": 390,
+    "uniteller_change": -3031,
+    "transnetwork_sept": 0,
+    "transnetwork_oct_proj": 0,
+    "transnetwork_change": 0
+  },
+  {
+    "country": "NI",
+    "payer": "BCC99-BANCENTRO",
+    "uniteller_sept": 3841,
+    "uniteller_oct_proj": 1376,
+    "uniteller_change": -2464,
+    "transnetwork_sept": 0,
+    "transnetwork_oct_proj": 0,
+    "transnetwork_change": 0
+  },
+  {
+    "country": "MX",
+    "payer": "BCP99-BanCoppel",
+    "uniteller_sept": 3067,
+    "uniteller_oct_proj": 636,
+    "uniteller_change": -2430,
+    "transnetwork_sept": 0,
+    "transnetwork_oct_proj": 0,
+    "transnetwork_change": 0
+  },
+  {
+    "country": "CO",
+    "payer": "BANCOLOMBIA",
+    "uniteller_sept": 0,
+    "uniteller_oct_proj": 0,
+    "uniteller_change": 0,
+    "transnetwork_sept": 3779,
+    "transnetwork_oct_proj": 6100,
+    "transnetwork_change": 2321
+  },
+  {
+    "country": "HN",
+    "payer": "HCA6-Banco Atlantida",
+    "uniteller_sept": 2527,
+    "uniteller_oct_proj": 293,
+    "uniteller_change": -2233,
+    "transnetwork_sept": 0,
+    "transnetwork_oct_proj": 0,
+    "transnetwork_change": 0
+  },
+  {
+    "country": "HN",
+    "payer": "BANCO ATLANTIDA",
+    "uniteller_sept": 0,
+    "uniteller_oct_proj": 0,
+    "uniteller_change": 0,
+    "transnetwork_sept": 4148,
+    "transnetwork_oct_proj": 6196,
+    "transnetwork_change": 2048
+  },
+  {
+    "country": "NI",
+    "payer": "BANCENTRO",
+    "uniteller_sept": 0,
+    "uniteller_oct_proj": 0,
+    "uniteller_change": 0,
+    "transnetwork_sept": 3232,
+    "transnetwork_oct_proj": 5183,
+    "transnetwork_change": 1951
+  },
+  {
+    "country": "MX",
+    "payer": "BANCOPPEL",
+    "uniteller_sept": 0,
+    "uniteller_oct_proj": 0,
+    "uniteller_change": 0,
+    "transnetwork_sept": 4910,
+    "transnetwork_oct_proj": 6646,
+    "transnetwork_change": 1736
+  },
+  {
+    "country": "EC",
+    "payer": "GYQ99-Banco Guayaquil",
+    "uniteller_sept": 3313,
+    "uniteller_oct_proj": 2016,
+    "uniteller_change": -1296,
+    "transnetwork_sept": 0,
+    "transnetwork_oct_proj": 0,
+    "transnetwork_change": 0
+  },
+  {
+    "country": "MX",
+    "payer": "BBV1-BBVA",
+    "uniteller_sept": 2200,
+    "uniteller_oct_proj": 1146,
+    "uniteller_change": -1053,
+    "transnetwork_sept": 0,
+    "transnetwork_oct_proj": 0,
+    "transnetwork_change": 0
+  },
+  {
+    "country": "SV",
+    "payer": "SCA4-Banco Agricola",
+    "uniteller_sept": 1347,
+    "uniteller_oct_proj": 453,
+    "uniteller_change": -893,
+    "transnetwork_sept": 0,
+    "transnetwork_oct_proj": 0,
+    "transnetwork_change": 0
+  },
+  {
+    "country": "EC",
+    "payer": "BANCO DE GUAYAQUIL",
+    "uniteller_sept": 0,
+    "uniteller_oct_proj": 0,
+    "uniteller_change": 0,
+    "transnetwork_sept": 519,
+    "transnetwork_oct_proj": 1213,
+    "transnetwork_change": 694
+  },
+  {
+    "country": "SV",
+    "payer": "BANCO AGRICOLA",
+    "uniteller_sept": 0,
+    "uniteller_oct_proj": 0,
+    "uniteller_change": 0,
+    "transnetwork_sept": 1368,
+    "transnetwork_oct_proj": 1953,
+    "transnetwork_change": 585
+  },
+  {
+    "country": "HN",
+    "payer": "BNPS94-BANPAIS",
+    "uniteller_sept": 1473,
+    "uniteller_oct_proj": 936,
+    "uniteller_change": -536,
+    "transnetwork_sept": 0,
+    "transnetwork_oct_proj": 0,
+    "transnetwork_change": 0
+  },
+  {
+    "country": "GT",
+    "payer": "GCA10-Banrural",
+    "uniteller_sept": 1701,
+    "uniteller_oct_proj": 1203,
+    "uniteller_change": -497,
+    "transnetwork_sept": 0,
+    "transnetwork_oct_proj": 0,
+    "transnetwork_change": 0
+  },
+  {
+    "country": "DO",
+    "payer": "BANRES-Banreservas",
+    "uniteller_sept": 824,
+    "uniteller_oct_proj": 333,
+    "uniteller_change": -490,
+    "transnetwork_sept": 0,
+    "transnetwork_oct_proj": 0,
+    "transnetwork_change": 0
+  },
+  {
+    "country": "MX",
+    "payer": "EK699_BANCO-Banco Azteca",
+    "uniteller_sept": 2457,
+    "uniteller_oct_proj": 2003,
+    "uniteller_change": -453,
+    "transnetwork_sept": 0,
+    "transnetwork_oct_proj": 0,
+    "transnetwork_change": 0
+  },
+  {
+    "country": "DO",
+    "payer": "BANRESERVAS",
+    "uniteller_sept": 0,
+    "uniteller_oct_proj": 0,
+    "uniteller_change": 0,
+    "transnetwork_sept": 777,
+    "transnetwork_oct_proj": 1196,
+    "transnetwork_change": 419
+  },
+  {
+    "country": "MX",
+    "payer": "ELEKTRA MEXICO",
+    "uniteller_sept": 0,
+    "uniteller_oct_proj": 0,
+    "uniteller_change": 0,
+    "transnetwork_sept": 4577,
+    "transnetwork_oct_proj": 4236,
+    "transnetwork_change": -340
+  },
+  {
+    "country": "GT",
+    "payer": "BANRURAL",
+    "uniteller_sept": 0,
+    "uniteller_oct_proj": 0,
+    "uniteller_change": 0,
+    "transnetwork_sept": 946,
+    "transnetwork_oct_proj": 1230,
+    "transnetwork_change": 284
+  },
+  {
+    "country": "MX",
+    "payer": "BBVA BANCOMER",
+    "uniteller_sept": 0,
+    "uniteller_oct_proj": 0,
+    "uniteller_change": 0,
+    "transnetwork_sept": 4086,
+    "transnetwork_oct_proj": 4346,
+    "transnetwork_change": 260
+  },
+  {
+    "country": "HN",
+    "payer": "BANPAIS SA",
+    "uniteller_sept": 0,
+    "uniteller_oct_proj": 0,
+    "uniteller_change": 0,
+    "transnetwork_sept": 11,
+    "transnetwork_oct_proj": 270,
+    "transnetwork_change": 259
+  },
+  {
+    "country": "NI",
+    "payer": "NCA2-BANCO PROMERICA",
+    "uniteller_sept": 2818,
+    "uniteller_oct_proj": 2580,
+    "uniteller_change": -238,
+    "transnetwork_sept": 0,
+    "transnetwork_oct_proj": 0,
+    "transnetwork_change": 0
+  },
+  {
+    "country": "MX",
+    "payer": "EK699-Elektra Banco Azteca",
+    "uniteller_sept": 766,
+    "uniteller_oct_proj": 536,
+    "uniteller_change": -229,
+    "transnetwork_sept": 0,
+    "transnetwork_oct_proj": 0,
+    "transnetwork_change": 0
+  },
+  {
+    "country": "EC",
+    "payer": "BANCO PICHINCHA",
+    "uniteller_sept": 0,
+    "uniteller_oct_proj": 0,
+    "uniteller_change": 0,
+    "transnetwork_sept": 445,
+    "transnetwork_oct_proj": 606,
+    "transnetwork_change": 161
+  },
+  {
+    "country": "HN",
+    "payer": "HCA7-B. de Occidente",
+    "uniteller_sept": 3253,
+    "uniteller_oct_proj": 3406,
+    "uniteller_change": 153,
+    "transnetwork_sept": 0,
+    "transnetwork_oct_proj": 0,
+    "transnetwork_change": 0
+  },
+  {
+    "country": "PE",
+    "payer": "Interbank-Interbank",
+    "uniteller_sept": 561,
+    "uniteller_oct_proj": 413,
+    "uniteller_change": -147,
+    "transnetwork_sept": 0,
+    "transnetwork_oct_proj": 0,
+    "transnetwork_change": 0
+  },
+  {
+    "country": "MX",
+    "payer": "BANAMEX00-Banamex",
+    "uniteller_sept": 766,
+    "uniteller_oct_proj": 620,
+    "uniteller_change": -146,
+    "transnetwork_sept": 0,
+    "transnetwork_oct_proj": 0,
+    "transnetwork_change": 0
+  },
+  {
+    "country": "HT",
+    "payer": "UNIBANK-Unitransfer",
+    "uniteller_sept": 1162,
+    "uniteller_oct_proj": 1016,
+    "uniteller_change": -145,
+    "transnetwork_sept": 0,
+    "transnetwork_oct_proj": 0,
+    "transnetwork_change": 0
+  },
+  {
+    "country": "MX",
+    "payer": "OXXO MX",
+    "uniteller_sept": 0,
+    "uniteller_oct_proj": 0,
+    "uniteller_change": 0,
+    "transnetwork_sept": 313,
+    "transnetwork_oct_proj": 450,
+    "transnetwork_change": 137
+  },
+  {
+    "country": "CO",
+    "payer": "CSA8-Davivienda",
+    "uniteller_sept": 672,
+    "uniteller_oct_proj": 543,
+    "uniteller_change": -128,
+    "transnetwork_sept": 0,
+    "transnetwork_oct_proj": 0,
+    "transnetwork_change": 0
+  },
+  {
+    "country": "HN",
+    "payer": "EK499-Elektra",
+    "uniteller_sept": 752,
+    "uniteller_oct_proj": 646,
+    "uniteller_change": -105,
+    "transnetwork_sept": 0,
+    "transnetwork_oct_proj": 0,
+    "transnetwork_change": 0
+  },
+  {
+    "country": "MX",
+    "payer": "WMTAUR99-Bodega Aurrera",
+    "uniteller_sept": 361,
+    "uniteller_oct_proj": 266,
+    "uniteller_change": -94,
+    "transnetwork_sept": 0,
+    "transnetwork_oct_proj": 0,
+    "transnetwork_change": 0
+  },
+  {
+    "country": "PE",
+    "payer": "BANCO INTERBANK PERU",
+    "uniteller_sept": 0,
+    "uniteller_oct_proj": 0,
+    "uniteller_change": 0,
+    "transnetwork_sept": 313,
+    "transnetwork_oct_proj": 406,
+    "transnetwork_change": 93
+  },
+  {
+    "country": "HN",
+    "payer": "HCA2-Banco FICOHSA",
+    "uniteller_sept": 655,
+    "uniteller_oct_proj": 566,
+    "uniteller_change": -88,
+    "transnetwork_sept": 0,
+    "transnetwork_oct_proj": 0,
+    "transnetwork_change": 0
+  },
+  {
+    "country": "DO",
+    "payer": "BHD-BHD",
+    "uniteller_sept": 328,
+    "uniteller_oct_proj": 240,
+    "uniteller_change": -88,
+    "transnetwork_sept": 0,
+    "transnetwork_oct_proj": 0,
+    "transnetwork_change": 0
+  },
+  {
+    "country": "MX",
+    "payer": "OXXOTN-OXXO",
+    "uniteller_sept": 196,
+    "uniteller_oct_proj": 113,
+    "uniteller_change": -82,
+    "transnetwork_sept": 0,
+    "transnetwork_oct_proj": 0,
+    "transnetwork_change": 0
+  },
+  {
+    "country": "EC",
+    "payer": "ECU8-B. del Austro",
+    "uniteller_sept": 387,
+    "uniteller_oct_proj": 306,
+    "uniteller_change": -80,
+    "transnetwork_sept": 0,
+    "transnetwork_oct_proj": 0,
+    "transnetwork_change": 0
+  },
+  {
+    "country": "GT",
+    "payer": "BANCO DESARROLLO RURAL",
+    "uniteller_sept": 0,
+    "uniteller_oct_proj": 0,
+    "uniteller_change": 0,
+    "transnetwork_sept": 2255,
+    "transnetwork_oct_proj": 2176,
+    "transnetwork_change": -78
+  },
+  {
+    "country": "GT",
+    "payer": "GCA8-B. Industrial",
+    "uniteller_sept": 542,
+    "uniteller_oct_proj": 470,
+    "uniteller_change": -72,
+    "transnetwork_sept": 0,
+    "transnetwork_oct_proj": 0,
+    "transnetwork_change": 0
+  },
+  {
+    "country": "MX",
+    "payer": "SNTNDR00-Santander",
+    "uniteller_sept": 818,
+    "uniteller_oct_proj": 746,
+    "uniteller_change": -71,
+    "transnetwork_sept": 0,
+    "transnetwork_oct_proj": 0,
+    "transnetwork_change": 0
+  },
+  {
+    "country": "HN",
+    "payer": "ELEKTRA HONDURAS",
+    "uniteller_sept": 0,
+    "uniteller_oct_proj": 0,
+    "uniteller_change": 0,
+    "transnetwork_sept": 2855,
+    "transnetwork_oct_proj": 2796,
+    "transnetwork_change": -58
+  },
+  {
+    "country": "CO",
+    "payer": "BANCO DAVIVIENDA",
+    "uniteller_sept": 0,
+    "uniteller_oct_proj": 0,
+    "uniteller_change": 0,
+    "transnetwork_sept": 844,
+    "transnetwork_oct_proj": 790,
+    "transnetwork_change": -54
+  }
+]
