@@ -73,7 +73,7 @@ All files are automatically deployed to GitHub Pages when pushed to the `main` b
 
 ## 📧 Contact
 
-**Owner:** Val Diaz
+**Owner:** Val Infante
 **GitHub:** vinfante1346
 **Repository:** https://github.com/vinfante1346/visualizations
 
