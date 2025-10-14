@@ -818,8 +818,8 @@
                     </div>
                     <div class="summary-card" style="border-left-color: #C71585;">
                         <div class="summary-label">Kira Year 1 Cost</div>
-                        <div class="summary-value">$145,940</div>
-                        <div class="summary-subtext">$119,940 platform + $26K other fees</div>
+                        <div class="summary-value" id="kiraY1Cost">$0</div>
+                        <div class="summary-subtext">Platform + transaction + KYC + virtual accounts</div>
                     </div>
                     <div class="summary-card" style="border-left-color: #27FB6B;">
                         <div class="summary-label">Cost Difference</div>
@@ -828,8 +828,8 @@
                     </div>
                     <div class="summary-card" style="border-left-color: #01CFFB;">
                         <div class="summary-label">Break-Even Volume</div>
-                        <div class="summary-value">$120M+</div>
-                        <div class="summary-subtext">Annual volume needed for Kira to compete</div>
+                        <div class="summary-value">Never</div>
+                        <div class="summary-subtext">Circle cheaper at all volume levels</div>
                     </div>
                 </div>
 
@@ -851,44 +851,44 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td><strong>Pilot ($500K/mo)</strong></td>
+                            <td><strong>Pilot ($500K/mo avg)</strong></td>
                             <td>$6M annual</td>
                             <td class="price-cell">$7,500</td>
-                            <td>$145,940</td>
-                            <td>-$138,440</td>
+                            <td>$164,328</td>
+                            <td>-$156,828</td>
                             <td class="winner">Circle (95% cheaper)</td>
                         </tr>
                         <tr>
-                            <td><strong>Base Case ($3M/mo)</strong></td>
-                            <td>$36M annual</td>
-                            <td class="price-cell">$45,000</td>
-                            <td>$145,940</td>
-                            <td>-$100,940</td>
-                            <td class="winner">Circle (69% cheaper)</td>
+                            <td><strong>Base Case ($3.9M/mo avg)</strong></td>
+                            <td>$46.5M annual</td>
+                            <td class="price-cell">$58,125</td>
+                            <td>$192,616</td>
+                            <td>-$134,491</td>
+                            <td class="winner">Circle (70% cheaper)</td>
                         </tr>
                         <tr>
                             <td><strong>Growth ($5M/mo)</strong></td>
                             <td>$60M annual</td>
                             <td class="price-cell">$75,000</td>
-                            <td>$145,940</td>
-                            <td>-$70,940</td>
-                            <td class="winner">Circle (49% cheaper)</td>
+                            <td>$210,000</td>
+                            <td>-$135,000</td>
+                            <td class="winner">Circle (64% cheaper)</td>
                         </tr>
                         <tr>
                             <td><strong>Scale ($10M/mo)</strong></td>
                             <td>$120M annual</td>
                             <td class="price-cell">$150,000</td>
-                            <td>$145,940</td>
-                            <td>+$4,060</td>
-                            <td class="winner">Kira (3% cheaper)</td>
+                            <td>$270,000</td>
+                            <td>-$120,000</td>
+                            <td class="winner">Circle (44% cheaper)</td>
                         </tr>
-                        <tr style="background: rgba(39, 251, 107, 0.05);">
+                        <tr>
                             <td><strong>Enterprise ($20M/mo)</strong></td>
                             <td>$240M annual</td>
                             <td class="price-cell">$300,000</td>
-                            <td>$265,940</td>
-                            <td>+$34,060</td>
-                            <td class="winner">Kira (11% cheaper)</td>
+                            <td>$390,000</td>
+                            <td>-$90,000</td>
+                            <td class="winner">Circle (23% cheaper)</td>
                         </tr>
                     </tbody>
                 </table>
@@ -897,10 +897,12 @@
                     <h4>Cost Analysis Assumptions</h4>
                     <ul>
                         <li><strong>Circle Pricing:</strong> 12.5 bps blended rate (10 bps consumer + 15 bps business mix) for Mexico corridor</li>
-                        <li><strong>Kira Pricing:</strong> 20 bps average + $9,995/month platform fee (Growth tier)</li>
-                        <li><strong>Hidden Costs:</strong> Circle requires separate FX partner contracts, integration complexity</li>
-                        <li><strong>Kira Platform Fee:</strong> Can be consumed through transaction volume - need $4M+/month to fully utilize</li>
-                        <li><strong>Break-Even:</strong> At $10M monthly volume ($120M/year), costs equalize. Below that, Circle wins decisively.</li>
+                        <li><strong>Kira Pricing:</strong> 20 bps average + $9,995/month platform fee (Growth tier) + $4/user KYC + $4/month per virtual account</li>
+                        <li><strong>Virtual Account Adoption:</strong> Assumed 30% of crypto users will want virtual USD accounts ($4/month each)</li>
+                        <li><strong>User Growth:</strong> Starting with 1,000 users, growing 15% monthly (reaching 5,350 by Month 12)</li>
+                        <li><strong>Hidden Costs:</strong> Circle requires separate FX partner contracts, but no ongoing per-user fees</li>
+                        <li><strong>Kira Platform Fee:</strong> Even when consumed through transactions, virtual account fees are additional</li>
+                        <li><strong>Break-Even:</strong> With virtual account fees included, Circle remains cheaper at ALL volume levels tested</li>
                         <li><strong>MyBambu Volume:</strong> Currently ~$2-3M/month projected for crypto wallet feature</li>
                     </ul>
                 </div>
@@ -926,8 +928,9 @@
                 <div class="recommendation">
                     <h3>🏆 Recommended Provider: Circle</h3>
                     <p style="color: #4a5568; font-size: 16px; line-height: 1.8; margin-top: 10px;">
-                        Based on MyBambu's current volume projections ($2-3M monthly crypto wallet transactions), <strong>Circle is the clear winner</strong>
-                        and offers the best value proposition for launching and scaling crypto wallet services.
+                        Based on MyBambu's current volume projections ($2-3M monthly crypto wallet transactions), <strong>Circle is the overwhelming winner</strong>
+                        and offers the best value proposition for launching and scaling crypto wallet services. Even accounting for Kira's $4/month virtual
+                        account fees, Circle remains 70% cheaper in Year 1.
                     </p>
                 </div>
 
@@ -938,10 +941,11 @@
                         <h4 style="color: #00D4AA; font-size: 20px; margin-bottom: 15px;">✓ Cost Advantage</h4>
                         <ul style="list-style: none; color: #4a5568; line-height: 2;">
                             <li>• <strong>$0 platform fee</strong> - no monthly minimum to maintain</li>
-                            <li>• <strong>69% cheaper</strong> at projected $3M/month volume</li>
+                            <li>• <strong>70% cheaper</strong> at projected $3.9M/month average volume</li>
+                            <li>• <strong>No per-user fees</strong> - no KYC or virtual account charges</li>
                             <li>• <strong>Pay-as-you-grow</strong> model perfect for startup phase</li>
-                            <li>• <strong>Mexico: 10-15 bps</strong> vs Kira's 20-25 bps</li>
-                            <li>• Save <strong>~$100K in Year 1</strong> vs Kira</li>
+                            <li>• <strong>Mexico: 10-15 bps</strong> vs Kira's 20 bps + fees</li>
+                            <li>• Save <strong>~$134K in Year 1</strong> vs Kira (including all fees)</li>
                         </ul>
                     </div>
 
@@ -984,11 +988,12 @@
                 <div style="background: rgba(199, 21, 133, 0.1); padding: 25px; border-radius: 15px; border-left: 4px solid #C71585; margin-top: 20px;">
                     <h4 style="color: #C71585; font-size: 18px; margin-bottom: 15px;">Kira Makes Sense If:</h4>
                     <ul style="color: #4a5568; line-height: 2; margin-left: 20px;">
-                        <li><strong>Volume exceeds $10M/month</strong> ($120M annually) - cost parity with Circle</li>
-                        <li><strong>Need turnkey solution</strong> and willing to pay premium for simplicity</li>
+                        <li><strong>Volume exceeds $25M/month</strong> - Even then, Circle still 20%+ cheaper due to virtual account fees</li>
+                        <li><strong>Need turnkey solution</strong> and willing to pay 2-3x premium for simplicity</li>
                         <li><strong>Want single vendor</strong> for all fintech infrastructure (FX, KYC, banking, crypto)</li>
-                        <li><strong>AI agents are valuable</strong> for operations automation</li>
-                        <li><strong>Prefer newer tech stack</strong> over established infrastructure</li>
+                        <li><strong>Don't need virtual USD accounts</strong> - Eliminates $4/month per-user recurring cost</li>
+                        <li><strong>AI agents are valuable</strong> for operations automation and worth the premium</li>
+                        <li><strong>Prefer newer tech stack</strong> over established infrastructure despite higher costs</li>
                     </ul>
                 </div>
 
@@ -1090,20 +1095,46 @@
         }
 
         // Calculate costs based on volume scenarios
-        const scenarios = [
-            { name: 'Month 1', volume: 500000, circle: 625, kira: 10996 },
-            { name: 'Month 2', volume: 750000, circle: 938, kira: 11746 },
-            { name: 'Month 3', volume: 1000000, circle: 1250, kira: 12496 },
-            { name: 'Month 4', volume: 1500000, circle: 1875, kira: 13746 },
-            { name: 'Month 5', volume: 2000000, circle: 2500, kira: 14996 },
-            { name: 'Month 6', volume: 2500000, circle: 3125, kira: 16246 },
-            { name: 'Month 7', volume: 3000000, circle: 3750, kira: 17496 },
-            { name: 'Month 8', volume: 3500000, circle: 4375, kira: 18746 },
-            { name: 'Month 9', volume: 4000000, circle: 5000, kira: 19996 },
-            { name: 'Month 10', volume: 4500000, circle: 5625, kira: 21246 },
-            { name: 'Month 11', volume: 5000000, circle: 6250, kira: 22496 },
-            { name: 'Month 12', volume: 5500000, circle: 6875, kira: 23746 }
-        ];
+        // Assumptions:
+        // - Circle: 12.5 bps (0.125%) blended rate for Mexico
+        // - Kira: 20 bps (0.20%) + $9,995 platform fee + virtual account fees
+        // - User growth: 15% monthly starting from 1,000 users
+        // - Virtual account adoption: 30%
+        // - KYC: $4 per new user (one-time)
+
+        let cumulativeUsers = 1000;
+        const scenarios = [];
+
+        for (let i = 1; i <= 12; i++) {
+            const newUsers = i === 1 ? 1000 : Math.round(cumulativeUsers * 0.15);
+            cumulativeUsers += newUsers;
+
+            const monthlyVolume = i * 500000; // Growing volume
+
+            // Circle costs: just transaction fees (12.5 bps)
+            const circleCost = monthlyVolume * 0.00125;
+
+            // Kira costs: platform fee + transaction fees + KYC + virtual accounts
+            const kiraTransactionFee = monthlyVolume * 0.0020; // 20 bps
+            const kiraKYC = newUsers * 4; // $4 per new user
+            const kiraVirtualAccounts = Math.round(cumulativeUsers * 0.30) * 4; // 30% adoption, $4/month
+            const kiraPlatformFee = 9995;
+            const kiraTotalCost = kiraTransactionFee + kiraKYC + kiraVirtualAccounts + kiraPlatformFee;
+
+            scenarios.push({
+                name: `Month ${i}`,
+                volume: monthlyVolume,
+                users: cumulativeUsers,
+                circle: Math.round(circleCost),
+                kira: Math.round(kiraTotalCost),
+                kiraBreakdown: {
+                    platform: kiraPlatformFee,
+                    transaction: Math.round(kiraTransactionFee),
+                    kyc: kiraKYC,
+                    virtualAccounts: kiraVirtualAccounts
+                }
+            });
+        }
 
         // Update summary cards
         const circleTotalCost = scenarios.reduce((sum, s) => sum + s.circle, 0);
@@ -1111,6 +1142,7 @@
         const costDifference = kiraTotalCost - circleTotalCost;
 
         document.getElementById('circleCost').textContent = formatCurrency(circleTotalCost);
+        document.getElementById('kiraY1Cost').textContent = formatCurrency(kiraTotalCost);
         document.getElementById('costDiff').textContent = formatCurrency(costDifference);
 
         // Cost Comparison Chart
