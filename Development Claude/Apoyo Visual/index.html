@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Val's Visualizations</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 40px 20px;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        h1 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+        .subtitle {
+            color: #666;
+            margin-bottom: 40px;
+            font-size: 1.1em;
+        }
+        .project-card {
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            transition: transform 0.2s;
+        }
+        .project-card:hover {
+            transform: translateX(5px);
+        }
+        .project-card h2 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 1.3em;
+        }
+        .project-card p {
+            color: #666;
+            margin-bottom: 15px;
+        }
+        .project-card a {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background 0.2s;
+        }
+        .project-card a:hover {
+            background: #764ba2;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📊 Val's Visualizations</h1>
+        <p class="subtitle">Interactive dashboards, business models, and data visualizations</p>
+
+        <div class="project-card">
+            <h2>💰 Apoyo + BlockWyre Business Model</h2>
+            <p>Interactive calculator showing monthly MyBambu leverage, capital requirements, and ROI analysis for the Apoyo secured loans program.</p>
+            <a href="artifacts/apoyo-mybambu-leverage-calculator.html">View Calculator →</a>
+        </div>
+
+        <div class="project-card">
+            <h2>📈 More Projects Coming Soon</h2>
+            <p>Additional visualizations and dashboards will be added here.</p>
+        </div>
+    </div>
+</body>
+</html>
