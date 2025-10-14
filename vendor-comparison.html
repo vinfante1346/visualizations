@@ -466,7 +466,13 @@
                 </div>
 
                 <div style="background: white; padding: 25px; border-radius: 12px; margin-top: 20px;">
-                    <h3 style="color: #2d3748; margin-bottom: 15px;">🌎 Trend by Country (Biggest Declines)</h3>
+                    <h3 style="color: #2d3748; margin-bottom: 15px;">🌎 Trend by Country</h3>
+
+                    <div style="position: relative; height: 400px; margin-bottom: 30px;">
+                        <canvas id="countryTrendChart"></canvas>
+                    </div>
+
+                    <h4 style="color: #2d3748; margin-bottom: 10px;">Country Details (Biggest Declines):</h4>
                     <table class="data-table">
                         <thead>
                             <tr>
@@ -513,6 +519,10 @@
 
                 <div style="background: white; padding: 25px; border-radius: 12px; margin-top: 20px;">
                     <h3 style="color: #2d3748; margin-bottom: 15px;">🏦 Top Payer Shifts (Transaction Changes)</h3>
+
+                    <div style="position: relative; height: 500px; margin-bottom: 30px;">
+                        <canvas id="payerShiftsChart"></canvas>
+                    </div>
 
                     <h4 style="color: #c53030; margin: 15px 0 10px 0;">Biggest Uniteller Losses:</h4>
                     <table class="data-table">
@@ -851,8 +861,140 @@
             });
         }
 
+        // Trend Analysis Charts
+        function createTrendCharts() {
+            // Country Trend Chart
+            const countryCtx = document.getElementById('countryTrendChart');
+            if (countryCtx) {
+                new Chart(countryCtx.getContext('2d'), {
+                    type: 'bar',
+                    data: {
+                        labels: ['Colombia', 'Nicaragua', 'Mexico', 'Ecuador', 'Honduras'],
+                        datasets: [
+                            {
+                                label: 'Uniteller Change',
+                                data: [-77.2, -40.4, -35.5, -35.1, -32.1],
+                                backgroundColor: 'rgba(229, 62, 62, 0.8)',
+                                borderColor: 'rgb(229, 62, 62)',
+                                borderWidth: 2
+                            },
+                            {
+                                label: 'Transnetwork Change',
+                                data: [48.8, 21.8, 12.9, 80.4, 22.1],
+                                backgroundColor: 'rgba(56, 161, 105, 0.8)',
+                                borderColor: 'rgb(56, 161, 105)',
+                                borderWidth: 2
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: { position: 'top' },
+                            title: {
+                                display: true,
+                                text: 'Vendor Performance Change by Country (Sept → Oct Projected %)',
+                                font: { size: 14, weight: 'bold' }
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        return context.dataset.label + ': ' + context.parsed.y.toFixed(1) + '%';
+                                    }
+                                }
+                            }
+                        },
+                        scales: {
+                            y: {
+                                title: {
+                                    display: true,
+                                    text: 'Change (%)'
+                                },
+                                ticks: {
+                                    callback: function(value) {
+                                        return value + '%';
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+
+            // Payer Shifts Chart - Horizontal bar showing losses vs gains
+            const payerCtx = document.getElementById('payerShiftsChart');
+            if (payerCtx) {
+                new Chart(payerCtx.getContext('2d'), {
+                    type: 'bar',
+                    data: {
+                        labels: [
+                            'Bancolombia (CO)',
+                            'BANCENTRO (NI)',
+                            'BanCoppel (MX)',
+                            'Banco Atlantida (HN)',
+                            'Banco Guayaquil (EC)'
+                        ],
+                        datasets: [
+                            {
+                                label: 'Uniteller Loss',
+                                data: [-3031, -2464, -2430, -2234, -1296],
+                                backgroundColor: 'rgba(229, 62, 62, 0.8)',
+                                borderColor: 'rgb(229, 62, 62)',
+                                borderWidth: 2
+                            },
+                            {
+                                label: 'Transnetwork Gain',
+                                data: [2321, 1951, 1737, 2049, 694],
+                                backgroundColor: 'rgba(56, 161, 105, 0.8)',
+                                borderColor: 'rgb(56, 161, 105)',
+                                borderWidth: 2
+                            }
+                        ]
+                    },
+                    options: {
+                        indexAxis: 'y',
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: { position: 'top' },
+                            title: {
+                                display: true,
+                                text: 'Top 5 Payer Shifts: Uniteller Losses vs Transnetwork Gains (Transactions)',
+                                font: { size: 14, weight: 'bold' }
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        const value = Math.abs(context.parsed.x);
+                                        return context.dataset.label + ': ' + value.toLocaleString() + ' txs';
+                                    }
+                                }
+                            }
+                        },
+                        scales: {
+                            x: {
+                                title: {
+                                    display: true,
+                                    text: 'Transaction Change'
+                                },
+                                ticks: {
+                                    callback: function(value) {
+                                        return value.toLocaleString();
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+        }
+
         // Initialize on page load
         loadData();
+
+        // Create trend charts after a short delay to ensure DOM is ready
+        setTimeout(createTrendCharts, 500);
     </script>
 </body>
 </html>
