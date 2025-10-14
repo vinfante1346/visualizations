@@ -244,6 +244,7 @@
             <button class="tab active" onclick="switchTab('vendors')">Vendors</button>
             <button class="tab" onclick="switchTab('countries')">Countries / Corridors</button>
             <button class="tab" onclick="switchTab('payers')">Payers / Banks</button>
+            <button class="tab" onclick="switchTab('trends')" style="background: linear-gradient(135deg, #fc8181 0%, #f56565 100%); color: white;">⚠️ Trend Analysis</button>
         </div>
 
         <!-- VENDORS TAB -->
@@ -378,6 +379,96 @@
                     <div id="no-results" class="no-results" style="display: none;">
                         No payers match your search criteria
                     </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TRENDS TAB -->
+        <div id="trends-tab" class="tab-content">
+            <div class="content-box" style="background: linear-gradient(135deg, #fff5f5 0%, #ffe5e5 100%); border: 2px solid #fc8181;">
+                <h2 style="color: #c53030; margin-bottom: 20px;">⚠️ CRITICAL TREND: Major Market Share Shift</h2>
+
+                <div style="background: white; padding: 30px; border-radius: 12px; margin-bottom: 20px;">
+                    <div style="text-align: center; margin-bottom: 30px;">
+                        <div style="font-size: 72px; font-weight: bold; color: #c53030; margin: 20px 0;">-15.8%</div>
+                        <p style="font-size: 20px; color: #2d3748;"><strong>Uniteller lost 15.8 percentage points</strong> of market share from September to October</p>
+                        <p style="font-size: 18px; color: #718096; margin-top: 10px;">while Transnetwork gained the same amount</p>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 30px 0;">
+                        <div style="background: linear-gradient(135deg, #764ba2 0%, #9f7aea 100%); color: white; padding: 30px; border-radius: 12px; text-align: center;">
+                            <div style="font-size: 14px; opacity: 0.9; margin-bottom: 10px;">UNITELLER</div>
+                            <div style="font-size: 48px; font-weight: bold; margin: 15px 0;">50.7% → 35.0%</div>
+                            <div style="font-size: 16px; opacity: 0.9;">September → October</div>
+                            <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.3); font-size: 18px; color: #feb2b2; font-weight: 600;">
+                                ↓ 15.8 points
+                            </div>
+                        </div>
+                        <div style="background: linear-gradient(135deg, #667eea 0%, #4c51bf 100%); color: white; padding: 30px; border-radius: 12px; text-align: center;">
+                            <div style="font-size: 14px; opacity: 0.9; margin-bottom: 10px;">TRANSNETWORK</div>
+                            <div style="font-size: 48px; font-weight: bold; margin: 15px 0;">49.3% → 65.0%</div>
+                            <div style="font-size: 16px; opacity: 0.9;">September → October</div>
+                            <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.3); font-size: 18px; color: #9ae6b4; font-weight: 600;">
+                                ↑ 15.8 points
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="background: white; padding: 25px; border-radius: 12px; margin-bottom: 20px;">
+                    <h3 style="color: #2d3748; margin-bottom: 15px;">📊 Volume Impact</h3>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Vendor</th>
+                                <th>September 2025</th>
+                                <th>October 2025 (Projected)</th>
+                                <th>Change</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Uniteller Transactions</strong></td>
+                                <td>48,216</td>
+                                <td>30,813</td>
+                                <td style="color: #e53e3e; font-weight: 600;">-36.1%</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Uniteller Volume</strong></td>
+                                <td>$10,209,689</td>
+                                <td>$6,810,893</td>
+                                <td style="color: #e53e3e; font-weight: 600;">-33.3%</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Transnetwork Transactions</strong></td>
+                                <td>46,797</td>
+                                <td>57,343</td>
+                                <td style="color: #38a169; font-weight: 600;">+22.5%</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Transnetwork Volume</strong></td>
+                                <td>$9,156,133</td>
+                                <td>$11,566,893</td>
+                                <td style="color: #38a169; font-weight: 600;">+26.3%</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div style="background: #e6fffa; border-left: 4px solid #38a169; padding: 20px; border-radius: 8px;">
+                    <h3 style="color: #22543d; margin-bottom: 15px;">💡 Strategic Recommendations</h3>
+                    <ul style="list-style: none; padding: 0;">
+                        <li style="padding: 8px 0; color: #234e52; line-height: 1.6;">→ <strong>Immediate:</strong> Reduce Uniteller prefunding from $500K to $300-350K. Redeploy $150-200K to Transnetwork.</li>
+                        <li style="padding: 8px 0; color: #234e52; line-height: 1.6;">→ <strong>Investigation:</strong> Understand root cause - pricing changes? Service quality? Corridor availability?</li>
+                        <li style="padding: 8px 0; color: #234e52; line-height: 1.6;">→ <strong>Monitoring:</strong> Track daily/weekly to see if trend accelerates, stabilizes, or reverses.</li>
+                        <li style="padding: 8px 0; color: #234e52; line-height: 1.6;">→ <strong>Vendor relationships:</strong> Discuss trend with both vendors - potential renegotiation opportunities.</li>
+                    </ul>
+                </div>
+
+                <div style="text-align: center; margin-top: 30px;">
+                    <a href="vendor-trend-analysis.html" style="display: inline-block; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 15px 30px; border-radius: 10px; text-decoration: none; font-weight: 600; font-size: 16px;">
+                        View Full Trend Analysis with Charts →
+                    </a>
                 </div>
             </div>
         </div>
