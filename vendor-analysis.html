@@ -319,6 +319,40 @@
         </div>
 
         <div class="chart-container">
+            <h2>Top Payers (Destination Banks) Analysis</h2>
+            <p style="color: #4a5568; margin-bottom: 20px;">Highest volume destination banks across all corridors</p>
+
+            <table class="vendor-table">
+                <thead>
+                    <tr>
+                        <th>Rank</th>
+                        <th>Payer / Bank</th>
+                        <th>Country</th>
+                        <th>Total Volume</th>
+                        <th>Transactions</th>
+                        <th>Uniteller</th>
+                        <th>Transnetwork</th>
+                        <th>Moneygram</th>
+                    </tr>
+                </thead>
+                <tbody id="payerTableBody">
+                    <!-- Populated by JavaScript -->
+                </tbody>
+            </table>
+
+            <div class="insights-box" style="margin-top: 20px;">
+                <h3>Payer Insights</h3>
+                <ul>
+                    <li><strong>Mexico banks dominate top payers:</strong> BANCOPPEL ($410K), Elektra ($276K), and BBVA Bancomer ($237K) are top Mexican destinations - all served by Transnetwork.</li>
+                    <li><strong>Regional bank concentration:</strong> Top 4 payers (BANCOPPEL MX, Banco Atlantida HN, Bancolombia CO, Bancentro NI) represent $1.5M (26% of total volume).</li>
+                    <li><strong>Nicaragua has strong Transnetwork presence:</strong> BANCENTRO ($376K) and BANPRO ($315K) both exclusively Transnetwork, representing 34% of Nicaragua corridor.</li>
+                    <li><strong>Uniteller niche banks:</strong> B. de Occidente (HN, $281K) and Banco Promerica (NI, $168K) are Uniteller-exclusive, showing geographic specialization.</li>
+                    <li><strong>Moneygram Venezuela focus:</strong> Banco de Venezuela ($138K, 1,997 txs) is top Moneygram payer, reflecting exclusive Venezuela corridor coverage.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="chart-container">
             <h2>Detailed Vendor Breakdown</h2>
             <table class="vendor-table">
                 <thead>
@@ -626,6 +660,30 @@
             'HT': 'Haiti'
         };
 
+        // Top payers data
+        const payerData = [
+            {"country":"MX","payer":"BANCOPPEL","uniteller":{"amount":0,"txCount":0},"transnetwork":{"amount":410274.53,"txCount":1994},"moneygram":{"amount":0,"txCount":0},"total":410274.53,"totalTx":1994},
+            {"country":"HN","payer":"BANCO ATLANTIDA","uniteller":{"amount":0,"txCount":0},"transnetwork":{"amount":382886.73,"txCount":1859},"moneygram":{"amount":0,"txCount":0},"total":382886.73,"totalTx":1859},
+            {"country":"CO","payer":"BANCOLOMBIA","uniteller":{"amount":0,"txCount":0},"transnetwork":{"amount":377327.53,"txCount":1830},"moneygram":{"amount":0,"txCount":0},"total":377327.53,"totalTx":1830},
+            {"country":"NI","payer":"BANCENTRO","uniteller":{"amount":0,"txCount":0},"transnetwork":{"amount":376475.75,"txCount":1555},"moneygram":{"amount":0,"txCount":0},"total":376475.75,"totalTx":1555},
+            {"country":"NI","payer":"BANPRO","uniteller":{"amount":0,"txCount":0},"transnetwork":{"amount":315173.42,"txCount":1538},"moneygram":{"amount":0,"txCount":0},"total":315173.42,"totalTx":1538},
+            {"country":"HN","payer":"HCA7-B. de Occidente","uniteller":{"amount":281472.13,"txCount":1022},"transnetwork":{"amount":0,"txCount":0},"moneygram":{"amount":0,"txCount":0},"total":281472.13,"totalTx":1022},
+            {"country":"MX","payer":"ELEKTRA MEXICO","uniteller":{"amount":0,"txCount":0},"transnetwork":{"amount":276323.48,"txCount":1271},"moneygram":{"amount":0,"txCount":0},"total":276323.48,"totalTx":1271},
+            {"country":"MX","payer":"BBVA BANCOMER","uniteller":{"amount":0,"txCount":0},"transnetwork":{"amount":236617.79,"txCount":1304},"moneygram":{"amount":0,"txCount":0},"total":236617.79,"totalTx":1304},
+            {"country":"NI","payer":"NCA2-BANCO PROMERICA","uniteller":{"amount":167851.99,"txCount":774},"transnetwork":{"amount":0,"txCount":0},"moneygram":{"amount":0,"txCount":0},"total":167851.99,"totalTx":774},
+            {"country":"EC","payer":"GYQ99-Banco Guayaquil","uniteller":{"amount":154704.59,"txCount":605},"transnetwork":{"amount":0,"txCount":0},"moneygram":{"amount":0,"txCount":0},"total":154704.59,"totalTx":605},
+            {"country":"MX","payer":"EK699_BANCO-Banco Azteca","uniteller":{"amount":143659.74,"txCount":601},"transnetwork":{"amount":0,"txCount":0},"moneygram":{"amount":0,"txCount":0},"total":143659.74,"totalTx":601},
+            {"country":"VE","payer":"0102-BANCO DE VENEZUELA","uniteller":{"amount":0,"txCount":0},"transnetwork":{"amount":0,"txCount":0},"moneygram":{"amount":138121.55,"txCount":1997},"total":138121.55,"totalTx":1997},
+            {"country":"HN","payer":"ELEKTRA HONDURAS","uniteller":{"amount":0,"txCount":0},"transnetwork":{"amount":128303.29,"txCount":839},"moneygram":{"amount":0,"txCount":0},"total":128303.29,"totalTx":839},
+            {"country":"GT","payer":"BANCO DESARROLLO RURAL","uniteller":{"amount":0,"txCount":0},"transnetwork":{"amount":109313.14,"txCount":653},"moneygram":{"amount":0,"txCount":0},"total":109313.14,"totalTx":653},
+            {"country":"SV","payer":"BANCO AGRICOLA","uniteller":{"amount":0,"txCount":0},"transnetwork":{"amount":108884.03,"txCount":586},"moneygram":{"amount":0,"txCount":0},"total":108884.03,"totalTx":586},
+            {"country":"NI","payer":"BCC99-BANCENTRO","uniteller":{"amount":102898.96,"txCount":413},"transnetwork":{"amount":0,"txCount":0},"moneygram":{"amount":0,"txCount":0},"total":102898.96,"totalTx":413},
+            {"country":"EC","payer":"BANCO DE GUAYAQUIL","uniteller":{"amount":0,"txCount":0},"transnetwork":{"amount":86793.2,"txCount":364},"moneygram":{"amount":0,"txCount":0},"total":86793.2,"totalTx":364},
+            {"country":"HN","payer":"AGENTES ATLANTIDA","uniteller":{"amount":0,"txCount":0},"transnetwork":{"amount":82146.63,"txCount":580},"moneygram":{"amount":0,"txCount":0},"total":82146.63,"totalTx":580},
+            {"country":"MX","payer":"BANORTE-Banorte","uniteller":{"amount":78201.37,"txCount":316},"transnetwork":{"amount":0,"txCount":0},"moneygram":{"amount":0,"txCount":0},"total":78201.37,"totalTx":316},
+            {"country":"DO","payer":"BANRESERVAS","uniteller":{"amount":0,"txCount":0},"transnetwork":{"amount":74273.51,"txCount":359},"moneygram":{"amount":0,"txCount":0},"total":74273.51,"totalTx":359}
+        ];
+
         // Transaction Share Pie Chart
         const txShareCtx = document.getElementById('transactionShareChart').getContext('2d');
         new Chart(txShareCtx, {
@@ -912,6 +970,25 @@
             `;
 
             corridorTableBody.appendChild(row);
+        });
+
+        // Populate payer table
+        const payerTableBody = document.getElementById('payerTableBody');
+        payerData.forEach((payer, index) => {
+            const row = document.createElement('tr');
+
+            row.innerHTML = `
+                <td><strong>#${index + 1}</strong></td>
+                <td><strong>${payer.payer}</strong></td>
+                <td>${countryNames[payer.country]}</td>
+                <td><strong>$${(payer.total / 1000).toFixed(0)}K</strong></td>
+                <td>${payer.totalTx.toLocaleString()}</td>
+                <td>${payer.uniteller.amount > 0 ? '$' + (payer.uniteller.amount / 1000).toFixed(0) + 'K' : '—'}</td>
+                <td>${payer.transnetwork.amount > 0 ? '$' + (payer.transnetwork.amount / 1000).toFixed(0) + 'K' : '—'}</td>
+                <td>${payer.moneygram.amount > 0 ? '$' + (payer.moneygram.amount / 1000).toFixed(0) + 'K' : '—'}</td>
+            `;
+
+            payerTableBody.appendChild(row);
         });
     </script>
 </body>
