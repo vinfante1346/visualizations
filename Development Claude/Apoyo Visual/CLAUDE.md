@@ -1,13 +1,13 @@
-# CLAUDE.MD - VAL'S GITHUB CONFIGURATION
+# CLAUDE.MD - VAL INFANTE'S GITHUB CONFIGURATION
 
 **CRITICAL: READ THIS EVERY TIME BEFORE DEPLOYING ANYTHING**
 
 ---
 
-## Val's GitHub Account
+## Owner Information
 
+**Name:** Val Infante (NOT Val Diaz)
 **GitHub Username:** `vinfante1346`
-
 **GitHub Pages Base URL:** `https://vinfante1346.github.io`
 
 ---
@@ -173,9 +173,9 @@ If you fuck up and push to the wrong repo or give wrong URLs:
 
 ---
 
-## Val's Expectations
+## Val Infante's Expectations
 
-Val needs:
+Val Infante needs:
 1. **Correct URLs every time** - No more 404s
 2. **Fast deployment** - Push and share link within 2 minutes
 3. **Organized structure** - Don't clutter the repo
@@ -184,8 +184,10 @@ Val needs:
 ---
 
 **REMEMBER: vinfante1346.github.io/visualizations/ - COMMIT THIS TO MEMORY**
+**OWNER: Val Infante (NOT Val Diaz)**
 
 ---
 
 **Last Updated:** 2025-01-14
-**Maintained By:** Claude (that's you, dummy)
+**Owner:** Val Infante
+**Maintained By:** Claude
