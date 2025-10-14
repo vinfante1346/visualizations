@@ -1,0 +1,1173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyBambu - Circle vs Kira Provider Comparison</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #00052E 0%, #001845 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1800px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 50px;
+        }
+
+        .logo-text {
+            font-size: 48px;
+            font-weight: 800;
+            color: white;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .logo-icon {
+            width: 55px;
+            height: 55px;
+            background: #27FB6B;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            font-weight: 800;
+            color: white;
+        }
+
+        .subtitle {
+            font-size: 20px;
+            color: #27FB6B;
+            font-weight: 600;
+            margin-top: 10px;
+        }
+
+        .provider-badges {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .provider-badge {
+            display: inline-block;
+            color: white;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .badge-circle {
+            background: linear-gradient(135deg, #00D4AA 0%, #00A886 100%);
+        }
+
+        .badge-kira {
+            background: linear-gradient(135deg, #C71585 0%, #9B1068 100%);
+        }
+
+        .tabs {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .tab {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 2px solid rgba(39, 251, 107, 0.3);
+            padding: 12px 24px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .tab:hover {
+            background: rgba(39, 251, 107, 0.1);
+            border-color: #27FB6B;
+        }
+
+        .tab.active {
+            background: #27FB6B;
+            color: #00052E;
+            border-color: #27FB6B;
+        }
+
+        .content {
+            display: none;
+        }
+
+        .content.active {
+            display: block;
+        }
+
+        .card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .card-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: #00052E;
+            margin-bottom: 25px;
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .provider-card {
+            background: white;
+            border-radius: 20px;
+            padding: 35px;
+            border: 4px solid;
+            transition: transform 0.3s ease;
+        }
+
+        .provider-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .provider-card.circle {
+            border-color: #00D4AA;
+        }
+
+        .provider-card.kira {
+            border-color: #C71585;
+        }
+
+        .provider-header {
+            font-size: 32px;
+            font-weight: 800;
+            margin-bottom: 15px;
+        }
+
+        .provider-header.circle {
+            color: #00D4AA;
+        }
+
+        .provider-header.kira {
+            color: #C71585;
+        }
+
+        .feature-list {
+            list-style: none;
+            margin-top: 20px;
+        }
+
+        .feature-list li {
+            padding: 12px 0;
+            border-bottom: 1px solid #e9ecef;
+            font-size: 15px;
+            color: #4a5568;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .feature-list li:before {
+            content: "✓";
+            color: #27FB6B;
+            font-weight: bold;
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+
+        .feature-list li.cons:before {
+            content: "✗";
+            color: #dc3545;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th {
+            background: linear-gradient(135deg, #00052E 0%, #001845 100%);
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        td {
+            padding: 15px;
+            border-bottom: 1px solid #e9ecef;
+            color: #2d3748;
+        }
+
+        tr:hover {
+            background: rgba(39, 251, 107, 0.05);
+        }
+
+        .winner {
+            background: rgba(39, 251, 107, 0.15);
+            font-weight: 700;
+        }
+
+        .price-cell {
+            font-weight: 700;
+            color: #27FB6B;
+        }
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .summary-card {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 25px;
+            border-radius: 15px;
+            border-left: 4px solid #27FB6B;
+        }
+
+        .summary-label {
+            font-size: 13px;
+            color: #718096;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .summary-value {
+            font-size: 32px;
+            font-weight: 800;
+            color: #00052E;
+        }
+
+        .summary-subtext {
+            font-size: 13px;
+            color: #4a5568;
+            margin-top: 5px;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 400px;
+            margin-top: 30px;
+        }
+
+        .assumptions {
+            background: rgba(1, 207, 251, 0.1);
+            padding: 20px;
+            border-radius: 12px;
+            border-left: 4px solid #01CFFB;
+            margin-top: 20px;
+        }
+
+        .assumptions h4 {
+            color: #00052E;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        .assumptions ul {
+            margin-left: 20px;
+            color: #4a5568;
+        }
+
+        .assumptions li {
+            margin-bottom: 6px;
+            font-size: 14px;
+        }
+
+        .recommendation {
+            background: rgba(39, 251, 107, 0.1);
+            padding: 30px;
+            border-radius: 15px;
+            border-left: 5px solid #27FB6B;
+            margin-top: 30px;
+        }
+
+        .recommendation h3 {
+            color: #00052E;
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+
+        .corridor-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .corridor-card {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            border: 2px solid #e9ecef;
+        }
+
+        .corridor-header {
+            font-size: 18px;
+            font-weight: 700;
+            color: #00052E;
+            margin-bottom: 12px;
+        }
+
+        .corridor-price {
+            font-size: 24px;
+            font-weight: 800;
+            color: #27FB6B;
+            margin-bottom: 8px;
+        }
+
+        @media (max-width: 968px) {
+            .comparison-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .logo-text {
+                font-size: 32px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo-text">
+                <div class="logo-icon">B</div>
+                MyBambu Crypto Wallet
+            </div>
+            <div class="subtitle">Circle vs Kira - Comprehensive Provider Comparison</div>
+            <div class="provider-badges">
+                <div class="provider-badge badge-circle">Circle CPN</div>
+                <div class="provider-badge badge-kira">Kira Infrastructure</div>
+            </div>
+        </div>
+
+        <div class="tabs">
+            <button class="tab active" onclick="showTab('overview')">Executive Summary</button>
+            <button class="tab" onclick="showTab('pricing')">Pricing Comparison</button>
+            <button class="tab" onclick="showTab('features')">Features & Capabilities</button>
+            <button class="tab" onclick="showTab('corridors')">LATAM Corridors</button>
+            <button class="tab" onclick="showTab('cost')">Total Cost Analysis</button>
+            <button class="tab" onclick="showTab('recommendation')">Recommendation</button>
+        </div>
+
+        <!-- Overview Tab -->
+        <div id="overview" class="content active">
+            <div class="card">
+                <h2 class="card-title">Executive Summary: Circle vs Kira</h2>
+
+                <div class="comparison-grid">
+                    <div class="provider-card circle">
+                        <div class="provider-header circle">Circle</div>
+                        <p style="color: #4a5568; margin-bottom: 20px;">
+                            Leading global stablecoin infrastructure with Circle Payment Network (CPN) for instant USDC settlements
+                        </p>
+                        <ul class="feature-list">
+                            <li><strong>Core Strength:</strong> Direct USDC issuer with deep liquidity</li>
+                            <li><strong>Best For:</strong> High-volume cross-border payments</li>
+                            <li><strong>Platform Fee:</strong> $0/month (pay per transaction)</li>
+                            <li><strong>Mexico Pricing:</strong> 10-15 bps + $0.23 (consumer)</li>
+                            <li><strong>Settlement:</strong> Real-time via CPN network</li>
+                            <li><strong>Coverage:</strong> 15+ countries including all LATAM</li>
+                            <li><strong>Integration:</strong> Mint & Redeem APIs, CPN wallets</li>
+                            <li class="cons"><strong>Limitation:</strong> Requires separate FX partner for some corridors</li>
+                            <li class="cons"><strong>Limitation:</strong> Complex multi-step flow for non-CPN corridors</li>
+                        </ul>
+                    </div>
+
+                    <div class="provider-card kira">
+                        <div class="provider-header kira">Kira</div>
+                        <p style="color: #4a5568; margin-bottom: 20px;">
+                            All-in-one fintech infrastructure with embedded AI agents and stablecoin services
+                        </p>
+                        <ul class="feature-list">
+                            <li><strong>Core Strength:</strong> End-to-end solution with FX included</li>
+                            <li><strong>Best For:</strong> Startups seeking turnkey infrastructure</li>
+                            <li><strong>Platform Fee:</strong> $9,995/month (Growth tier)</li>
+                            <li><strong>Mexico Pricing:</strong> 15-25 bps (all-in)</li>
+                            <li><strong>Settlement:</strong> Real-time USDT/USDC support</li>
+                            <li><strong>Coverage:</strong> 15+ LATAM corridors plus global</li>
+                            <li><strong>Integration:</strong> Single API with bundled services</li>
+                            <li class="cons"><strong>Limitation:</strong> High monthly minimum for early stage</li>
+                            <li class="cons"><strong>Limitation:</strong> Less established than Circle</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="summary-grid">
+                    <div class="summary-card">
+                        <div class="summary-label">Winner: Low Volume</div>
+                        <div class="summary-value" style="color: #00D4AA;">Circle</div>
+                        <div class="summary-subtext">No platform fee, pay only for transactions</div>
+                    </div>
+                    <div class="summary-card">
+                        <div class="summary-label">Winner: High Volume</div>
+                        <div class="summary-value" style="color: #00D4AA;">Circle</div>
+                        <div class="summary-subtext">Lower per-transaction fees at scale</div>
+                    </div>
+                    <div class="summary-card">
+                        <div class="summary-label">Winner: Simplicity</div>
+                        <div class="summary-value" style="color: #C71585;">Kira</div>
+                        <div class="summary-subtext">Single integration, all-in-one platform</div>
+                    </div>
+                    <div class="summary-card">
+                        <div class="summary-label">Winner: LATAM Focus</div>
+                        <div class="summary-value" style="color: #00D4AA;">Circle</div>
+                        <div class="summary-subtext">Better rates for Mexico, Brazil, Colombia</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pricing Comparison Tab -->
+        <div id="pricing" class="content">
+            <div class="card">
+                <h2 class="card-title">Detailed Pricing Comparison</h2>
+
+                <h3 style="color: #00052E; font-size: 22px; margin-top: 30px; margin-bottom: 15px;">LATAM Key Corridors</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Corridor</th>
+                            <th>Circle Pricing</th>
+                            <th>Kira Pricing (Growth)</th>
+                            <th>Volume to Break Even</th>
+                            <th>Winner</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>USD → MXN (Consumer)</strong></td>
+                            <td class="price-cell">10 bps + $0.23</td>
+                            <td class="price-cell">25 bps</td>
+                            <td>$230 avg txn</td>
+                            <td class="winner">Circle</td>
+                        </tr>
+                        <tr>
+                            <td><strong>USD → MXN (Business)</strong></td>
+                            <td class="price-cell">15 bps + 3 MXN</td>
+                            <td class="price-cell">25 bps</td>
+                            <td>High volume</td>
+                            <td class="winner">Circle</td>
+                        </tr>
+                        <tr>
+                            <td><strong>USD → Brazil (PIX)</strong></td>
+                            <td class="price-cell">50 bps + 0.5 BRL</td>
+                            <td class="price-cell">N/A</td>
+                            <td>-</td>
+                            <td class="winner">Circle (only option)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>USD → Colombia</strong></td>
+                            <td class="price-cell">85 bps + 900 COP</td>
+                            <td class="price-cell">40-70 bps</td>
+                            <td>Depends on volume</td>
+                            <td class="winner">Kira</td>
+                        </tr>
+                        <tr>
+                            <td><strong>USD → Argentina</strong></td>
+                            <td class="price-cell">90 bps (incl tax)</td>
+                            <td class="price-cell">1.15-1.35%</td>
+                            <td>-</td>
+                            <td class="winner">Circle</td>
+                        </tr>
+                        <tr>
+                            <td><strong>USDC On-Ramp (Buy)</strong></td>
+                            <td class="price-cell">Varies by partner</td>
+                            <td class="price-cell">15-20 bps</td>
+                            <td>-</td>
+                            <td class="winner">Kira (integrated)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>USDC Off-Ramp (Sell)</strong></td>
+                            <td class="price-cell">Varies by partner</td>
+                            <td class="price-cell">13-25 bps</td>
+                            <td>-</td>
+                            <td class="winner">Kira (integrated)</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3 style="color: #00052E; font-size: 22px; margin-top: 40px; margin-bottom: 15px;">Platform & Service Fees</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Fee Type</th>
+                            <th>Circle</th>
+                            <th>Kira (Starter)</th>
+                            <th>Kira (Growth)</th>
+                            <th>Kira (Enterprise)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Monthly Platform Fee</strong></td>
+                            <td class="winner">$0</td>
+                            <td class="winner">$0</td>
+                            <td>$9,995</td>
+                            <td>$29,995</td>
+                        </tr>
+                        <tr>
+                            <td><strong>KYC Per User</strong></td>
+                            <td>Varies by partner</td>
+                            <td class="winner">$4</td>
+                            <td class="winner">$4</td>
+                            <td class="winner">$4</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Virtual USD Account</strong></td>
+                            <td>N/A (requires partner)</td>
+                            <td>0.20% + $4/mo</td>
+                            <td>0.12% + $4/mo</td>
+                            <td class="winner">0.08% + $4/mo</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Support SLA</strong></td>
+                            <td>Enterprise only</td>
+                            <td>1 business day</td>
+                            <td>1-2 hours</td>
+                            <td class="winner">24/7 dedicated</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Uptime Guarantee</strong></td>
+                            <td>99.9%+</td>
+                            <td>Best effort</td>
+                            <td class="winner">99.9%</td>
+                            <td class="winner">99.9%</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="assumptions">
+                    <h4>Pricing Notes</h4>
+                    <ul>
+                        <li><strong>Circle:</strong> No platform fee, but may require separate contracts for FX, KYC, and banking partners</li>
+                        <li><strong>Kira:</strong> Monthly minimum can be consumed through transactions - at typical volumes, effective cost is lower</li>
+                        <li><strong>Break-Even:</strong> For MyBambu's expected volume ($3-5M/month), Circle likely more cost-effective</li>
+                        <li><strong>Volume Discounts:</strong> Both providers offer lower rates at higher monthly volumes</li>
+                        <li><strong>Hidden Costs:</strong> Integration complexity for Circle may require more dev resources</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Features Tab -->
+        <div id="features" class="content">
+            <div class="card">
+                <h2 class="card-title">Features & Capabilities Comparison</h2>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 30%;">Feature</th>
+                            <th>Circle</th>
+                            <th>Kira</th>
+                            <th>Winner</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Stablecoins Supported</strong></td>
+                            <td>USDC (native issuer)</td>
+                            <td>USDT, USDC, PYUSD</td>
+                            <td class="winner">Kira (more options)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Settlement Speed</strong></td>
+                            <td>Real-time via CPN<br>T+1 for non-CPN</td>
+                            <td>Real-time on blockchain</td>
+                            <td class="winner">Tie (both real-time)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>LATAM Coverage</strong></td>
+                            <td>Mexico, Brazil, Colombia, Argentina, Chile, Peru, El Salvador, +8 more</td>
+                            <td>Mexico, Colombia, Argentina, Chile, Peru, Costa Rica, +9 more</td>
+                            <td class="winner">Circle (Brazil PIX)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Embedded Banking</strong></td>
+                            <td>No (requires partners)</td>
+                            <td>Yes (FBO accounts)</td>
+                            <td class="winner">Kira</td>
+                        </tr>
+                        <tr>
+                            <td><strong>FX Services</strong></td>
+                            <td>Requires 3rd party</td>
+                            <td>Built-in</td>
+                            <td class="winner">Kira</td>
+                        </tr>
+                        <tr>
+                            <td><strong>KYC/AML</strong></td>
+                            <td>Customer's responsibility</td>
+                            <td>Built-in ($4/user)</td>
+                            <td class="winner">Kira (turnkey)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>API Complexity</strong></td>
+                            <td>Multiple APIs (Mint, Redeem, CPN)</td>
+                            <td>Single unified API</td>
+                            <td class="winner">Kira (simpler)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Liquidity</strong></td>
+                            <td>Unlimited (USDC issuer)</td>
+                            <td>Depends on partnerships</td>
+                            <td class="winner">Circle</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Regulatory Compliance</strong></td>
+                            <td>US Money Transmitter License, regulated globally</td>
+                            <td>Partner with licensed entities</td>
+                            <td class="winner">Circle (stronger)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Track Record</strong></td>
+                            <td>10+ years, $150B+ USDC in circulation</td>
+                            <td>New entrant (2024)</td>
+                            <td class="winner">Circle</td>
+                        </tr>
+                        <tr>
+                            <td><strong>AI Agents</strong></td>
+                            <td>No</td>
+                            <td>Yes (vertical AI for operations)</td>
+                            <td class="winner">Kira (unique)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>White Label Options</strong></td>
+                            <td>Limited</td>
+                            <td>Full white label</td>
+                            <td class="winner">Kira</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3 style="color: #00052E; font-size: 22px; margin-top: 40px; margin-bottom: 15px;">Integration Flows</h3>
+
+                <div class="corridor-grid">
+                    <div class="corridor-card" style="border-color: #00D4AA;">
+                        <div class="corridor-header" style="color: #00D4AA;">Circle Non-CPN Flow</div>
+                        <p style="font-size: 13px; color: #4a5568; line-height: 1.6;">
+                            Sender → MyBambu Fiat US → Mint USDC → MyBambu Wallet MX → Redeem USD → FX Partner → Receiver MXN
+                        </p>
+                        <div style="margin-top: 10px; font-size: 12px; color: #718096;">
+                            <strong>Steps:</strong> 6 | <strong>Partners:</strong> 3 | <strong>Time:</strong> Real-time to T+1
+                        </div>
+                    </div>
+
+                    <div class="corridor-card" style="border-color: #00D4AA;">
+                        <div class="corridor-header" style="color: #00D4AA;">Circle CPN Flow</div>
+                        <p style="font-size: 13px; color: #4a5568; line-height: 1.6;">
+                            Sender → MyBambu Fiat US → Mint USDC → Circle CPN → BFI Partner → Receiver MXN
+                        </p>
+                        <div style="margin-top: 10px; font-size: 12px; color: #718096;">
+                            <strong>Steps:</strong> 5 | <strong>Partners:</strong> 2 | <strong>Time:</strong> Real-time
+                        </div>
+                    </div>
+
+                    <div class="corridor-card" style="border-color: #C71585;">
+                        <div class="corridor-header" style="color: #C71585;">Kira Flow</div>
+                        <p style="font-size: 13px; color: #4a5568; line-height: 1.6;">
+                            Sender → MyBambu Fiat US → Kira API → Auto FX → Receiver MXN
+                        </p>
+                        <div style="margin-top: 10px; font-size: 12px; color: #718096;">
+                            <strong>Steps:</strong> 4 | <strong>Partners:</strong> 1 | <strong>Time:</strong> Real-time
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- LATAM Corridors Tab -->
+        <div id="corridors" class="content">
+            <div class="card">
+                <h2 class="card-title">LATAM Corridor Analysis</h2>
+
+                <div class="corridor-grid">
+                    <div class="corridor-card">
+                        <div class="corridor-header">🇲🇽 Mexico (SPEI)</div>
+                        <div class="corridor-price">Circle: 10-15 bps</div>
+                        <div style="font-size: 14px; color: #4a5568; margin-bottom: 15px;">
+                            <strong>Limits:</strong> $1.5M USD<br>
+                            <strong>Speed:</strong> Instant<br>
+                            <strong>Availability:</strong> 24/7
+                        </div>
+                        <div style="background: rgba(39, 251, 107, 0.1); padding: 10px; border-radius: 8px; font-size: 13px;">
+                            <strong>✓ Best for MyBambu:</strong> Largest remittance corridor, Circle has best pricing and direct SPEI integration
+                        </div>
+                    </div>
+
+                    <div class="corridor-card">
+                        <div class="corridor-header">🇧🇷 Brazil (PIX)</div>
+                        <div class="corridor-price">Circle: 50 bps</div>
+                        <div style="font-size: 14px; color: #4a5568; margin-bottom: 15px;">
+                            <strong>Limits:</strong> $1.5M USD<br>
+                            <strong>Speed:</strong> Instant<br>
+                            <strong>Availability:</strong> 24/7
+                        </div>
+                        <div style="background: rgba(39, 251, 107, 0.1); padding: 10px; border-radius: 8px; font-size: 13px;">
+                            <strong>✓ Circle Only:</strong> Kira doesn't support PIX. Circle required for Brazil expansion.
+                        </div>
+                    </div>
+
+                    <div class="corridor-card">
+                        <div class="corridor-header">🇨🇴 Colombia (PSE)</div>
+                        <div class="corridor-price">Circle: 85 bps</div>
+                        <div style="font-size: 14px; color: #4a5568; margin-bottom: 15px;">
+                            <strong>Limits:</strong> 2.3M USD/day<br>
+                            <strong>Speed:</strong> T+0 before 1PM<br>
+                            <strong>Availability:</strong> 24/7
+                        </div>
+                        <div style="background: rgba(199, 21, 133, 0.1); padding: 10px; border-radius: 8px; font-size: 13px;">
+                            <strong>↔ Competitive:</strong> Kira may offer better rates (60-70 bps) at volume
+                        </div>
+                    </div>
+
+                    <div class="corridor-card">
+                        <div class="corridor-header">🇦🇷 Argentina</div>
+                        <div class="corridor-price">Circle: 90 bps</div>
+                        <div style="font-size: 14px; color: #4a5568; margin-bottom: 15px;">
+                            <strong>Limits:</strong> $1.5M USD<br>
+                            <strong>Speed:</strong> Instant<br>
+                            <strong>Availability:</strong> 24/7
+                        </div>
+                        <div style="background: rgba(39, 251, 107, 0.1); padding: 10px; border-radius: 8px; font-size: 13px;">
+                            <strong>✓ Circle Wins:</strong> Lower fees than Kira (1.15-1.35%)
+                        </div>
+                    </div>
+
+                    <div class="corridor-card">
+                        <div class="corridor-header">🇨🇱 Chile</div>
+                        <div class="corridor-price">Circle: 25-35 bps</div>
+                        <div style="font-size: 14px; color: #4a5568; margin-bottom: 15px;">
+                            <strong>Speed:</strong> T+1<br>
+                            <strong>Availability:</strong> Business days
+                        </div>
+                        <div style="background: rgba(1, 207, 251, 0.1); padding: 10px; border-radius: 8px; font-size: 13px;">
+                            <strong>→ Standard:</strong> Both providers competitive
+                        </div>
+                    </div>
+
+                    <div class="corridor-card">
+                        <div class="corridor-header">🇵🇪 Peru</div>
+                        <div class="corridor-price">Circle: 60-70 bps</div>
+                        <div style="font-size: 14px; color: #4a5568; margin-bottom: 15px;">
+                            <strong>Speed:</strong> T+1<br>
+                            <strong>Availability:</strong> Business days
+                        </div>
+                        <div style="background: rgba(1, 207, 251, 0.1); padding: 10px; border-radius: 8px; font-size: 13px;">
+                            <strong>→ Standard:</strong> Both providers competitive
+                        </div>
+                    </div>
+                </div>
+
+                <div class="assumptions">
+                    <h4>LATAM Market Considerations</h4>
+                    <ul>
+                        <li><strong>Mexico Priority:</strong> 90%+ of MyBambu remittance volume - Circle's 10-15bps is industry-leading</li>
+                        <li><strong>Brazil Expansion:</strong> If planning PIX support, Circle is required (Kira doesn't support PIX)</li>
+                        <li><strong>Instant Settlement:</strong> Mexico SPEI and Brazil PIX both support 24/7 instant settlement</li>
+                        <li><strong>Regulatory:</strong> Circle has stronger regulatory standing in LATAM markets</li>
+                        <li><strong>Volume Pricing:</strong> Circle offers volume discounts at $10M+, $25M+, $40M+ monthly tiers</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Total Cost Analysis Tab -->
+        <div id="cost" class="content">
+            <div class="card">
+                <h2 class="card-title">Total Cost of Operations Analysis</h2>
+
+                <div class="summary-grid">
+                    <div class="summary-card" style="border-left-color: #00D4AA;">
+                        <div class="summary-label">Circle Year 1 Cost</div>
+                        <div class="summary-value" id="circleCost">$0</div>
+                        <div class="summary-subtext">No platform fee, transaction-based only</div>
+                    </div>
+                    <div class="summary-card" style="border-left-color: #C71585;">
+                        <div class="summary-label">Kira Year 1 Cost</div>
+                        <div class="summary-value">$145,940</div>
+                        <div class="summary-subtext">$119,940 platform + $26K other fees</div>
+                    </div>
+                    <div class="summary-card" style="border-left-color: #27FB6B;">
+                        <div class="summary-label">Cost Difference</div>
+                        <div class="summary-value" id="costDiff">$0</div>
+                        <div class="summary-subtext">Circle advantage in Year 1</div>
+                    </div>
+                    <div class="summary-card" style="border-left-color: #01CFFB;">
+                        <div class="summary-label">Break-Even Volume</div>
+                        <div class="summary-value">$120M+</div>
+                        <div class="summary-subtext">Annual volume needed for Kira to compete</div>
+                    </div>
+                </div>
+
+                <div class="chart-container">
+                    <canvas id="costComparisonChart"></canvas>
+                </div>
+
+                <h3 style="color: #00052E; font-size: 22px; margin-top: 40px; margin-bottom: 15px;">Cost Breakdown by Volume Scenario</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Scenario</th>
+                            <th>Monthly Volume</th>
+                            <th>Circle Total Cost</th>
+                            <th>Kira Total Cost</th>
+                            <th>Cost Difference</th>
+                            <th>Winner</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Pilot ($500K/mo)</strong></td>
+                            <td>$6M annual</td>
+                            <td class="price-cell">$7,500</td>
+                            <td>$145,940</td>
+                            <td>-$138,440</td>
+                            <td class="winner">Circle (95% cheaper)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Base Case ($3M/mo)</strong></td>
+                            <td>$36M annual</td>
+                            <td class="price-cell">$45,000</td>
+                            <td>$145,940</td>
+                            <td>-$100,940</td>
+                            <td class="winner">Circle (69% cheaper)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Growth ($5M/mo)</strong></td>
+                            <td>$60M annual</td>
+                            <td class="price-cell">$75,000</td>
+                            <td>$145,940</td>
+                            <td>-$70,940</td>
+                            <td class="winner">Circle (49% cheaper)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Scale ($10M/mo)</strong></td>
+                            <td>$120M annual</td>
+                            <td class="price-cell">$150,000</td>
+                            <td>$145,940</td>
+                            <td>+$4,060</td>
+                            <td class="winner">Kira (3% cheaper)</td>
+                        </tr>
+                        <tr style="background: rgba(39, 251, 107, 0.05);">
+                            <td><strong>Enterprise ($20M/mo)</strong></td>
+                            <td>$240M annual</td>
+                            <td class="price-cell">$300,000</td>
+                            <td>$265,940</td>
+                            <td>+$34,060</td>
+                            <td class="winner">Kira (11% cheaper)</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="assumptions">
+                    <h4>Cost Analysis Assumptions</h4>
+                    <ul>
+                        <li><strong>Circle Pricing:</strong> 12.5 bps blended rate (10 bps consumer + 15 bps business mix) for Mexico corridor</li>
+                        <li><strong>Kira Pricing:</strong> 20 bps average + $9,995/month platform fee (Growth tier)</li>
+                        <li><strong>Hidden Costs:</strong> Circle requires separate FX partner contracts, integration complexity</li>
+                        <li><strong>Kira Platform Fee:</strong> Can be consumed through transaction volume - need $4M+/month to fully utilize</li>
+                        <li><strong>Break-Even:</strong> At $10M monthly volume ($120M/year), costs equalize. Below that, Circle wins decisively.</li>
+                        <li><strong>MyBambu Volume:</strong> Currently ~$2-3M/month projected for crypto wallet feature</li>
+                    </ul>
+                </div>
+
+                <div class="assumptions" style="background: rgba(255, 193, 7, 0.1); border-left-color: #ffc107;">
+                    <h4>⚠️ Important Considerations</h4>
+                    <ul>
+                        <li><strong>Integration Time:</strong> Circle integration more complex (multiple APIs), may take 2-3 months vs 4-6 weeks for Kira</li>
+                        <li><strong>Maintenance:</strong> Circle requires managing multiple partner relationships (FX, banking, KYC)</li>
+                        <li><strong>Support:</strong> Kira includes 24/7 support at Enterprise tier; Circle support varies by relationship</li>
+                        <li><strong>Flexibility:</strong> Circle allows starting with zero commitment; Kira requires $9,995/month minimum</li>
+                        <li><strong>Risk:</strong> Circle is battle-tested with 10+ years; Kira is new (launched 2024)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recommendation Tab -->
+        <div id="recommendation" class="content">
+            <div class="card">
+                <h2 class="card-title">Final Recommendation</h2>
+
+                <div class="recommendation">
+                    <h3>🏆 Recommended Provider: Circle</h3>
+                    <p style="color: #4a5568; font-size: 16px; line-height: 1.8; margin-top: 10px;">
+                        Based on MyBambu's current volume projections ($2-3M monthly crypto wallet transactions), <strong>Circle is the clear winner</strong>
+                        and offers the best value proposition for launching and scaling crypto wallet services.
+                    </p>
+                </div>
+
+                <h3 style="color: #00052E; font-size: 24px; margin-top: 40px; margin-bottom: 20px;">Why Circle Wins for MyBambu</h3>
+
+                <div class="comparison-grid">
+                    <div style="background: rgba(0, 212, 170, 0.1); padding: 25px; border-radius: 15px; border-left: 4px solid #00D4AA;">
+                        <h4 style="color: #00D4AA; font-size: 20px; margin-bottom: 15px;">✓ Cost Advantage</h4>
+                        <ul style="list-style: none; color: #4a5568; line-height: 2;">
+                            <li>• <strong>$0 platform fee</strong> - no monthly minimum to maintain</li>
+                            <li>• <strong>69% cheaper</strong> at projected $3M/month volume</li>
+                            <li>• <strong>Pay-as-you-grow</strong> model perfect for startup phase</li>
+                            <li>• <strong>Mexico: 10-15 bps</strong> vs Kira's 20-25 bps</li>
+                            <li>• Save <strong>~$100K in Year 1</strong> vs Kira</li>
+                        </ul>
+                    </div>
+
+                    <div style="background: rgba(0, 212, 170, 0.1); padding: 25px; border-radius: 15px; border-left: 4px solid #00D4AA;">
+                        <h4 style="color: #00D4AA; font-size: 20px; margin-bottom: 15px;">✓ Market Leadership</h4>
+                        <ul style="list-style: none; color: #4a5568; line-height: 2;">
+                            <li>• <strong>10+ years</strong> operating stablecoin infrastructure</li>
+                            <li>• <strong>$150B+ USDC</strong> in circulation (issuer)</li>
+                            <li>• <strong>Regulated</strong> as US Money Transmitter</li>
+                            <li>• <strong>Brazil PIX support</strong> - critical for LATAM expansion</li>
+                            <li>• <strong>Unlimited liquidity</strong> as USDC issuer</li>
+                        </ul>
+                    </div>
+
+                    <div style="background: rgba(0, 212, 170, 0.1); padding: 25px; border-radius: 15px; border-left: 4px solid #00D4AA;">
+                        <h4 style="color: #00D4AA; font-size: 20px; margin-bottom: 15px;">✓ LATAM Focus</h4>
+                        <ul style="list-style: none; color: #4a5568; line-height: 2;">
+                            <li>• <strong>Best Mexico rates</strong> (90% of remittance volume)</li>
+                            <li>• <strong>Direct SPEI integration</strong> for instant settlement</li>
+                            <li>• <strong>PIX for Brazil</strong> expansion (Kira doesn't support)</li>
+                            <li>• <strong>15+ LATAM corridors</strong> with instant settlement</li>
+                            <li>• <strong>24/7 availability</strong> for key markets</li>
+                        </ul>
+                    </div>
+
+                    <div style="background: rgba(0, 212, 170, 0.1); padding: 25px; border-radius: 15px; border-left: 4px solid #00D4AA;">
+                        <h4 style="color: #00D4AA; font-size: 20px; margin-bottom: 15px;">✓ Flexibility</h4>
+                        <ul style="list-style: none; color: #4a5568; line-height: 2;">
+                            <li>• <strong>No commitment</strong> - can start/stop anytime</li>
+                            <li>• <strong>Scale as you grow</strong> - costs scale linearly</li>
+                            <li>• <strong>Multiple integration options</strong> (Mint, CPN, Wallets)</li>
+                            <li>• <strong>Choose your partners</strong> for FX and banking</li>
+                            <li>• <strong>Future-proof</strong> as USDC adoption grows</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h3 style="color: #00052E; font-size: 24px; margin-top: 40px; margin-bottom: 20px;">When to Reconsider Kira</h3>
+
+                <div style="background: rgba(199, 21, 133, 0.1); padding: 25px; border-radius: 15px; border-left: 4px solid #C71585; margin-top: 20px;">
+                    <h4 style="color: #C71585; font-size: 18px; margin-bottom: 15px;">Kira Makes Sense If:</h4>
+                    <ul style="color: #4a5568; line-height: 2; margin-left: 20px;">
+                        <li><strong>Volume exceeds $10M/month</strong> ($120M annually) - cost parity with Circle</li>
+                        <li><strong>Need turnkey solution</strong> and willing to pay premium for simplicity</li>
+                        <li><strong>Want single vendor</strong> for all fintech infrastructure (FX, KYC, banking, crypto)</li>
+                        <li><strong>AI agents are valuable</strong> for operations automation</li>
+                        <li><strong>Prefer newer tech stack</strong> over established infrastructure</li>
+                    </ul>
+                </div>
+
+                <h3 style="color: #00052E; font-size: 24px; margin-top: 40px; margin-bottom: 20px;">Implementation Roadmap</h3>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Phase</th>
+                            <th>Timeline</th>
+                            <th>Action Items</th>
+                            <th>Cost Impact</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Phase 1: Pilot</strong></td>
+                            <td>Months 1-3</td>
+                            <td>
+                                • Circle account setup & API integration<br>
+                                • Mexico SPEI corridor only<br>
+                                • 500 test users<br>
+                                • Monitor transaction costs
+                            </td>
+                            <td class="price-cell">~$2K-5K total</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Phase 2: Launch</strong></td>
+                            <td>Months 4-6</td>
+                            <td>
+                                • Full US → Mexico launch<br>
+                                • Scale to 5,000 users<br>
+                                • Add Colombia corridor<br>
+                                • Implement CPN if available
+                            </td>
+                            <td class="price-cell">~$15K-25K total</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Phase 3: Expand</strong></td>
+                            <td>Months 7-12</td>
+                            <td>
+                                • Add Brazil (PIX)<br>
+                                • Add Argentina corridor<br>
+                                • Scale to 20,000+ users<br>
+                                • Negotiate volume pricing
+                            </td>
+                            <td class="price-cell">~$50K-100K total</td>
+                        </tr>
+                        <tr style="background: rgba(39, 251, 107, 0.05);">
+                            <td><strong>Phase 4: Optimize</strong></td>
+                            <td>Year 2</td>
+                            <td>
+                                • Re-evaluate Kira if >$10M/month<br>
+                                • Negotiate Circle enterprise pricing<br>
+                                • Consider multi-provider strategy<br>
+                                • Expand to EU/Asia
+                            </td>
+                            <td class="price-cell">Optimize based on volume</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="recommendation" style="margin-top: 30px;">
+                    <h3>💡 Final Verdict</h3>
+                    <p style="color: #4a5568; font-size: 16px; line-height: 1.8; margin-top: 10px;">
+                        <strong>Start with Circle</strong> for crypto wallet launch. The cost savings ($100K+ in Year 1), proven infrastructure,
+                        superior LATAM rates, and zero-commitment model make it the obvious choice. Re-evaluate Kira when monthly volume
+                        exceeds $10M or if turnkey simplicity becomes more valuable than cost savings.
+                    </p>
+                    <p style="color: #4a5568; font-size: 16px; line-height: 1.8; margin-top: 15px;">
+                        <strong>Recommended Action:</strong> Proceed with Circle integration immediately. Set up pilot in Mexico corridor
+                        to validate pricing and performance. Keep Kira as backup option for Phase 4 optimization.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showTab(tabName) {
+            document.querySelectorAll('.content').forEach(content => {
+                content.classList.remove('active');
+            });
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.getElementById(tabName).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        // Format currency
+        function formatCurrency(value) {
+            return new Intl.NumberFormat('en-US', {
+                style: 'currency',
+                currency: 'USD',
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 0
+            }).format(value);
+        }
+
+        // Calculate costs based on volume scenarios
+        const scenarios = [
+            { name: 'Month 1', volume: 500000, circle: 625, kira: 10996 },
+            { name: 'Month 2', volume: 750000, circle: 938, kira: 11746 },
+            { name: 'Month 3', volume: 1000000, circle: 1250, kira: 12496 },
+            { name: 'Month 4', volume: 1500000, circle: 1875, kira: 13746 },
+            { name: 'Month 5', volume: 2000000, circle: 2500, kira: 14996 },
+            { name: 'Month 6', volume: 2500000, circle: 3125, kira: 16246 },
+            { name: 'Month 7', volume: 3000000, circle: 3750, kira: 17496 },
+            { name: 'Month 8', volume: 3500000, circle: 4375, kira: 18746 },
+            { name: 'Month 9', volume: 4000000, circle: 5000, kira: 19996 },
+            { name: 'Month 10', volume: 4500000, circle: 5625, kira: 21246 },
+            { name: 'Month 11', volume: 5000000, circle: 6250, kira: 22496 },
+            { name: 'Month 12', volume: 5500000, circle: 6875, kira: 23746 }
+        ];
+
+        // Update summary cards
+        const circleTotalCost = scenarios.reduce((sum, s) => sum + s.circle, 0);
+        const kiraTotalCost = scenarios.reduce((sum, s) => sum + s.kira, 0);
+        const costDifference = kiraTotalCost - circleTotalCost;
+
+        document.getElementById('circleCost').textContent = formatCurrency(circleTotalCost);
+        document.getElementById('costDiff').textContent = formatCurrency(costDifference);
+
+        // Cost Comparison Chart
+        const ctx = document.getElementById('costComparisonChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: scenarios.map(s => s.name),
+                datasets: [{
+                    label: 'Circle Monthly Cost',
+                    data: scenarios.map(s => s.circle),
+                    borderColor: '#00D4AA',
+                    backgroundColor: 'rgba(0, 212, 170, 0.1)',
+                    borderWidth: 3,
+                    fill: true,
+                    tension: 0.4
+                }, {
+                    label: 'Kira Monthly Cost',
+                    data: scenarios.map(s => s.kira),
+                    borderColor: '#C71585',
+                    backgroundColor: 'rgba(199, 21, 133, 0.1)',
+                    borderWidth: 3,
+                    fill: true,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                interaction: {
+                    mode: 'index',
+                    intersect: false
+                },
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'top'
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return context.dataset.label + ': ' + formatCurrency(context.parsed.y);
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        ticks: {
+                            callback: function(value) {
+                                return formatCurrency(value);
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
