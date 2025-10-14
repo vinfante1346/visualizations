@@ -84,10 +84,10 @@
             background: rgba(255, 255, 255, 0.1);
             color: white;
             border: 2px solid rgba(39, 251, 107, 0.3);
-            padding: 12px 30px;
+            padding: 12px 24px;
             border-radius: 12px;
             cursor: pointer;
-            font-size: 16px;
+            font-size: 15px;
             font-weight: 600;
             transition: all 0.3s ease;
         }
@@ -331,6 +331,7 @@
         <div class="tabs">
             <button class="tab active" onclick="showTab('overview')">Overview</button>
             <button class="tab" onclick="showTab('pricing')">Pricing Tiers</button>
+            <button class="tab" onclick="showTab('totalCost')">Total Cost of Operations</button>
             <button class="tab" onclick="showTab('revenue')">Revenue Forecast</button>
             <button class="tab" onclick="showTab('costs')">Cost Analysis</button>
             <button class="tab" onclick="showTab('roi')">ROI Projections</button>
@@ -574,6 +575,154 @@
                         <li>If usage is below minimum, the difference is invoiced</li>
                         <li>Prices shown are for API integrations only</li>
                         <li>Wallet-based on/off ramp may have different pricing</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Total Cost of Operations Tab -->
+        <div id="totalCost" class="content">
+            <div class="card">
+                <h2 class="card-title">Total Cost of Operating Under Kira</h2>
+
+                <div class="summary-grid">
+                    <div class="summary-card">
+                        <div class="summary-label">Year 1 Total Operating Costs</div>
+                        <div class="summary-value" id="totalOpCosts">$0</div>
+                        <div class="summary-subtext">All Kira-related expenses</div>
+                    </div>
+                    <div class="summary-card">
+                        <div class="summary-label">Platform Fees (12 months)</div>
+                        <div class="summary-value" id="totalPlatformFees">$119,940</div>
+                        <div class="summary-subtext">Growth tier @ $9,995/mo</div>
+                    </div>
+                    <div class="summary-card">
+                        <div class="summary-label">Onboarding Costs</div>
+                        <div class="summary-value" id="totalOnboarding">$0</div>
+                        <div class="summary-subtext">KYC + Account setup</div>
+                    </div>
+                    <div class="summary-card">
+                        <div class="summary-label">Monthly Account Fees</div>
+                        <div class="summary-value" id="totalAccountFees">$0</div>
+                        <div class="summary-subtext">Virtual USD accounts</div>
+                    </div>
+                </div>
+
+                <div class="chart-container">
+                    <canvas id="totalCostChart"></canvas>
+                </div>
+
+                <h3 style="color: #00052E; font-size: 22px; margin-top: 40px; margin-bottom: 20px;">Cost Breakdown by Category</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Cost Category</th>
+                            <th>Year 1</th>
+                            <th>Year 2 (Projected)</th>
+                            <th>Year 3 (Projected)</th>
+                            <th>% of Total Y1</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="highlight">
+                            <td><strong>Platform Minimum Fees</strong></td>
+                            <td class="price-cell" id="platformY1">$119,940</td>
+                            <td class="price-cell">$119,940</td>
+                            <td class="price-cell">$359,940</td>
+                            <td id="platformPct">82%</td>
+                        </tr>
+                        <tr>
+                            <td>KYC/KYB Onboarding</td>
+                            <td class="price-cell" id="kycY1">$0</td>
+                            <td class="price-cell" id="kycY2">$0</td>
+                            <td class="price-cell" id="kycY3">$0</td>
+                            <td id="kycPct">0%</td>
+                        </tr>
+                        <tr>
+                            <td>Monthly Virtual Account Fees</td>
+                            <td class="price-cell" id="accountY1">$0</td>
+                            <td class="price-cell" id="accountY2">$0</td>
+                            <td class="price-cell" id="accountY3">$0</td>
+                            <td id="accountPct">0%</td>
+                        </tr>
+                        <tr>
+                            <td>Transaction Processing</td>
+                            <td class="price-cell">$0</td>
+                            <td class="price-cell">$0</td>
+                            <td class="price-cell">$0</td>
+                            <td>0%</td>
+                        </tr>
+                        <tr style="background: rgba(39, 251, 107, 0.1); font-weight: 700;">
+                            <td><strong>TOTAL OPERATING COSTS</strong></td>
+                            <td class="price-cell" id="totalY1">$0</td>
+                            <td class="price-cell" id="totalY2">$0</td>
+                            <td class="price-cell" id="totalY3">$0</td>
+                            <td>100%</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3 style="color: #00052E; font-size: 22px; margin-top: 40px; margin-bottom: 20px;">Monthly Cost Detail (Year 1)</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Month</th>
+                            <th>New Users</th>
+                            <th>Cumulative Users</th>
+                            <th>Platform Fee</th>
+                            <th>KYC Costs</th>
+                            <th>Account Fees</th>
+                            <th>Total Monthly Cost</th>
+                        </tr>
+                    </thead>
+                    <tbody id="monthlyOpCostTable">
+                    </tbody>
+                </table>
+
+                <h3 style="color: #00052E; font-size: 22px; margin-top: 40px; margin-bottom: 20px;">Cost Per User Analysis</h3>
+                <div class="summary-grid">
+                    <div class="summary-card">
+                        <div class="summary-label">Cost Per User (Year 1 Avg)</div>
+                        <div class="summary-value" id="costPerUser">$0</div>
+                        <div class="summary-subtext">Total costs ÷ active users</div>
+                    </div>
+                    <div class="summary-card">
+                        <div class="summary-label">Onboarding Cost Per User</div>
+                        <div class="summary-value">$4.00</div>
+                        <div class="summary-subtext">One-time KYC fee</div>
+                    </div>
+                    <div class="summary-card">
+                        <div class="summary-label">Monthly Retention Cost</div>
+                        <div class="summary-value" id="retentionCost">$0</div>
+                        <div class="summary-subtext">Platform + account fees per user</div>
+                    </div>
+                    <div class="summary-card">
+                        <div class="summary-label">Break-Even Users Needed</div>
+                        <div class="summary-value" id="breakEvenUsers">0</div>
+                        <div class="summary-subtext">To cover monthly platform fee</div>
+                    </div>
+                </div>
+
+                <div class="assumptions">
+                    <h4>Operating Cost Components</h4>
+                    <ul>
+                        <li><strong>Platform Minimum Fee:</strong> $9,995/month (Growth tier) - Covers 99.9% uptime, priority support, and unlimited transactions up to minimum value</li>
+                        <li><strong>KYC/KYB Onboarding:</strong> $4 per individual user (one-time) - Required for compliance and account activation</li>
+                        <li><strong>Virtual USD Account Fees:</strong> $4/month per user with virtual account (estimated 30% adoption rate)</li>
+                        <li><strong>Transaction Fees:</strong> Consumed against monthly minimum (0.25% average blended rate) - No additional cost until minimum exceeded</li>
+                        <li><strong>Infrastructure & Support:</strong> Included in platform fee (APIs, security, compliance, monitoring)</li>
+                        <li><strong>Upgrade Path:</strong> Can move to Enterprise tier ($29,995/mo) when transaction volume justifies lower per-transaction rates</li>
+                    </ul>
+                </div>
+
+                <div class="assumptions" style="background: rgba(255, 193, 7, 0.1); border-left-color: #ffc107;">
+                    <h4>⚠️ Important Cost Considerations</h4>
+                    <ul>
+                        <li><strong>Monthly Minimum Must Be Paid:</strong> Even with zero transactions, $9,995/month is required to maintain platform access</li>
+                        <li><strong>Transaction Credits:</strong> Monthly fee can be consumed through transaction volume - at 0.25% fee, need $3.998M monthly volume to consume minimum</li>
+                        <li><strong>Scaling Economics:</strong> Cost per user decreases as user base grows (fixed platform fee spread across more users)</li>
+                        <li><strong>Tier Decision:</strong> Starter ($0/mo) viable for pilot/testing, but Growth tier recommended for production launch</li>
+                        <li><strong>Hidden Costs:</strong> Integration development, customer support, marketing, and compliance oversight are additional costs not included here</li>
                     </ul>
                 </div>
             </div>
@@ -964,6 +1113,131 @@
             });
         }
 
+        // Update Total Cost Tab
+        function updateTotalCostTab() {
+            const totalAccountFees = baseCase.monthlyData.reduce((sum, m) => sum + m.accountFees, 0);
+            const avgUsers = baseCase.monthlyData.reduce((sum, m) => sum + m.users, 0) / 12;
+            const costPerUser = (baseCase.totalCosts / baseCase.finalUsers).toFixed(2);
+            const retentionCost = ((PLATFORM_FEE + (avgUsers * VIRTUAL_ACCOUNT_ADOPTION * MONTHLY_ACCOUNT_FEE)) / avgUsers).toFixed(2);
+
+            // Calculate break-even users needed per month
+            const revenuePerUser = (TRANSACTIONS_PER_USER * AVG_TRANSACTION_SIZE * BLENDED_FEE_RATE);
+            const breakEvenUsers = Math.ceil(PLATFORM_FEE / revenuePerUser);
+
+            document.getElementById('totalOpCosts').textContent = formatCurrency(baseCase.totalCosts);
+            document.getElementById('totalPlatformFees').textContent = formatCurrency(PLATFORM_FEE * 12);
+            document.getElementById('totalOnboarding').textContent = formatCurrency(baseCase.totalKYCCosts);
+            document.getElementById('totalAccountFees').textContent = formatCurrency(totalAccountFees);
+            document.getElementById('costPerUser').textContent = '$' + costPerUser;
+            document.getElementById('retentionCost').textContent = '$' + retentionCost;
+            document.getElementById('breakEvenUsers').textContent = formatNumber(breakEvenUsers);
+
+            // Update breakdown table
+            const platformTotal = PLATFORM_FEE * 12;
+            const platformPct = ((platformTotal / baseCase.totalCosts) * 100).toFixed(1);
+            const kycPct = ((baseCase.totalKYCCosts / baseCase.totalCosts) * 100).toFixed(1);
+            const accountPct = ((totalAccountFees / baseCase.totalCosts) * 100).toFixed(1);
+
+            document.getElementById('platformY1').textContent = formatCurrency(platformTotal);
+            document.getElementById('platformPct').textContent = platformPct + '%';
+            document.getElementById('kycY1').textContent = formatCurrency(baseCase.totalKYCCosts);
+            document.getElementById('kycPct').textContent = kycPct + '%';
+            document.getElementById('accountY1').textContent = formatCurrency(totalAccountFees);
+            document.getElementById('accountPct').textContent = accountPct + '%';
+            document.getElementById('totalY1').textContent = formatCurrency(baseCase.totalCosts);
+
+            // Year 2 and 3 projections (assuming continued growth)
+            const y2NewUsers = Math.round(baseCase.finalUsers * 1.5); // 50% growth
+            const y3NewUsers = Math.round(baseCase.finalUsers * 2.0); // 100% growth total
+            const y2KYC = y2NewUsers * KYC_COST_PER_USER;
+            const y3KYC = y3NewUsers * KYC_COST_PER_USER;
+            const y2Accounts = (baseCase.finalUsers + y2NewUsers) * VIRTUAL_ACCOUNT_ADOPTION * MONTHLY_ACCOUNT_FEE * 12;
+            const y3Accounts = (baseCase.finalUsers + y2NewUsers + y3NewUsers) * VIRTUAL_ACCOUNT_ADOPTION * MONTHLY_ACCOUNT_FEE * 12;
+            const y2Total = (PLATFORM_FEE * 12) + y2KYC + y2Accounts;
+            const y3Total = (PLATFORM_FEE * 36) + y3KYC + y3Accounts; // Enterprise tier likely
+
+            document.getElementById('kycY2').textContent = formatCurrency(y2KYC);
+            document.getElementById('accountY2').textContent = formatCurrency(y2Accounts);
+            document.getElementById('totalY2').textContent = formatCurrency(y2Total);
+            document.getElementById('kycY3').textContent = formatCurrency(y3KYC);
+            document.getElementById('accountY3').textContent = formatCurrency(y3Accounts);
+            document.getElementById('totalY3').textContent = formatCurrency(y3Total);
+
+            // Total Cost Chart
+            const ctx = document.getElementById('totalCostChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: months,
+                    datasets: [{
+                        label: 'Platform Fee',
+                        data: Array(12).fill(PLATFORM_FEE),
+                        backgroundColor: 'rgba(199, 21, 133, 0.7)',
+                        borderColor: '#C71585',
+                        borderWidth: 2
+                    }, {
+                        label: 'KYC Costs',
+                        data: baseCase.monthlyData.map(m => m.kycCosts),
+                        backgroundColor: 'rgba(1, 207, 251, 0.7)',
+                        borderColor: '#01CFFB',
+                        borderWidth: 2
+                    }, {
+                        label: 'Account Fees',
+                        data: baseCase.monthlyData.map(m => m.accountFees),
+                        backgroundColor: 'rgba(39, 251, 107, 0.7)',
+                        borderColor: '#27FB6B',
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'top'
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return context.dataset.label + ': ' + formatCurrency(context.parsed.y);
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            stacked: true
+                        },
+                        y: {
+                            stacked: true,
+                            ticks: {
+                                callback: function(value) {
+                                    return formatCurrency(value);
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Monthly cost table
+            const monthlyOpCostTable = document.getElementById('monthlyOpCostTable');
+            baseCase.monthlyData.forEach((m, i) => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td><strong>${months[i]}</strong></td>
+                    <td>${formatNumber(m.newUsers)}</td>
+                    <td>${formatNumber(m.users)}</td>
+                    <td>${formatCurrency(m.platformFee)}</td>
+                    <td>${formatCurrency(m.kycCosts)}</td>
+                    <td>${formatCurrency(m.accountFees)}</td>
+                    <td><strong>${formatCurrency(m.totalCosts)}</strong></td>
+                `;
+                monthlyOpCostTable.appendChild(row);
+            });
+        }
+
         // Update Costs Tab
         function updateCostsTab() {
             const netProfit = baseCase.totalRevenue - baseCase.totalCosts;
@@ -1127,6 +1401,7 @@
         }
 
         // Initialize all tabs
+        updateTotalCostTab();
         updateRevenueTab();
         updateCostsTab();
         updateROITab();
