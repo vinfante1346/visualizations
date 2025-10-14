@@ -279,6 +279,46 @@
         </div>
 
         <div class="chart-container">
+            <h2>Corridor Analysis by Vendor</h2>
+            <p style="color: #4a5568; margin-bottom: 20px;">US remittance corridors showing vendor market share by destination country</p>
+
+            <div class="chart-wrapper" style="height: 500px;">
+                <canvas id="corridorChart"></canvas>
+            </div>
+
+            <div style="margin-top: 30px;">
+                <h3 style="color: #2d3748; margin-bottom: 15px; font-size: 18px;">Top Corridors Breakdown</h3>
+                <table class="vendor-table">
+                    <thead>
+                        <tr>
+                            <th>Corridor</th>
+                            <th>Total Volume</th>
+                            <th>Uniteller</th>
+                            <th>Transnetwork</th>
+                            <th>Moneygram</th>
+                            <th>Leading Vendor</th>
+                        </tr>
+                    </thead>
+                    <tbody id="corridorTableBody">
+                        <!-- Populated by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="insights-box" style="margin-top: 20px;">
+                <h3>Corridor Insights</h3>
+                <ul>
+                    <li><strong>Mexico dominates:</strong> Largest corridor at $3.0M total volume. Transnetwork leads with 64% market share ($1.9M).</li>
+                    <li><strong>Central America (HN, NI, GT, SV):</strong> Combined $5.4M volume. Transnetwork dominates these corridors with 65-73% share.</li>
+                    <li><strong>Moneygram's Venezuela focus:</strong> 100% of Venezuela corridor ($469K, 6,788 txs). This is Moneygram's only significant presence.</li>
+                    <li><strong>South America split:</strong> Uniteller stronger in Ecuador (57%), Transnetwork leads Colombia (88%) and Nicaragua (73%).</li>
+                    <li><strong>Caribbean presence:</strong> Uniteller serves Haiti (100%, $121K) and Costa Rica (100%, $165K) exclusively.</li>
+                    <li><strong>Strategic opportunity:</strong> Consider optimizing capital allocation based on corridor performance - Mexico and Honduras alone represent 51% of total volume.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="chart-container">
             <h2>Detailed Vendor Breakdown</h2>
             <table class="vendor-table">
                 <thead>
@@ -557,6 +597,35 @@
             moneygram: 'rgba(237, 100, 166, 0.8)'
         };
 
+        // Corridor data
+        const corridorData = [
+            {"country":"MX","uniteller":{"amount":1070398.58,"txCount":5174},"transnetwork":{"amount":1908228.8,"txCount":9654},"moneygram":{"amount":0,"txCount":0},"total":2978627.38},
+            {"country":"HN","uniteller":{"amount":870012.94,"txCount":3636},"transnetwork":{"amount":1388628.5,"txCount":7510},"moneygram":{"amount":0,"txCount":0},"total":2258641.44},
+            {"country":"NI","uniteller":{"amount":547701.9,"txCount":2400},"transnetwork":{"amount":1458878.34,"txCount":6440},"moneygram":{"amount":0,"txCount":0},"total":2006580.24},
+            {"country":"CO","uniteller":{"amount":112225.14,"txCount":560},"transnetwork":{"amount":860556.4,"txCount":4156},"moneygram":{"amount":0,"txCount":0},"total":972781.54},
+            {"country":"EC","uniteller":{"amount":439359.18,"txCount":1576},"transnetwork":{"amount":327665.7,"txCount":1270},"moneygram":{"amount":0,"txCount":0},"total":767024.88},
+            {"country":"GT","uniteller":{"amount":249734.08,"txCount":1250},"transnetwork":{"amount":461670.4,"txCount":2714},"moneygram":{"amount":0,"txCount":0},"total":711404.48},
+            {"country":"VE","uniteller":{"amount":0,"txCount":0},"transnetwork":{"amount":0,"txCount":0},"moneygram":{"amount":469248.64,"txCount":6788},"total":469248.64},
+            {"country":"SV","uniteller":{"amount":164139.54,"txCount":704},"transnetwork":{"amount":301437.56,"txCount":1562},"moneygram":{"amount":0,"txCount":0},"total":465577.1},
+            {"country":"DO","uniteller":{"amount":211550.12,"txCount":1178},"transnetwork":{"amount":169364.02,"txCount":824},"moneygram":{"amount":0,"txCount":0},"total":380914.14},
+            {"country":"CR","uniteller":{"amount":165424.6,"txCount":672},"transnetwork":{"amount":0,"txCount":0},"moneygram":{"amount":0,"txCount":0},"total":165424.6},
+            {"country":"HT","uniteller":{"amount":120878.74,"txCount":610},"transnetwork":{"amount":0,"txCount":0},"moneygram":{"amount":0,"txCount":0},"total":120878.74}
+        ];
+
+        const countryNames = {
+            'MX': 'Mexico',
+            'HN': 'Honduras',
+            'NI': 'Nicaragua',
+            'CO': 'Colombia',
+            'EC': 'Ecuador',
+            'GT': 'Guatemala',
+            'VE': 'Venezuela',
+            'SV': 'El Salvador',
+            'DO': 'Dominican Republic',
+            'CR': 'Costa Rica',
+            'HT': 'Haiti'
+        };
+
         // Transaction Share Pie Chart
         const txShareCtx = document.getElementById('transactionShareChart').getContext('2d');
         new Chart(txShareCtx, {
@@ -741,6 +810,108 @@
                     }
                 }
             }
+        });
+
+        // Corridor Chart
+        const corridorCtx = document.getElementById('corridorChart').getContext('2d');
+        const corridorLabels = corridorData.map(c => countryNames[c.country]);
+        const corridorChart = new Chart(corridorCtx, {
+            type: 'bar',
+            data: {
+                labels: corridorLabels,
+                datasets: [
+                    {
+                        label: 'Uniteller',
+                        data: corridorData.map(c => (c.uniteller.amount / 1000).toFixed(1)),
+                        backgroundColor: colors.uniteller,
+                        borderColor: 'rgb(118, 75, 162)',
+                        borderWidth: 2
+                    },
+                    {
+                        label: 'Transnetwork',
+                        data: corridorData.map(c => (c.transnetwork.amount / 1000).toFixed(1)),
+                        backgroundColor: colors.transnetwork,
+                        borderColor: 'rgb(102, 126, 234)',
+                        borderWidth: 2
+                    },
+                    {
+                        label: 'Moneygram',
+                        data: corridorData.map(c => (c.moneygram.amount / 1000).toFixed(1)),
+                        backgroundColor: colors.moneygram,
+                        borderColor: 'rgb(237, 100, 166)',
+                        borderWidth: 2
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'top'
+                    },
+                    title: {
+                        display: true,
+                        text: 'Money Movement by Corridor ($K)'
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return context.dataset.label + ': $' + context.parsed.y + 'K';
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        stacked: false,
+                        title: {
+                            display: true,
+                            text: 'Destination Country'
+                        }
+                    },
+                    y: {
+                        stacked: false,
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Volume ($K)'
+                        }
+                    }
+                }
+            }
+        });
+
+        // Populate corridor table
+        const corridorTableBody = document.getElementById('corridorTableBody');
+        corridorData.forEach(corridor => {
+            const row = document.createElement('tr');
+
+            // Determine leading vendor
+            let leader = 'Transnetwork';
+            let leaderBadge = 'leader';
+            if (corridor.uniteller.amount > corridor.transnetwork.amount && corridor.uniteller.amount > corridor.moneygram.amount) {
+                leader = 'Uniteller';
+                leaderBadge = 'premium';
+            } else if (corridor.moneygram.amount > corridor.uniteller.amount && corridor.moneygram.amount > corridor.transnetwork.amount) {
+                leader = 'Moneygram';
+                leaderBadge = 'declining';
+            }
+
+            const unitellerPct = corridor.total > 0 ? ((corridor.uniteller.amount / corridor.total) * 100).toFixed(0) : 0;
+            const transnetworkPct = corridor.total > 0 ? ((corridor.transnetwork.amount / corridor.total) * 100).toFixed(0) : 0;
+            const moneygramPct = corridor.total > 0 ? ((corridor.moneygram.amount / corridor.total) * 100).toFixed(0) : 0;
+
+            row.innerHTML = `
+                <td><strong>${countryNames[corridor.country]}</strong></td>
+                <td><strong>$${(corridor.total / 1000).toFixed(0)}K</strong></td>
+                <td>${corridor.uniteller.amount > 0 ? '$' + (corridor.uniteller.amount / 1000).toFixed(0) + 'K (' + unitellerPct + '%)' : '—'}</td>
+                <td>${corridor.transnetwork.amount > 0 ? '$' + (corridor.transnetwork.amount / 1000).toFixed(0) + 'K (' + transnetworkPct + '%)' : '—'}</td>
+                <td>${corridor.moneygram.amount > 0 ? '$' + (corridor.moneygram.amount / 1000).toFixed(0) + 'K (' + moneygramPct + '%)' : '—'}</td>
+                <td><span class="badge ${leaderBadge}">${leader}</span></td>
+            `;
+
+            corridorTableBody.appendChild(row);
         });
     </script>
 </body>
