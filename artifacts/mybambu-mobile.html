@@ -646,10 +646,19 @@
                 font-size: 14px;
             }
             table {
-                font-size: 13px;
+                font-size: 11px;
+                display: block;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
             }
             th, td {
-                padding: 12px 8px !important;
+                padding: 10px 6px !important;
+                white-space: nowrap;
+            }
+            /* Ensure all content containers are responsive on mobile */
+            .slide > div {
+                max-width: 100% !important;
+                width: 100% !important;
             }
         }
 
