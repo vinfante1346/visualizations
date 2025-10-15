@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MyBambu - Neobank for US and LATAM</title>
+    <title>MyBambu - Neobank for US and LATAM (Mobile)</title>
     <script src="https://unpkg.com/lucide@latest"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -35,8 +35,16 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            padding: 100px 40px 60px;
+            padding: 100px 20px 60px;
             position: relative;
+        }
+
+        /* Mobile-first optimization */
+        @media (max-width: 768px) {
+            .slide {
+                padding: 80px 16px 40px !important;
+                min-height: auto;
+            }
         }
 
         .dark-slide {
@@ -752,7 +760,7 @@
         <div class="slide light-slide">
             <h2><span class="highlight-green">MyBambu</span> at a Glance</h2>
             <p style="max-width: 900px; text-align: center; font-size: 18px; margin-bottom: 60px; line-height: 1.8;">
-                MyBambu's digital modern banking platform best serves all the needs of the unbanked and underbanked Latinos, allowing them to transact conveniently and securely in the U.S regardless of their immigration status.
+                MyBambu's digital modern banking platform best serves all the needs of the unbanked and underbanked Latinos, allowing them transact conveniently and securely in the U.S regardless of their immigration status.
             </p>
             <div class="stats-grid">
                 <div class="stat-card">
@@ -781,86 +789,86 @@
                 🚀 13 products in one powerful app
             </p>
 
-            <!-- All Products in Compact Grid -->
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; max-width: 1200px; margin: 0 auto;">
+            <!-- All Products in Mobile Vertical Stack -->
+            <div style="display: flex; flex-direction: column; gap: 14px; max-width: 500px; margin: 0 auto; width: 100%;">
 
-                <div class="product-card" style="background: linear-gradient(135deg, rgba(39, 251, 107, 0.95), rgba(0, 204, 51, 0.95)); border: 3px solid #27FB6B; position: relative; padding: 28px 24px; min-height: 160px; display: flex; flex-direction: column;">
-                    <div style="position: absolute; top: 10px; right: 10px; background: rgba(255,255,255,0.9); color: #00052E; padding: 5px 12px; border-radius: 12px; font-size: 10px; font-weight: 800;">NEW</div>
-                    <div class="product-icon" style="font-size: 48px; margin-bottom: 12px;">💸</div>
-                    <h3 style="font-size: 18px; margin-bottom: 8px; color: #00052E; font-weight: 800; line-height: 1.2;">Bambu Pay</h3>
-                    <p style="font-size: 13px; color: #00052E; line-height: 1.5; font-weight: 600; margin-top: auto;">Send to non-MyBambu users</p>
+                <div class="product-card" style="background: linear-gradient(135deg, rgba(39, 251, 107, 0.95), rgba(0, 204, 51, 0.95)); border: 3px solid #27FB6B; position: relative; padding: 24px;">
+                    <div style="position: absolute; top: 8px; right: 8px; background: rgba(255,255,255,0.9); color: #00052E; padding: 4px 10px; border-radius: 12px; font-size: 10px; font-weight: 800;">NEW</div>
+                    <div class="product-icon" style="font-size: 42px; margin-bottom: 12px;">💸</div>
+                    <h3 style="font-size: 18px; margin-bottom: 8px; color: #00052E; font-weight: 800;">Bambu Pay</h3>
+                    <p style="font-size: 13px; color: #00052E; line-height: 1.5; font-weight: 600;">Send to non-MyBambu users</p>
                 </div>
 
-                <div class="product-card" style="background: linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(255, 255, 255, 0.95)); border: 2px solid rgba(39, 251, 107, 0.4); padding: 28px 24px; min-height: 160px; display: flex; flex-direction: column;">
-                    <div class="product-icon" style="font-size: 48px; margin-bottom: 12px;">🌎</div>
-                    <h3 style="font-size: 18px; margin-bottom: 8px; color: #00052E; font-weight: 800; line-height: 1.2;">International Transfers</h3>
-                    <p style="font-size: 13px; color: #00052E; line-height: 1.5; font-weight: 600; margin-top: auto;">35-min to 17 countries</p>
+                <div class="product-card" style="background: linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(255, 255, 255, 0.95)); border: 2px solid rgba(39, 251, 107, 0.4); padding: 24px;">
+                    <div class="product-icon" style="font-size: 42px; margin-bottom: 12px;">🌎</div>
+                    <h3 style="font-size: 18px; margin-bottom: 8px; color: #00052E; font-weight: 800;">International Transfers</h3>
+                    <p style="font-size: 13px; color: #00052E; line-height: 1.5; font-weight: 600;">35-min to 17 countries</p>
                 </div>
 
-                <div class="product-card" style="background: linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(255, 255, 255, 0.95)); border: 2px solid rgba(39, 251, 107, 0.4); padding: 28px 24px; min-height: 160px; display: flex; flex-direction: column;">
-                    <div class="product-icon" style="font-size: 48px; margin-bottom: 12px;">💳</div>
-                    <h3 style="font-size: 18px; margin-bottom: 8px; color: #00052E; font-weight: 800; line-height: 1.2;">MyBambu Card</h3>
-                    <p style="font-size: 13px; color: #00052E; line-height: 1.5; font-weight: 600; margin-top: auto;">Digital & physical cards</p>
+                <div class="product-card" style="background: linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(255, 255, 255, 0.95)); border: 2px solid rgba(39, 251, 107, 0.4); padding: 24px;">
+                    <div class="product-icon" style="font-size: 42px; margin-bottom: 12px;">💳</div>
+                    <h3 style="font-size: 18px; margin-bottom: 8px; color: #00052E; font-weight: 800;">MyBambu Card</h3>
+                    <p style="font-size: 13px; color: #00052E; line-height: 1.5; font-weight: 600;">Digital & physical cards</p>
                 </div>
 
-                <div class="product-card" style="background: linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(255, 255, 255, 0.95)); border: 2px solid rgba(39, 251, 107, 0.4); padding: 28px 24px; min-height: 160px; display: flex; flex-direction: column;">
-                    <div class="product-icon" style="font-size: 48px; margin-bottom: 12px;">💰</div>
-                    <h3 style="font-size: 18px; margin-bottom: 8px; color: #00052E; font-weight: 800; line-height: 1.2;">Add Cash</h3>
-                    <p style="font-size: 13px; color: #00052E; line-height: 1.5; font-weight: 600; margin-top: auto;">120,000+ US locations</p>
+                <div class="product-card" style="background: linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(255, 255, 255, 0.95)); border: 2px solid rgba(39, 251, 107, 0.4); padding: 24px;">
+                    <div class="product-icon" style="font-size: 42px; margin-bottom: 12px;">💰</div>
+                    <h3 style="font-size: 18px; margin-bottom: 8px; color: #00052E; font-weight: 800;">Add Cash</h3>
+                    <p style="font-size: 13px; color: #00052E; line-height: 1.5; font-weight: 600;">120,000+ US locations</p>
                 </div>
 
-                <div class="product-card" style="background: linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(255, 255, 255, 0.95)); border: 2px solid rgba(39, 251, 107, 0.4); padding: 28px 24px; min-height: 160px; display: flex; flex-direction: column;">
-                    <div class="product-icon" style="font-size: 48px; margin-bottom: 12px;">⬇️</div>
-                    <h3 style="font-size: 18px; margin-bottom: 8px; color: #00052E; font-weight: 800; line-height: 1.2;">Direct Deposit</h3>
-                    <p style="font-size: 13px; color: #00052E; line-height: 1.5; font-weight: 600; margin-top: auto;">Easy paycheck setup</p>
+                <div class="product-card" style="background: linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(255, 255, 255, 0.95)); border: 2px solid rgba(39, 251, 107, 0.4); padding: 24px;">
+                    <div class="product-icon" style="font-size: 42px; margin-bottom: 12px;">⬇️</div>
+                    <h3 style="font-size: 18px; margin-bottom: 8px; color: #00052E; font-weight: 800;">Direct Deposit</h3>
+                    <p style="font-size: 13px; color: #00052E; line-height: 1.5; font-weight: 600;">Easy paycheck setup</p>
                 </div>
 
-                <div class="product-card" style="background: linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(255, 255, 255, 0.95)); border: 2px solid rgba(39, 251, 107, 0.4); padding: 28px 24px; min-height: 160px; display: flex; flex-direction: column;">
-                    <div class="product-icon" style="font-size: 48px; margin-bottom: 12px;">💱</div>
-                    <h3 style="font-size: 18px; margin-bottom: 8px; color: #00052E; font-weight: 800; line-height: 1.2;">User Transfers</h3>
-                    <p style="font-size: 13px; color: #00052E; line-height: 1.5; font-weight: 600; margin-top: auto;">Free instant transfers</p>
+                <div class="product-card" style="background: linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(255, 255, 255, 0.95)); border: 2px solid rgba(39, 251, 107, 0.4); padding: 24px;">
+                    <div class="product-icon" style="font-size: 42px; margin-bottom: 12px;">💱</div>
+                    <h3 style="font-size: 18px; margin-bottom: 8px; color: #00052E; font-weight: 800;">User Transfers</h3>
+                    <p style="font-size: 13px; color: #00052E; line-height: 1.5; font-weight: 600;">Free instant transfers</p>
                 </div>
 
-                <div class="product-card" style="background: linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(255, 255, 255, 0.95)); border: 2px solid rgba(39, 251, 107, 0.4); padding: 28px 24px; min-height: 160px; display: flex; flex-direction: column;">
-                    <div class="product-icon" style="font-size: 48px; margin-bottom: 12px;">💎</div>
-                    <h3 style="font-size: 18px; margin-bottom: 8px; color: #00052E; font-weight: 800; line-height: 1.2;">Cash-back</h3>
-                    <p style="font-size: 13px; color: #00052E; line-height: 1.5; font-weight: 600; margin-top: auto;">Earn on every purchase</p>
+                <div class="product-card" style="background: linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(255, 255, 255, 0.95)); border: 2px solid rgba(39, 251, 107, 0.4); padding: 24px;">
+                    <div class="product-icon" style="font-size: 42px; margin-bottom: 12px;">💎</div>
+                    <h3 style="font-size: 18px; margin-bottom: 8px; color: #00052E; font-weight: 800;">Cash-back</h3>
+                    <p style="font-size: 13px; color: #00052E; line-height: 1.5; font-weight: 600;">Earn on every purchase</p>
                 </div>
 
-                <div class="product-card" style="background: linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(255, 255, 255, 0.95)); border: 2px solid rgba(39, 251, 107, 0.4); padding: 28px 24px; min-height: 160px; display: flex; flex-direction: column;">
-                    <div class="product-icon" style="font-size: 48px; margin-bottom: 12px;">🏪</div>
-                    <h3 style="font-size: 18px; margin-bottom: 8px; color: #00052E; font-weight: 800; line-height: 1.2;">Shop on US</h3>
-                    <p style="font-size: 13px; color: #00052E; line-height: 1.5; font-weight: 600; margin-top: auto;">Build credit shopping</p>
+                <div class="product-card" style="background: linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(255, 255, 255, 0.95)); border: 2px solid rgba(39, 251, 107, 0.4); padding: 24px;">
+                    <div class="product-icon" style="font-size: 42px; margin-bottom: 12px;">🏪</div>
+                    <h3 style="font-size: 18px; margin-bottom: 8px; color: #00052E; font-weight: 800;">Shop on US</h3>
+                    <p style="font-size: 13px; color: #00052E; line-height: 1.5; font-weight: 600;">Build credit shopping</p>
                 </div>
 
-                <div class="product-card" style="background: linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(255, 255, 255, 0.95)); border: 2px solid rgba(39, 251, 107, 0.4); padding: 28px 24px; min-height: 160px; display: flex; flex-direction: column;">
-                    <div class="product-icon" style="font-size: 48px; margin-bottom: 12px;">📱</div>
-                    <h3 style="font-size: 18px; margin-bottom: 8px; color: #00052E; font-weight: 800; line-height: 1.2;">Top-Ups</h3>
-                    <p style="font-size: 13px; color: #00052E; line-height: 1.5; font-weight: 600; margin-top: auto;">USA & LATAM mobile</p>
+                <div class="product-card" style="background: linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(255, 255, 255, 0.95)); border: 2px solid rgba(39, 251, 107, 0.4); padding: 24px;">
+                    <div class="product-icon" style="font-size: 42px; margin-bottom: 12px;">📱</div>
+                    <h3 style="font-size: 18px; margin-bottom: 8px; color: #00052E; font-weight: 800;">Top-Ups</h3>
+                    <p style="font-size: 13px; color: #00052E; line-height: 1.5; font-weight: 600;">USA & LATAM mobile</p>
                 </div>
 
-                <div class="product-card" style="background: linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(255, 255, 255, 0.95)); border: 2px solid rgba(39, 251, 107, 0.4); padding: 28px 24px; min-height: 160px; display: flex; flex-direction: column;">
-                    <div class="product-icon" style="font-size: 48px; margin-bottom: 12px;">🎁</div>
-                    <h3 style="font-size: 18px; margin-bottom: 8px; color: #00052E; font-weight: 800; line-height: 1.2;">Gift Cards</h3>
-                    <p style="font-size: 13px; color: #00052E; line-height: 1.5; font-weight: 600; margin-top: auto;">Digital gift cards</p>
+                <div class="product-card" style="background: linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(255, 255, 255, 0.95)); border: 2px solid rgba(39, 251, 107, 0.4); padding: 24px;">
+                    <div class="product-icon" style="font-size: 42px; margin-bottom: 12px;">🎁</div>
+                    <h3 style="font-size: 18px; margin-bottom: 8px; color: #00052E; font-weight: 800;">Gift Cards</h3>
+                    <p style="font-size: 13px; color: #00052E; line-height: 1.5; font-weight: 600;">Digital gift cards</p>
                 </div>
 
-                <div class="product-card" style="background: linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(255, 255, 255, 0.95)); border: 2px solid rgba(39, 251, 107, 0.4); padding: 28px 24px; min-height: 160px; display: flex; flex-direction: column;">
-                    <div class="product-icon" style="font-size: 48px; margin-bottom: 12px;">🛡️</div>
-                    <h3 style="font-size: 18px; margin-bottom: 8px; color: #00052E; font-weight: 800; line-height: 1.2;">Insurance</h3>
-                    <p style="font-size: 13px; color: #00052E; line-height: 1.5; font-weight: 600; margin-top: auto;">Tailored policies</p>
+                <div class="product-card" style="background: linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(255, 255, 255, 0.95)); border: 2px solid rgba(39, 251, 107, 0.4); padding: 24px;">
+                    <div class="product-icon" style="font-size: 42px; margin-bottom: 12px;">🛡️</div>
+                    <h3 style="font-size: 18px; margin-bottom: 8px; color: #00052E; font-weight: 800;">Insurance</h3>
+                    <p style="font-size: 13px; color: #00052E; line-height: 1.5; font-weight: 600;">Tailored policies</p>
                 </div>
 
-                <div class="product-card" style="background: linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(255, 255, 255, 0.95)); border: 2px solid rgba(39, 251, 107, 0.4); padding: 28px 24px; min-height: 160px; display: flex; flex-direction: column;">
-                    <div class="product-icon" style="font-size: 48px; margin-bottom: 12px;">🍱</div>
-                    <h3 style="font-size: 18px; margin-bottom: 8px; color: #00052E; font-weight: 800; line-height: 1.2;">Food Delivery</h3>
-                    <p style="font-size: 13px; color: #00052E; line-height: 1.5; font-weight: 600; margin-top: auto;">Cuba & Venezuela</p>
+                <div class="product-card" style="background: linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(255, 255, 255, 0.95)); border: 2px solid rgba(39, 251, 107, 0.4); padding: 24px;">
+                    <div class="product-icon" style="font-size: 42px; margin-bottom: 12px;">🍱</div>
+                    <h3 style="font-size: 18px; margin-bottom: 8px; color: #00052E; font-weight: 800;">Food Delivery</h3>
+                    <p style="font-size: 13px; color: #00052E; line-height: 1.5; font-weight: 600;">Cuba & Venezuela</p>
                 </div>
 
-                <div class="product-card" style="background: linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(255, 255, 255, 0.95)); border: 2px solid rgba(39, 251, 107, 0.4); padding: 28px 24px; min-height: 160px; display: flex; flex-direction: column;">
-                    <div class="product-icon" style="font-size: 48px; margin-bottom: 12px;">👥</div>
-                    <h3 style="font-size: 18px; margin-bottom: 8px; color: #00052E; font-weight: 800; line-height: 1.2;">Refer & Earn</h3>
-                    <p style="font-size: 13px; color: #00052E; line-height: 1.5; font-weight: 600; margin-top: auto;">Get rewards</p>
+                <div class="product-card" style="background: linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(255, 255, 255, 0.95)); border: 2px solid rgba(39, 251, 107, 0.4); padding: 24px;">
+                    <div class="product-icon" style="font-size: 42px; margin-bottom: 12px;">👥</div>
+                    <h3 style="font-size: 18px; margin-bottom: 8px; color: #00052E; font-weight: 800;">Refer & Earn</h3>
+                    <p style="font-size: 13px; color: #00052E; line-height: 1.5; font-weight: 600;">Get rewards</p>
                 </div>
 
             </div>
@@ -871,7 +879,7 @@
             <h2 style="margin-bottom: 16px;"><span class="highlight-green">Product</span> Roadmap 2025</h2>
             <p style="font-size: 20px; color: #00052E; opacity: 0.8; margin-bottom: 50px;">Building the future of digital banking 🚀</p>
 
-            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; max-width: 1300px; margin: 0 auto;">
+            <div style="display: flex; flex-direction: column; gap: 24px; max-width: 500px; margin: 0 auto; width: 100%;">
 
                 <!-- Lending & Credit -->
                 <div style="background: linear-gradient(135deg, #27FB6B 0%, #00cc33 100%); padding: 32px; border-radius: 24px; box-shadow: 0 12px 40px rgba(39, 251, 107, 0.3); position: relative; overflow: hidden;">
@@ -1109,12 +1117,40 @@
         <!-- Slide 8: Capital Invested -->
         <div class="slide light-slide">
             <h2><span class="highlight-green">Bambu Systems LLC</span></h2>
-            <h3 style="font-size: 32px; margin-bottom: 60px;">Capital Invested - As of 12/31/2024</h3>
+            <h3 style="font-size: 32px; margin-bottom: 40px;">Series E Offering</h3>
+            <p style="font-size: 18px; margin-bottom: 60px; max-width: 900px; text-align: center;">October 15, 2025</p>
             <div style="max-width: 800px; width: 100%;">
+                <div style="background: white; border-radius: 20px; padding: 40px; box-shadow: 0 8px 32px rgba(0,0,0,0.1); margin-bottom: 40px;">
+                    <div style="font-size: 24px; font-weight: 700; color: #00052E; margin-bottom: 24px; text-align: center;">Offering Details</div>
+                    <div style="display: flex; justify-content: space-between; padding: 16px 0; border-bottom: 1px solid #e0e0e0;">
+                        <span style="color: #666; font-weight: 600;">Offering Amount:</span>
+                        <span style="font-weight: 700; color: #27FB6B;">$30M - $50M</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; padding: 16px 0; border-bottom: 1px solid #e0e0e0;">
+                        <span style="color: #666; font-weight: 600;">Security Type:</span>
+                        <span style="font-weight: 700; color: #00052E;">Series E Units</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; padding: 16px 0; border-bottom: 1px solid #e0e0e0;">
+                        <span style="color: #666; font-weight: 600;">Pre-Money Valuation:</span>
+                        <span style="font-weight: 700; color: #27FB6B;">$25M</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; padding: 16px 0; border-bottom: 1px solid #e0e0e0;">
+                        <span style="color: #666; font-weight: 600;">Preference Multiple:</span>
+                        <span style="font-weight: 700; color: #00052E;">4x</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; padding: 16px 0; border-bottom: 1px solid #e0e0e0;">
+                        <span style="color: #666; font-weight: 600;">Preferred Return:</span>
+                        <span style="font-weight: 700; color: #00052E;">10% per annum</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; padding: 16px 0;">
+                        <span style="color: #666; font-weight: 600;">Expected Closing:</span>
+                        <span style="font-weight: 700; color: #00052E;">October 31, 2025</span>
+                    </div>
+                </div>
                 <table style="width: 100%; border-collapse: collapse; background: white; border-radius: 16px; overflow: hidden; box-shadow: 0 8px 32px rgba(0,0,0,0.1);">
                     <thead>
                         <tr style="background: #00052E; color: white;">
-                            <th style="padding: 20px; text-align: left; font-size: 18px;">Series</th>
+                            <th style="padding: 20px; text-align: left; font-size: 18px;">Previous Rounds</th>
                             <th style="padding: 20px; text-align: right; font-size: 18px;">Amount</th>
                         </tr>
                     </thead>
@@ -1137,9 +1173,6 @@
                         </tr>
                     </tbody>
                 </table>
-                <p style="margin-top: 20px; font-size: 14px; text-align: center; font-style: italic;">
-                    *Series D Notes will be converted to Series D equity upon full funding
-                </p>
             </div>
         </div>
 
@@ -1348,121 +1381,112 @@
             </div>
         </div>
 
-        <!-- Slide 15: Cap Table -->
+        <!-- Slide 15: Series E Offering -->
         <div class="slide light-slide">
-            <h2><span class="highlight-green">BAMBU SYSTEMS, LLC</span></h2>
-            <h3 style="font-size: 28px; margin-bottom: 20px;">Capitalization Table</h3>
-            <p style="font-size: 18px; margin-bottom: 40px;">Target valuation: $250,000,000 | 30-Sep-25</p>
-            <div style="max-width: 1200px; width: 100%; overflow-x: auto;">
+            <h2><span class="highlight-green">Bambu Systems LLC</span></h2>
+            <h3 style="font-size: 32px; margin-bottom: 20px;">Series E Offering</h3>
+            <p style="font-size: 18px; margin-bottom: 50px; max-width: 900px; text-align: center;">October 15, 2025</p>
+            <div style="max-width: 900px; width: 100%;">
+                <div style="background: white; border-radius: 20px; padding: 40px; box-shadow: 0 8px 32px rgba(0,0,0,0.1); margin-bottom: 30px;">
+                    <div style="font-size: 24px; font-weight: 700; color: #00052E; margin-bottom: 24px; text-align: center;">Offering Details</div>
+                    <div style="display: flex; justify-content: space-between; padding: 16px 0; border-bottom: 1px solid #e0e0e0;">
+                        <span style="color: #666; font-weight: 600;">Offering Amount:</span>
+                        <span style="font-weight: 700; color: #27FB6B;">$30M - $50M</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; padding: 16px 0; border-bottom: 1px solid #e0e0e0;">
+                        <span style="color: #666; font-weight: 600;">Security Type:</span>
+                        <span style="font-weight: 700; color: #00052E;">Series E Units</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; padding: 16px 0; border-bottom: 1px solid #e0e0e0;">
+                        <span style="color: #666; font-weight: 600;">Pre-Money Valuation:</span>
+                        <span style="font-weight: 700; color: #27FB6B;">$25M</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; padding: 16px 0; border-bottom: 1px solid #e0e0e0;">
+                        <span style="color: #666; font-weight: 600;">Preference Multiple:</span>
+                        <span style="font-weight: 700; color: #00052E;">4x</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; padding: 16px 0; border-bottom: 1px solid #e0e0e0;">
+                        <span style="color: #666; font-weight: 600;">Preferred Return:</span>
+                        <span style="font-weight: 700; color: #00052E;">10% per annum</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; padding: 16px 0;">
+                        <span style="color: #666; font-weight: 600;">Expected Closing:</span>
+                        <span style="font-weight: 700; color: #00052E;">October 31, 2025</span>
+                    </div>
+                </div>
                 <table style="width: 100%; border-collapse: collapse; background: white; border-radius: 16px; overflow: hidden; box-shadow: 0 8px 32px rgba(0,0,0,0.1);">
                     <thead>
                         <tr style="background: #00052E; color: white;">
-                            <th style="padding: 20px; text-align: left; font-size: 16px;">Class of Units</th>
-                            <th style="padding: 20px; text-align: right; font-size: 16px;">Units</th>
-                            <th style="padding: 20px; text-align: right; font-size: 16px;">Invested $</th>
-                            <th style="padding: 20px; text-align: right; font-size: 16px;">Priority $</th>
-                            <th style="padding: 20px; text-align: right; font-size: 16px;">Total</th>
+                            <th style="padding: 20px; text-align: left; font-size: 18px;">Previous Rounds</th>
+                            <th style="padding: 20px; text-align: right; font-size: 18px;">Amount</th>
                         </tr>
                     </thead>
-                    <tbody style="font-size: 14px;">
+                    <tbody>
                         <tr style="border-bottom: 1px solid #e0e0e0;">
-                            <td style="padding: 16px; font-weight: 600;">Series E Pending Investment</td>
-                            <td style="padding: 16px; text-align: right; font-style: italic;">tbd</td>
-                            <td style="padding: 16px; text-align: right;">-</td>
-                            <td style="padding: 16px; text-align: right; font-weight: 700;">35,000,000.00</td>
-                            <td style="padding: 16px; text-align: right; font-weight: 700; color: #27FB6B;">$60,000,000</td>
+                            <td style="padding: 20px; font-weight: 600;">Series A</td>
+                            <td style="padding: 20px; text-align: right; font-weight: 700; color: #27FB6B;">$53,540,266</td>
                         </tr>
                         <tr style="border-bottom: 1px solid #e0e0e0;">
-                            <td style="padding: 16px; font-weight: 600;">Series D Investment</td>
-                            <td style="padding: 16px; text-align: right;">472,636.49</td>
-                            <td style="padding: 16px; text-align: right;">83,043,787</td>
-                            <td style="padding: 16px; text-align: right;">83,043,787</td>
-                            <td style="padding: 16px; text-align: right; font-weight: 700; color: #27FB6B;">$166,087,573</td>
+                            <td style="padding: 20px; font-weight: 600;">Series B</td>
+                            <td style="padding: 20px; text-align: right; font-weight: 700; color: #27FB6B;">$27,163,000</td>
                         </tr>
                         <tr style="border-bottom: 1px solid #e0e0e0;">
-                            <td style="padding: 16px; font-weight: 600;">Series C Investment</td>
-                            <td style="padding: 16px; text-align: right;">437,688.91</td>
-                            <td style="padding: 16px; text-align: right;">47,708,091</td>
-                            <td style="padding: 16px; text-align: right;">101,310,116</td>
-                            <td style="padding: 16px; text-align: right; font-weight: 700; color: #27FB6B;">$149,018,207</td>
+                            <td style="padding: 20px; font-weight: 600;">Series C</td>
+                            <td style="padding: 20px; text-align: right; font-weight: 700; color: #27FB6B;">$44,107,000</td>
                         </tr>
-                        <tr style="border-bottom: 1px solid #e0e0e0;">
-                            <td style="padding: 16px; font-weight: 600;">Series B Investment</td>
-                            <td style="padding: 16px; text-align: right;">26,500.49</td>
-                            <td style="padding: 16px; text-align: right;">27,163,000</td>
-                            <td style="padding: 16px; text-align: right;">8,200,203</td>
-                            <td style="padding: 16px; text-align: right; font-weight: 700; color: #27FB6B;">$35,363,203</td>
-                        </tr>
-                        <tr style="border-bottom: 1px solid #e0e0e0;">
-                            <td style="padding: 16px; font-weight: 600;">Series A Investment</td>
-                            <td style="padding: 16px; text-align: right;">53,540.27</td>
-                            <td style="padding: 16px; text-align: right;">53,540,266</td>
-                            <td style="padding: 16px; text-align: right;">21,711,735</td>
-                            <td style="padding: 16px; text-align: right; font-weight: 700; color: #27FB6B;">$75,252,001</td>
-                        </tr>
-                        <tr style="border-bottom: 2px solid #27FB6B;">
-                            <td style="padding: 16px; font-weight: 600;">Founder & Management Units</td>
-                            <td style="padding: 16px; text-align: right;">107,709.28</td>
-                            <td style="padding: 16px; text-align: right;">-</td>
-                            <td style="padding: 16px; text-align: right;">-</td>
-                            <td style="padding: 16px; text-align: right; font-weight: 700;">-</td>
-                        </tr>
-                        <tr style="background: #f5f5f5; font-weight: 700;">
-                            <td style="padding: 20px;">Total Units</td>
-                            <td style="padding: 20px; text-align: right;">1,892,108.02</td>
-                            <td style="padding: 20px; text-align: right; color: #27FB6B;">$211,455,144</td>
-                            <td style="padding: 20px; text-align: right; color: #27FB6B;">$214,265,840</td>
-                            <td style="padding: 20px; text-align: right; font-size: 18px; color: #27FB6B;">$485,720,984</td>
+                        <tr>
+                            <td style="padding: 20px; font-weight: 600;">Series D</td>
+                            <td style="padding: 20px; text-align: right; font-weight: 700; color: #27FB6B;">$68,000,000</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
+        </div>
 
-            <!-- Board Members Section -->
-            <div style="margin-top: 80px;">
-                <h2 style="font-size: 36px; margin-bottom: 40px;"><span class="highlight-green">MyBambu</span> Board Members</h2>
-                <div style="max-width: 1400px; width: 100%; display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 24px;">
-                    <div style="background: rgba(255,255,255,0.95); backdrop-filter: blur(20px); padding: 24px; border-radius: 16px; border: 2px solid #27FB6B;">
-                        <div style="font-size: 20px; font-weight: 900; color: #27FB6B; margin-bottom: 6px;">Douglas P. Quay</div>
-                        <div style="font-size: 16px; font-weight: 700; color: #00052E; margin-bottom: 12px;">Founder & CEO</div>
-                        <div style="font-size: 13px; color: #666; line-height: 1.6;">
-                            Architect of Bambu global neo-bank design with extensive banking and payment systems experience.
-                        </div>
+        <!-- Slide 16: Board Members -->
+        <div class="slide dark-slide">
+            <h2><span class="highlight-green">MyBambu</span> Board Members</h2>
+            <div style="max-width: 1400px; width: 100%; display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 32px; margin-top: 60px;">
+                <div style="background: rgba(255,255,255,0.95); backdrop-filter: blur(20px); padding: 32px; border-radius: 20px; border: 2px solid #27FB6B;">
+                    <div style="font-size: 24px; font-weight: 900; color: #27FB6B; margin-bottom: 8px;">Douglas P. Quay</div>
+                    <div style="font-size: 18px; font-weight: 700; color: #00052E; margin-bottom: 16px;">Founder & CEO</div>
+                    <div style="font-size: 14px; color: #666; line-height: 1.8;">
+                        Mr. Quay is the architect of the innovative Bambu global neo-bank design. He is an accomplished executive in the neo-bank industry with extensive experience in banking and payment systems.
                     </div>
-                    <div style="background: rgba(255,255,255,0.95); backdrop-filter: blur(20px); padding: 24px; border-radius: 16px; border: 2px solid #27FB6B;">
-                        <div style="font-size: 20px; font-weight: 900; color: #27FB6B; margin-bottom: 6px;">T. Michael Glenn</div>
-                        <div style="font-size: 16px; font-weight: 700; color: #00052E; margin-bottom: 12px;">Chairman</div>
-                        <div style="font-size: 13px; color: #666; line-height: 1.6;">
-                            35-year FedEx career, President & CEO of FedEx Services (2000-2016).
-                        </div>
+                </div>
+                <div style="background: rgba(255,255,255,0.95); backdrop-filter: blur(20px); padding: 32px; border-radius: 20px; border: 2px solid #27FB6B;">
+                    <div style="font-size: 24px; font-weight: 900; color: #27FB6B; margin-bottom: 8px;">T. Michael Glenn</div>
+                    <div style="font-size: 18px; font-weight: 700; color: #00052E; margin-bottom: 16px;">Chairman</div>
+                    <div style="font-size: 14px; color: #666; line-height: 1.8;">
+                        Mr. Glenn retired from FedEx Corporation in 2016, after a 35-year career. He served as President and CEO of FedEx Services for the last 16 years of his career.
                     </div>
-                    <div style="background: rgba(255,255,255,0.95); backdrop-filter: blur(20px); padding: 24px; border-radius: 16px; border: 2px solid #27FB6B;">
-                        <div style="font-size: 20px; font-weight: 900; color: #27FB6B; margin-bottom: 6px;">Robert Carter</div>
-                        <div style="font-size: 16px; font-weight: 700; color: #00052E; margin-bottom: 12px;">Co-Chairman</div>
-                        <div style="font-size: 13px; color: #666; line-height: 1.6;">
-                            EVP FedEx Information Services, CIO FedEx Corp, Co-President & Co-CEO FedEx Services.
-                        </div>
+                </div>
+                <div style="background: rgba(255,255,255,0.95); backdrop-filter: blur(20px); padding: 32px; border-radius: 20px; border: 2px solid #27FB6B;">
+                    <div style="font-size: 24px; font-weight: 900; color: #27FB6B; margin-bottom: 8px;">Robert Carter</div>
+                    <div style="font-size: 18px; font-weight: 700; color: #00052E; margin-bottom: 16px;">Co-Chairman</div>
+                    <div style="font-size: 14px; color: #666; line-height: 1.8;">
+                        Mr. Carter is executive vice president of FedEx Information Services and chief information officer of FedEx Corp. He is also co-president and co-CEO of FedEx Services.
                     </div>
-                    <div style="background: rgba(255,255,255,0.95); backdrop-filter: blur(20px); padding: 24px; border-radius: 16px; border: 2px solid #27FB6B;">
-                        <div style="font-size: 20px; font-weight: 900; color: #27FB6B; margin-bottom: 6px;">William T. Mays, Jr.</div>
-                        <div style="font-size: 16px; font-weight: 700; color: #00052E; margin-bottom: 12px;">Board Member</div>
-                        <div style="font-size: 13px; color: #666; line-height: 1.6;">
-                            Family office manager for Frederick W. Smith, FedEx founder, Chairman & CEO.
-                        </div>
+                </div>
+                <div style="background: rgba(255,255,255,0.95); backdrop-filter: blur(20px); padding: 32px; border-radius: 20px; border: 2px solid #27FB6B;">
+                    <div style="font-size: 24px; font-weight: 900; color: #27FB6B; margin-bottom: 8px;">William T. Mays, Jr.</div>
+                    <div style="font-size: 18px; font-weight: 700; color: #00052E; margin-bottom: 16px;">Board Member</div>
+                    <div style="font-size: 14px; color: #666; line-height: 1.8;">
+                        Mr. Mays handles the family office matters for Frederick W. Smith, the founder and Chairman and CEO of FedEx Corporation.
                     </div>
-                    <div style="background: rgba(255,255,255,0.95); backdrop-filter: blur(20px); padding: 24px; border-radius: 16px; border: 2px solid #27FB6B;">
-                        <div style="font-size: 20px; font-weight: 900; color: #27FB6B; margin-bottom: 6px;">Richard "Trip" Miller, III</div>
-                        <div style="font-size: 16px; font-weight: 700; color: #00052E; margin-bottom: 12px;">Board Member</div>
-                        <div style="font-size: 13px; color: #666; line-height: 1.6;">
-                            Founder, Gullane Capital Partners LLC (2002), concentrated value investing hedge fund.
-                        </div>
+                </div>
+                <div style="background: rgba(255,255,255,0.95); backdrop-filter: blur(20px); padding: 32px; border-radius: 20px; border: 2px solid #27FB6B;">
+                    <div style="font-size: 24px; font-weight: 900; color: #27FB6B; margin-bottom: 8px;">Richard "Trip" Miller, III</div>
+                    <div style="font-size: 18px; font-weight: 700; color: #00052E; margin-bottom: 16px;">Board Member</div>
+                    <div style="font-size: 14px; color: #666; line-height: 1.8;">
+                        Mr. Miller founded Gullane Capital Partners LLC in 2002, a hedge fund utilizing a concentrated, disciplined value investing philosophy.
                     </div>
-                    <div style="background: rgba(255,255,255,0.95); backdrop-filter: blur(20px); padding: 24px; border-radius: 16px; border: 2px solid #27FB6B;">
-                        <div style="font-size: 20px; font-weight: 900; color: #27FB6B; margin-bottom: 6px;">Fabiano S. Aguilar</div>
-                        <div style="font-size: 16px; font-weight: 700; color: #00052E; margin-bottom: 12px;">At Large Nominee</div>
-                        <div style="font-size: 13px; color: #666; line-height: 1.6;">
-                            Managing Director, Parabellum Investments, focused on PE, hedge funds and real estate.
-                        </div>
+                </div>
+                <div style="background: rgba(255,255,255,0.95); backdrop-filter: blur(20px); padding: 32px; border-radius: 20px; border: 2px solid #27FB6B;">
+                    <div style="font-size: 24px; font-weight: 900; color: #27FB6B; margin-bottom: 8px;">Fabiano S. Aguilar</div>
+                    <div style="font-size: 18px; font-weight: 700; color: #00052E; margin-bottom: 16px;">At Large Nominee</div>
+                    <div style="font-size: 14px; color: #666; line-height: 1.8;">
+                        Mr. Aguilar is the Managing Director of Parabellum Investments, a proprietary investment firm focused on private equity, liquid financial markets, hedge funds and real estate investments.
                     </div>
                 </div>
             </div>
@@ -1471,14 +1495,7 @@
         <!-- Slide 17: Contact -->
         <div class="slide green-slide">
             <h2><span class="highlight-green">Contact</span></h2>
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 60px; max-width: 1200px; width: 100%; margin-top: 60px;">
-                <div style="text-align: center;">
-                    <div style="width: 160px; height: 160px; border-radius: 50%; background: linear-gradient(135deg, #27FB6B, #00cc33); margin: 0 auto 24px; display: flex; align-items: center; justify-content: center; font-size: 64px; font-weight: 900; color: white; box-shadow: 0 12px 40px rgba(39, 251, 107, 0.3);">DQ</div>
-                    <div style="font-size: 32px; font-weight: 900; color: #00052E; margin-bottom: 8px;">Doug Quay</div>
-                    <div style="font-size: 18px; font-weight: 700; color: #666; margin-bottom: 20px;">Founder & CEO</div>
-                    <div style="font-size: 16px; color: #00052E;">dquay@mybambu.com</div>
-                    <div style="font-size: 16px; color: #00052E;">901.277.8193</div>
-                </div>
+            <div style="display: flex; justify-content: center; max-width: 1200px; width: 100%; margin-top: 60px;">
                 <div style="text-align: center;">
                     <div style="width: 160px; height: 160px; border-radius: 50%; background: linear-gradient(135deg, #27FB6B, #00cc33); margin: 0 auto 24px; display: flex; align-items: center; justify-content: center; font-size: 64px; font-weight: 900; color: white; box-shadow: 0 12px 40px rgba(39, 251, 107, 0.3);">VI</div>
                     <div style="font-size: 32px; font-weight: 900; color: #00052E; margin-bottom: 8px;">Val Infante</div>
@@ -1516,7 +1533,7 @@
         const slideContainer = document.getElementById('slideContainer');
         const progressBar = document.getElementById('progressBar');
         const slideNum = document.getElementById('slideNum');
-        const totalSlides = 15;
+        const totalSlides = 16;
         let currentSlide = 0;
 
         // Update progress and slide number on scroll
