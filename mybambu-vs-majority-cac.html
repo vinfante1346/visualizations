@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyBambu vs Majority: Customer Acquisition Efficiency</title>
+    <script src="https://cdn.plot.ly/plotly-2.26.0.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bambu-primary: #27FB6B;
+            --bambu-dark: #00052E;
+            --bambu-navy: #002041;
+            --bambu-light: #FFFFFF;
+            --bambu-accent: #01CFFB;
+            --bambu-blue: #206DFE;
+            --majority-orange: #FF6B35;
+        }
+
+        body {
+            font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--bambu-dark) 0%, var(--bambu-navy) 100%);
+            color: var(--bambu-light);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            padding: 60px 20px;
+            background: linear-gradient(135deg, var(--bambu-primary) 0%, var(--bambu-accent) 100%);
+            border-radius: 20px;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 40px rgba(39, 251, 107, 0.3);
+        }
+
+        h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            color: var(--bambu-dark);
+        }
+
+        .subtitle {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+            color: var(--bambu-dark);
+            font-weight: 600;
+        }
+
+        .tagline {
+            font-size: 1.1em;
+            color: var(--bambu-dark);
+            opacity: 0.9;
+        }
+
+        .nav {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin: 30px 0;
+        }
+
+        .nav-btn {
+            padding: 12px 25px;
+            background: var(--bambu-blue);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(32, 109, 254, 0.3);
+            font-family: 'Poppins', sans-serif;
+            font-weight: 500;
+        }
+
+        .nav-btn:hover {
+            background: var(--bambu-primary);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(39, 251, 107, 0.4);
+            color: var(--bambu-dark);
+        }
+
+        .nav-btn.active {
+            background: var(--bambu-primary);
+            color: var(--bambu-dark);
+        }
+
+        .section {
+            display: none;
+            animation: fadeIn 0.5s;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            margin: 30px 0;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+
+        .metric-card {
+            background: linear-gradient(135deg, rgba(39, 251, 107, 0.1) 0%, rgba(1, 207, 251, 0.1) 100%);
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            border: 2px solid rgba(39, 251, 107, 0.3);
+            transition: all 0.3s;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(39, 251, 107, 0.3);
+        }
+
+        .metric-value {
+            font-size: 2.5em;
+            font-weight: 700;
+            color: var(--bambu-primary);
+            margin: 10px 0;
+        }
+
+        .metric-label {
+            font-size: 1em;
+            opacity: 0.9;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .metric-sublabel {
+            font-size: 0.9em;
+            opacity: 0.7;
+            margin-top: 5px;
+        }
+
+        .comparison-card {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 30px 0;
+        }
+
+        .company-column {
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+        }
+
+        .bambu-column {
+            background: linear-gradient(135deg, rgba(39, 251, 107, 0.15) 0%, rgba(1, 207, 251, 0.15) 100%);
+            border: 2px solid var(--bambu-primary);
+        }
+
+        .majority-column {
+            background: linear-gradient(135deg, rgba(255, 107, 53, 0.15) 0%, rgba(255, 107, 53, 0.05) 100%);
+            border: 2px solid var(--majority-orange);
+        }
+
+        .company-logo {
+            font-size: 2em;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .bambu-logo {
+            color: var(--bambu-primary);
+        }
+
+        .majority-logo {
+            color: var(--majority-orange);
+        }
+
+        .big-number {
+            font-size: 3em;
+            font-weight: 700;
+            margin: 20px 0;
+        }
+
+        .bambu-number {
+            color: var(--bambu-primary);
+        }
+
+        .majority-number {
+            color: var(--majority-orange);
+        }
+
+        .savings-banner {
+            background: linear-gradient(135deg, var(--bambu-primary) 0%, var(--bambu-accent) 100%);
+            color: var(--bambu-dark);
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            font-size: 1.5em;
+            font-weight: 700;
+            margin: 40px 0;
+            box-shadow: 0 10px 40px rgba(39, 251, 107, 0.4);
+        }
+
+        .savings-number {
+            font-size: 2.5em;
+            margin: 20px 0;
+        }
+
+        .chart-container {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+            min-height: 550px;
+            overflow: visible;
+        }
+
+        h2 {
+            color: var(--bambu-primary);
+            margin: 30px 0 20px 0;
+            font-size: 2em;
+            font-weight: 600;
+        }
+
+        h3 {
+            color: var(--bambu-accent);
+            margin: 20px 0 15px 0;
+            font-size: 1.5em;
+        }
+
+        ul {
+            margin: 20px 0;
+            padding-left: 30px;
+        }
+
+        li {
+            margin: 15px 0;
+            font-size: 1.1em;
+            line-height: 1.8;
+        }
+
+        .highlight {
+            color: var(--bambu-primary);
+            font-weight: 600;
+        }
+
+        .competitor-highlight {
+            color: var(--majority-orange);
+            font-weight: 600;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 30px 0;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 18px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        th {
+            background: rgba(39, 251, 107, 0.2);
+            color: var(--bambu-primary);
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.9em;
+            letter-spacing: 1px;
+        }
+
+        tr:hover {
+            background: rgba(39, 251, 107, 0.1);
+        }
+
+        .winner-badge {
+            display: inline-block;
+            background: var(--bambu-primary);
+            color: var(--bambu-dark);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.9em;
+            margin-left: 10px;
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 2em; }
+            .subtitle { font-size: 1.2em; }
+            .comparison-card { grid-template-columns: 1fr; }
+            .metrics-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>MyBambu vs Majority</h1>
+            <div class="subtitle">Customer Acquisition Cost Analysis Q3 2025</div>
+            <div class="tagline">How MyBambu Achieves 53% Lower CAC Than Majority</div>
+        </header>
+
+        <div class="nav">
+            <button class="nav-btn active" onclick="showSection('overview')">Executive Summary</button>
+            <button class="nav-btn" onclick="showSection('comparison')">Cost Comparison</button>
+            <button class="nav-btn" onclick="showSection('efficiency')">Efficiency Metrics</button>
+            <button class="nav-btn" onclick="showSection('insights')">Strategic Insights</button>
+        </div>
+
+        <!-- Overview Section -->
+        <div id="overview" class="section active">
+            <div class="card">
+                <h2>Executive Summary</h2>
+
+                <div class="savings-banner">
+                    MyBambu's Q3 CAC: <span class="savings-number">$8.53</span>
+                    vs Majority's Estimated CAC: <span class="savings-number">$18.00</span>
+                    <div style="margin-top: 20px; font-size: 0.8em;">
+                        🎯 53% MORE EFFICIENT at acquiring customers
+                    </div>
+                </div>
+
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <div class="metric-label">Q3 Total Spend</div>
+                        <div class="metric-value">$3.03M</div>
+                        <div class="metric-sublabel">MyBambu Marketing Budget</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">Q3 Downloads</div>
+                        <div class="metric-value">355,579</div>
+                        <div class="metric-sublabel">New App Installs</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">MyBambu CAC</div>
+                        <div class="metric-value">$8.53</div>
+                        <div class="metric-sublabel">Cost Per Install</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">Savings vs Majority</div>
+                        <div class="metric-value">$3.37M</div>
+                        <div class="metric-sublabel">Q3 Cost Avoidance</div>
+                    </div>
+                </div>
+
+                <div class="chart-container">
+                    <div id="cacComparisonChart"></div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>What This Means</h2>
+                <ul>
+                    <li><strong class="highlight">53% Lower CAC:</strong> MyBambu acquires customers for $8.53 vs Majority's $18.00 - nearly half the cost</li>
+                    <li><strong class="highlight">$3.37M Saved in Q3:</strong> If MyBambu had Majority's CAC, the same downloads would have cost $6.40M instead of $3.03M</li>
+                    <li><strong class="highlight">Superior Marketing ROI:</strong> Every dollar spent on acquisition goes further at MyBambu</li>
+                    <li><strong class="highlight">Scalability Advantage:</strong> Lower CAC means MyBambu can grow faster with the same budget</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Comparison Section -->
+        <div id="comparison" class="section">
+            <div class="card">
+                <h2>Side-by-Side Cost Comparison</h2>
+
+                <div class="comparison-card">
+                    <div class="company-column bambu-column">
+                        <div class="company-logo bambu-logo">MyBambu</div>
+                        <div class="big-number bambu-number">$8.53</div>
+                        <div>Cost Per Install (CPI)</div>
+                        <div style="margin-top: 30px; font-size: 1.2em;">
+                            <strong>355,579 Downloads</strong><br>
+                            <span style="font-size: 1.5em; color: var(--bambu-primary);">$3,032,807</span><br>
+                            Total Q3 Spend
+                        </div>
+                        <div class="winner-badge" style="margin-top: 20px;">✓ 53% MORE EFFICIENT</div>
+                    </div>
+
+                    <div class="company-column majority-column">
+                        <div class="company-logo majority-logo">Majority</div>
+                        <div class="big-number majority-number">$18.00</div>
+                        <div>Estimated Cost Per Install</div>
+                        <div style="margin-top: 30px; font-size: 1.2em;">
+                            <strong>355,579 Downloads</strong><br>
+                            <span style="font-size: 1.5em; color: var(--majority-orange);">$6,400,422</span><br>
+                            Estimated Cost (Same Volume)
+                        </div>
+                    </div>
+                </div>
+
+                <div class="savings-banner">
+                    If MyBambu had Majority's CAC, we would have spent:<br>
+                    <span class="savings-number">$3,367,615 MORE</span><br>
+                    in Q3 2025 alone
+                </div>
+
+                <div class="chart-container">
+                    <div id="costBreakdownChart"></div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>Annual Projection</h2>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Metric</th>
+                            <th>MyBambu</th>
+                            <th>Majority (Estimated)</th>
+                            <th>Difference</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Q3 Cost Per Install</strong></td>
+                            <td>$8.53</td>
+                            <td>$18.00</td>
+                            <td style="color: var(--bambu-primary);">$9.47 lower</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Q3 Total Downloads</strong></td>
+                            <td>355,579</td>
+                            <td>355,579</td>
+                            <td>Same</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Q3 Actual Spend</strong></td>
+                            <td>$3,032,807</td>
+                            <td>$6,400,422</td>
+                            <td style="color: var(--bambu-primary);">$3,367,615 saved</td>
+                        </tr>
+                        <tr style="background: rgba(39, 251, 107, 0.15);">
+                            <td><strong>Annualized Savings (4 Quarters)</strong></td>
+                            <td colspan="2" style="text-align: center; font-size: 1.3em; color: var(--bambu-primary);">
+                                <strong>~$13.5M in Marketing Efficiency Gains</strong>
+                            </td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Efficiency Section -->
+        <div id="efficiency" class="section">
+            <div class="card">
+                <h2>Marketing Efficiency Metrics</h2>
+
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <div class="metric-label">CAC Efficiency</div>
+                        <div class="metric-value">53%</div>
+                        <div class="metric-sublabel">Lower than Majority</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">Budget Leverage</div>
+                        <div class="metric-value">2.11x</div>
+                        <div class="metric-sublabel">More downloads per dollar</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">Cost Savings</div>
+                        <div class="metric-value">$9.47</div>
+                        <div class="metric-sublabel">Per customer vs Majority</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">Q3 Efficiency Gain</div>
+                        <div class="metric-value">111%</div>
+                        <div class="metric-sublabel">ROI vs Majority CAC</div>
+                    </div>
+                </div>
+
+                <div class="chart-container">
+                    <div id="efficiencyChart"></div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>What Can We Do With The Savings?</h2>
+
+                <div style="background: rgba(39, 251, 107, 0.1); padding: 30px; border-radius: 15px; margin: 20px 0;">
+                    <h3 style="color: var(--bambu-primary); margin-top: 0;">With $3.37M in Q3 savings, MyBambu could:</h3>
+                    <ul>
+                        <li><strong>Acquire 395,000 MORE customers</strong> at our current $8.53 CAC</li>
+                        <li><strong>Double our marketing budget</strong> and still spend less than Majority</li>
+                        <li><strong>Invest in retention programs</strong> to reduce churn and increase LTV</li>
+                        <li><strong>Expand to new markets</strong> with aggressive customer acquisition</li>
+                        <li><strong>Improve unit economics</strong> with same growth trajectory</li>
+                    </ul>
+                </div>
+
+                <div class="chart-container">
+                    <div id="opportunityChart"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Insights Section -->
+        <div id="insights" class="section">
+            <div class="card">
+                <h2>Strategic Insights</h2>
+
+                <h3>Why Is MyBambu More Efficient?</h3>
+                <ul>
+                    <li><strong class="highlight">Better Organic Growth:</strong> Strong word-of-mouth and brand recognition in Latino community</li>
+                    <li><strong class="highlight">Optimized Digital Channels:</strong> Superior performance in paid social, SEO, and app store optimization</li>
+                    <li><strong class="highlight">Product-Market Fit:</strong> Features and messaging resonate strongly with target audience</li>
+                    <li><strong class="highlight">Brand Trust:</strong> Established brand equity drives lower cost per conversion</li>
+                    <li><strong class="highlight">Referral Program:</strong> Customers bring in new customers at lower cost</li>
+                </ul>
+
+                <h3 style="margin-top: 40px;">Competitive Advantages</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Factor</th>
+                            <th>MyBambu</th>
+                            <th>Majority</th>
+                            <th>Advantage</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Cost Per Install</strong></td>
+                            <td style="color: var(--bambu-primary);">$8.53</td>
+                            <td style="color: var(--majority-orange);">$18.00</td>
+                            <td>MyBambu <span class="winner-badge">53% better</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Target Market</strong></td>
+                            <td>Latino immigrants</td>
+                            <td>All immigrants (broader)</td>
+                            <td>MyBambu (focused targeting)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Monthly Fee</strong></td>
+                            <td>$0 (Free)</td>
+                            <td>$5.99/month</td>
+                            <td>MyBambu <span class="winner-badge">Better value</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Marketing Efficiency</strong></td>
+                            <td>$3.03M for 355K users</td>
+                            <td>$6.40M for same volume</td>
+                            <td>MyBambu <span class="winner-badge">$3.37M saved</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Scalability</strong></td>
+                            <td>High (lower CAC)</td>
+                            <td>Moderate (higher CAC)</td>
+                            <td>MyBambu <span class="winner-badge">2x leverage</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3 style="margin-top: 40px;">Strategic Recommendations</h3>
+                <div style="background: rgba(1, 207, 251, 0.1); padding: 30px; border-radius: 15px; margin: 20px 0;">
+                    <ul>
+                        <li><strong>Capitalize on CAC Advantage:</strong> Increase marketing budget to accelerate growth while maintaining efficiency edge</li>
+                        <li><strong>Highlight Free Model:</strong> Emphasize $0 monthly fee vs Majority's $5.99/month in campaigns</li>
+                        <li><strong>Optimize High-Performing Channels:</strong> Double down on channels driving $8.53 CAC</li>
+                        <li><strong>Referral Incentives:</strong> Boost referral program to drive CAC even lower</li>
+                        <li><strong>Investor Story:</strong> Use these metrics to demonstrate superior unit economics and path to profitability</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>Bottom Line</h2>
+                <div class="savings-banner">
+                    MyBambu's marketing efficiency is a<br>
+                    <span class="savings-number">MASSIVE COMPETITIVE ADVANTAGE</span><br>
+                    <div style="margin-top: 20px; font-size: 0.7em;">
+                        Lower CAC = Faster growth + Better unit economics + Stronger path to profitability
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showSection(sectionId) {
+            // Hide all sections
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.remove('active');
+            });
+
+            // Remove active class from all buttons
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+
+            // Show selected section
+            document.getElementById(sectionId).classList.add('active');
+
+            // Add active class to clicked button
+            event.target.classList.add('active');
+        }
+
+        // CAC Comparison Chart
+        const cacData = [
+            {
+                x: ['MyBambu', 'Majority'],
+                y: [8.53, 18.00],
+                type: 'bar',
+                marker: {
+                    color: ['#27FB6B', '#FF6B35']
+                },
+                text: ['$8.53', '$18.00'],
+                textposition: 'auto',
+                textfont: {
+                    size: 20,
+                    color: '#FFFFFF'
+                },
+                hovertemplate: '<b>%{x}</b><br>CAC: $%{y:.2f}<extra></extra>'
+            }
+        ];
+
+        const cacLayout = {
+            title: {
+                text: 'Customer Acquisition Cost (CAC) Comparison',
+                font: { color: '#F8F9FA', size: 24, family: 'Poppins' }
+            },
+            paper_bgcolor: 'rgba(0,0,0,0)',
+            plot_bgcolor: 'rgba(0,0,0,0)',
+            font: { color: '#F8F9FA', size: 14, family: 'Poppins' },
+            yaxis: {
+                title: { text: 'Cost Per Install ($)', font: { color: '#F8F9FA', size: 14 } },
+                gridcolor: 'rgba(255,255,255,0.1)',
+                tickformat: '$,.2f'
+            },
+            xaxis: {
+                gridcolor: 'rgba(255,255,255,0.1)'
+            },
+            height: 500,
+            margin: { t: 80, b: 80, l: 80, r: 50 }
+        };
+
+        Plotly.newPlot('cacComparisonChart', cacData, cacLayout, {responsive: true});
+
+        // Cost Breakdown Chart
+        const costData = [
+            {
+                labels: ['MyBambu Actual Spend', 'Additional Cost at Majority CAC'],
+                values: [3032807, 3367615],
+                type: 'pie',
+                marker: {
+                    colors: ['#27FB6B', '#FF6B35']
+                },
+                textinfo: 'label+percent',
+                textfont: {
+                    size: 14,
+                    color: '#FFFFFF'
+                },
+                hovertemplate: '<b>%{label}</b><br>$%{value:,.0f}<br>%{percent}<extra></extra>',
+                hole: 0.4
+            }
+        ];
+
+        const costLayout = {
+            title: {
+                text: 'Total Cost to Acquire 355,579 Customers',
+                font: { color: '#F8F9FA', size: 24, family: 'Poppins' }
+            },
+            paper_bgcolor: 'rgba(0,0,0,0)',
+            plot_bgcolor: 'rgba(0,0,0,0)',
+            font: { color: '#F8F9FA', size: 12, family: 'Poppins' },
+            showlegend: true,
+            legend: {
+                font: { color: '#F8F9FA', size: 14 },
+                orientation: 'h',
+                x: 0.5,
+                xanchor: 'center',
+                y: -0.15
+            },
+            height: 500,
+            margin: { t: 80, b: 100, l: 50, r: 50 },
+            annotations: [{
+                text: '$6.4M<br>If Majority CAC',
+                font: { size: 18, color: '#27FB6B', family: 'Poppins' },
+                showarrow: false,
+                x: 0.5,
+                y: 0.5
+            }]
+        };
+
+        Plotly.newPlot('costBreakdownChart', costData, costLayout, {responsive: true});
+
+        // Efficiency Chart
+        const efficiencyData = [
+            {
+                x: ['Downloads Per $1000'],
+                y: [117.2],
+                name: 'MyBambu',
+                type: 'bar',
+                marker: { color: '#27FB6B' },
+                text: ['117 downloads'],
+                textposition: 'auto',
+                hovertemplate: '<b>MyBambu</b><br>%{y:.1f} downloads per $1000<extra></extra>'
+            },
+            {
+                x: ['Downloads Per $1000'],
+                y: [55.6],
+                name: 'Majority',
+                type: 'bar',
+                marker: { color: '#FF6B35' },
+                text: ['56 downloads'],
+                textposition: 'auto',
+                hovertemplate: '<b>Majority</b><br>%{y:.1f} downloads per $1000<extra></extra>'
+            }
+        ];
+
+        const efficiencyLayout = {
+            title: {
+                text: 'Marketing Budget Efficiency',
+                font: { color: '#F8F9FA', size: 24, family: 'Poppins' }
+            },
+            paper_bgcolor: 'rgba(0,0,0,0)',
+            plot_bgcolor: 'rgba(0,0,0,0)',
+            font: { color: '#F8F9FA', size: 14, family: 'Poppins' },
+            yaxis: {
+                title: { text: 'Downloads Per $1000 Spent', font: { color: '#F8F9FA', size: 14 } },
+                gridcolor: 'rgba(255,255,255,0.1)'
+            },
+            xaxis: {
+                gridcolor: 'rgba(255,255,255,0.1)'
+            },
+            showlegend: true,
+            legend: {
+                font: { color: '#F8F9FA', size: 14 },
+                orientation: 'h',
+                x: 0.5,
+                xanchor: 'center',
+                y: 1.15
+            },
+            height: 500,
+            margin: { t: 100, b: 80, l: 80, r: 50 }
+        };
+
+        Plotly.newPlot('efficiencyChart', efficiencyData, efficiencyLayout, {responsive: true});
+
+        // Opportunity Chart
+        const opportunityData = [
+            {
+                x: ['Current Q3<br>Customers', 'If We Spent<br>Majority\'s Budget'],
+                y: [355579, 750450],
+                type: 'bar',
+                marker: { color: '#27FB6B' },
+                text: ['355,579', '750,450<br>(+395K more)'],
+                textposition: 'auto',
+                textfont: { size: 16 },
+                hovertemplate: '<b>%{x}</b><br>Customers: %{y:,.0f}<extra></extra>'
+            }
+        ];
+
+        const opportunityLayout = {
+            title: {
+                text: 'Growth Opportunity: What If We Spent $6.4M (Majority\'s Budget)?',
+                font: { color: '#F8F9FA', size: 24, family: 'Poppins' }
+            },
+            paper_bgcolor: 'rgba(0,0,0,0)',
+            plot_bgcolor: 'rgba(0,0,0,0)',
+            font: { color: '#F8F9FA', size: 14, family: 'Poppins' },
+            yaxis: {
+                title: { text: 'Total Customers', font: { color: '#F8F9FA', size: 14 } },
+                gridcolor: 'rgba(255,255,255,0.1)',
+                tickformat: ',.0f'
+            },
+            xaxis: {
+                gridcolor: 'rgba(255,255,255,0.1)'
+            },
+            height: 500,
+            margin: { t: 100, b: 100, l: 80, r: 50 }
+        };
+
+        Plotly.newPlot('opportunityChart', opportunityData, opportunityLayout, {responsive: true});
+    </script>
+</body>
+</html>
