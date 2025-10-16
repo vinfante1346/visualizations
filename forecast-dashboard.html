@@ -312,6 +312,7 @@
             <button class="tab active" onclick="switchTab('yearly')">Yearly Summary</button>
             <button class="tab" onclick="switchTab('monthly')">Monthly Breakdown</button>
             <button class="tab" onclick="switchTab('burnrate')">Burn Rate to Breakeven</button>
+            <button class="tab" onclick="switchTab('opex')">OpEx Reduction</button>
             <button class="tab" onclick="switchTab('scenario')">Scenario Planning 🔒</button>
         </div>
 
@@ -555,6 +556,295 @@
             </div>
         </div>
 
+        <!-- OPEX REDUCTION TAB -->
+        <div id="opexTab" class="tab-content">
+            <div class="chart-container" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                <h2 style="color: white; border-bottom: 2px solid rgba(255,255,255,0.3);">Operating Expenses Reduction Strategy</h2>
+                <div style="color: white; margin-top: 20px;">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; margin-top: 20px;">
+                        <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 8px; backdrop-filter: blur(10px);">
+                            <div style="font-size: 14px; opacity: 0.9; margin-bottom: 8px;">Current Monthly OpEx (Avg 2025)</div>
+                            <div style="font-size: 36px; font-weight: 700;">$4.2M</div>
+                        </div>
+                        <div style="background: rgba(255,255,255,0.15); padding: 20px; border-radius: 8px; backdrop-filter: blur(10px);">
+                            <div style="font-size: 14px; opacity: 0.9; margin-bottom: 8px;">Target Monthly OpEx</div>
+                            <div style="font-size: 36px; font-weight: 700;">$2.0M</div>
+                        </div>
+                        <div style="background: rgba(255,255,255,0.2); padding: 20px; border-radius: 8px; backdrop-filter: blur(10px);">
+                            <div style="font-size: 14px; opacity: 0.9; margin-bottom: 8px;">Required Reduction</div>
+                            <div style="font-size: 36px; font-weight: 700;">52%</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="controls">
+                <div class="control-group">
+                    <label>Select Reduction Scenario</label>
+                    <select id="opexScenarioSelect" onchange="updateOpExScenario()">
+                        <option value="1">Scenario 1: Marketing Cut (30% reduction)</option>
+                        <option value="2">Scenario 2: Marketing + Ops (40% reduction)</option>
+                        <option value="3">Scenario 3: Aggressive Cut (50% reduction)</option>
+                        <option value="4">Scenario 4: Optimal Balance (52% reduction)</option>
+                        <option value="5">Scenario 5: Maximum Cut (60% reduction)</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="chart-container">
+                <h2>Before vs After: Monthly OpEx Comparison</h2>
+                <div class="chart-wrapper">
+                    <canvas id="opexComparisonChart"></canvas>
+                </div>
+            </div>
+
+            <div class="chart-container">
+                <h2>OpEx Breakdown by Category</h2>
+                <div class="chart-wrapper">
+                    <canvas id="opexBreakdownChart"></canvas>
+                </div>
+            </div>
+
+            <div class="data-table">
+                <h2>Reduction Scenarios Comparison</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Scenario</th>
+                            <th>Current OpEx</th>
+                            <th>Target OpEx</th>
+                            <th>Reduction</th>
+                            <th>Marketing Cut</th>
+                            <th>Other OpEx Cut</th>
+                            <th>Impact Assessment</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Scenario 1: Marketing Cut</strong></td>
+                            <td>$4.2M</td>
+                            <td>$2.9M</td>
+                            <td><span class="badge neutral">30%</span></td>
+                            <td>-50%</td>
+                            <td>-20%</td>
+                            <td>Lower customer acquisition, moderate risk</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Scenario 2: Marketing + Ops</strong></td>
+                            <td>$4.2M</td>
+                            <td>$2.5M</td>
+                            <td><span class="badge neutral">40%</span></td>
+                            <td>-60%</td>
+                            <td>-30%</td>
+                            <td>Significant growth slowdown, high risk</td>
+                        </tr>
+                        <tr style="background: #fef5e7;">
+                            <td><strong>Scenario 3: Aggressive Cut</strong></td>
+                            <td>$4.2M</td>
+                            <td>$2.1M</td>
+                            <td><span class="badge neutral">50%</span></td>
+                            <td>-70%</td>
+                            <td>-40%</td>
+                            <td>Major operational changes required</td>
+                        </tr>
+                        <tr style="background: #d4edda;">
+                            <td><strong>Scenario 4: Optimal Balance</strong></td>
+                            <td>$4.2M</td>
+                            <td>$2.0M</td>
+                            <td><span class="badge positive">52%</span></td>
+                            <td>-65%</td>
+                            <td>-45%</td>
+                            <td>Balanced approach, achieves target</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Scenario 5: Maximum Cut</strong></td>
+                            <td>$4.2M</td>
+                            <td>$1.7M</td>
+                            <td><span class="badge negative">60%</span></td>
+                            <td>-80%</td>
+                            <td>-50%</td>
+                            <td>Survival mode, minimal operations</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="chart-container">
+                <h2>Implementation Roadmap</h2>
+                <div style="margin-top: 30px;">
+                    <div style="margin-bottom: 40px;">
+                        <div style="display: flex; align-items: center; margin-bottom: 15px;">
+                            <div style="width: 50px; height: 50px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 20px; margin-right: 20px;">1</div>
+                            <div style="flex: 1;">
+                                <h3 style="color: #2d3748; margin-bottom: 5px;">Phase 1: Immediate Actions (Month 1)</h3>
+                                <p style="color: #718096; margin-bottom: 10px;">Quick wins with minimal disruption</p>
+                                <div style="background: #f7fafc; padding: 15px; border-radius: 8px; border-left: 4px solid #667eea;">
+                                    <ul style="margin-left: 20px; color: #4a5568;">
+                                        <li>Reduce marketing spend by 40% ($840K/month savings)</li>
+                                        <li>Freeze non-essential hires</li>
+                                        <li>Renegotiate vendor contracts (target 15% reduction)</li>
+                                        <li>Cut discretionary spending and travel</li>
+                                        <li><strong>Target Savings: $1.0M/month</strong></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="margin-bottom: 40px;">
+                        <div style="display: flex; align-items: center; margin-bottom: 15px;">
+                            <div style="width: 50px; height: 50px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 20px; margin-right: 20px;">2</div>
+                            <div style="flex: 1;">
+                                <h3 style="color: #2d3748; margin-bottom: 5px;">Phase 2: Operational Optimization (Months 2-3)</h3>
+                                <p style="color: #718096; margin-bottom: 10px;">Streamline operations and reduce overhead</p>
+                                <div style="background: #f7fafc; padding: 15px; border-radius: 8px; border-left: 4px solid #667eea;">
+                                    <ul style="margin-left: 20px; color: #4a5568;">
+                                        <li>Further marketing optimization (target 65% total reduction)</li>
+                                        <li>Consolidate office space and facilities</li>
+                                        <li>Optimize technology stack (eliminate redundant tools)</li>
+                                        <li>Reduce third-party service costs</li>
+                                        <li>Implement automation for manual processes</li>
+                                        <li><strong>Target Savings: Additional $800K/month</strong></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="margin-bottom: 40px;">
+                        <div style="display: flex; align-items: center; margin-bottom: 15px;">
+                            <div style="width: 50px; height: 50px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 20px; margin-right: 20px;">3</div>
+                            <div style="flex: 1;">
+                                <h3 style="color: #2d3748; margin-bottom: 5px;">Phase 3: Strategic Restructuring (Months 4-6)</h3>
+                                <p style="color: #718096; margin-bottom: 10px;">Fundamental changes to operating model</p>
+                                <div style="background: #f7fafc; padding: 15px; border-radius: 8px; border-left: 4px solid #667eea;">
+                                    <ul style="margin-left: 20px; color: #4a5568;">
+                                        <li>Workforce optimization and role consolidation</li>
+                                        <li>Outsource non-core functions</li>
+                                        <li>Reduce infrastructure and cloud costs</li>
+                                        <li>Focus resources on highest ROI activities</li>
+                                        <li>Implement lean operating model</li>
+                                        <li><strong>Target Savings: Additional $400K/month</strong></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="background: linear-gradient(135deg, #48bb78 0%, #38a169 100%); padding: 30px; border-radius: 12px; color: white; text-align: center;">
+                        <h3 style="font-size: 24px; margin-bottom: 10px;">Total Monthly OpEx After Implementation</h3>
+                        <div style="font-size: 48px; font-weight: 700; margin-bottom: 10px;">$2.0M</div>
+                        <div style="font-size: 18px; opacity: 0.9;">52% reduction from current $4.2M baseline</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="data-table">
+                <h2>Detailed Cost Breakdown & Reduction Targets</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Cost Category</th>
+                            <th>Current Monthly</th>
+                            <th>Target Monthly</th>
+                            <th>Reduction $</th>
+                            <th>Reduction %</th>
+                            <th>Actions Required</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Marketing & Advertising</strong></td>
+                            <td>$1,600,000</td>
+                            <td>$560,000</td>
+                            <td>$1,040,000</td>
+                            <td><span class="badge negative">-65%</span></td>
+                            <td>Focus on organic growth, reduce paid acquisition</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Personnel Costs</strong></td>
+                            <td>$1,400,000</td>
+                            <td>$800,000</td>
+                            <td>$600,000</td>
+                            <td><span class="badge negative">-43%</span></td>
+                            <td>Hiring freeze, role consolidation, offshore some roles</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Technology & Infrastructure</strong></td>
+                            <td>$600,000</td>
+                            <td>$350,000</td>
+                            <td>$250,000</td>
+                            <td><span class="badge negative">-42%</span></td>
+                            <td>Optimize cloud costs, eliminate redundant tools</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Office & Facilities</strong></td>
+                            <td>$300,000</td>
+                            <td>$120,000</td>
+                            <td>$180,000</td>
+                            <td><span class="badge negative">-60%</span></td>
+                            <td>Downsize office space, go more remote</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Professional Services</strong></td>
+                            <td>$200,000</td>
+                            <td>$100,000</td>
+                            <td>$100,000</td>
+                            <td><span class="badge negative">-50%</span></td>
+                            <td>Reduce consulting, legal, and advisory fees</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Other Operating Expenses</strong></td>
+                            <td>$100,000</td>
+                            <td>$70,000</td>
+                            <td>$30,000</td>
+                            <td><span class="badge negative">-30%</span></td>
+                            <td>Cut discretionary spending, travel, events</td>
+                        </tr>
+                        <tr style="background: #f7fafc; font-weight: 600;">
+                            <td><strong>TOTAL</strong></td>
+                            <td><strong>$4,200,000</strong></td>
+                            <td><strong>$2,000,000</strong></td>
+                            <td><strong>$2,200,000</strong></td>
+                            <td><span class="badge positive">-52%</span></td>
+                            <td><strong>All actions combined</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="metrics-grid">
+                <div class="metric-card" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                    <div class="label" style="color: rgba(255,255,255,0.9);">Annual Savings</div>
+                    <div class="value" style="color: white;">$26.4M</div>
+                    <div class="comparison">
+                        <span style="color: rgba(255,255,255,0.9); font-size: 14px;">From OpEx reduction alone</span>
+                    </div>
+                </div>
+                <div class="metric-card" style="background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);">
+                    <div class="label" style="color: rgba(255,255,255,0.9);">Months to Breakeven</div>
+                    <div class="value" style="color: white;">6-8</div>
+                    <div class="comparison">
+                        <span style="color: rgba(255,255,255,0.9); font-size: 14px;">Accelerated timeline</span>
+                    </div>
+                </div>
+                <div class="metric-card" style="background: linear-gradient(135deg, #f6ad55 0%, #ed8936 100%);">
+                    <div class="label" style="color: rgba(255,255,255,0.9);">Cash Runway Extension</div>
+                    <div class="value" style="color: white;">+12 Mo</div>
+                    <div class="comparison">
+                        <span style="color: rgba(255,255,255,0.9); font-size: 14px;">Additional runway gained</span>
+                    </div>
+                </div>
+                <div class="metric-card" style="background: linear-gradient(135deg, #fc8181 0%, #f56565 100%);">
+                    <div class="label" style="color: rgba(255,255,255,0.9);">Implementation Risk</div>
+                    <div class="value" style="color: white;">Medium</div>
+                    <div class="comparison">
+                        <span style="color: rgba(255,255,255,0.9); font-size: 14px;">Requires careful execution</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- SCENARIO PLANNING TAB -->
         <div id="scenarioTab" class="tab-content">
             <div id="scenarioLocked" style="background: white; border-radius: 12px; padding: 60px; text-align: center; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);">
@@ -750,8 +1040,12 @@
                 tabs[2].classList.add('active');
                 document.getElementById('burnrateTab').classList.add('active');
                 updateBurnRateView();
-            } else if (tab === 'scenario') {
+            } else if (tab === 'opex') {
                 tabs[3].classList.add('active');
+                document.getElementById('opexTab').classList.add('active');
+                initializeOpExTab();
+            } else if (tab === 'scenario') {
+                tabs[4].classList.add('active');
                 document.getElementById('scenarioTab').classList.add('active');
             }
         }
@@ -987,9 +1281,9 @@
                 totalRevenue: [999063, 1058638, 1139054, 1213744, 1358383, 919413, 958330, 1089524, 896324, 935468, 1650707, 1887941],
                 costOfServices: [348000, 3050000, 0, 294000, 282000, 353000, 455000, 552000, 661000, 1082502, 1123089, 1274822],
                 grossProfit: [19829, 170029, 0, 16794, 16268, 20285, 25817, 31898, 37859, -7923, 897141, 1101143],
-                marketing: [1500000, 1500000, 1500000, 1500000, 1500000, 1500000, 1500000, 1500000, 1500000, 937953, 700000, 700000],
-                otherOperatingExpenses: [2980000, 2980000, 2980000, 2980000, 2980000, 2980000, 2980000, 2980000, 2980000, 2757746, 2525987, 2570765],
-                operatingExpenses: [4480000, 4480000, 4480000, 4480000, 4480000, 4480000, 4480000, 4480000, 4480000, 3695699, 3225987, 3270765],
+                marketing: [1320000, 1345089, 1368695, 1394030, 1423794, 1678845, 1708544, 1726838, 2298974, 2119605, 762858, 772362],
+                otherOperatingExpenses: [2613526, 2683933, 2789853, 2803238, 2979087, 3359005, 3283725, 3305040, 3203448, 2226336, 1600267, 1684629],
+                operatingExpenses: [3933526, 4029023, 4158549, 4197269, 4402881, 5037851, 4992269, 5031879, 5502422, 4345942, 2363126, 2456991],
                 netIncome: [-4460171, -4309971, -4480000, -4463206, -4463732, -4459715, -4454183, -4448102, -4442141, -3703622, -2328846, -2169622],
                 customers: [485000, 500000, 515000, 530000, 545000, 560000, 580000, 600000, 620000, 640000, 655000, 664225],
                 activeCustomers: [75000, 80000, 85000, 90000, 95000, 100000, 105000, 110000, 115000, 118000, 122000, 124867]
@@ -1010,9 +1304,9 @@
                 totalRevenue: [2559134, 3102998, 3717265, 4451641, 5052756, 5924673, 6633219, 7350222, 8041531, 8708105, 9473646, 10255230],
                 costOfServices: [1286483, 1466293, 1738716, 1990082, 2217369, 2438672, 2624968, 2857217, 3083483, 3270137, 3512460, 3720206],
                 grossProfit: [1272650, 1636705, 1978550, 2461559, 2835386, 3486001, 4008251, 4493005, 4958047, 5437969, 5961186, 6535024],
-                marketing: [1155740, 1825294, 1844974, 1880845, 1906664, 1931720, 1955442, 1981502, 2006382, 2030264, 2057390, 2082983],
-                otherOperatingExpenses: [2713347, 2797595, 2841337, 2913272, 2957914, 2978060, 3021662, 3084169, 3139962, 3194813, 3309878, 3374139],
-                operatingExpenses: [3869088, 4622889, 4686311, 4794116, 4864578, 4909780, 4977104, 5065670, 5146344, 5225077, 5367268, 5457121],
+                marketing: [774122, 1336942, 1343663, 1466772, 1476042, 1484942, 1493249, 1502401, 1511016, 1519167, 1528504, 1537159],
+                otherOperatingExpenses: [1832553, 1923565, 1969044, 2031171, 2074881, 2147435, 2519645, 2550495, 2581031, 2609104, 2695683, 2736078],
+                operatingExpenses: [2606675, 3260507, 3312708, 3497944, 3550923, 3632378, 4012895, 4052896, 4092047, 4128271, 4224187, 4273238],
                 netIncome: [-2596437, -2986184, -2707761, -2332557, -2029192, -1423779, -968853, -572666, -188297, 212892, 593918, 1077903],
                 customers: [674638, 695432, 716794, 740744, 765205, 790154, 815539, 841338, 867417, 889392, 911467, 933611],
                 activeCustomers: [128928, 213253, 219826, 226578, 234149, 241881, 249768, 257792, 265947, 274190, 281137, 288115]
@@ -3107,6 +3401,182 @@
                     if (element) element.value = saved[key];
                 });
             }
+        }
+
+        // OpEx Reduction Tab Functions
+        let opexComparisonChart = null;
+        let opexBreakdownChart = null;
+
+        const opexScenarios = {
+            1: {
+                name: 'Scenario 1: Marketing Cut',
+                reduction: 0.30,
+                current: 4200000,
+                target: 2940000,
+                marketing: { current: 1600000, target: 800000 },
+                other: { current: 2600000, target: 2140000 }
+            },
+            2: {
+                name: 'Scenario 2: Marketing + Ops',
+                reduction: 0.40,
+                current: 4200000,
+                target: 2520000,
+                marketing: { current: 1600000, target: 640000 },
+                other: { current: 2600000, target: 1880000 }
+            },
+            3: {
+                name: 'Scenario 3: Aggressive Cut',
+                reduction: 0.50,
+                current: 4200000,
+                target: 2100000,
+                marketing: { current: 1600000, target: 480000 },
+                other: { current: 2600000, target: 1620000 }
+            },
+            4: {
+                name: 'Scenario 4: Optimal Balance',
+                reduction: 0.52,
+                current: 4200000,
+                target: 2000000,
+                marketing: { current: 1600000, target: 560000 },
+                other: { current: 2600000, target: 1440000 }
+            },
+            5: {
+                name: 'Scenario 5: Maximum Cut',
+                reduction: 0.60,
+                current: 4200000,
+                target: 1680000,
+                marketing: { current: 1600000, target: 320000 },
+                other: { current: 2600000, target: 1360000 }
+            }
+        };
+
+        function initializeOpExTab() {
+            if (!opexComparisonChart) {
+                updateOpExScenario();
+            }
+        }
+
+        function updateOpExScenario() {
+            const scenario = opexScenarios[document.getElementById('opexScenarioSelect').value];
+
+            // Destroy existing charts
+            if (opexComparisonChart) {
+                opexComparisonChart.destroy();
+            }
+            if (opexBreakdownChart) {
+                opexBreakdownChart.destroy();
+            }
+
+            // Create comparison chart
+            const comparisonCtx = document.getElementById('opexComparisonChart').getContext('2d');
+            opexComparisonChart = new Chart(comparisonCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                    datasets: [{
+                        label: 'Current OpEx',
+                        data: Array(12).fill(scenario.current / 1000000),
+                        backgroundColor: 'rgba(252, 129, 129, 0.7)',
+                        borderColor: 'rgba(252, 129, 129, 1)',
+                        borderWidth: 2
+                    }, {
+                        label: 'Target OpEx',
+                        data: Array(12).fill(scenario.target / 1000000),
+                        backgroundColor: 'rgba(72, 187, 120, 0.7)',
+                        borderColor: 'rgba(72, 187, 120, 1)',
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: scenario.name + ' - Monthly OpEx ($M)',
+                            font: { size: 16, weight: 'bold' }
+                        },
+                        legend: {
+                            position: 'top'
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return context.dataset.label + ': $' + context.parsed.y.toFixed(2) + 'M';
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Monthly OpEx ($M)'
+                            },
+                            ticks: {
+                                callback: function(value) {
+                                    return '$' + value + 'M';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Create breakdown chart
+            const breakdownCtx = document.getElementById('opexBreakdownChart').getContext('2d');
+            opexBreakdownChart = new Chart(breakdownCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Marketing (Current)', 'Other OpEx (Current)', 'Marketing (Target)', 'Other OpEx (Target)'],
+                    datasets: [{
+                        label: 'OpEx Breakdown',
+                        data: [
+                            scenario.marketing.current / 1000000,
+                            scenario.other.current / 1000000,
+                            scenario.marketing.target / 1000000,
+                            scenario.other.target / 1000000
+                        ],
+                        backgroundColor: [
+                            'rgba(252, 129, 129, 0.8)',
+                            'rgba(237, 137, 54, 0.8)',
+                            'rgba(72, 187, 120, 0.8)',
+                            'rgba(56, 161, 105, 0.8)'
+                        ],
+                        borderColor: [
+                            'rgba(252, 129, 129, 1)',
+                            'rgba(237, 137, 54, 1)',
+                            'rgba(72, 187, 120, 1)',
+                            'rgba(56, 161, 105, 1)'
+                        ],
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Current vs Target Breakdown ($M)',
+                            font: { size: 16, weight: 'bold' }
+                        },
+                        legend: {
+                            position: 'right'
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    const label = context.label || '';
+                                    const value = context.parsed;
+                                    return label + ': $' + value.toFixed(2) + 'M';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
         }
 
         // Run on page load
