@@ -1,0 +1,1017 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyBambu Q3 2025 Paid Ads Quarterly Report</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #B8F4DC 0%, #9EF0D8 100%);
+            color: #1a1d3d;
+            overflow-x: hidden;
+        }
+
+        .slide {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 60px 40px;
+            position: relative;
+        }
+
+        .slide-content {
+            max-width: 1200px;
+            width: 100%;
+            background: white;
+            border-radius: 24px;
+            padding: 60px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+        }
+
+        h1 {
+            font-size: 64px;
+            font-weight: 900;
+            color: #1a1d3d;
+            margin-bottom: 20px;
+            line-height: 1.1;
+        }
+
+        h2 {
+            font-size: 42px;
+            font-weight: 800;
+            color: #1a1d3d;
+            margin-bottom: 30px;
+        }
+
+        h3 {
+            font-size: 28px;
+            font-weight: 700;
+            color: #1a1d3d;
+            margin-bottom: 20px;
+        }
+
+        .subtitle {
+            font-size: 22px;
+            color: #666;
+            margin-bottom: 40px;
+        }
+
+        .team {
+            font-size: 18px;
+            color: #888;
+            font-style: italic;
+        }
+
+        .metric-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 24px;
+            margin: 40px 0;
+        }
+
+        .metric-card {
+            background: linear-gradient(135deg, #27FB6B 0%, #1ED760 100%);
+            padding: 30px;
+            border-radius: 16px;
+            color: #1a1d3d;
+        }
+
+        .metric-label {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            opacity: 0.8;
+        }
+
+        .metric-value {
+            font-size: 36px;
+            font-weight: 900;
+            margin-bottom: 8px;
+        }
+
+        .metric-detail {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .budget-table {
+            width: 100%;
+            margin: 30px 0;
+            border-collapse: separate;
+            border-spacing: 0;
+            overflow: hidden;
+            border-radius: 12px;
+        }
+
+        .budget-table th {
+            background: #27FB6B;
+            color: #1a1d3d;
+            font-weight: 700;
+            padding: 16px;
+            text-align: left;
+            font-size: 16px;
+        }
+
+        .budget-table td {
+            padding: 16px;
+            border-bottom: 1px solid #e5e5e5;
+            font-size: 16px;
+        }
+
+        .budget-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .budget-table tr:nth-child(even) {
+            background: #f8f8f8;
+        }
+
+        .insight-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 24px;
+            border-radius: 12px;
+            margin: 30px 0;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .insight-label {
+            font-weight: 800;
+            margin-right: 8px;
+        }
+
+        .progress-bar-container {
+            margin: 40px 0;
+        }
+
+        .progress-bar {
+            height: 60px;
+            background: linear-gradient(90deg, #27FB6B 0%, #27FB6B 77%, #333 77%, #333 100%);
+            border-radius: 30px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(39, 251, 107, 0.3);
+        }
+
+        .progress-label {
+            position: absolute;
+            right: 30px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 36px;
+            font-weight: 900;
+            color: #1a1d3d;
+        }
+
+        .chart-container {
+            margin: 40px 0;
+            height: 400px;
+            position: relative;
+        }
+
+        .nav-buttons {
+            position: fixed;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 20px;
+            z-index: 1000;
+        }
+
+        .nav-button {
+            padding: 12px 32px;
+            border: none;
+            background: #1a1d3d;
+            color: white;
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .nav-button:hover {
+            background: #27FB6B;
+            color: #1a1d3d;
+            transform: translateY(-2px);
+        }
+
+        .nav-button:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        .slide-number {
+            position: fixed;
+            top: 30px;
+            right: 40px;
+            font-size: 18px;
+            font-weight: 700;
+            color: #1a1d3d;
+            background: white;
+            padding: 10px 20px;
+            border-radius: 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .conversion-table {
+            margin: 30px 0;
+        }
+
+        .conversion-table th {
+            background: #27FB6B;
+            padding: 16px;
+            font-weight: 700;
+            font-size: 18px;
+        }
+
+        .conversion-table td {
+            padding: 20px;
+            text-align: center;
+            font-size: 24px;
+            font-weight: 700;
+            border: 2px solid #e5e5e5;
+        }
+
+        .demographics-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin: 30px 0;
+        }
+
+        .demo-card {
+            background: #f8f8f8;
+            padding: 24px;
+            border-radius: 16px;
+        }
+
+        .demo-card h4 {
+            font-size: 18px;
+            margin-bottom: 12px;
+            color: #667eea;
+        }
+
+        .demo-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #e5e5e5;
+        }
+
+        .demo-item:last-child {
+            border-bottom: none;
+        }
+
+        .performance-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 1px;
+            background: #1a1d3d;
+            border-radius: 12px;
+            overflow: hidden;
+            margin: 30px 0;
+        }
+
+        .perf-header {
+            background: #27FB6B;
+            padding: 16px;
+            text-align: center;
+            font-weight: 700;
+            color: #1a1d3d;
+        }
+
+        .perf-cell {
+            background: white;
+            padding: 16px;
+            text-align: center;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .perf-positive {
+            color: #27FB6B;
+        }
+
+        .perf-negative {
+            color: #e74c3c;
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 42px; }
+            h2 { font-size: 32px; }
+            .slide-content { padding: 30px; }
+            .metric-grid { grid-template-columns: 1fr; }
+            .demographics-grid { grid-template-columns: 1fr; }
+            .performance-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="slide-number" id="slideNumber">1 / 19</div>
+
+<!-- Slide 1: Title -->
+<div class="slide" id="slide1">
+    <div class="slide-content">
+        <div style="text-align: center;">
+            <div class="subtitle">Quarterly Report</div>
+            <h1 style="color: #1a1d3d;">PAID ADS</h1>
+            <div style="margin-top: 60px; font-size: 48px; font-weight: 700;">Q3 2025</div>
+            <div class="team" style="margin-top: 40px; font-size: 24px;">Mafe Varon - Mili Paul - Matt Lopez</div>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 2: Q3 Results Overview -->
+<div class="slide" id="slide2" style="display: none;">
+    <div class="slide-content">
+        <h2>Q3 Results</h2>
+
+        <div class="metric-grid">
+            <div class="metric-card">
+                <div class="metric-label">Original Goal</div>
+                <div class="metric-value">92,837</div>
+                <div class="metric-detail">accounts at $45 CPA</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">Real Result</div>
+                <div class="metric-value">112,965</div>
+                <div class="metric-detail">accounts at $47.95 CPA</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">Paid Channel</div>
+                <div class="metric-value">73,257</div>
+                <div class="metric-detail">accounts at $41.40 CPA</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">Performance</div>
+                <div class="metric-value">+20,128</div>
+                <div class="metric-detail">more accounts than planned</div>
+            </div>
+        </div>
+
+        <table class="budget-table">
+            <thead>
+                <tr>
+                    <th>Channel</th>
+                    <th>Budget</th>
+                    <th>Spent</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Traditional</td>
+                    <td>$835,533.20</td>
+                    <td>$1,366,064</td>
+                </tr>
+                <tr>
+                    <td>Paid</td>
+                    <td>$3,342,132.80</td>
+                    <td>$3,032,806.94</td>
+                </tr>
+                <tr>
+                    <td><strong>Total</strong></td>
+                    <td><strong>$4,177,666</strong></td>
+                    <td><strong>$4,398,870.94</strong></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div style="text-align: center; font-size: 28px; font-weight: 800; margin: 30px 0;">
+            Total Marketing Cost = $5,416,275.74
+        </div>
+
+        <div class="insight-box">
+            <span class="insight-label">Insight:</span> We were able to bring in many more accounts than originally forecasted. Our CPA improved over 8% this quarter compared to last quarter.
+        </div>
+    </div>
+</div>
+
+<!-- Slide 3: 2025 Account Goal -->
+<div class="slide" id="slide3" style="display: none;">
+    <div class="slide-content">
+        <h2 style="text-align: center;">2025 Account Goal</h2>
+
+        <div style="text-align: center; margin: 60px 0;">
+            <div style="font-size: 32px; margin-bottom: 20px;">
+                2025 New Accounts Goal: <span style="font-weight: 900; color: #1a1d3d;">359,595</span>
+            </div>
+            <div style="font-size: 32px; margin-bottom: 40px;">
+                End of Q3 New Accounts: <span style="font-weight: 900; color: #27FB6B;">276,991</span>
+            </div>
+        </div>
+
+        <div class="progress-bar-container">
+            <div class="progress-bar">
+                <div class="progress-label">77%</div>
+            </div>
+        </div>
+
+        <div class="insight-box">
+            <span class="insight-label">Insight:</span> Entering Q4 of 2025, we are slightly ahead of schedule in terms of our new accounts goal for the year 👏
+        </div>
+    </div>
+</div>
+
+<!-- Slide 4: Q3 Conversion Values -->
+<div class="slide" id="slide4" style="display: none;">
+    <div class="slide-content">
+        <h2>Q3 Conversion Values</h2>
+
+        <table class="conversion-table budget-table">
+            <thead>
+                <tr>
+                    <th>Month</th>
+                    <th>Install → Profile</th>
+                    <th>Profile → Account</th>
+                    <th>Install → Account (30% KPI)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td style="font-weight: 700;">July</td>
+                    <td>47%</td>
+                    <td>60%</td>
+                    <td style="color: #e74c3c;">28%</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: 700;">Aug</td>
+                    <td>50%</td>
+                    <td>61%</td>
+                    <td style="color: #27FB6B;">31%</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: 700;">Sept</td>
+                    <td>56%</td>
+                    <td>63%</td>
+                    <td style="color: #27FB6B; font-weight: 900;">35%</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Slide 5: KPIs Monthly Evolution (Charts) -->
+<div class="slide" id="slide5" style="display: none;">
+    <div class="slide-content">
+        <h2>KPIs - Monthly Evolution</h2>
+
+        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px;">
+            <div>
+                <h3>Spend</h3>
+                <div class="chart-container" style="height: 250px;">
+                    <canvas id="spendChart"></canvas>
+                </div>
+            </div>
+            <div>
+                <h3>Installs</h3>
+                <div class="chart-container" style="height: 250px;">
+                    <canvas id="installsChart"></canvas>
+                </div>
+            </div>
+            <div>
+                <h3>Profiles</h3>
+                <div class="chart-container" style="height: 250px;">
+                    <canvas id="profilesChart"></canvas>
+                </div>
+            </div>
+            <div>
+                <h3>Accounts</h3>
+                <div class="chart-container" style="height: 250px;">
+                    <canvas id="accountsChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 6: CPA Evolution -->
+<div class="slide" id="slide6" style="display: none;">
+    <div class="slide-content">
+        <h2>KPIs - Cost Per Metrics Evolution</h2>
+
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px;">
+            <div>
+                <h3>CPI (Cost Per Install)</h3>
+                <div class="chart-container" style="height: 300px;">
+                    <canvas id="cpiChart"></canvas>
+                </div>
+            </div>
+            <div>
+                <h3>CPP (Cost Per Profile)</h3>
+                <div class="chart-container" style="height: 300px;">
+                    <canvas id="cppChart"></canvas>
+                </div>
+            </div>
+            <div>
+                <h3>CPA (Cost Per Account)</h3>
+                <div class="chart-container" style="height: 300px;">
+                    <canvas id="cpaChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 7: Demographics Q3 -->
+<div class="slide" id="slide7" style="display: none;">
+    <div class="slide-content">
+        <h2>Demographics - Q3 2025</h2>
+
+        <div class="demographics-grid">
+            <div class="demo-card">
+                <h4>Top 5 Nationalities (Q3)</h4>
+                <div class="demo-item">
+                    <span>United States</span>
+                    <strong>52.0%</strong>
+                </div>
+                <div class="demo-item">
+                    <span>Mexico</span>
+                    <strong>15.5%</strong>
+                </div>
+                <div class="demo-item">
+                    <span>Other</span>
+                    <strong>12.7%</strong>
+                </div>
+                <div class="demo-item">
+                    <span>Honduras</span>
+                    <strong>8.2%</strong>
+                </div>
+                <div class="demo-item">
+                    <span>Guatemala</span>
+                    <strong>7.0%</strong>
+                </div>
+            </div>
+
+            <div class="demo-card">
+                <h4>Primary Language (Q3)</h4>
+                <div class="demo-item">
+                    <span>Spanish</span>
+                    <strong>60.3%</strong>
+                </div>
+                <div class="demo-item">
+                    <span>English</span>
+                    <strong>39.7%</strong>
+                </div>
+            </div>
+
+            <div class="demo-card">
+                <h4>Operating System (Q3)</h4>
+                <div class="demo-item">
+                    <span>Android</span>
+                    <strong>71.5%</strong>
+                </div>
+                <div class="demo-item">
+                    <span>iOS</span>
+                    <strong>28.6%</strong>
+                </div>
+            </div>
+
+            <div class="demo-card">
+                <h4>Age Distribution (Q3)</h4>
+                <div class="demo-item">
+                    <span>18-28</span>
+                    <strong>27.49%</strong>
+                </div>
+                <div class="demo-item">
+                    <span>29-44</span>
+                    <strong>45.68%</strong>
+                </div>
+                <div class="demo-item">
+                    <span>45-60</span>
+                    <strong>20.68%</strong>
+                </div>
+                <div class="demo-item">
+                    <span>61-70</span>
+                    <strong>5.00%</strong>
+                </div>
+                <div class="demo-item">
+                    <span>70+</span>
+                    <strong>1.15%</strong>
+                </div>
+            </div>
+        </div>
+
+        <div class="insight-box">
+            <span class="insight-label">Top Inferred Nationality for Q3:</span> Mexico (31.04%), Venezuela (23.38%), and Honduras (15.35%)
+        </div>
+    </div>
+</div>
+
+<!-- Slide 8: Paid Ads Business Impact -->
+<div class="slide" id="slide8" style="display: none;">
+    <div class="slide-content">
+        <h2>Paid Ads - Business Impact</h2>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center;">
+            <div>
+                <table class="budget-table">
+                    <tbody>
+                        <tr>
+                            <td style="font-weight: 700;">New Accounts</td>
+                            <td style="font-size: 24px; font-weight: 900; color: #27FB6B;">73,257</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 700;">CPA</td>
+                            <td style="font-size: 24px; font-weight: 900;">$41.40 <span style="font-size: 14px; color: #27FB6B;">(12.27% less than Q2)</span></td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: 700;">Activation Rate</td>
+                            <td style="font-size: 24px; font-weight: 900;">31.66% <span style="font-size: 14px;">(Q2: 40.67%)</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div>
+                <h3>Paid New Accounts Activity</h3>
+                <div class="chart-container">
+                    <canvas id="activityChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 9: Paid Ads Performance -->
+<div class="slide" id="slide9" style="display: none;">
+    <div class="slide-content">
+        <h2>Paid Ads Performance</h2>
+
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;">
+            <div class="metric-card">
+                <div class="metric-label">Spend</div>
+                <div class="metric-value">$3.03M</div>
+                <div class="metric-detail">Total Q3 Spend</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">Impressions</div>
+                <div class="metric-value">282M</div>
+                <div class="metric-detail">Total Q3 Impressions</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">Clicks</div>
+                <div class="metric-value">3.45M</div>
+                <div class="metric-detail">Total Q3 Clicks</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">CTR</div>
+                <div class="metric-value">1.7%</div>
+                <div class="metric-detail">Average Click-Through Rate</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">Accounts</div>
+                <div class="metric-value">73,000</div>
+                <div class="metric-detail">Total Q3 New Accounts</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">CPA</div>
+                <div class="metric-value">$41.40</div>
+                <div class="metric-detail">Average Cost Per Account</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 10: Performance by Media Source -->
+<div class="slide" id="slide10" style="display: none;">
+    <div class="slide-content">
+        <h2>Performance by Media Source</h2>
+
+        <div class="performance-grid">
+            <div class="perf-header">% Change from Q2</div>
+            <div class="perf-header">Google</div>
+            <div class="perf-header">Meta</div>
+            <div class="perf-header">TikTok</div>
+            <div class="perf-header">Apple Ads</div>
+
+            <div class="perf-cell" style="font-weight: 700;">Spend</div>
+            <div class="perf-cell perf-positive">+13.12%</div>
+            <div class="perf-cell perf-positive">+10.59%</div>
+            <div class="perf-cell perf-negative">-25.30%</div>
+            <div class="perf-cell perf-negative">-27.37%</div>
+
+            <div class="perf-cell" style="font-weight: 700;">Installs</div>
+            <div class="perf-cell perf-positive">+18.69%</div>
+            <div class="perf-cell perf-positive">+74.07%</div>
+            <div class="perf-cell perf-negative">-33.33%</div>
+            <div class="perf-cell perf-negative">-7.70%</div>
+
+            <div class="perf-cell" style="font-weight: 700;">New Accounts</div>
+            <div class="perf-cell perf-positive">+37.64%</div>
+            <div class="perf-cell perf-positive">+48.67%</div>
+            <div class="perf-cell perf-negative">-13.88%</div>
+            <div class="perf-cell perf-negative">-7.24%</div>
+
+            <div class="perf-cell" style="font-weight: 700;">CPA</div>
+            <div class="perf-cell perf-positive">-17.83%</div>
+            <div class="perf-cell perf-positive">-25.62%</div>
+            <div class="perf-cell perf-positive">-13.24%</div>
+            <div class="perf-cell perf-positive">-21.21%</div>
+        </div>
+
+        <div class="insight-box">
+            <span class="insight-label">Insight:</span> All platforms managed to reduce CPA compared to the previous quarter. Google, Meta, and Liftoff had a particularly strong quarter, as they all increased new accounts substantially.
+        </div>
+    </div>
+</div>
+
+<!-- Slide 11: Next Steps -->
+<div class="slide" id="slide11" style="display: none;">
+    <div class="slide-content">
+        <h2>Paid Ads - Next Steps</h2>
+
+        <div style="font-size: 18px; line-height: 1.8;">
+            <p style="margin-bottom: 30px; font-size: 20px; font-weight: 600;">
+                The goal is to preserve profitability (low CPA) and algorithmic stability by treating the $200K as a maintenance budget.
+            </p>
+
+            <div style="margin: 30px 0;">
+                <h3 style="color: #667eea;">1. Strict CPA Focus & Consolidation:</h3>
+                <ul style="margin-left: 30px; margin-top: 15px;">
+                    <li style="margin: 12px 0;"><strong>Prioritize Low-Funnel:</strong> Allocate the majority of the $200K budget to Retargeting/Remarketing and lookalikes of high-intent custom audiences.</li>
+                    <li style="margin: 12px 0;"><strong>Channel Concentration:</strong> Focus 80%+ of the spend on Google and Meta, the highest-volume platforms with the best recent CPA performance (Sept CPA: Google $39.66, Meta $45.51).</li>
+                </ul>
+            </div>
+
+            <div style="margin: 30px 0;">
+                <h3 style="color: #667eea;">2. Strategic Use of Special Funds (Nov/Dec):</h3>
+                <ul style="margin-left: 30px; margin-top: 15px;">
+                    <li style="margin: 12px 0;"><strong>tROAS Campaign Execution:</strong> Utilize the dedicated $20,000 budget secured for November and December to run tROAS (Target Return On Ad Spend) campaigns in Google.</li>
+                    <li style="margin: 12px 0;"><strong>Objective:</strong> This investment is crucial for training the Google algorithm for profitability (not just CPA), preparing it for the high-volume spend in January.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 12: Thank You -->
+<div class="slide" id="slide12" style="display: none;">
+    <div class="slide-content">
+        <div style="text-align: center;">
+            <h1 style="font-size: 96px; color: #1a1d3d;">THANK YOU! 🙂</h1>
+            <div class="team" style="margin-top: 60px; font-size: 32px;">
+                Mafe Varon - Mili Paul - Matt Lopez
+            </div>
+            <div style="margin-top: 40px; font-size: 24px; color: #666;">Q3 2025</div>
+        </div>
+    </div>
+</div>
+
+<div class="nav-buttons">
+    <button class="nav-button" id="prevBtn" onclick="changeSlide(-1)">← Previous</button>
+    <button class="nav-button" id="nextBtn" onclick="changeSlide(1)">Next →</button>
+</div>
+
+<script>
+let currentSlide = 1;
+const totalSlides = 12;
+
+function showSlide(n) {
+    const slides = document.querySelectorAll('.slide');
+
+    if (n > totalSlides) { currentSlide = totalSlides; }
+    if (n < 1) { currentSlide = 1; }
+
+    slides.forEach(slide => slide.style.display = 'none');
+    document.getElementById(`slide${currentSlide}`).style.display = 'flex';
+
+    document.getElementById('slideNumber').textContent = `${currentSlide} / ${totalSlides}`;
+
+    document.getElementById('prevBtn').disabled = currentSlide === 1;
+    document.getElementById('nextBtn').disabled = currentSlide === totalSlides;
+
+    // Initialize charts when reaching slides with charts
+    if (currentSlide === 5) initKPICharts();
+    if (currentSlide === 6) initCostCharts();
+    if (currentSlide === 8) initActivityChart();
+}
+
+function changeSlide(n) {
+    currentSlide += n;
+    showSlide(currentSlide);
+}
+
+// Keyboard navigation
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowLeft') changeSlide(-1);
+    if (e.key === 'ArrowRight') changeSlide(1);
+});
+
+// Chart configurations
+const chartColors = {
+    primary: '#27FB6B',
+    secondary: '#667eea',
+    accent: '#e74c3c',
+    gray: '#95a5a6'
+};
+
+function initKPICharts() {
+    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sept'];
+
+    // Spend Chart
+    new Chart(document.getElementById('spendChart'), {
+        type: 'line',
+        data: {
+            labels: months,
+            datasets: [{
+                label: '2025',
+                data: [1200000, 1100000, 1350000, 1400000, 1500000, 1500000, 1483352, 2057758, 1875164],
+                borderColor: chartColors.primary,
+                backgroundColor: 'rgba(39, 251, 107, 0.1)',
+                tension: 0.4,
+                borderWidth: 3
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } }
+        }
+    });
+
+    // Installs Chart
+    new Chart(document.getElementById('installsChart'), {
+        type: 'line',
+        data: {
+            labels: months,
+            datasets: [{
+                label: '2025',
+                data: [100000, 95000, 110000, 115000, 135000, 95000, 103267, 125249, 127063],
+                borderColor: chartColors.secondary,
+                backgroundColor: 'rgba(102, 126, 234, 0.1)',
+                tension: 0.4,
+                borderWidth: 3
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } }
+        }
+    });
+
+    // Profiles Chart
+    new Chart(document.getElementById('profilesChart'), {
+        type: 'line',
+        data: {
+            labels: months,
+            datasets: [{
+                label: '2025',
+                data: [49000, 40000, 52000, 45000, 43000, 47000, 48711, 64140, 70834],
+                borderColor: chartColors.accent,
+                backgroundColor: 'rgba(231, 76, 60, 0.1)',
+                tension: 0.4,
+                borderWidth: 3
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } }
+        }
+    });
+
+    // Accounts Chart
+    new Chart(document.getElementById('accountsChart'), {
+        type: 'line',
+        data: {
+            labels: months,
+            datasets: [{
+                label: '2025',
+                data: [28000, 25000, 30000, 27000, 25000, 30000, 29190, 39516, 44326],
+                borderColor: '#27FB6B',
+                backgroundColor: 'rgba(39, 251, 107, 0.1)',
+                tension: 0.4,
+                borderWidth: 3
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } }
+        }
+    });
+}
+
+function initCostCharts() {
+    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sept'];
+
+    // CPI Chart
+    new Chart(document.getElementById('cpiChart'), {
+        type: 'line',
+        data: {
+            labels: months,
+            datasets: [{
+                label: '2025',
+                data: [12, 12, 12, 10, 15, 16, 14.36, 16.43, 14.76],
+                borderColor: chartColors.primary,
+                backgroundColor: 'rgba(39, 251, 107, 0.1)',
+                tension: 0.4,
+                borderWidth: 3
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: { y: { beginAtZero: true } }
+        }
+    });
+
+    // CPP Chart
+    new Chart(document.getElementById('cppChart'), {
+        type: 'line',
+        data: {
+            labels: months,
+            datasets: [{
+                label: '2025',
+                data: [25, 27, 28, 30, 32, 33, 30.45, 32.08, 26.47],
+                borderColor: chartColors.secondary,
+                backgroundColor: 'rgba(102, 126, 234, 0.1)',
+                tension: 0.4,
+                borderWidth: 3
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: { y: { beginAtZero: true } }
+        }
+    });
+
+    // CPA Chart
+    new Chart(document.getElementById('cpaChart'), {
+        type: 'line',
+        data: {
+            labels: months,
+            datasets: [{
+                label: '2025',
+                data: [43, 44, 45, 47, 50, 56, 50.82, 52.07, 42.30],
+                borderColor: chartColors.accent,
+                backgroundColor: 'rgba(231, 76, 60, 0.1)',
+                tension: 0.4,
+                borderWidth: 3
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: { y: { beginAtZero: true } }
+        }
+    });
+}
+
+function initActivityChart() {
+    new Chart(document.getElementById('activityChart'), {
+        type: 'doughnut',
+        data: {
+            labels: ['Card Activity', 'Other Activity', 'Cash Load', 'VMT Funding', 'IMT Activity', 'P2P Funding', 'P2P Spending', 'ATM Withdrawal', 'ACH Direct Deposit'],
+            datasets: [{
+                data: [23.5, 23.1, 11.6, 11.2, 5.6, 5.0, 4.1, 3.9, 3.3],
+                backgroundColor: [
+                    '#27FB6B',
+                    '#667eea',
+                    '#3498db',
+                    '#9b59b6',
+                    '#e74c3c',
+                    '#f39c12',
+                    '#1abc9c',
+                    '#34495e',
+                    '#95a5a6'
+                ]
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'right'
+                }
+            }
+        }
+    });
+}
+
+// Initialize first slide
+showSlide(1);
+</script>
+
+</body>
+</html>
