@@ -318,6 +318,11 @@
                 <h2>Loss Breakdown by Category</h2>
                 <div id="lossBreakdownChart" class="chart-container"></div>
             </div>
+
+            <div class="card">
+                <h2>Monthly Loss Breakdown</h2>
+                <div id="monthlyBreakdownChart" class="chart-container"></div>
+            </div>
         </div>
 
         <!-- Performance Section -->
@@ -659,6 +664,61 @@
         };
 
         Plotly.newPlot('lossBreakdownChart', lossData, lossLayout, {responsive: true});
+
+        // Monthly Loss Breakdown Chart
+        const monthlyBreakdownData = [
+            {
+                x: ['Nov 2024', 'Dec 2024', 'Jan 2025', 'Feb 2025', 'Mar 2025', 'Apr 2025',
+                    'May 2025', 'Jun 2025', 'Jul 2025', 'Aug 2025', 'Sep 2025', 'Oct 2025'],
+                y: [48500, 52300, 55800, 49200, 58900, 62400, 71200, 83500, 97800, 112400, 145600, 203200],
+                name: 'Reg E Losses',
+                type: 'bar',
+                marker: { color: '#206DFE' },
+                hovertemplate: '<b>Reg E Losses</b><br>%{x}<br>$%{y:,.0f}<extra></extra>'
+            },
+            {
+                x: ['Nov 2024', 'Dec 2024', 'Jan 2025', 'Feb 2025', 'Mar 2025', 'Apr 2025',
+                    'May 2025', 'Jun 2025', 'Jul 2025', 'Aug 2025', 'Sep 2025', 'Oct 2025'],
+                y: [715800, 748200, 782600, 756400, 805300, 824700, 869500, 912300, 958700, 1024800, 1088900, 1237700],
+                name: 'Chargebacks',
+                type: 'bar',
+                marker: { color: '#27FB6B' },
+                hovertemplate: '<b>Chargebacks</b><br>%{x}<br>$%{y:,.0f}<extra></extra>'
+            }
+        ];
+
+        const monthlyBreakdownLayout = {
+            title: {
+                text: 'Monthly Loss Trends by Category (12 Months)',
+                font: { color: '#F8F9FA', size: 24, family: 'Poppins' }
+            },
+            barmode: 'stack',
+            paper_bgcolor: 'rgba(0,0,0,0)',
+            plot_bgcolor: 'rgba(0,0,0,0)',
+            font: { color: '#F8F9FA', size: 12, family: 'Poppins' },
+            xaxis: {
+                title: { text: 'Month', font: { color: '#F8F9FA', size: 14 } },
+                gridcolor: 'rgba(255,255,255,0.1)',
+                tickangle: -45
+            },
+            yaxis: {
+                title: { text: 'Loss Amount ($)', font: { color: '#F8F9FA', size: 14 } },
+                gridcolor: 'rgba(255,255,255,0.1)',
+                tickformat: '$,.0f'
+            },
+            showlegend: true,
+            legend: {
+                font: { color: '#F8F9FA', size: 14 },
+                orientation: 'h',
+                x: 0.5,
+                xanchor: 'center',
+                y: 1.15
+            },
+            height: 500,
+            margin: { t: 100, b: 120, l: 80, r: 50 }
+        };
+
+        Plotly.newPlot('monthlyBreakdownChart', monthlyBreakdownData, monthlyBreakdownLayout, {responsive: true});
 
         // Performance Comparison Chart
         const perfData = [
