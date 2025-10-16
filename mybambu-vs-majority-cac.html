@@ -346,10 +346,12 @@
                 <h2>💰 The Investment Thesis: Why MyBambu is Worth $550M</h2>
 
                 <div class="savings-banner" style="background: linear-gradient(135deg, #27FB6B 0%, #01CFFB 100%); padding: 50px;">
-                    <div style="font-size: 3em; font-weight: 700; margin-bottom: 15px;">$500M - $650M</div>
-                    <div style="font-size: 1.3em; margin-bottom: 10px;">Estimated Company Valuation</div>
-                    <div style="font-size: 0.9em; opacity: 0.9;">
-                        Based on 660K customers with best-in-class unit economics
+                    <div style="font-size: 2.5em; font-weight: 700; margin-bottom: 15px;">$500M - $900M</div>
+                    <div style="font-size: 1.3em; margin-bottom: 10px;">Estimated Valuation Range</div>
+                    <div style="font-size: 1em; margin-top: 15px;">
+                        <strong>Based on 2026 Forward Revenue: $75.3M</strong><br>
+                        664K customers (2025) → 934K customers (2026)<br>
+                        Breakeven: October 2026
                     </div>
                 </div>
 
@@ -441,59 +443,151 @@
                     <div id="overviewChart"></div>
                 </div>
 
-                <h3 style="margin-top: 40px;">Valuation Comp: MyBambu vs Other Neobanks</h3>
+                <h3 style="margin-top: 40px;">📊 Valuation Scenarios: Conservative to Aggressive</h3>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Scenario</th>
+                            <th>Revenue Multiple</th>
+                            <th>Valuation</th>
+                            <th>Per Customer</th>
+                            <th>Assumptions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="background: rgba(255, 107, 53, 0.15);">
+                            <td><strong>🔻 Bear Case</strong></td>
+                            <td>5x FY2026</td>
+                            <td style="font-size: 1.1em;">$377M</td>
+                            <td>$568</td>
+                            <td>Miss targets, market downturn</td>
+                        </tr>
+                        <tr style="background: rgba(39, 251, 107, 0.15);">
+                            <td><strong>📈 Base Case</strong></td>
+                            <td>7x FY2026</td>
+                            <td style="color: var(--bambu-primary); font-size: 1.3em;"><strong>$527M</strong></td>
+                            <td><strong>$794</strong></td>
+                            <td>Hit 2026 targets, normal market</td>
+                        </tr>
+                        <tr style="background: rgba(1, 207, 251, 0.15);">
+                            <td><strong>🚀 Bull Case</strong></td>
+                            <td>8x FY2026</td>
+                            <td style="color: var(--bambu-accent); font-size: 1.3em;"><strong>$602M</strong></td>
+                            <td><strong>$907</strong></td>
+                            <td>Beat targets, strong growth</td>
+                        </tr>
+                        <tr style="background: rgba(32, 109, 254, 0.15);">
+                            <td><strong>⭐ Strategic Premium</strong></td>
+                            <td>10-12x FY2026</td>
+                            <td style="color: var(--bambu-blue); font-size: 1.3em;"><strong>$753M - $900M</strong></td>
+                            <td><strong>$1,134-1,356</strong></td>
+                            <td>Competitive bidding, strategic buyer</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3 style="margin-top: 40px;">💼 Potential Strategic Buyers & Valuations</h3>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Buyer Category</th>
+                            <th>Potential Acquirers</th>
+                            <th>Strategic Rationale</th>
+                            <th>Premium</th>
+                            <th>Valuation Range</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>🏦 Large US Banks</strong></td>
+                            <td>Chase, BofA, Wells Fargo, Citi</td>
+                            <td>Instant access to 664K Latino customers</td>
+                            <td style="color: var(--bambu-primary);">30-50%</td>
+                            <td style="font-size: 1.1em;"><strong>$685M - $790M</strong></td>
+                        </tr>
+                        <tr>
+                            <td><strong>💳 Fintech Giants</strong></td>
+                            <td>PayPal, Block (Square), Stripe, SoFi</td>
+                            <td>Embedded banking expansion</td>
+                            <td style="color: var(--bambu-primary);">20-35%</td>
+                            <td style="font-size: 1.1em;"><strong>$632M - $711M</strong></td>
+                        </tr>
+                        <tr>
+                            <td><strong>🌎 International Banks</strong></td>
+                            <td>Santander, BBVA, Scotiabank</td>
+                            <td>US Latino market entry vehicle</td>
+                            <td style="color: var(--bambu-primary);">25-40%</td>
+                            <td style="font-size: 1.1em;"><strong>$659M - $738M</strong></td>
+                        </tr>
+                        <tr>
+                            <td><strong>💸 Remittance Companies</strong></td>
+                            <td>Western Union, MoneyGram, Remitly</td>
+                            <td>Banking integration, reduce churn</td>
+                            <td style="color: var(--bambu-primary);">10-20%</td>
+                            <td style="font-size: 1.1em;"><strong>$580M - $632M</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="chart-container" style="margin-top: 30px;">
+                    <div id="buyersChart"></div>
+                </div>
+
+                <h3 style="margin-top: 40px;">🔍 Valuation Comp: MyBambu vs Other Neobanks</h3>
                 <table>
                     <thead>
                         <tr>
                             <th>Company</th>
+                            <th>Revenue</th>
                             <th>Valuation</th>
-                            <th>Customers</th>
+                            <th>Multiple</th>
                             <th>Per Customer</th>
-                            <th>Notes</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
                             <td><strong>Chime</strong></td>
+                            <td>$1.7B</td>
                             <td>$25B</td>
-                            <td>13M</td>
+                            <td>14.7x</td>
                             <td>$1,923</td>
-                            <td>Market leader, credit products</td>
                         </tr>
                         <tr>
                             <td><strong>Nubank</strong></td>
+                            <td>$2.4B</td>
                             <td>$30B</td>
-                            <td>48M</td>
+                            <td>12.5x</td>
                             <td>$625</td>
-                            <td>Latin America, IPO 2021</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Revolut</strong></td>
-                            <td>$33B</td>
-                            <td>16M</td>
-                            <td>$2,063</td>
-                            <td>Europe, multi-product</td>
                         </tr>
                         <tr>
                             <td><strong>Dave</strong></td>
+                            <td>$240M</td>
                             <td>$4B</td>
-                            <td>10M</td>
+                            <td>16.7x</td>
                             <td>$400</td>
-                            <td>Cash advance focus</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Varo</strong></td>
+                            <td>$150M</td>
+                            <td>$2.5B</td>
+                            <td>16.7x</td>
+                            <td>$625</td>
                         </tr>
                         <tr style="background: rgba(39, 251, 107, 0.2);">
-                            <td><strong>🎯 MyBambu (Base)</strong></td>
-                            <td style="color: var(--bambu-primary); font-size: 1.2em;"><strong>$550M</strong></td>
-                            <td><strong>660K</strong></td>
-                            <td style="color: var(--bambu-primary);"><strong>$833</strong></td>
-                            <td><strong>Best-in-class CAC efficiency</strong></td>
+                            <td><strong>🎯 MyBambu (Base 7x)</strong></td>
+                            <td><strong>$75.3M (2026)</strong></td>
+                            <td style="color: var(--bambu-primary); font-size: 1.2em;"><strong>$527M</strong></td>
+                            <td><strong>7.0x</strong></td>
+                            <td style="color: var(--bambu-primary);"><strong>$794</strong></td>
                         </tr>
                         <tr style="background: rgba(1, 207, 251, 0.15);">
-                            <td><strong>🚀 MyBambu (w/ Premium)</strong></td>
-                            <td style="color: var(--bambu-accent); font-size: 1.2em;"><strong>$800M+</strong></td>
-                            <td><strong>660K</strong></td>
-                            <td style="color: var(--bambu-accent);"><strong>$1,212</strong></td>
-                            <td><strong>Strategic acquisition upside</strong></td>
+                            <td><strong>🚀 MyBambu (Strategic 10x)</strong></td>
+                            <td><strong>$75.3M (2026)</strong></td>
+                            <td style="color: var(--bambu-accent); font-size: 1.2em;"><strong>$753M</strong></td>
+                            <td><strong>10.0x</strong></td>
+                            <td style="color: var(--bambu-accent);"><strong>$1,134</strong></td>
                         </tr>
                     </tbody>
                 </table>
@@ -994,55 +1088,81 @@
 
         Plotly.newPlot('overviewChart', overviewData, overviewLayout, {responsive: true});
 
-        // Valuation Comparison Chart
+        // Valuation Scenarios Chart
         const valuationData = [
             {
-                x: ['Dave', 'Nubank', 'MyBambu (Base)', 'MyBambu (Premium)', 'Chime', 'Revolut'],
-                y: [400, 625, 833, 1212, 1923, 2063],
+                x: ['Bear Case<br>5x', 'Base Case<br>7x', 'Bull Case<br>8x', 'Strategic<br>10-12x'],
+                y: [377, 527, 602, 826.5],
                 type: 'bar',
                 marker: {
-                    color: ['#999999', '#999999', '#27FB6B', '#01CFFB', '#999999', '#999999']
+                    color: ['#FF6B35', '#27FB6B', '#01CFFB', '#206DFE']
                 },
-                text: ['$400', '$625', '$833', '$1,212', '$1,923', '$2,063'],
+                text: ['$377M', '$527M', '$602M', '$753M-900M'],
                 textposition: 'auto',
-                textfont: { size: 16, color: '#FFFFFF' },
-                hovertemplate: '<b>%{x}</b><br>Per Customer: $%{y:,.0f}<extra></extra>'
+                textfont: { size: 18, color: '#FFFFFF', family: 'Poppins', weight: 700 },
+                hovertemplate: '<b>%{x}</b><br>Valuation: $%{y:,.0f}M<extra></extra>',
+                error_y: {
+                    type: 'data',
+                    symmetric: false,
+                    array: [0, 0, 0, 73.5],
+                    arrayminus: [0, 0, 0, 73.5],
+                    visible: true,
+                    color: '#206DFE',
+                    thickness: 3
+                }
             }
         ];
 
         const valuationLayout = {
             title: {
-                text: 'Valuation Per Customer: Neobank Comparison',
+                text: 'MyBambu Valuation Range: $377M - $900M',
                 font: { color: '#F8F9FA', size: 26, family: 'Poppins' }
             },
             paper_bgcolor: 'rgba(0,0,0,0)',
             plot_bgcolor: 'rgba(0,0,0,0)',
             font: { color: '#F8F9FA', size: 14, family: 'Poppins' },
             yaxis: {
-                title: { text: 'Value Per Customer ($)', font: { color: '#F8F9FA', size: 16 } },
+                title: { text: 'Company Valuation ($M)', font: { color: '#F8F9FA', size: 16 } },
                 gridcolor: 'rgba(255,255,255,0.1)',
-                tickformat: '$,.0f'
+                tickformat: '$,.0f',
+                range: [0, 1000]
             },
             xaxis: {
                 gridcolor: 'rgba(255,255,255,0.1)',
-                tickangle: -15
+                tickfont: { size: 14 }
             },
             height: 550,
-            margin: { t: 100, b: 120, l: 90, r: 50 },
-            annotations: [{
-                x: 2,
-                y: 833,
-                text: 'MyBambu:<br>$550M at 660K customers',
-                showarrow: true,
-                arrowhead: 2,
-                ax: 0,
-                ay: -80,
-                font: { size: 14, color: '#27FB6B', family: 'Poppins' },
-                bgcolor: 'rgba(0,5,46,0.8)',
-                bordercolor: '#27FB6B',
-                borderwidth: 2,
-                borderpad: 8
-            }]
+            margin: { t: 100, b: 100, l: 90, r: 50 },
+            annotations: [
+                {
+                    x: 1,
+                    y: 527,
+                    text: 'Base Case<br>$527M',
+                    showarrow: true,
+                    arrowhead: 2,
+                    ax: -60,
+                    ay: -80,
+                    font: { size: 16, color: '#27FB6B', family: 'Poppins', weight: 700 },
+                    bgcolor: 'rgba(0,5,46,0.9)',
+                    bordercolor: '#27FB6B',
+                    borderwidth: 2,
+                    borderpad: 10
+                },
+                {
+                    x: 3,
+                    y: 900,
+                    text: 'Strategic Premium<br>Up to $900M',
+                    showarrow: true,
+                    arrowhead: 2,
+                    ax: 60,
+                    ay: -40,
+                    font: { size: 16, color: '#206DFE', family: 'Poppins', weight: 700 },
+                    bgcolor: 'rgba(0,5,46,0.9)',
+                    bordercolor: '#206DFE',
+                    borderwidth: 2,
+                    borderpad: 10
+                }
+            ]
         };
 
         Plotly.newPlot('valuationChart', valuationData, valuationLayout, {responsive: true});
@@ -1335,6 +1455,99 @@
         };
 
         Plotly.newPlot('allChannelsChart', allChannelsData, allChannelsLayout, {responsive: true});
+
+        // Strategic Buyers Valuation Chart
+        const buyersData = [
+            {
+                x: ['Remittance<br>Companies', 'Fintech<br>Giants', 'International<br>Banks', 'Large US<br>Banks'],
+                y: [606, 671.5, 698.5, 737.5],
+                type: 'bar',
+                marker: {
+                    color: ['#01CFFB', '#27FB6B', '#206DFE', '#27FB6B'],
+                    line: {
+                        color: '#27FB6B',
+                        width: 2
+                    }
+                },
+                text: ['$580M-632M', '$632M-711M', '$659M-738M', '$685M-790M'],
+                textposition: 'auto',
+                textfont: { size: 16, color: '#00052E', family: 'Poppins', weight: 600 },
+                hovertemplate: '<b>%{x}</b><br>Valuation Range: %{text}<extra></extra>',
+                error_y: {
+                    type: 'data',
+                    symmetric: false,
+                    array: [26, 39.5, 39.5, 52.5],
+                    arrayminus: [26, 39.5, 39.5, 52.5],
+                    visible: true,
+                    color: 'rgba(39, 251, 107, 0.6)',
+                    thickness: 4
+                }
+            }
+        ];
+
+        const buyersLayout = {
+            title: {
+                text: 'Strategic Buyer Valuations (with Premiums)',
+                font: { color: '#F8F9FA', size: 26, family: 'Poppins' }
+            },
+            paper_bgcolor: 'rgba(0,0,0,0)',
+            plot_bgcolor: 'rgba(0,0,0,0)',
+            font: { color: '#F8F9FA', size: 14, family: 'Poppins' },
+            yaxis: {
+                title: { text: 'Valuation ($M)', font: { color: '#F8F9FA', size: 16 } },
+                gridcolor: 'rgba(255,255,255,0.1)',
+                tickformat: '$,.0f',
+                range: [500, 850]
+            },
+            xaxis: {
+                gridcolor: 'rgba(255,255,255,0.1)',
+                tickfont: { size: 13 }
+            },
+            height: 550,
+            margin: { t: 100, b: 110, l: 90, r: 50 },
+            shapes: [{
+                type: 'line',
+                x0: -0.5,
+                x1: 3.5,
+                y0: 527,
+                y1: 527,
+                line: {
+                    color: '#27FB6B',
+                    width: 3,
+                    dash: 'dash'
+                }
+            }],
+            annotations: [
+                {
+                    x: 3.2,
+                    y: 527,
+                    text: 'Base Case: $527M',
+                    showarrow: false,
+                    font: { size: 14, color: '#27FB6B', family: 'Poppins' },
+                    bgcolor: 'rgba(0,5,46,0.9)',
+                    bordercolor: '#27FB6B',
+                    borderwidth: 2,
+                    borderpad: 6,
+                    xanchor: 'right'
+                },
+                {
+                    x: 3,
+                    y: 790,
+                    text: 'Large Banks<br>Highest Premium',
+                    showarrow: true,
+                    arrowhead: 2,
+                    ax: 0,
+                    ay: -60,
+                    font: { size: 14, color: '#27FB6B', family: 'Poppins' },
+                    bgcolor: 'rgba(0,5,46,0.9)',
+                    bordercolor: '#27FB6B',
+                    borderwidth: 2,
+                    borderpad: 8
+                }
+            ]
+        };
+
+        Plotly.newPlot('buyersChart', buyersData, buyersLayout, {responsive: true});
     </script>
 </body>
 </html>
