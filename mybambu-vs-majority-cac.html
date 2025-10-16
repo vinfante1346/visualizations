@@ -341,20 +341,76 @@
         <!-- Overview Section -->
         <div id="overview" class="section active">
             <div class="card">
-                <h2>Executive Summary</h2>
+                <h2>Executive Summary: Multi-Channel CAC Analysis</h2>
 
                 <div class="savings-banner">
-                    <div style="font-size: 0.7em; margin-bottom: 10px; opacity: 0.9;">
-                        Paid Digital Ads: Cost Per Install (CPI) → True Customer Acquisition Cost (CAC)
-                    </div>
-                    MyBambu's True CAC: <span class="savings-number">$22.45</span>
-                    vs Majority's Estimated CAC: <span class="savings-number">$62.07</span>
+                    MyBambu Dominates Customer Acquisition Across ALL Channels
                     <div style="margin-top: 20px; font-size: 0.8em;">
-                        🎯 64% LOWER CAC in Paid Digital - MyBambu converts better AND pays less per install
+                        🎯 Lower CAC in BOTH Paid Digital AND Field Marketing
                     </div>
                 </div>
 
-                <div class="metrics-grid">
+                <h3 style="margin-top: 30px;">CAC by Channel</h3>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Channel</th>
+                            <th>MyBambu CAC</th>
+                            <th>Majority CAC</th>
+                            <th>Advantage</th>
+                            <th>Savings/Customer</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>💻 Paid Digital</strong></td>
+                            <td style="color: var(--bambu-primary); font-size: 1.2em;"><strong>$22.45</strong></td>
+                            <td style="color: var(--majority-orange);">$62.07</td>
+                            <td><span class="winner-badge">64% lower</span></td>
+                            <td style="color: var(--bambu-primary);"><strong>$39.62</strong></td>
+                        </tr>
+                        <tr>
+                            <td><strong>🚶 Boots on Ground</strong></td>
+                            <td style="color: var(--bambu-primary); font-size: 1.2em;"><strong>$55.00</strong></td>
+                            <td style="color: var(--majority-orange);">$100-120</td>
+                            <td><span class="winner-badge">45-55% lower</span></td>
+                            <td style="color: var(--bambu-primary);"><strong>$45-65</strong></td>
+                        </tr>
+                        <tr style="background: rgba(39, 251, 107, 0.2); font-size: 1.1em;">
+                            <td><strong>📊 BLENDED TOTAL</strong></td>
+                            <td style="color: var(--bambu-primary); font-size: 1.3em;"><strong>~$35</strong></td>
+                            <td style="color: var(--majority-orange); font-size: 1.1em;"><strong>~$80</strong></td>
+                            <td><span class="winner-badge" style="font-size: 1.1em;">56% lower</span></td>
+                            <td style="color: var(--bambu-primary); font-size: 1.2em;"><strong>~$45</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="chart-container">
+                    <div id="overviewChart"></div>
+                </div>
+
+                <h3 style="margin-top: 40px;">Key Takeaways</h3>
+                <div style="background: rgba(39, 251, 107, 0.1); padding: 30px; border-radius: 15px; margin: 20px 0;">
+                    <ul>
+                        <li><strong class="highlight">Paid Digital Excellence:</strong> 64% lower CAC ($22.45 vs $62.07) due to lower CPI AND higher conversion (38% vs 29%)</li>
+                        <li><strong class="highlight">Field Marketing Dominance:</strong> 45-55% lower CAC ($55 vs $100-120) through community trust and operational efficiency</li>
+                        <li><strong class="highlight">Blended Efficiency:</strong> Overall ~$35 CAC vs Majority's ~$80 = 56% cost advantage</li>
+                        <li><strong class="highlight">Scale Impact:</strong> At 500K customers/year, saves $22.5M annually vs Majority's costs</li>
+                        <li><strong class="highlight">Competitive Moat:</strong> Superior performance in BOTH channels creates sustainable advantage</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Paid Digital Section -->
+        <div id="digital" class="section">
+            <div class="card">
+                <h2>💻 Paid Digital Advertising: Deep Dive</h2>
+
+                <h3>The Complete Picture: CPI + Conversion = True CAC</h3>
+                <div class="metrics-grid" style="margin: 30px 0;">
                     <div class="metric-card">
                         <div class="metric-label">MyBambu CPI</div>
                         <div class="metric-value">$8.53</div>
@@ -365,7 +421,7 @@
                         <div class="metric-value">38%</div>
                         <div class="metric-sublabel">Install → Customer</div>
                     </div>
-                    <div class="metric-card">
+                    <div class="metric-card" style="background: linear-gradient(135deg, rgba(39, 251, 107, 0.2) 0%, rgba(1, 207, 251, 0.2) 100%);">
                         <div class="metric-label">MyBambu True CAC</div>
                         <div class="metric-value">$22.45</div>
                         <div class="metric-sublabel">Cost Per Customer</div>
@@ -373,49 +429,21 @@
                     <div class="metric-card">
                         <div class="metric-label">Majority CPI</div>
                         <div class="metric-value">$18.00</div>
-                        <div class="metric-sublabel">Cost Per Install</div>
+                        <div class="metric-sublabel">Cost Per Install (Est.)</div>
                     </div>
                     <div class="metric-card">
                         <div class="metric-label">Majority Conversion</div>
                         <div class="metric-value">29%</div>
                         <div class="metric-sublabel">Install → Customer (Est.)</div>
                     </div>
-                    <div class="metric-card">
+                    <div class="metric-card" style="background: linear-gradient(135deg, rgba(255, 107, 53, 0.2) 0%, rgba(255, 107, 53, 0.1) 100%);">
                         <div class="metric-label">Majority True CAC</div>
                         <div class="metric-value">$62.07</div>
                         <div class="metric-sublabel">Cost Per Customer (Est.)</div>
                     </div>
                 </div>
 
-                <div class="savings-banner" style="background: linear-gradient(135deg, #27FB6B 0%, #01CFFB 100%); margin-top: 30px;">
-                    MyBambu's Paid Digital CAC Advantage: <span class="savings-number">$39.62</span> saved per customer
-                    <div style="margin-top: 15px; font-size: 0.7em;">
-                        Q3 Paid Digital: 355,579 downloads × 38% conversion = <strong>135,120 customers</strong><br>
-                        Paid Digital Savings: <strong>$5.35M in Q3</strong> vs Majority's estimated CAC
-                    </div>
-                </div>
-
-                <div class="chart-container">
-                    <div id="cacComparisonChart"></div>
-                </div>
-            </div>
-
-            <div class="card">
-                <h2>What This Means for Paid Digital Performance</h2>
-                <ul>
-                    <li><strong class="highlight">64% Lower True CAC:</strong> In paid digital ads, MyBambu acquires CUSTOMERS (not just installs) for $22.45 vs Majority's $62.07</li>
-                    <li><strong class="highlight">Double Advantage in Paid Channels:</strong> We pay LESS per install ($8.53 vs $18) AND convert BETTER (38% vs 29%)</li>
-                    <li><strong class="highlight">$5.35M Saved in Q3 Paid Digital:</strong> With 135,120 actual customers from paid ads, we saved $39.62 per customer vs Majority</li>
-                    <li><strong class="highlight">Superior Product-Market Fit:</strong> 31% higher conversion rate from paid traffic shows our product resonates better with target audience</li>
-                    <li><strong class="highlight">Paid Ad Scalability:</strong> Lower CPI + higher conversion = 2.76x more efficient paid customer acquisition</li>
-                </ul>
-            </div>
-        </div>
-
-        <!-- Paid Digital Section -->
-        <div id="digital" class="section">
-            <div class="card">
-                <h2>Side-by-Side Cost Comparison</h2>
+                <h3 style="margin-top: 30px;">Side-by-Side Comparison</h3>
 
                 <div class="comparison-card">
                     <div class="company-column bambu-column">
@@ -780,6 +808,64 @@
             // Add active class to clicked button
             event.target.classList.add('active');
         }
+
+        // Overview Chart - All Channels
+        const overviewData = [
+            {
+                x: ['Paid Digital', 'Boots on Ground', 'Blended Average'],
+                y: [22.45, 55, 35],
+                name: 'MyBambu',
+                type: 'bar',
+                marker: { color: '#27FB6B' },
+                text: ['$22.45', '$55', '$35'],
+                textposition: 'auto',
+                textfont: { size: 18, color: '#00052E' },
+                hovertemplate: '<b>MyBambu %{x}</b><br>CAC: $%{y:.2f}<extra></extra>'
+            },
+            {
+                x: ['Paid Digital', 'Boots on Ground', 'Blended Average'],
+                y: [62.07, 110, 80],
+                name: 'Majority (Est.)',
+                type: 'bar',
+                marker: { color: '#FF6B35' },
+                text: ['$62.07', '$100-120', '$80'],
+                textposition: 'auto',
+                textfont: { size: 18, color: '#FFFFFF' },
+                hovertemplate: '<b>Majority %{x}</b><br>CAC: $%{y:.2f}<extra></extra>'
+            }
+        ];
+
+        const overviewLayout = {
+            title: {
+                text: 'CAC Across All Channels',
+                font: { color: '#F8F9FA', size: 26, family: 'Poppins' }
+            },
+            barmode: 'group',
+            paper_bgcolor: 'rgba(0,0,0,0)',
+            plot_bgcolor: 'rgba(0,0,0,0)',
+            font: { color: '#F8F9FA', size: 14, family: 'Poppins' },
+            yaxis: {
+                title: { text: 'Customer Acquisition Cost ($)', font: { color: '#F8F9FA', size: 16 } },
+                gridcolor: 'rgba(255,255,255,0.1)',
+                tickformat: '$,.0f'
+            },
+            xaxis: {
+                gridcolor: 'rgba(255,255,255,0.1)',
+                tickfont: { size: 14 }
+            },
+            showlegend: true,
+            legend: {
+                font: { color: '#F8F9FA', size: 16 },
+                orientation: 'h',
+                x: 0.5,
+                xanchor: 'center',
+                y: 1.15
+            },
+            height: 550,
+            margin: { t: 120, b: 100, l: 90, r: 50 }
+        };
+
+        Plotly.newPlot('overviewChart', overviewData, overviewLayout, {responsive: true});
 
         // CAC Comparison Chart - showing both CPI and True CAC
         const cacData = [
