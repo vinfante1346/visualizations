@@ -620,25 +620,42 @@
             labels: ['Reg E Losses', 'Chargebacks'],
             type: 'pie',
             marker: {
-                colors: ['#7C3AED', '#00D4AA']
+                colors: ['#206DFE', '#27FB6B']
             },
-            textinfo: 'label+percent+value',
-            texttemplate: '<b>%{label}</b><br>$%{value:,.0f}<br>%{percent}',
-            hovertemplate: '<b>%{label}</b><br>Amount: $%{value:,.0f}<br>Percentage: %{percent}<extra></extra>'
+            textinfo: 'label+percent',
+            textfont: {
+                size: 16,
+                color: '#FFFFFF'
+            },
+            hovertemplate: '<b>%{label}</b><br>Amount: $%{value:,.0f}<br>Percentage: %{percent}<extra></extra>',
+            hole: 0.3
         }];
 
         const lossLayout = {
             title: {
                 text: '12-Month Loss Distribution',
-                font: { color: '#F8F9FA', size: 20 }
+                font: { color: '#F8F9FA', size: 24, family: 'Poppins' }
             },
             paper_bgcolor: 'rgba(0,0,0,0)',
             plot_bgcolor: 'rgba(0,0,0,0)',
-            font: { color: '#F8F9FA' },
+            font: { color: '#F8F9FA', size: 14, family: 'Poppins' },
             showlegend: true,
             legend: {
-                font: { color: '#F8F9FA' }
-            }
+                font: { color: '#F8F9FA', size: 14 },
+                orientation: 'h',
+                x: 0.5,
+                xanchor: 'center',
+                y: -0.15
+            },
+            height: 500,
+            margin: { t: 80, b: 100, l: 50, r: 50 },
+            annotations: [{
+                text: '$10.4M<br>Total Loss',
+                font: { size: 20, color: '#27FB6B', family: 'Poppins' },
+                showarrow: false,
+                x: 0.5,
+                y: 0.5
+            }]
         };
 
         Plotly.newPlot('lossBreakdownChart', lossData, lossLayout, {responsive: true});
