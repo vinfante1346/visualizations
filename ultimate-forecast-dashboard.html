@@ -756,138 +756,49 @@
             }
         }
 
-        // Forecast data extracted from Excel
+        // Load comprehensive forecast data from JSON file
+        let comprehensiveData = null;
+
+        // Fetch the JSON data
+        fetch('ultimate-forecast-data.json')
+            .then(response => response.json())
+            .then(data => {
+                comprehensiveData = data;
+                console.log('✅ Loaded comprehensive forecast data:', data);
+                // Initialize dashboard with loaded data
+                initializeDashboard();
+            })
+            .catch(error => {
+                console.error('Error loading forecast data:', error);
+                alert('Failed to load forecast data. Please refresh the page.');
+            });
+
+        // Placeholder for legacy data structure (will be replaced by comprehensive data)
         const forecastData = {
             revised: {
                 2025: {
-                    revenues: {
-                        'Foreign Remittance Fees': 2269783.50,
-                        'Foreign Exchange Fees': 2318552.73,
-                        'ATM Surcharges': 1155488.00,
-                        'Card & Interchange Fees - US': 5087282.51,
-                        'Load Fee Revenues': 506761.86,
-                        'Business Card & Interchange Fees': 0,
-                        'Business Credit Card Fees': 0,
-                        'Business Credit Card ISO Fees': 0,
-                        'Top-Up Fees': 412697.68,
-                        'Latam ATM Charges': 31343.60,
-                        'Co-branding Fees': 477694.16,
-                        'Latam Companion Card': 73444.95,
-                        'Unsecured Loans': 1305889.71,
-                        'Vehicle Loans': 0,
-                        'Unsecured Business Loan Fees': 0,
-                        'Home Mortgage Referral Fees': 0
-                    },
-                    totalRevenue: 13821942.74,
-                    costOfServices: 13101323.17,
-                    grossProfit: 720619.56,
-                    marketing: 18145115.52,
-                    otherOperatingExpenses: 35587600.50,
-                    operatingExpenses: 53732716.02,
-                    netIncome: -53012096.45,
-                    endingCustomers: 664225,
-                    activeCustomers: 124867
+                    revenues: {},
+                    totalRevenue: 0,
+                    costOfServices: 0,
+                    grossProfit: 0,
+                    marketing: 0,
+                    otherOperatingExpenses: 0,
+                    operatingExpenses: 0,
+                    netIncome: 0,
+                    endingCustomers: 0,
+                    activeCustomers: 0
                 },
                 2026: {
-                    revenues: {
-                        'Foreign Remittance Fees': 7758387.26,
-                        'Foreign Exchange Fees': 10720743.98,
-                        'ATM Surcharges': 2274164.08,
-                        'Card & Interchange Fees - US': 18805831.82,
-                        'Load Fee Revenues': 1961483.81,
-                        'Business Card & Interchange Fees': 423678.90,
-                        'Business Credit Card Fees': 1142721.77,
-                        'Business Credit Card ISO Fees': 3595929.29,
-                        'Top-Up Fees': 640950.42,
-                        'Latam ATM Charges': 3813863.13,
-                        'Co-branding Fees': 3954647.75,
-                        'Latam Companion Card': 6221615.98,
-                        'Unsecured Loans': 11833528.39,
-                        'Vehicle Loans': 490103.21,
-                        'Unsecured Business Loan Fees': 598554.06,
-                        'Home Mortgage Referral Fees': 385238.22
-                    },
-                    totalRevenue: 75270418.74,
-                    costOfServices: 30206085.27,
-                    grossProfit: 45064333.46,
-                    marketing: 22659197.96,
-                    otherOperatingExpenses: 36326147.96,
-                    operatingExpenses: 58985345.92,
-                    netIncome: -13921012.45,
-                    endingCustomers: 933611,
-                    activeCustomers: 260219
-                }
-            },
-            original: {
-                2025: {
-                    totalRevenue: 55359325.30,
-                    costOfServices: 25776325.58,
-                    grossProfit: 29582999.72,
-                    marketing: 19955479.02,
-                    otherOperatingExpenses: 42290165.21,
-                    operatingExpenses: 62245644.23,
-                    netIncome: -32662644.51,
-                    endingCustomers: 712023,
-                    activeCustomers: 374204
-                },
-                2026: {
-                    totalRevenue: 307473100.89,
-                    costOfServices: 104093036.04,
-                    grossProfit: 203380064.84,
-                    marketing: 33655785.68,
-                    otherOperatingExpenses: 104491127.63,
-                    operatingExpenses: 138146913.31,
-                    netIncome: 65233151.53,
-                    endingCustomers: 1096412,
-                    activeCustomers: 646571
-                }
-            },
-            '075': {
-                2025: {
-                    totalRevenue: 44333199.13,
-                    costOfServices: 22104068.63,
-                    grossProfit: 22229130.49,
-                    marketing: 17876237.57,
-                    otherOperatingExpenses: 39290889.11,
-                    operatingExpenses: 57167126.68,
-                    netIncome: -34937996.18,
-                    endingCustomers: 673338,
-                    activeCustomers: 286668
-                },
-                2026: {
-                    totalRevenue: 163812188.26,
-                    costOfServices: 68972008.56,
-                    grossProfit: 94840179.70,
-                    marketing: 29675458.22,
-                    otherOperatingExpenses: 65104442.62,
-                    operatingExpenses: 94779900.84,
-                    netIncome: 60278.86,
-                    endingCustomers: 931814,
-                    activeCustomers: 565270
-                }
-            },
-            '050': {
-                2025: {
-                    totalRevenue: 33329229.14,
-                    costOfServices: 18650565.96,
-                    grossProfit: 14678663.18,
-                    marketing: 16813572.29,
-                    otherOperatingExpenses: 37834689.07,
-                    operatingExpenses: 54648261.36,
-                    netIncome: -39969598.18,
-                    endingCustomers: 655360,
-                    activeCustomers: 241298
-                },
-                2026: {
-                    totalRevenue: 109347977.85,
-                    costOfServices: 50754189.92,
-                    grossProfit: 58593787.93,
-                    marketing: 20175378.31,
-                    otherOperatingExpenses: 48501164.58,
-                    operatingExpenses: 68676542.89,
-                    netIncome: -10082754.95,
-                    endingCustomers: 901800,
-                    activeCustomers: 430936
+                    revenues: {},
+                    totalRevenue: 0,
+                    costOfServices: 0,
+                    grossProfit: 0,
+                    marketing: 0,
+                    otherOperatingExpenses: 0,
+                    operatingExpenses: 0,
+                    netIncome: 0,
+                    endingCustomers: 0,
+                    activeCustomers: 0
                 }
             }
         };
@@ -3095,6 +3006,40 @@
             updateScenario();
         }
 
+        function initializeDashboard() {
+            if (!comprehensiveData) {
+                console.error('Comprehensive data not loaded yet');
+                return;
+            }
+
+            // Populate forecastData with comprehensive data
+            forecastData.revised['2025'].totalRevenue = comprehensiveData['2025'].revenue.total_revenues.reduce((a, b) => a + b, 0);
+            forecastData.revised['2026'].totalRevenue = comprehensiveData['2026'].revenue.total_revenues.reduce((a, b) => a + b, 0);
+
+            forecastData.revised['2025'].costOfServices = comprehensiveData['2025'].expenses.total_cost_of_services.reduce((a, b) => a + b, 0);
+            forecastData.revised['2026'].costOfServices = comprehensiveData['2026'].expenses.total_cost_of_services.reduce((a, b) => a + b, 0);
+
+            forecastData.revised['2025'].operatingExpenses = comprehensiveData['2025'].expenses.total_operating_expenses.reduce((a, b) => a + b, 0);
+            forecastData.revised['2026'].operatingExpenses = comprehensiveData['2026'].expenses.total_operating_expenses.reduce((a, b) => a + b, 0);
+
+            forecastData.revised['2025'].grossProfit = forecastData.revised['2025'].totalRevenue - forecastData.revised['2025'].costOfServices;
+            forecastData.revised['2026'].grossProfit = forecastData.revised['2026'].totalRevenue - forecastData.revised['2026'].costOfServices;
+
+            forecastData.revised['2025'].netIncome = forecastData.revised['2025'].grossProfit - forecastData.revised['2025'].operatingExpenses;
+            forecastData.revised['2026'].netIncome = forecastData.revised['2026'].grossProfit - forecastData.revised['2026'].operatingExpenses;
+
+            // Customer counts (use last month value)
+            forecastData.revised['2025'].endingCustomers = comprehensiveData['2025'].customers[comprehensiveData['2025'].customers.length - 1];
+            forecastData.revised['2026'].endingCustomers = comprehensiveData['2026'].customers[comprehensiveData['2026'].customers.length - 1];
+
+            console.log('📊 Dashboard initialized with comprehensive data');
+            console.log('2025 Total Revenue:', forecastData.revised['2025'].totalRevenue);
+            console.log('2026 Total Revenue:', forecastData.revised['2026'].totalRevenue);
+
+            // Now initialize the original dashboard
+            init();
+        }
+
         function init() {
             updateYearlyView();
 
@@ -3109,8 +3054,10 @@
             }
         }
 
-        // Run on page load
-        init();
+        // If data is already loaded, init immediately; otherwise wait for fetch
+        if (comprehensiveData) {
+            initializeDashboard();
+        }
     </script>
 </body>
 </html>
