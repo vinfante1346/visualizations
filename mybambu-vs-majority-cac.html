@@ -334,6 +334,7 @@
 
         <div class="nav">
             <button class="nav-btn active" onclick="showSection('overview')">💰 Valuation Story</button>
+            <button class="nav-btn" onclick="showSection('liquidation')">🔄 Liquidation Scenario</button>
             <button class="nav-btn" onclick="showSection('digital')">Paid Digital</button>
             <button class="nav-btn" onclick="showSection('field')">Boots on the Ground</button>
             <button class="nav-btn" onclick="showSection('comparison')">Total Comparison</button>
@@ -360,33 +361,33 @@
                 <div class="metrics-grid">
                     <div class="metric-card">
                         <div class="metric-label">Total Customers</div>
-                        <div class="metric-value">660K</div>
+                        <div class="metric-value">664K</div>
                         <div class="metric-sublabel">Acquired customer base</div>
                     </div>
                     <div class="metric-card">
-                        <div class="metric-label">Monthly Actives</div>
-                        <div class="metric-value">130K</div>
-                        <div class="metric-sublabel">19.7% engagement rate</div>
+                        <div class="metric-label">Active Customers</div>
+                        <div class="metric-value">200K</div>
+                        <div class="metric-sublabel">30% engagement rate</div>
                     </div>
                     <div class="metric-card" style="background: linear-gradient(135deg, rgba(39, 251, 107, 0.2) 0%, rgba(1, 207, 251, 0.2) 100%);">
-                        <div class="metric-label">Blended CAC</div>
+                        <div class="metric-label">Base CAC</div>
                         <div class="metric-value">$35</div>
-                        <div class="metric-sublabel">56% lower than Majority</div>
+                        <div class="metric-sublabel">Acquisition cost only</div>
+                    </div>
+                    <div class="metric-card" style="background: linear-gradient(135deg, rgba(39, 251, 107, 0.25) 0%, rgba(1, 207, 251, 0.25) 100%); border: 2px solid var(--bambu-primary);">
+                        <div class="metric-label">True CAC (Active)</div>
+                        <div class="metric-value">$65</div>
+                        <div class="metric-sublabel">$35 + $30 activation incentive</div>
                     </div>
                     <div class="metric-card">
                         <div class="metric-label">Value Per Customer</div>
-                        <div class="metric-value">$757-985</div>
+                        <div class="metric-value">$794-907</div>
                         <div class="metric-sublabel">Industry standard multiple</div>
-                    </div>
-                    <div class="metric-card">
-                        <div class="metric-label">Per Active Customer</div>
-                        <div class="metric-value">$3,846</div>
-                        <div class="metric-sublabel">Premium valuation</div>
                     </div>
                     <div class="metric-card" style="background: linear-gradient(135deg, rgba(39, 251, 107, 0.2) 0%, rgba(1, 207, 251, 0.2) 100%);">
                         <div class="metric-label">Strategic Premium</div>
                         <div class="metric-value">+30-50%</div>
-                        <div class="metric-sublabel">Upside to $1B+</div>
+                        <div class="metric-sublabel">Upside to $900M</div>
                     </div>
                 </div>
 
@@ -408,36 +409,51 @@
                     <thead>
                         <tr>
                             <th>Channel</th>
-                            <th>MyBambu CAC</th>
+                            <th>MyBambu Base CAC</th>
+                            <th>+ Activation Incentive</th>
+                            <th>True CAC (Active)</th>
                             <th>Majority CAC</th>
-                            <th>Advantage</th>
-                            <th>Savings/Customer</th>
+                            <th>MyBambu Advantage</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
                             <td><strong>💻 Paid Digital</strong></td>
-                            <td style="color: var(--bambu-primary); font-size: 1.2em;"><strong>$22.45</strong></td>
+                            <td style="color: var(--bambu-primary);">$22.45</td>
+                            <td>$30</td>
+                            <td style="color: var(--bambu-primary); font-size: 1.2em;"><strong>$52.45</strong></td>
                             <td style="color: var(--majority-orange);">$62.07</td>
-                            <td><span class="winner-badge">64% lower</span></td>
-                            <td style="color: var(--bambu-primary);"><strong>$39.62</strong></td>
+                            <td><span class="winner-badge">15% lower</span></td>
                         </tr>
                         <tr>
                             <td><strong>🚶 Boots on Ground</strong></td>
-                            <td style="color: var(--bambu-primary); font-size: 1.2em;"><strong>$55.00</strong></td>
+                            <td style="color: var(--bambu-primary);">$55.00</td>
+                            <td>$30</td>
+                            <td style="color: var(--bambu-primary); font-size: 1.2em;"><strong>$85.00</strong></td>
                             <td style="color: var(--majority-orange);">$100-120</td>
-                            <td><span class="winner-badge">45-55% lower</span></td>
-                            <td style="color: var(--bambu-primary);"><strong>$45-65</strong></td>
+                            <td><span class="winner-badge">15-29% lower</span></td>
                         </tr>
                         <tr style="background: rgba(39, 251, 107, 0.2); font-size: 1.1em;">
-                            <td><strong>📊 BLENDED TOTAL</strong></td>
-                            <td style="color: var(--bambu-primary); font-size: 1.3em;"><strong>~$35</strong></td>
-                            <td style="color: var(--majority-orange); font-size: 1.1em;"><strong>~$80</strong></td>
-                            <td><span class="winner-badge" style="font-size: 1.1em;">56% lower</span></td>
-                            <td style="color: var(--bambu-primary); font-size: 1.2em;"><strong>~$45</strong></td>
+                            <td><strong>📊 BLENDED (Active)</strong></td>
+                            <td style="color: var(--bambu-primary);">$35</td>
+                            <td><strong>$30</strong></td>
+                            <td style="color: var(--bambu-primary); font-size: 1.3em;"><strong>$65</strong></td>
+                            <td style="color: var(--majority-orange); font-size: 1.1em;"><strong>$90.83</strong></td>
+                            <td><span class="winner-badge" style="font-size: 1.1em;">28% lower</span></td>
                         </tr>
                     </tbody>
                 </table>
+
+                <div style="background: rgba(1, 207, 251, 0.1); padding: 25px; border-radius: 15px; margin: 25px 0; border: 1px solid var(--bambu-accent);">
+                    <h4 style="color: var(--bambu-accent); margin-top: 0;">💡 Key Insight: MyBambu's True CAC for Active Customers</h4>
+                    <div style="font-size: 1.05em; line-height: 1.8;">
+                        <strong>Base Acquisition:</strong> $35 (get customer to sign up)<br>
+                        <strong>Activation Incentive:</strong> $30 (get customer to actively use the account)<br>
+                        <strong>Total True CAC:</strong> <span style="color: var(--bambu-primary); font-size: 1.2em; font-weight: 700;">$65 per active customer</span><br>
+                        <br>
+                        Even with the $30 activation bonus, MyBambu is still <strong>28% more efficient</strong> than Majority's $90.83 blended CAC
+                    </div>
+                </div>
 
                 <div class="chart-container">
                     <div id="overviewChart"></div>
@@ -596,10 +612,46 @@
                     <div id="valuationChart"></div>
                 </div>
 
-                <h3 style="margin-top: 40px;">💰 Liquidation Scenario: Majority Acquires MyBambu Actives</h3>
+                <h3 style="margin-top: 40px;">The Bottom Line: Why This Matters</h3>
+                <div class="savings-banner" style="background: linear-gradient(135deg, var(--bambu-blue) 0%, var(--bambu-primary) 100%); padding: 40px; margin-top: 30px;">
+                    <div style="font-size: 1.5em; margin-bottom: 20px;">MyBambu Has Built a $550M Company</div>
+                    <div style="font-size: 1.1em; line-height: 1.8;">
+                        <strong>664,000 customers</strong> acquired at <strong>$35 CAC</strong> (vs industry $80+)<br>
+                        = <strong>$23M invested</strong> to acquire customer base worth <strong>$500M-650M</strong><br>
+                        <br>
+                        <span style="font-size: 1.3em; font-weight: 700;">24x Return on CAC Investment</span>
+                    </div>
+                </div>
+
+                <h3 style="margin-top: 40px;">Strategic Takeaways</h3>
+                <div style="background: rgba(39, 251, 107, 0.1); padding: 30px; border-radius: 15px; margin: 20px 0;">
+                    <ul>
+                        <li><strong class="highlight">Best Unit Economics:</strong> $35 CAC vs $80+ industry = 2.3x more efficient</li>
+                        <li><strong class="highlight">Proven at Scale:</strong> 660K customers shows product-market fit</li>
+                        <li><strong class="highlight">Active & Engaged:</strong> 130K monthly actives generating real revenue</li>
+                        <li><strong class="highlight">Multiple Expansion Ready:</strong> Credit, remittances, investments = 3-5x ARPU upside</li>
+                        <li><strong class="highlight">Strategic Asset:</strong> Only Latino neobank at this scale - banks will pay premium</li>
+                        <li><strong class="highlight">Valuation Floor:</strong> $500M base case, $1B+ with strategic buyer</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Liquidation Scenario Section -->
+        <div id="liquidation" class="section">
+            <div class="card">
+                <h2>🔄 Liquidation Scenario: What Buyers Would Pay for Active Customers</h2>
+
+                <div class="savings-banner" style="background: linear-gradient(135deg, var(--majority-orange) 0%, #FF8C5A 100%); padding: 40px; margin-top: 20px;">
+                    <div style="font-size: 1.8em; margin-bottom: 15px;">Liquidation Analysis: 200K Active Customers</div>
+                    <div style="font-size: 1.1em; opacity: 0.95;">
+                        What would different acquirers pay to buy MyBambu's active customer base?
+                    </div>
+                </div>
+
+                <h3 style="margin-top: 40px;">💰 Majority's Blended CAC (60% Field / 40% Digital)</h3>
 
                 <div style="background: rgba(255, 107, 53, 0.15); padding: 30px; border-radius: 15px; margin: 20px 0; border: 2px solid var(--majority-orange);">
-                    <h4 style="color: var(--majority-orange); margin-top: 0;">Majority's Blended CAC (60% Field / 40% Digital)</h4>
                     <div style="font-size: 1.2em; margin: 20px 0;">
                         <strong>Blended CAC Calculation:</strong><br>
                         (60% × $110) + (40% × $62.07) = <strong style="color: var(--majority-orange); font-size: 1.3em;">$90.83 per customer</strong>
@@ -617,10 +669,13 @@
 
                     <div style="margin-top: 25px; padding: 20px; background: rgba(39, 251, 107, 0.1); border-radius: 10px; border: 1px solid var(--bambu-primary);">
                         <div style="font-size: 1em; opacity: 0.95;">
-                            <strong style="color: var(--bambu-primary);">MyBambu's Advantage:</strong><br>
-                            We acquired these 200K actives for: <strong>200,000 × $35 = $7M</strong><br>
-                            Majority would pay: <strong>$18.17M</strong><br>
-                            <span style="color: var(--bambu-primary); font-size: 1.2em; font-weight: 700;">= $11.17M savings vs. their CAC</span>
+                            <strong style="color: var(--bambu-primary);">MyBambu's True Cost for 200K Actives:</strong><br>
+                            Base CAC: <strong>200,000 × $35 = $7M</strong><br>
+                            Activation Incentives: <strong>200,000 × $30 = $6M</strong><br>
+                            <strong>Total Investment: $13M</strong><br>
+                            <br>
+                            Majority would need to spend: <strong>$18.17M</strong><br>
+                            <span style="color: var(--bambu-primary); font-size: 1.2em; font-weight: 700;">MyBambu saves $5.17M vs. Majority's CAC (28% more efficient)</span>
                         </div>
                     </div>
                 </div>
@@ -687,27 +742,25 @@
                     <div id="liquidationChart"></div>
                 </div>
 
-                <h3 style="margin-top: 40px;">The Bottom Line: Why This Matters</h3>
-                <div class="savings-banner" style="background: linear-gradient(135deg, var(--bambu-blue) 0%, var(--bambu-primary) 100%); padding: 40px; margin-top: 30px;">
-                    <div style="font-size: 1.5em; margin-bottom: 20px;">MyBambu Has Built a $550M Company</div>
-                    <div style="font-size: 1.1em; line-height: 1.8;">
-                        <strong>664,000 customers</strong> acquired at <strong>$35 CAC</strong> (vs industry $80+)<br>
-                        = <strong>$23M invested</strong> to acquire customer base worth <strong>$500M-650M</strong><br>
-                        <br>
-                        <span style="font-size: 1.3em; font-weight: 700;">24x Return on CAC Investment</span>
-                    </div>
+                <h3 style="margin-top: 40px;">📊 Key Liquidation Insights</h3>
+                <div style="background: rgba(39, 251, 107, 0.1); padding: 30px; border-radius: 15px; margin: 20px 0;">
+                    <ul style="font-size: 1.05em;">
+                        <li><strong class="highlight">Lowest Offer - Majority:</strong> $18.17M ($90.83/active) - Only CAC savings, no strategic premium</li>
+                        <li><strong class="highlight">Mid-Range - Nubank:</strong> $20M-30M ($100-150/active) - US market entry play</li>
+                        <li><strong class="highlight">Strong Interest - Banks:</strong> $36M-60M ($180-300/active) - Strategic value for Latino market</li>
+                        <li><strong class="highlight">Highest Offer - PayPal:</strong> $50M-80M ($250-400/active) - Cross-sell and integration value</li>
+                        <li><strong class="highlight">MyBambu's Cost:</strong> Only $13M invested ($65 true CAC) - Massive ROI opportunity</li>
+                    </ul>
                 </div>
 
-                <h3 style="margin-top: 40px;">Strategic Takeaways</h3>
-                <div style="background: rgba(39, 251, 107, 0.1); padding: 30px; border-radius: 15px; margin: 20px 0;">
-                    <ul>
-                        <li><strong class="highlight">Best Unit Economics:</strong> $35 CAC vs $80+ industry = 2.3x more efficient</li>
-                        <li><strong class="highlight">Proven at Scale:</strong> 660K customers shows product-market fit</li>
-                        <li><strong class="highlight">Active & Engaged:</strong> 130K monthly actives generating real revenue</li>
-                        <li><strong class="highlight">Multiple Expansion Ready:</strong> Credit, remittances, investments = 3-5x ARPU upside</li>
-                        <li><strong class="highlight">Strategic Asset:</strong> Only Latino neobank at this scale - banks will pay premium</li>
-                        <li><strong class="highlight">Valuation Floor:</strong> $500M base case, $1B+ with strategic buyer</li>
-                    </ul>
+                <div class="savings-banner" style="background: linear-gradient(135deg, var(--bambu-primary) 0%, var(--bambu-accent) 100%); padding: 40px; margin-top: 30px;">
+                    <div style="font-size: 1.3em; margin-bottom: 15px;">Liquidation Floor: $18M - $80M</div>
+                    <div style="font-size: 1em; line-height: 1.8;">
+                        Even in a liquidation scenario, MyBambu's 200K active customers are worth<br>
+                        <strong>$18.17M minimum (Majority) to $80M maximum (PayPal)</strong><br>
+                        <br>
+                        <span style="font-size: 1.2em;">vs. MyBambu's $13M total investment = 40% to 515% return</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1121,36 +1174,36 @@
             event.target.classList.add('active');
         }
 
-        // Overview Chart - All Channels
+        // Overview Chart - All Channels with Activation Incentive
         const overviewData = [
             {
                 x: ['Paid Digital', 'Boots on Ground', 'Blended Average'],
-                y: [22.45, 55, 35],
-                name: 'MyBambu',
+                y: [52.45, 85, 65],
+                name: 'MyBambu (True CAC)',
                 type: 'bar',
                 marker: { color: '#27FB6B' },
-                text: ['$22.45', '$55', '$35'],
+                text: ['$52.45', '$85', '$65'],
                 textposition: 'auto',
-                textfont: { size: 18, color: '#00052E' },
-                hovertemplate: '<b>MyBambu %{x}</b><br>CAC: $%{y:.2f}<extra></extra>'
+                textfont: { size: 16, color: '#00052E', family: 'Poppins', weight: 600 },
+                hovertemplate: '<b>MyBambu %{x}</b><br>True CAC (incl. $30 incentive): $%{y:.2f}<extra></extra>'
             },
             {
                 x: ['Paid Digital', 'Boots on Ground', 'Blended Average'],
-                y: [62.07, 110, 80],
+                y: [62.07, 110, 90.83],
                 name: 'Majority (Est.)',
                 type: 'bar',
                 marker: { color: '#FF6B35' },
-                text: ['$62.07', '$100-120', '$80'],
+                text: ['$62.07', '$110', '$90.83'],
                 textposition: 'auto',
-                textfont: { size: 18, color: '#FFFFFF' },
+                textfont: { size: 16, color: '#FFFFFF', family: 'Poppins', weight: 600 },
                 hovertemplate: '<b>Majority %{x}</b><br>CAC: $%{y:.2f}<extra></extra>'
             }
         ];
 
         const overviewLayout = {
             title: {
-                text: 'CAC Across All Channels',
-                font: { color: '#F8F9FA', size: 26, family: 'Poppins' }
+                text: 'True CAC Comparison (Including MyBambu\'s $30 Activation Incentive)',
+                font: { color: '#F8F9FA', size: 24, family: 'Poppins' }
             },
             barmode: 'group',
             paper_bgcolor: 'rgba(0,0,0,0)',
@@ -1159,7 +1212,8 @@
             yaxis: {
                 title: { text: 'Customer Acquisition Cost ($)', font: { color: '#F8F9FA', size: 16 } },
                 gridcolor: 'rgba(255,255,255,0.1)',
-                tickformat: '$,.0f'
+                tickformat: '$,.0f',
+                range: [0, 130]
             },
             xaxis: {
                 gridcolor: 'rgba(255,255,255,0.1)',
@@ -1167,14 +1221,44 @@
             },
             showlegend: true,
             legend: {
-                font: { color: '#F8F9FA', size: 16 },
+                font: { color: '#F8F9FA', size: 15 },
                 orientation: 'h',
                 x: 0.5,
                 xanchor: 'center',
                 y: 1.15
             },
             height: 550,
-            margin: { t: 120, b: 100, l: 90, r: 50 }
+            margin: { t: 140, b: 100, l: 90, r: 50 },
+            annotations: [
+                {
+                    x: 2,
+                    y: 65,
+                    text: 'MyBambu: $65<br>(28% lower)',
+                    showarrow: true,
+                    arrowhead: 2,
+                    ax: -60,
+                    ay: -60,
+                    font: { size: 14, color: '#27FB6B', family: 'Poppins' },
+                    bgcolor: 'rgba(0,5,46,0.9)',
+                    bordercolor: '#27FB6B',
+                    borderwidth: 2,
+                    borderpad: 8
+                },
+                {
+                    x: 2,
+                    y: 90.83,
+                    text: 'Majority: $90.83',
+                    showarrow: true,
+                    arrowhead: 2,
+                    ax: 60,
+                    ay: -40,
+                    font: { size: 14, color: '#FF6B35', family: 'Poppins' },
+                    bgcolor: 'rgba(0,5,46,0.9)',
+                    bordercolor: '#FF6B35',
+                    borderwidth: 2,
+                    borderpad: 8
+                }
+            ]
         };
 
         Plotly.newPlot('overviewChart', overviewData, overviewLayout, {responsive: true});
@@ -1706,8 +1790,8 @@
             annotations: [
                 {
                     x: 4.8,
-                    y: 35,
-                    text: 'MyBambu Cost: $35/customer',
+                    y: 65,
+                    text: 'MyBambu True Cost: $65<br>($35 CAC + $30 incentive)',
                     showarrow: false,
                     font: { size: 13, color: '#27FB6B', family: 'Poppins' },
                     bgcolor: 'rgba(0,5,46,0.9)',
