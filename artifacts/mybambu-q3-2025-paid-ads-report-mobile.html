@@ -637,26 +637,175 @@
             font-weight: 600;
         }
 
-        @media (max-width: 768px) {
-            h1 { font-size: 38px !important; }
-            h2 { font-size: 28px !important; }
-            .slide { padding: 80px 20px 100px 20px; }
-            .slide-content { padding: 20px; }
-            .metric-grid { grid-template-columns: 1fr !important; }
-            .logo { left: 20px; font-size: 20px; }
-            .logo-icon { font-size: 28px; }
-            .slide-number { right: 20px; font-size: 12px; padding: 8px 16px; }
-            .nav-button { padding: 12px 24px; font-size: 14px; }
-            .bomb-explosion { font-size: 70px; }
-            .bss-text { font-size: 70px; }
-            .shockwave-ring { width: 120px; height: 120px; border-width: 6px; }
-            .confetti { font-size: 22px; }
-            .comparison-values { flex-direction: column; align-items: flex-start; gap: 6px; }
-            .your-value { font-size: 24px; }
-            .chart-container { height: 250px !important; }
-            .stat-highlight { font-size: 54px !important; }
-            .progress-bar { height: 60px; }
-            .progress-label { font-size: 28px; }
+        /* Mobile optimizations for iOS and Android */
+        h1 { font-size: 36px !important; }
+        h2 { font-size: 26px !important; }
+        h3 { font-size: 20px !important; }
+
+        .slide {
+            padding: 70px 15px 80px 15px;
+            min-height: 100vh;
+        }
+
+        .slide-content {
+            padding: 15px;
+            max-width: 100%;
+        }
+
+        .metric-grid {
+            grid-template-columns: 1fr !important;
+            gap: 15px !important;
+            margin: 30px 0 !important;
+        }
+
+        .metric-card {
+            padding: 20px !important;
+        }
+
+        .metric-value {
+            font-size: 32px !important;
+        }
+
+        .metric-label {
+            font-size: 11px !important;
+        }
+
+        .metric-detail {
+            font-size: 13px !important;
+        }
+
+        .logo {
+            left: 15px;
+            top: 15px;
+            font-size: 18px !important;
+        }
+
+        .logo-icon {
+            font-size: 24px !important;
+        }
+
+        .slide-number {
+            right: 15px;
+            top: 15px;
+            font-size: 11px !important;
+            padding: 6px 12px !important;
+        }
+
+        .bomb-explosion {
+            font-size: 60px !important;
+        }
+
+        .bss-text {
+            font-size: 60px !important;
+            padding: 0 20px;
+            text-align: center;
+        }
+
+        .shockwave-ring {
+            width: 100px !important;
+            height: 100px !important;
+            border-width: 5px !important;
+        }
+
+        .confetti {
+            font-size: 20px !important;
+        }
+
+        .comparison-box {
+            padding: 15px !important;
+            margin: 20px 0 !important;
+        }
+
+        .comparison-box h4 {
+            font-size: 16px !important;
+            margin-bottom: 12px !important;
+        }
+
+        .comparison-item {
+            padding: 12px !important;
+            margin: 10px 0 !important;
+            flex-direction: column !important;
+            align-items: flex-start !important;
+        }
+
+        .comparison-label {
+            font-size: 12px !important;
+            margin-bottom: 8px;
+        }
+
+        .comparison-values {
+            flex-direction: column !important;
+            align-items: flex-start !important;
+            gap: 6px !important;
+            width: 100%;
+        }
+
+        .your-value {
+            font-size: 26px !important;
+        }
+
+        .industry-value {
+            font-size: 13px !important;
+        }
+
+        .performance-indicator {
+            font-size: 11px !important;
+            padding: 5px 10px !important;
+        }
+
+        .chart-container {
+            height: 220px !important;
+            padding: 10px !important;
+        }
+
+        .stat-highlight {
+            font-size: 48px !important;
+        }
+
+        .progress-bar {
+            height: 50px !important;
+        }
+
+        .progress-label {
+            font-size: 24px !important;
+        }
+
+        .insight-box {
+            padding: 15px !important;
+            font-size: 14px !important;
+            margin: 25px 0 !important;
+        }
+
+        .insight-box::before {
+            font-size: 40px !important;
+            right: 15px !important;
+        }
+
+        .budget-table {
+            font-size: 11px !important;
+        }
+
+        .budget-table th {
+            padding: 10px 6px !important;
+            font-size: 10px !important;
+        }
+
+        .budget-table td {
+            padding: 10px 6px !important;
+            font-size: 12px !important;
+        }
+
+        .benchmark-badge {
+            font-size: 10px !important;
+            padding: 4px 10px !important;
+        }
+
+        .subtitle {
+            font-size: 14px !important;
+        }
+
+        .team {
+            font-size: 14px !important;
         }
     </style>
 </head>
@@ -986,10 +1135,6 @@
 
 </div> <!-- End slides-container -->
 
-<div class="nav-buttons">
-    <button class="nav-button" id="prevBtn" onclick="changeSlide(-1)">← Previous</button>
-    <button class="nav-button" id="nextBtn" onclick="changeSlide(1)">Next →</button>
-</div>
 
 <script>
 let currentSlide = 1;
