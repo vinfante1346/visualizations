@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MyBambu Q3 2025 Paid Ads Quarterly Report</title>
+    <title>MyBambu Q3 2025 Paid Ads Report</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -13,9 +14,9 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(135deg, #B8F4DC 0%, #9EF0D8 100%);
-            color: #1a1d3d;
+            font-family: 'Poppins', sans-serif;
+            background: #00052E;
+            color: white;
             overflow-x: hidden;
         }
 
@@ -30,13 +31,9 @@
         }
 
         .slide-content {
-            max-width: 1200px;
+            max-width: 1400px;
             width: 100%;
-            background: white;
-            border-radius: 24px;
-            padding: 60px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
-            animation: slideIn 0.5s ease-out;
+            animation: slideIn 0.6s ease-out;
         }
 
         @keyframes slideIn {
@@ -51,65 +48,109 @@
         }
 
         @keyframes countUp {
-            from { opacity: 0; transform: scale(0.5); }
-            to { opacity: 1; transform: scale(1); }
+            from {
+                opacity: 0;
+                transform: scale(0.8) translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 30px rgba(39, 251, 107, 0.4); }
+            50% { box-shadow: 0 0 50px rgba(39, 251, 107, 0.6); }
+        }
+
+        @keyframes wiggle {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(-3deg); }
+            75% { transform: rotate(3deg); }
         }
 
         h1 {
-            font-size: 64px;
+            font-size: 72px;
             font-weight: 900;
-            color: #1a1d3d;
+            color: white;
             margin-bottom: 20px;
             line-height: 1.1;
+            text-shadow: 0 4px 20px rgba(39, 251, 107, 0.3);
         }
 
         h2 {
-            font-size: 42px;
+            font-size: 48px;
             font-weight: 800;
-            color: #1a1d3d;
-            margin-bottom: 30px;
+            color: white;
+            margin-bottom: 40px;
+            position: relative;
+            display: inline-block;
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #27FB6B 0%, transparent 100%);
         }
 
         h3 {
-            font-size: 28px;
+            font-size: 32px;
             font-weight: 700;
-            color: #1a1d3d;
-            margin-bottom: 20px;
+            color: #27FB6B;
+            margin-bottom: 24px;
+        }
+
+        .logo {
+            position: fixed;
+            top: 30px;
+            left: 40px;
+            z-index: 1000;
+            font-size: 32px;
+            font-weight: 900;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            animation: wiggle 3s ease-in-out infinite;
+        }
+
+        .logo-icon {
+            color: #27FB6B;
+            font-size: 40px;
+        }
+
+        .logo-text {
+            color: white;
         }
 
         .subtitle {
             font-size: 22px;
-            color: #666;
-            margin-bottom: 40px;
-        }
-
-        .team {
-            font-size: 18px;
-            color: #888;
-            font-style: italic;
+            color: #27FB6B;
+            margin-bottom: 20px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
         }
 
         .metric-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 24px;
-            margin: 40px 0;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin: 50px 0;
         }
 
         .metric-card {
-            background: linear-gradient(135deg, #27FB6B 0%, #1ED760 100%);
-            padding: 30px;
-            border-radius: 16px;
-            color: #1a1d3d;
-            transition: all 0.3s ease;
+            background: linear-gradient(135deg, rgba(39, 251, 107, 0.1) 0%, rgba(39, 251, 107, 0.05) 100%);
+            border: 2px solid rgba(39, 251, 107, 0.3);
+            padding: 40px;
+            border-radius: 20px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             cursor: pointer;
             position: relative;
             overflow: hidden;
-        }
-
-        .metric-card:hover {
-            transform: translateY(-5px) scale(1.02);
-            box-shadow: 0 15px 40px rgba(39, 251, 107, 0.4);
         }
 
         .metric-card::before {
@@ -119,9 +160,15 @@
             left: -50%;
             width: 200%;
             height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(39, 251, 107, 0.15) 0%, transparent 70%);
             opacity: 0;
-            transition: opacity 0.3s;
+            transition: opacity 0.4s;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            border-color: #27FB6B;
+            animation: glow 2s ease-in-out infinite;
         }
 
         .metric-card:hover::before {
@@ -131,136 +178,79 @@
         .metric-label {
             font-size: 14px;
             font-weight: 600;
-            margin-bottom: 10px;
-            opacity: 0.8;
+            margin-bottom: 16px;
+            color: #27FB6B;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         .metric-value {
-            font-size: 36px;
+            font-size: 48px;
             font-weight: 900;
-            margin-bottom: 8px;
-            animation: countUp 0.6s ease-out;
+            margin-bottom: 12px;
+            color: white;
+            animation: countUp 0.8s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .metric-detail {
-            font-size: 14px;
-            opacity: 0.9;
+            font-size: 16px;
+            opacity: 0.8;
+            color: #b0b0b0;
         }
 
         .benchmark-badge {
             display: inline-block;
-            background: rgba(255, 255, 255, 0.3);
-            padding: 4px 12px;
-            border-radius: 12px;
-            font-size: 12px;
+            background: rgba(39, 251, 107, 0.2);
+            border: 1px solid #27FB6B;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 13px;
             font-weight: 700;
-            margin-top: 8px;
-        }
-
-        .benchmark-badge.good {
-            background: rgba(46, 204, 113, 0.3);
+            margin-top: 12px;
+            color: #27FB6B;
         }
 
         .benchmark-badge.excellent {
-            background: rgba(39, 251, 107, 0.5);
-        }
-
-        .benchmark-badge.needs-improvement {
-            background: rgba(231, 76, 60, 0.3);
-        }
-
-        .budget-table {
-            width: 100%;
-            margin: 30px 0;
-            border-collapse: separate;
-            border-spacing: 0;
-            overflow: hidden;
-            border-radius: 12px;
-        }
-
-        .budget-table th {
             background: #27FB6B;
-            color: #1a1d3d;
-            font-weight: 700;
-            padding: 16px;
-            text-align: left;
-            font-size: 16px;
-        }
-
-        .budget-table td {
-            padding: 16px;
-            border-bottom: 1px solid #e5e5e5;
-            font-size: 16px;
-            transition: background 0.3s;
-        }
-
-        .budget-table tr:hover td {
-            background: #f0f9ff;
-        }
-
-        .budget-table tr:last-child td {
-            border-bottom: none;
-        }
-
-        .budget-table tr:nth-child(even) {
-            background: #f8f8f8;
-        }
-
-        .insight-box {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 24px;
-            border-radius: 12px;
-            margin: 30px 0;
-            font-size: 18px;
-            font-weight: 600;
-            animation: slideIn 0.8s ease-out;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .insight-box::before {
-            content: '💡';
-            position: absolute;
-            right: 20px;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 48px;
-            opacity: 0.3;
-        }
-
-        .insight-label {
-            font-weight: 800;
-            margin-right: 8px;
+            color: #00052E;
+            animation: glow 2s ease-in-out infinite;
         }
 
         .comparison-box {
-            background: #f8f9fa;
-            border-left: 4px solid #667eea;
-            padding: 20px;
-            margin: 20px 0;
-            border-radius: 8px;
-            position: relative;
+            background: rgba(255, 255, 255, 0.05);
+            border-left: 4px solid #27FB6B;
+            padding: 30px;
+            margin: 30px 0;
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
         }
 
         .comparison-box h4 {
-            color: #667eea;
-            margin-bottom: 12px;
-            font-size: 18px;
+            color: #27FB6B;
+            margin-bottom: 20px;
+            font-size: 24px;
+            font-weight: 700;
         }
 
         .comparison-item {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin: 10px 0;
-            padding: 10px;
-            background: white;
-            border-radius: 6px;
+            margin: 16px 0;
+            padding: 16px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 10px;
+            transition: all 0.3s;
+        }
+
+        .comparison-item:hover {
+            background: rgba(39, 251, 107, 0.1);
+            transform: translateX(10px);
         }
 
         .comparison-label {
             font-weight: 600;
+            color: white;
         }
 
         .comparison-values {
@@ -272,52 +262,149 @@
         .your-value {
             font-weight: 900;
             color: #27FB6B;
-            font-size: 20px;
+            font-size: 28px;
         }
 
         .industry-value {
-            color: #666;
+            color: #888;
             font-size: 16px;
         }
 
         .vs-label {
-            color: #999;
-            font-size: 12px;
+            color: #666;
+            font-size: 14px;
         }
 
-        .progress-bar-container {
+        .performance-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 14px;
+            font-weight: 700;
+            padding: 6px 12px;
+            border-radius: 20px;
+        }
+
+        .performance-indicator.up {
+            color: #27FB6B;
+            background: rgba(39, 251, 107, 0.15);
+        }
+
+        .performance-indicator.down {
+            color: #ff6b6b;
+            background: rgba(255, 107, 107, 0.15);
+        }
+
+        .insight-box {
+            background: linear-gradient(135deg, #27FB6B 0%, #00cc33 100%);
+            color: #00052E;
+            padding: 30px;
+            border-radius: 16px;
             margin: 40px 0;
-        }
-
-        .progress-bar {
-            height: 60px;
-            background: linear-gradient(90deg, #27FB6B 0%, #27FB6B 77%, #333 77%, #333 100%);
-            border-radius: 30px;
+            font-size: 20px;
+            font-weight: 600;
             position: relative;
             overflow: hidden;
-            box-shadow: 0 4px 20px rgba(39, 251, 107, 0.3);
-            animation: progressFill 2s ease-out;
         }
 
-        @keyframes progressFill {
-            from { width: 0; }
-            to { width: 100%; }
-        }
-
-        .progress-label {
+        .insight-box::before {
+            content: '💡';
             position: absolute;
             right: 30px;
             top: 50%;
             transform: translateY(-50%);
-            font-size: 36px;
-            font-weight: 900;
-            color: #1a1d3d;
+            font-size: 60px;
+            opacity: 0.3;
         }
 
-        .chart-container {
+        .insight-label {
+            font-weight: 900;
+            margin-right: 8px;
+        }
+
+        .budget-table {
+            width: 100%;
             margin: 40px 0;
-            height: 400px;
+            border-collapse: separate;
+            border-spacing: 0;
+            overflow: hidden;
+            border-radius: 16px;
+        }
+
+        .budget-table th {
+            background: #27FB6B;
+            color: #00052E;
+            font-weight: 800;
+            padding: 20px;
+            text-align: left;
+            font-size: 16px;
+        }
+
+        .budget-table td {
+            padding: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 16px;
+            transition: background 0.3s;
+            color: white;
+        }
+
+        .budget-table tr:hover td {
+            background: rgba(39, 251, 107, 0.1);
+        }
+
+        .budget-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .budget-table tr:nth-child(even) td {
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .progress-bar-container {
+            margin: 50px 0;
+        }
+
+        .progress-bar {
+            height: 80px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 40px;
             position: relative;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #27FB6B 0%, #00cc33 100%);
+            width: 77%;
+            border-radius: 40px;
+            animation: progressFill 2s ease-out;
+            box-shadow: 0 0 30px rgba(39, 251, 107, 0.5);
+        }
+
+        @keyframes progressFill {
+            from { width: 0; }
+            to { width: 77%; }
+        }
+
+        .progress-label {
+            position: absolute;
+            right: 40px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 42px;
+            font-weight: 900;
+            color: white;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .stat-highlight {
+            font-size: 96px;
+            font-weight: 900;
+            background: linear-gradient(135deg, #27FB6B 0%, #00cc33 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: countUp 1.2s ease-out;
         }
 
         .nav-buttons {
@@ -331,22 +418,23 @@
         }
 
         .nav-button {
-            padding: 12px 32px;
-            border: none;
-            background: #1a1d3d;
-            color: white;
-            border-radius: 30px;
+            padding: 16px 40px;
+            border: 2px solid #27FB6B;
+            background: rgba(39, 251, 107, 0.1);
+            color: #27FB6B;
+            border-radius: 50px;
             font-size: 16px;
             font-weight: 700;
             cursor: pointer;
             transition: all 0.3s;
+            font-family: 'Poppins', sans-serif;
         }
 
         .nav-button:hover:not(:disabled) {
             background: #27FB6B;
-            color: #1a1d3d;
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(39, 251, 107, 0.4);
+            color: #00052E;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(39, 251, 107, 0.4);
         }
 
         .nav-button:disabled {
@@ -360,169 +448,63 @@
             right: 40px;
             font-size: 18px;
             font-weight: 700;
-            color: #1a1d3d;
-            background: white;
-            padding: 10px 20px;
-            border-radius: 20px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            color: #27FB6B;
+            background: rgba(39, 251, 107, 0.1);
+            border: 2px solid #27FB6B;
+            padding: 12px 24px;
+            border-radius: 30px;
+            z-index: 1000;
         }
 
         .animated-number {
             display: inline-block;
         }
 
-        .tooltip {
-            position: absolute;
-            background: #1a1d3d;
-            color: white;
-            padding: 12px 16px;
-            border-radius: 8px;
-            font-size: 14px;
-            pointer-events: none;
-            opacity: 0;
-            transition: opacity 0.3s;
-            z-index: 1000;
-            max-width: 300px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-        }
-
-        .metric-card:hover .tooltip {
-            opacity: 1;
-        }
-
-        .performance-indicator {
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-            font-size: 14px;
-            font-weight: 700;
-            padding: 4px 8px;
-            border-radius: 6px;
-            margin-left: 8px;
-        }
-
-        .performance-indicator.up {
-            color: #27FB6B;
-            background: rgba(39, 251, 107, 0.1);
-        }
-
-        .performance-indicator.down {
-            color: #e74c3c;
-            background: rgba(231, 76, 60, 0.1);
-        }
-
-        .stat-highlight {
-            font-size: 72px;
-            font-weight: 900;
-            background: linear-gradient(135deg, #27FB6B 0%, #667eea 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            animation: countUp 1s ease-out;
-        }
-
-        .demographics-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 30px;
-            margin: 30px 0;
-        }
-
-        .demo-card {
-            background: #f8f8f8;
-            padding: 24px;
+        .chart-container {
+            margin: 40px 0;
+            height: 400px;
+            position: relative;
+            background: rgba(255, 255, 255, 0.03);
             border-radius: 16px;
-            transition: transform 0.3s;
+            padding: 20px;
         }
 
-        .demo-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-        }
-
-        .demo-card h4 {
-            font-size: 18px;
-            margin-bottom: 12px;
-            color: #667eea;
-        }
-
-        .demo-item {
-            display: flex;
-            justify-content: space-between;
-            padding: 8px 0;
-            border-bottom: 1px solid #e5e5e5;
-        }
-
-        .demo-item:last-child {
-            border-bottom: none;
-        }
-
-        .performance-grid {
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 1px;
-            background: #1a1d3d;
-            border-radius: 12px;
-            overflow: hidden;
-            margin: 30px 0;
-        }
-
-        .perf-header {
-            background: #27FB6B;
-            padding: 16px;
-            text-align: center;
-            font-weight: 700;
-            color: #1a1d3d;
-        }
-
-        .perf-cell {
-            background: white;
-            padding: 16px;
-            text-align: center;
-            font-size: 16px;
-            font-weight: 600;
-            transition: background 0.3s;
-        }
-
-        .perf-cell:hover {
-            background: #f0f9ff;
-        }
-
-        .perf-positive {
+        .team {
+            font-size: 20px;
             color: #27FB6B;
-        }
-
-        .perf-negative {
-            color: #e74c3c;
+            font-weight: 600;
         }
 
         @media (max-width: 768px) {
-            h1 { font-size: 42px; }
-            h2 { font-size: 32px; }
-            .slide-content { padding: 30px; }
+            h1 { font-size: 48px; }
+            h2 { font-size: 36px; }
+            .slide-content { padding: 30px 20px; }
             .metric-grid { grid-template-columns: 1fr; }
-            .demographics-grid { grid-template-columns: 1fr; }
-            .performance-grid { grid-template-columns: 1fr; }
+            .logo { left: 20px; font-size: 24px; }
+            .slide-number { right: 20px; }
         }
     </style>
 </head>
 <body>
 
+<div class="logo">
+    <span class="logo-icon">⚡</span>
+    <span class="logo-text">MyBambu</span>
+</div>
+
 <div class="slide-number" id="slideNumber">1 / 12</div>
 
 <!-- Slide 1: Title -->
 <div class="slide" id="slide1">
-    <div class="slide-content">
-        <div style="text-align: center;">
-            <div class="subtitle">Quarterly Report</div>
-            <h1 style="color: #1a1d3d;">PAID ADS</h1>
-            <div style="margin-top: 60px; font-size: 48px; font-weight: 700;">Q3 2025</div>
-            <div class="team" style="margin-top: 40px; font-size: 24px;">Mafe Varon - Mili Paul - Matt Lopez</div>
-        </div>
+    <div class="slide-content" style="text-align: center;">
+        <div class="subtitle">Quarterly Report</div>
+        <h1>PAID ADS</h1>
+        <div style="margin-top: 60px; font-size: 64px; font-weight: 900; color: #27FB6B;">Q3 2025</div>
+        <div class="team" style="margin-top: 50px; font-size: 24px;">Mafe Varon • Mili Paul • Matt Lopez</div>
     </div>
 </div>
 
-<!-- Slide 2: Q3 Results Overview with Industry Benchmarks -->
+<!-- Slide 2: Q3 Results -->
 <div class="slide" id="slide2" style="display: none;">
     <div class="slide-content">
         <h2>Q3 Results 🎯</h2>
@@ -543,7 +525,7 @@
                 <div class="metric-label">Paid Channel</div>
                 <div class="metric-value animated-number" data-target="73257">0</div>
                 <div class="metric-detail">accounts at $41.40 CPA</div>
-                <div class="benchmark-badge good">8% CPA Improvement</div>
+                <div class="benchmark-badge">8% CPA Improvement</div>
             </div>
             <div class="metric-card">
                 <div class="metric-label">Performance vs Plan</div>
@@ -560,7 +542,7 @@
                 <div class="comparison-values">
                     <span class="your-value">$41.40</span>
                     <span class="vs-label">vs</span>
-                    <span class="industry-value">Industry Avg: $65-85</span>
+                    <span class="industry-value">Industry: $65-85</span>
                     <span class="performance-indicator up">▲ 40% Better</span>
                 </div>
             </div>
@@ -569,79 +551,40 @@
                 <div class="comparison-values">
                     <span class="your-value">35%</span>
                     <span class="vs-label">vs</span>
-                    <span class="industry-value">Industry Avg: 20-25%</span>
+                    <span class="industry-value">Industry: 20-25%</span>
                     <span class="performance-indicator up">▲ 40% Better</span>
-                </div>
-            </div>
-            <div class="comparison-item">
-                <span class="comparison-label">Goal Achievement</span>
-                <div class="comparison-values">
-                    <span class="your-value">122%</span>
-                    <span class="vs-label">vs</span>
-                    <span class="industry-value">Industry Target: 100%</span>
-                    <span class="performance-indicator up">▲ Exceeded</span>
                 </div>
             </div>
         </div>
 
-        <table class="budget-table">
-            <thead>
-                <tr>
-                    <th>Channel</th>
-                    <th>Budget</th>
-                    <th>Spent</th>
-                    <th>Efficiency</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Traditional</td>
-                    <td>$835,533</td>
-                    <td>$1,366,064</td>
-                    <td><span class="performance-indicator down">▼ 163% of budget</span></td>
-                </tr>
-                <tr>
-                    <td>Paid</td>
-                    <td>$3,342,133</td>
-                    <td>$3,032,807</td>
-                    <td><span class="performance-indicator up">▲ 91% of budget</span></td>
-                </tr>
-                <tr>
-                    <td><strong>Total</strong></td>
-                    <td><strong>$4,177,666</strong></td>
-                    <td><strong>$4,398,871</strong></td>
-                    <td><strong>105% of budget</strong></td>
-                </tr>
-            </tbody>
-        </table>
-
-        <div style="text-align: center; margin: 30px 0;">
-            <div style="font-size: 18px; color: #666; margin-bottom: 10px;">Total Marketing Cost</div>
+        <div style="text-align: center; margin: 40px 0;">
+            <div style="font-size: 20px; color: #888; margin-bottom: 20px;">Total Marketing Cost</div>
             <div class="stat-highlight">$5.4M</div>
         </div>
 
         <div class="insight-box">
-            <span class="insight-label">Insight:</span> We were able to bring in many more accounts than originally forecasted. Our CPA improved over 8% this quarter compared to last quarter and is 40% better than industry average.
+            <span class="insight-label">Insight:</span> We exceeded our Q3 goal by 22%, bringing in 112,965 accounts. Our CPA of $41.40 is 40% better than the fintech industry average of $65-85, demonstrating exceptional campaign efficiency.
         </div>
     </div>
 </div>
 
-<!-- Slide 3: 2025 Account Goal with Projections -->
+<!-- Slide 3: 2025 Account Goal -->
 <div class="slide" id="slide3" style="display: none;">
     <div class="slide-content">
         <h2 style="text-align: center;">2025 Account Goal 🎯</h2>
 
         <div style="text-align: center; margin: 60px 0;">
-            <div style="font-size: 32px; margin-bottom: 20px;">
-                2025 New Accounts Goal: <span style="font-weight: 900; color: #1a1d3d;"><span class="animated-number" data-target="359595">0</span></span>
+            <div style="font-size: 36px; margin-bottom: 30px; color: white;">
+                2025 New Accounts Goal: <span style="font-weight: 900; color: #27FB6B;"><span class="animated-number" data-target="359595">0</span></span>
             </div>
-            <div style="font-size: 32px; margin-bottom: 40px;">
+            <div style="font-size: 36px; margin-bottom: 50px; color: white;">
                 End of Q3 New Accounts: <span style="font-weight: 900; color: #27FB6B;"><span class="animated-number" data-target="276991">0</span></span>
             </div>
         </div>
 
         <div class="progress-bar-container">
             <div class="progress-bar">
+                <div class="progress-fill"></div>
                 <div class="progress-label">77%</div>
             </div>
         </div>
@@ -649,21 +592,20 @@
         <div class="comparison-box">
             <h4>📈 Q4 Projection Analysis</h4>
             <div class="comparison-item">
-                <span class="comparison-label">Accounts Remaining for 2025 Goal</span>
+                <span class="comparison-label">Accounts Needed in Q4</span>
                 <div class="comparison-values">
                     <span class="your-value"><span class="animated-number" data-target="82604">0</span></span>
-                    <span class="vs-label">needed in Q4</span>
                 </div>
             </div>
             <div class="comparison-item">
-                <span class="comparison-label">Q3 Average per Month</span>
+                <span class="comparison-label">Q3 Monthly Average</span>
                 <div class="comparison-values">
                     <span class="your-value">37,655</span>
                     <span class="vs-label">accounts/month</span>
                 </div>
             </div>
             <div class="comparison-item">
-                <span class="comparison-label">Q4 Required Rate</span>
+                <span class="comparison-label">Q4 Required Monthly Rate</span>
                 <div class="comparison-values">
                     <span class="your-value">27,535</span>
                     <span class="vs-label">accounts/month</span>
@@ -673,15 +615,15 @@
         </div>
 
         <div class="insight-box">
-            <span class="insight-label">Insight:</span> Entering Q4 of 2025, we are ahead of schedule in terms of our new accounts goal for the year! We only need 73% of our Q3 monthly pace to hit our annual target. 👏
+            <span class="insight-label">Insight:</span> We're ahead of schedule! We only need 73% of our Q3 monthly pace to hit our 2025 annual target. Strong momentum heading into Q4. 👏
         </div>
     </div>
 </div>
 
-<!-- Slide 4: Q3 Conversion Values with Industry Benchmarks -->
+<!-- Slide 4: Conversion Values -->
 <div class="slide" id="slide4" style="display: none;">
     <div class="slide-content">
-        <h2>Q3 Conversion Values 📊</h2>
+        <h2>Q3 Conversion Funnel 📊</h2>
 
         <table class="budget-table" style="font-size: 18px;">
             <thead>
@@ -697,16 +639,16 @@
                     <td style="font-weight: 700;">July</td>
                     <td>47%</td>
                     <td>60%</td>
-                    <td style="color: #e74c3c; font-weight: 900;">28% ⚠️</td>
+                    <td style="color: #ff6b6b; font-weight: 900;">28% ⚠️</td>
                 </tr>
                 <tr>
-                    <td style="font-weight: 700;">Aug</td>
+                    <td style="font-weight: 700;">August</td>
                     <td>50%</td>
                     <td>61%</td>
                     <td style="color: #27FB6B; font-weight: 900;">31% ✓</td>
                 </tr>
                 <tr>
-                    <td style="font-weight: 700;">Sept</td>
+                    <td style="font-weight: 700;">September</td>
                     <td>56%</td>
                     <td>63%</td>
                     <td style="color: #27FB6B; font-weight: 900; font-size: 24px;">35% 🚀</td>
@@ -715,25 +657,7 @@
         </table>
 
         <div class="comparison-box">
-            <h4>📊 Conversion Funnel Performance vs Industry</h4>
-            <div class="comparison-item">
-                <span class="comparison-label">Install → Profile Conversion</span>
-                <div class="comparison-values">
-                    <span class="your-value">56%</span>
-                    <span class="vs-label">vs</span>
-                    <span class="industry-value">Industry: 40-50%</span>
-                    <span class="performance-indicator up">▲ 12% Better</span>
-                </div>
-            </div>
-            <div class="comparison-item">
-                <span class="comparison-label">Profile → Account Conversion</span>
-                <div class="comparison-values">
-                    <span class="your-value">63%</span>
-                    <span class="vs-label">vs</span>
-                    <span class="industry-value">Industry: 50-60%</span>
-                    <span class="performance-indicator up">▲ 5% Better</span>
-                </div>
-            </div>
+            <h4>📊 Conversion Performance vs Industry</h4>
             <div class="comparison-item">
                 <span class="comparison-label">End-to-End Conversion</span>
                 <div class="comparison-values">
@@ -747,46 +671,45 @@
                 <span class="comparison-label">Quarterly Improvement</span>
                 <div class="comparison-values">
                     <span class="your-value">+7 points</span>
-                    <span class="vs-label">from July to Sept</span>
+                    <span class="vs-label">July to Sept</span>
                     <span class="performance-indicator up">▲ 25% Growth</span>
                 </div>
             </div>
         </div>
 
         <div class="insight-box">
-            <span class="insight-label">Insight:</span> Conversion rates improved consistently month-over-month. September's 35% end-to-end conversion rate is 75% better than the industry standard and exceeds our 30% KPI target. This indicates strong product-market fit and effective onboarding.
+            <span class="insight-label">Insight:</span> September's 35% end-to-end conversion rate is 75% better than industry standard and exceeds our 30% KPI. Strong product-market fit and effective onboarding driving results.
         </div>
     </div>
 </div>
 
-<!-- Continue with other slides... -->
-<!-- Slide 5: KPIs Monthly Evolution -->
+<!-- Slide 5: KPIs Evolution -->
 <div class="slide" id="slide5" style="display: none;">
     <div class="slide-content">
         <h2>KPIs - Monthly Evolution 📈</h2>
 
         <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px;">
             <div>
-                <h3>Spend <span class="performance-indicator up">▲ Trending Up</span></h3>
-                <div class="chart-container" style="height: 250px;">
+                <h3>Spend <span class="performance-indicator up">▲ Strong</span></h3>
+                <div class="chart-container" style="height: 300px;">
                     <canvas id="spendChart"></canvas>
                 </div>
             </div>
             <div>
-                <h3>Installs <span class="performance-indicator up">▲ Strong Growth</span></h3>
-                <div class="chart-container" style="height: 250px;">
+                <h3>Installs <span class="performance-indicator up">▲ Growing</span></h3>
+                <div class="chart-container" style="height: 300px;">
                     <canvas id="installsChart"></canvas>
                 </div>
             </div>
             <div>
                 <h3>Profiles <span class="performance-indicator up">▲ Accelerating</span></h3>
-                <div class="chart-container" style="height: 250px;">
+                <div class="chart-container" style="height: 300px;">
                     <canvas id="profilesChart"></canvas>
                 </div>
             </div>
             <div>
-                <h3>Accounts <span class="performance-indicator up">▲ Peak Performance</span></h3>
-                <div class="chart-container" style="height: 250px;">
+                <h3>Accounts <span class="performance-indicator up">▲ Peak Q3</span></h3>
+                <div class="chart-container" style="height: 300px;">
                     <canvas id="accountsChart"></canvas>
                 </div>
             </div>
@@ -798,72 +721,64 @@
     </div>
 </div>
 
-<!-- Slide 6: CPA Evolution with Benchmarks -->
+<!-- Slide 6: Cost Efficiency -->
 <div class="slide" id="slide6" style="display: none;">
     <div class="slide-content">
         <h2>Cost Efficiency Trends 💰</h2>
 
         <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px;">
             <div>
-                <h3>CPI <span style="font-size: 18px; color: #666;">(Cost Per Install)</span></h3>
+                <h3>CPI</h3>
                 <div class="chart-container" style="height: 300px;">
                     <canvas id="cpiChart"></canvas>
                 </div>
-                <div class="comparison-box" style="margin-top: 20px;">
-                    <div style="text-align: center;">
-                        <div style="font-size: 14px; color: #666;">Q3 Average</div>
-                        <div style="font-size: 28px; font-weight: 900; color: #27FB6B;">$15.18</div>
-                        <div style="font-size: 12px; color: #666;">Industry: $18-25</div>
-                        <span class="performance-indicator up">▲ 15% Better</span>
-                    </div>
+                <div style="text-align: center; margin-top: 20px;">
+                    <div style="font-size: 16px; color: #888;">Q3 Average</div>
+                    <div style="font-size: 36px; font-weight: 900; color: #27FB6B;">$15.18</div>
+                    <div style="font-size: 14px; color: #666;">Industry: $18-25</div>
+                    <span class="performance-indicator up">▲ 15% Better</span>
                 </div>
             </div>
             <div>
-                <h3>CPP <span style="font-size: 18px; color: #666;">(Cost Per Profile)</span></h3>
+                <h3>CPP</h3>
                 <div class="chart-container" style="height: 300px;">
                     <canvas id="cppChart"></canvas>
                 </div>
-                <div class="comparison-box" style="margin-top: 20px;">
-                    <div style="text-align: center;">
-                        <div style="font-size: 14px; color: #666;">Q3 Average</div>
-                        <div style="font-size: 28px; font-weight: 900; color: #27FB6B;">$29.67</div>
-                        <div style="font-size: 12px; color: #666;">Industry: $35-50</div>
-                        <span class="performance-indicator up">▲ 20% Better</span>
-                    </div>
+                <div style="text-align: center; margin-top: 20px;">
+                    <div style="font-size: 16px; color: #888;">Q3 Average</div>
+                    <div style="font-size: 36px; font-weight: 900; color: #27FB6B;">$29.67</div>
+                    <div style="font-size: 14px; color: #666;">Industry: $35-50</div>
+                    <span class="performance-indicator up">▲ 20% Better</span>
                 </div>
             </div>
             <div>
-                <h3>CPA <span style="font-size: 18px; color: #666;">(Cost Per Account)</span></h3>
+                <h3>CPA</h3>
                 <div class="chart-container" style="height: 300px;">
                     <canvas id="cpaChart"></canvas>
                 </div>
-                <div class="comparison-box" style="margin-top: 20px;">
-                    <div style="text-align: center;">
-                        <div style="font-size: 14px; color: #666;">Q3 Average</div>
-                        <div style="font-size: 28px; font-weight: 900; color: #27FB6B;">$41.40</div>
-                        <div style="font-size: 12px; color: #666;">Industry: $65-85</div>
-                        <span class="performance-indicator up">▲ 40% Better</span>
-                    </div>
+                <div style="text-align: center; margin-top: 20px;">
+                    <div style="font-size: 16px; color: #888;">Q3 Average</div>
+                    <div style="font-size: 36px; font-weight: 900; color: #27FB6B;">$41.40</div>
+                    <div style="font-size: 14px; color: #666;">Industry: $65-85</div>
+                    <span class="performance-indicator up">▲ 40% Better</span>
                 </div>
             </div>
         </div>
 
         <div class="insight-box">
-            <span class="insight-label">Insight:</span> All cost metrics are significantly below industry benchmarks. CPA of $41.40 is 40% more efficient than the fintech industry average of $65-85, indicating excellent campaign optimization and strong organic word-of-mouth.
+            <span class="insight-label">Insight:</span> All cost metrics significantly below industry benchmarks. CPA of $41.40 is 40% more efficient than fintech average, indicating excellent campaign optimization and strong organic growth.
         </div>
     </div>
 </div>
-
-<!-- Remaining slides continue with similar enhancements... -->
 
 <!-- Slide 12: Thank You -->
 <div class="slide" id="slide12" style="display: none;">
     <div class="slide-content">
         <div style="text-align: center;">
-            <h1 style="font-size: 96px; color: #1a1d3d;">THANK YOU! 🙂</h1>
+            <h1 style="font-size: 108px; color: white;">THANK YOU! 🙂</h1>
 
-            <div style="margin: 60px 0;">
-                <div class="metric-grid" style="max-width: 800px; margin: 0 auto;">
+            <div style="margin: 80px 0;">
+                <div class="metric-grid" style="max-width: 900px; margin: 0 auto;">
                     <div class="metric-card">
                         <div class="metric-label">Q3 Achievement</div>
                         <div class="metric-value">122%</div>
@@ -882,10 +797,10 @@
                 </div>
             </div>
 
-            <div class="team" style="margin-top: 60px; font-size: 32px;">
-                Mafe Varon - Mili Paul - Matt Lopez
+            <div class="team" style="margin-top: 80px; font-size: 36px;">
+                Mafe Varon • Mili Paul • Matt Lopez
             </div>
-            <div style="margin-top: 40px; font-size: 24px; color: #666;">Q3 2025</div>
+            <div style="margin-top: 30px; font-size: 28px; color: #27FB6B;">Q3 2025</div>
         </div>
     </div>
 </div>
@@ -899,10 +814,10 @@
 let currentSlide = 1;
 const totalSlides = 12;
 
-// Animated number counter
+// Animated number counter with pop effect
 function animateNumber(element) {
     const target = parseInt(element.getAttribute('data-target'));
-    const duration = 2000;
+    const duration = 1500;
     const step = target / (duration / 16);
     let current = 0;
 
@@ -911,6 +826,11 @@ function animateNumber(element) {
         if (current >= target) {
             element.textContent = target.toLocaleString();
             clearInterval(counter);
+            // Add pop effect when complete
+            element.style.transform = 'scale(1.1)';
+            setTimeout(() => {
+                element.style.transform = 'scale(1)';
+            }, 200);
         } else {
             element.textContent = Math.floor(current).toLocaleString();
         }
@@ -935,14 +855,14 @@ function showSlide(n) {
                 animateNumber(num);
             }
         });
-    }, 100);
+    }, 200);
 
     document.getElementById('slideNumber').textContent = `${currentSlide} / ${totalSlides}`;
 
     document.getElementById('prevBtn').disabled = currentSlide === 1;
     document.getElementById('nextBtn').disabled = currentSlide === totalSlides;
 
-    // Initialize charts when reaching slides with charts
+    // Initialize charts
     if (currentSlide === 5) initKPICharts();
     if (currentSlide === 6) initCostCharts();
 }
@@ -958,160 +878,169 @@ document.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowRight') changeSlide(1);
 });
 
-// Chart configurations
 const chartColors = {
     primary: '#27FB6B',
-    secondary: '#667eea',
-    accent: '#e74c3c',
-    gray: '#95a5a6',
-    industryAvg: 'rgba(102, 126, 234, 0.3)'
+    secondary: '#00cc33',
+    grid: 'rgba(255, 255, 255, 0.1)',
+    text: 'white',
+    industryAvg: 'rgba(255, 255, 255, 0.3)'
 };
 
 function initKPICharts() {
     const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sept'];
 
-    // Spend Chart
+    const commonOptions = {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            legend: { display: false },
+            tooltip: {
+                backgroundColor: 'rgba(0, 5, 46, 0.9)',
+                titleColor: '#27FB6B',
+                bodyColor: 'white',
+                borderColor: '#27FB6B',
+                borderWidth: 1
+            }
+        },
+        scales: {
+            x: {
+                ticks: { color: chartColors.text },
+                grid: { color: chartColors.grid }
+            },
+            y: {
+                ticks: { color: chartColors.text },
+                grid: { color: chartColors.grid }
+            }
+        }
+    };
+
     new Chart(document.getElementById('spendChart'), {
         type: 'line',
         data: {
             labels: months,
             datasets: [{
-                label: '2025',
                 data: [1200000, 1100000, 1350000, 1400000, 1500000, 1500000, 1483352, 2057758, 1875164],
                 borderColor: chartColors.primary,
-                backgroundColor: 'rgba(39, 251, 107, 0.1)',
+                backgroundColor: 'rgba(39, 251, 107, 0.2)',
                 tension: 0.4,
                 borderWidth: 3,
                 pointRadius: 6,
-                pointHoverRadius: 8
+                pointBackgroundColor: chartColors.primary,
+                pointBorderColor: '#00052E',
+                pointBorderWidth: 2,
+                fill: true
             }]
         },
         options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                legend: { display: false },
-                tooltip: {
-                    callbacks: {
-                        label: function(context) {
-                            return '$' + context.parsed.y.toLocaleString();
-                        }
-                    }
-                }
-            },
+            ...commonOptions,
             scales: {
+                ...commonOptions.scales,
                 y: {
+                    ...commonOptions.scales.y,
                     ticks: {
-                        callback: function(value) {
-                            return '$' + (value / 1000000).toFixed(1) + 'M';
-                        }
+                        color: chartColors.text,
+                        callback: (value) => '$' + (value / 1000000).toFixed(1) + 'M'
                     }
                 }
             }
         }
     });
 
-    // Installs Chart
     new Chart(document.getElementById('installsChart'), {
         type: 'line',
         data: {
             labels: months,
             datasets: [{
-                label: '2025',
                 data: [100000, 95000, 110000, 115000, 135000, 95000, 103267, 125249, 127063],
-                borderColor: chartColors.secondary,
-                backgroundColor: 'rgba(102, 126, 234, 0.1)',
+                borderColor: chartColors.primary,
+                backgroundColor: 'rgba(39, 251, 107, 0.2)',
                 tension: 0.4,
                 borderWidth: 3,
                 pointRadius: 6,
-                pointHoverRadius: 8
+                pointBackgroundColor: chartColors.primary,
+                pointBorderColor: '#00052E',
+                pointBorderWidth: 2,
+                fill: true
             }]
         },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                legend: { display: false },
-                tooltip: {
-                    callbacks: {
-                        label: function(context) {
-                            return context.parsed.y.toLocaleString() + ' installs';
-                        }
-                    }
-                }
-            }
-        }
+        options: commonOptions
     });
 
-    // Profiles Chart
     new Chart(document.getElementById('profilesChart'), {
         type: 'line',
         data: {
             labels: months,
             datasets: [{
-                label: '2025',
                 data: [49000, 40000, 52000, 45000, 43000, 47000, 48711, 64140, 70834],
-                borderColor: chartColors.accent,
-                backgroundColor: 'rgba(231, 76, 60, 0.1)',
+                borderColor: chartColors.primary,
+                backgroundColor: 'rgba(39, 251, 107, 0.2)',
                 tension: 0.4,
                 borderWidth: 3,
                 pointRadius: 6,
-                pointHoverRadius: 8
+                pointBackgroundColor: chartColors.primary,
+                pointBorderColor: '#00052E',
+                pointBorderWidth: 2,
+                fill: true
             }]
         },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                legend: { display: false },
-                tooltip: {
-                    callbacks: {
-                        label: function(context) {
-                            return context.parsed.y.toLocaleString() + ' profiles';
-                        }
-                    }
-                }
-            }
-        }
+        options: commonOptions
     });
 
-    // Accounts Chart
     new Chart(document.getElementById('accountsChart'), {
         type: 'line',
         data: {
             labels: months,
             datasets: [{
-                label: '2025',
                 data: [28000, 25000, 30000, 27000, 25000, 30000, 29190, 39516, 44326],
-                borderColor: '#27FB6B',
-                backgroundColor: 'rgba(39, 251, 107, 0.1)',
+                borderColor: chartColors.primary,
+                backgroundColor: 'rgba(39, 251, 107, 0.2)',
                 tension: 0.4,
                 borderWidth: 3,
                 pointRadius: 6,
-                pointHoverRadius: 8
+                pointBackgroundColor: chartColors.primary,
+                pointBorderColor: '#00052E',
+                pointBorderWidth: 2,
+                fill: true
             }]
         },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                legend: { display: false },
-                tooltip: {
-                    callbacks: {
-                        label: function(context) {
-                            return context.parsed.y.toLocaleString() + ' accounts';
-                        }
-                    }
-                }
-            }
-        }
+        options: commonOptions
     });
 }
 
 function initCostCharts() {
     const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sept'];
 
-    // CPI Chart with Industry Benchmark
+    const costOptions = {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            legend: {
+                display: true,
+                labels: { color: 'white', font: { family: 'Poppins' } }
+            },
+            tooltip: {
+                backgroundColor: 'rgba(0, 5, 46, 0.9)',
+                titleColor: '#27FB6B',
+                bodyColor: 'white',
+                borderColor: '#27FB6B',
+                borderWidth: 1
+            }
+        },
+        scales: {
+            x: {
+                ticks: { color: 'white' },
+                grid: { color: 'rgba(255, 255, 255, 0.1)' }
+            },
+            y: {
+                ticks: {
+                    color: 'white',
+                    callback: (value) => '$' + value
+                },
+                grid: { color: 'rgba(255, 255, 255, 0.1)' }
+            }
+        }
+    };
+
     new Chart(document.getElementById('cpiChart'), {
         type: 'line',
         data: {
@@ -1120,48 +1049,22 @@ function initCostCharts() {
                 label: 'MyBambu CPI',
                 data: [12, 12, 12, 10, 15, 16, 14.36, 16.43, 14.76],
                 borderColor: chartColors.primary,
-                backgroundColor: 'rgba(39, 251, 107, 0.1)',
-                tension: 0.4,
+                backgroundColor: 'rgba(39, 251, 107, 0.2)',
                 borderWidth: 3,
                 pointRadius: 6,
-                pointHoverRadius: 8
+                fill: true
             }, {
                 label: 'Industry Avg',
                 data: [21, 21, 21, 21, 21, 21, 21, 21, 21],
                 borderColor: chartColors.industryAvg,
-                backgroundColor: 'transparent',
                 borderDash: [5, 5],
                 borderWidth: 2,
                 pointRadius: 0
             }]
         },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                legend: { display: true },
-                tooltip: {
-                    callbacks: {
-                        label: function(context) {
-                            return context.dataset.label + ': $' + context.parsed.y.toFixed(2);
-                        }
-                    }
-                }
-            },
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    ticks: {
-                        callback: function(value) {
-                            return '$' + value;
-                        }
-                    }
-                }
-            }
-        }
+        options: costOptions
     });
 
-    // CPP Chart with Industry Benchmark
     new Chart(document.getElementById('cppChart'), {
         type: 'line',
         data: {
@@ -1169,49 +1072,23 @@ function initCostCharts() {
             datasets: [{
                 label: 'MyBambu CPP',
                 data: [25, 27, 28, 30, 32, 33, 30.45, 32.08, 26.47],
-                borderColor: chartColors.secondary,
-                backgroundColor: 'rgba(102, 126, 234, 0.1)',
-                tension: 0.4,
+                borderColor: chartColors.primary,
+                backgroundColor: 'rgba(39, 251, 107, 0.2)',
                 borderWidth: 3,
                 pointRadius: 6,
-                pointHoverRadius: 8
+                fill: true
             }, {
                 label: 'Industry Avg',
                 data: [42, 42, 42, 42, 42, 42, 42, 42, 42],
                 borderColor: chartColors.industryAvg,
-                backgroundColor: 'transparent',
                 borderDash: [5, 5],
                 borderWidth: 2,
                 pointRadius: 0
             }]
         },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                legend: { display: true },
-                tooltip: {
-                    callbacks: {
-                        label: function(context) {
-                            return context.dataset.label + ': $' + context.parsed.y.toFixed(2);
-                        }
-                    }
-                }
-            },
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    ticks: {
-                        callback: function(value) {
-                            return '$' + value;
-                        }
-                    }
-                }
-            }
-        }
+        options: costOptions
     });
 
-    // CPA Chart with Industry Benchmark
     new Chart(document.getElementById('cpaChart'), {
         type: 'line',
         data: {
@@ -1219,50 +1096,24 @@ function initCostCharts() {
             datasets: [{
                 label: 'MyBambu CPA',
                 data: [43, 44, 45, 47, 50, 56, 50.82, 52.07, 42.30],
-                borderColor: chartColors.accent,
-                backgroundColor: 'rgba(231, 76, 60, 0.1)',
-                tension: 0.4,
+                borderColor: chartColors.primary,
+                backgroundColor: 'rgba(39, 251, 107, 0.2)',
                 borderWidth: 3,
                 pointRadius: 6,
-                pointHoverRadius: 8
+                fill: true
             }, {
                 label: 'Industry Avg',
                 data: [75, 75, 75, 75, 75, 75, 75, 75, 75],
                 borderColor: chartColors.industryAvg,
-                backgroundColor: 'transparent',
                 borderDash: [5, 5],
                 borderWidth: 2,
                 pointRadius: 0
             }]
         },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                legend: { display: true },
-                tooltip: {
-                    callbacks: {
-                        label: function(context) {
-                            return context.dataset.label + ': $' + context.parsed.y.toFixed(2);
-                        }
-                    }
-                }
-            },
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    ticks: {
-                        callback: function(value) {
-                            return '$' + value;
-                        }
-                    }
-                }
-            }
-        }
+        options: costOptions
     });
 }
 
-// Initialize first slide
 showSlide(1);
 </script>
 
