@@ -121,6 +121,8 @@
             margin: 30px 0;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
             border: 1px solid rgba(255, 255, 255, 0.1);
+            overflow: visible;
+            word-wrap: break-word;
         }
 
         .metrics-grid {
@@ -281,13 +283,17 @@
             margin: 30px 0;
             background: rgba(255, 255, 255, 0.03);
             border-radius: 10px;
-            overflow: hidden;
+            overflow: visible;
+            table-layout: auto;
         }
 
         th, td {
             padding: 18px;
             text-align: left;
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            white-space: normal;
         }
 
         th {
@@ -319,6 +325,12 @@
             .subtitle { font-size: 1.2em; }
             .comparison-card { grid-template-columns: 1fr; }
             .metrics-grid { grid-template-columns: 1fr; }
+            .card { padding: 20px; overflow: visible; }
+            .container { padding: 10px; }
+            table { font-size: 0.9em; overflow-x: auto; display: block; }
+            th, td { padding: 12px 8px; min-width: 100px; }
+            .metric-value { font-size: 2em; }
+            .big-number { font-size: 2.2em; }
         }
     </style>
 </head>
@@ -1068,13 +1080,13 @@
             paper_bgcolor: 'rgba(0,0,0,0)',
             plot_bgcolor: 'rgba(0,0,0,0)',
             font: { color: '#F8F9FA', size: 14, family: 'Poppins' },
-            yaxis: {
+            yaxis: { automargin: true,
                 title: { text: 'Customer Acquisition Cost ($)', font: { color: '#F8F9FA', size: 16 } },
                 gridcolor: 'rgba(255,255,255,0.1)',
                 tickformat: '$,.0f',
                 range: [0, 110]
             },
-            xaxis: {
+            xaxis: { automargin: true,
                 gridcolor: 'rgba(255,255,255,0.1)',
                 tickfont: { size: 14 }
             },
@@ -1087,7 +1099,7 @@
                 y: 1.15
             },
             height: 550,
-            margin: { t: 140, b: 100, l: 90, r: 50 },
+            margin: { t: 140, b: 100, l: 90, r: 50 }, autosize: true,
             annotations: [
                 {
                     x: 1,
@@ -1155,18 +1167,18 @@
             paper_bgcolor: 'rgba(0,0,0,0)',
             plot_bgcolor: 'rgba(0,0,0,0)',
             font: { color: '#F8F9FA', size: 14, family: 'Poppins' },
-            yaxis: {
+            yaxis: { automargin: true,
                 title: { text: 'Company Valuation ($M)', font: { color: '#F8F9FA', size: 16 } },
                 gridcolor: 'rgba(255,255,255,0.1)',
                 tickformat: '$,.0f',
                 range: [0, 1000]
             },
-            xaxis: {
+            xaxis: { automargin: true,
                 gridcolor: 'rgba(255,255,255,0.1)',
                 tickfont: { size: 14 }
             },
             height: 550,
-            margin: { t: 100, b: 100, l: 90, r: 50 },
+            margin: { t: 100, b: 100, l: 90, r: 50 }, autosize: true,
             annotations: [
                 {
                     x: 1,
@@ -1236,12 +1248,12 @@
             paper_bgcolor: 'rgba(0,0,0,0)',
             plot_bgcolor: 'rgba(0,0,0,0)',
             font: { color: '#F8F9FA', size: 14, family: 'Poppins' },
-            yaxis: {
+            yaxis: { automargin: true,
                 title: { text: 'Cost ($)', font: { color: '#F8F9FA', size: 14 } },
                 gridcolor: 'rgba(255,255,255,0.1)',
                 tickformat: '$,.2f'
             },
-            xaxis: {
+            xaxis: { automargin: true,
                 gridcolor: 'rgba(255,255,255,0.1)'
             },
             showlegend: true,
@@ -1253,7 +1265,7 @@
                 y: 1.15
             },
             height: 500,
-            margin: { t: 120, b: 80, l: 80, r: 50 }
+            margin: { t: 120, b: 80, l: 80, r: 50 }, autosize: true
         };
 
         Plotly.newPlot('cacComparisonChart', cacData, cacLayout, {responsive: true});
@@ -1294,7 +1306,7 @@
                 y: -0.15
             },
             height: 500,
-            margin: { t: 80, b: 100, l: 50, r: 50 },
+            margin: { t: 80, b: 100, l: 50, r: 50 }, autosize: true,
             annotations: [{
                 text: '$6.4M<br>If Majority CAC',
                 font: { size: 18, color: '#27FB6B', family: 'Poppins' },
@@ -1338,11 +1350,11 @@
             paper_bgcolor: 'rgba(0,0,0,0)',
             plot_bgcolor: 'rgba(0,0,0,0)',
             font: { color: '#F8F9FA', size: 14, family: 'Poppins' },
-            yaxis: {
+            yaxis: { automargin: true,
                 title: { text: 'Downloads Per $1000 Spent', font: { color: '#F8F9FA', size: 14 } },
                 gridcolor: 'rgba(255,255,255,0.1)'
             },
-            xaxis: {
+            xaxis: { automargin: true,
                 gridcolor: 'rgba(255,255,255,0.1)'
             },
             showlegend: true,
@@ -1354,7 +1366,7 @@
                 y: 1.15
             },
             height: 500,
-            margin: { t: 100, b: 80, l: 80, r: 50 }
+            margin: { t: 100, b: 80, l: 80, r: 50 }, autosize: true
         };
 
         Plotly.newPlot('efficiencyChart', efficiencyData, efficiencyLayout, {responsive: true});
@@ -1381,16 +1393,16 @@
             paper_bgcolor: 'rgba(0,0,0,0)',
             plot_bgcolor: 'rgba(0,0,0,0)',
             font: { color: '#F8F9FA', size: 14, family: 'Poppins' },
-            yaxis: {
+            yaxis: { automargin: true,
                 title: { text: 'Total Customers', font: { color: '#F8F9FA', size: 14 } },
                 gridcolor: 'rgba(255,255,255,0.1)',
                 tickformat: ',.0f'
             },
-            xaxis: {
+            xaxis: { automargin: true,
                 gridcolor: 'rgba(255,255,255,0.1)'
             },
             height: 500,
-            margin: { t: 100, b: 100, l: 80, r: 50 }
+            margin: { t: 100, b: 100, l: 80, r: 50 }, autosize: true
         };
 
         Plotly.newPlot('opportunityChart', opportunityData, opportunityLayout, {responsive: true});
@@ -1419,16 +1431,16 @@
             paper_bgcolor: 'rgba(0,0,0,0)',
             plot_bgcolor: 'rgba(0,0,0,0)',
             font: { color: '#F8F9FA', size: 14, family: 'Poppins' },
-            yaxis: {
+            yaxis: { automargin: true,
                 title: { text: 'Cost Per Customer ($)', font: { color: '#F8F9FA', size: 14 } },
                 gridcolor: 'rgba(255,255,255,0.1)',
                 tickformat: '$,.0f'
             },
-            xaxis: {
+            xaxis: { automargin: true,
                 gridcolor: 'rgba(255,255,255,0.1)'
             },
             height: 500,
-            margin: { t: 80, b: 80, l: 80, r: 50 }
+            margin: { t: 80, b: 80, l: 80, r: 50 }, autosize: true
         };
 
         Plotly.newPlot('fieldCacChart', fieldCacData, fieldCacLayout, {responsive: true});
@@ -1468,12 +1480,12 @@
             paper_bgcolor: 'rgba(0,0,0,0)',
             plot_bgcolor: 'rgba(0,0,0,0)',
             font: { color: '#F8F9FA', size: 14, family: 'Poppins' },
-            yaxis: {
+            yaxis: { automargin: true,
                 title: { text: 'Customer Acquisition Cost ($)', font: { color: '#F8F9FA', size: 14 } },
                 gridcolor: 'rgba(255,255,255,0.1)',
                 tickformat: '$,.0f'
             },
-            xaxis: {
+            xaxis: { automargin: true,
                 gridcolor: 'rgba(255,255,255,0.1)'
             },
             showlegend: true,
@@ -1485,7 +1497,7 @@
                 y: 1.15
             },
             height: 500,
-            margin: { t: 120, b: 80, l: 80, r: 50 }
+            margin: { t: 120, b: 80, l: 80, r: 50 }, autosize: true
         };
 
         Plotly.newPlot('allChannelsChart', allChannelsData, allChannelsLayout, {responsive: true});
@@ -1527,18 +1539,18 @@
             paper_bgcolor: 'rgba(0,0,0,0)',
             plot_bgcolor: 'rgba(0,0,0,0)',
             font: { color: '#F8F9FA', size: 14, family: 'Poppins' },
-            yaxis: {
+            yaxis: { automargin: true,
                 title: { text: 'Valuation ($M)', font: { color: '#F8F9FA', size: 16 } },
                 gridcolor: 'rgba(255,255,255,0.1)',
                 tickformat: '$,.0f',
                 range: [500, 850]
             },
-            xaxis: {
+            xaxis: { automargin: true,
                 gridcolor: 'rgba(255,255,255,0.1)',
                 tickfont: { size: 13 }
             },
             height: 550,
-            margin: { t: 100, b: 110, l: 90, r: 50 },
+            margin: { t: 100, b: 110, l: 90, r: 50 }, autosize: true,
             shapes: [{
                 type: 'line',
                 x0: -0.5,
