@@ -153,6 +153,84 @@
             animation: sparkle 1s ease-in-out infinite;
         }
 
+        @keyframes bombExplode {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(3);
+                opacity: 0.8;
+            }
+            100% {
+                transform: scale(8);
+                opacity: 0;
+            }
+        }
+
+        @keyframes shockwave {
+            0% {
+                transform: scale(0);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+
+        @keyframes bssReveal {
+            0% {
+                opacity: 0;
+                transform: scale(0) rotate(-180deg);
+            }
+            60% {
+                transform: scale(1.3) rotate(10deg);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) rotate(0deg);
+            }
+        }
+
+        .bomb-explosion {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 100px;
+            z-index: 10000;
+            pointer-events: none;
+        }
+
+        .shockwave-ring {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 200px;
+            height: 200px;
+            border: 10px solid #27FB6B;
+            border-radius: 50%;
+            z-index: 9998;
+            pointer-events: none;
+            animation: shockwave 1s ease-out;
+        }
+
+        .bss-text {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 120px;
+            font-weight: 900;
+            color: #27FB6B;
+            z-index: 10001;
+            pointer-events: none;
+            text-shadow: 0 0 40px rgba(39, 251, 107, 0.8);
+            opacity: 0;
+        }
+
         h1 {
             font-size: 72px;
             font-weight: 900;
@@ -974,6 +1052,80 @@ function createConfetti() {
 
         setTimeout(() => confetti.remove(), 5000);
     }
+
+    // Trigger BSS bomb explosion after 2 seconds
+    setTimeout(() => createBSSExplosion(), 2000);
+}
+
+function createBSSExplosion() {
+    // Create bomb emoji
+    const bomb = document.createElement('div');
+    bomb.className = 'bomb-explosion';
+    bomb.textContent = '💣';
+    bomb.style.animation = 'bombExplode 0.8s ease-out forwards';
+    document.body.appendChild(bomb);
+
+    // Create shockwave rings
+    setTimeout(() => {
+        for (let i = 0; i < 3; i++) {
+            const ring = document.createElement('div');
+            ring.className = 'shockwave-ring';
+            ring.style.animationDelay = (i * 0.15) + 's';
+            document.body.appendChild(ring);
+            setTimeout(() => ring.remove(), 1500);
+        }
+    }, 400);
+
+    // Create BSS text
+    setTimeout(() => {
+        const bssText = document.createElement('div');
+        bssText.className = 'bss-text';
+        bssText.textContent = 'BSS!';
+        bssText.style.animation = 'bssReveal 1s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards';
+        document.body.appendChild(bssText);
+
+        // Fade out BSS after 3 seconds
+        setTimeout(() => {
+            bssText.style.transition = 'opacity 1s';
+            bssText.style.opacity = '0';
+            setTimeout(() => bssText.remove(), 1000);
+        }, 3000);
+    }, 800);
+
+    // Remove bomb
+    setTimeout(() => bomb.remove(), 800);
+
+    // Create explosion particles
+    setTimeout(() => {
+        const explosionEmojis = ['💥', '✨', '⚡', '💚', '🔥', '💫'];
+        for (let i = 0; i < 20; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'confetti';
+            particle.textContent = explosionEmojis[Math.floor(Math.random() * explosionEmojis.length)];
+            particle.style.left = '50%';
+            particle.style.top = '50%';
+            particle.style.fontSize = '40px';
+            const angle = (Math.PI * 2 * i) / 20;
+            const velocity = 200 + Math.random() * 100;
+            particle.style.animation = `none`;
+            document.body.appendChild(particle);
+
+            let x = 0;
+            let y = 0;
+            const animate = () => {
+                x += Math.cos(angle) * 5;
+                y += Math.sin(angle) * 5;
+                particle.style.transform = `translate(${x}px, ${y}px) rotate(${x * 2}deg)`;
+                particle.style.opacity = Math.max(0, 1 - (Math.abs(x) + Math.abs(y)) / velocity);
+                if (Math.abs(x) < velocity && Math.abs(y) < velocity) {
+                    requestAnimationFrame(animate);
+                } else {
+                    particle.remove();
+                }
+            };
+            requestAnimationFrame(animate);
+        }
+    }, 400);
 }
 
 // Scroll detection to update slide number
