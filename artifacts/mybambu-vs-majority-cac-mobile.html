@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>MyBambu vs Majority CAC - Mobile</title>
+    <script src="https://cdn.plot.ly/plotly-2.26.0.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        :root {
+            --bambu-primary: #27FB6B;
+            --bambu-dark: #00052E;
+            --bambu-navy: #002041;
+            --bambu-light: #FFFFFF;
+            --bambu-accent: #01CFFB;
+            --bambu-blue: #206DFE;
+            --majority-orange: #FF6B35;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, var(--bambu-dark) 0%, var(--bambu-navy) 100%);
+            color: var(--bambu-light);
+            line-height: 1.5;
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 100%;
+            padding: 15px !important;
+            max-width: 100vw;
+            overflow-x: hidden;
+        }
+
+        header {
+            text-align: center;
+            padding: 30px 20px !important;
+            background: linear-gradient(135deg, var(--bambu-primary) 0%, var(--bambu-accent) 100%);
+            border-radius: 15px;
+            margin-bottom: 20px !important;
+            box-shadow: 0 8px 30px rgba(39, 251, 107, 0.3);
+        }
+
+        h1 {
+            font-size: 28px !important;
+            margin-bottom: 15px !important;
+            font-weight: 700;
+            color: var(--bambu-dark);
+            line-height: 1.2;
+        }
+
+        .subtitle {
+            font-size: 16px !important;
+            margin-bottom: 8px !important;
+            color: var(--bambu-dark);
+            font-weight: 600;
+        }
+
+        .tagline {
+            font-size: 14px !important;
+            color: var(--bambu-dark);
+            opacity: 0.9;
+        }
+
+        .nav {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin: 20px 0 !important;
+            padding: 0 10px;
+        }
+
+        .nav-btn {
+            padding: 15px 20px !important;
+            background: var(--bambu-blue);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px !important;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(32, 109, 254, 0.3);
+            width: 100%;
+            touch-action: manipulation;
+        }
+
+        .nav-btn.active {
+            background: var(--bambu-primary);
+            color: var(--bambu-dark);
+        }
+
+        .section {
+            display: none;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 20px !important;
+            margin: 15px 0 !important;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        h2 {
+            font-size: 22px !important;
+            margin-bottom: 20px !important;
+            color: var(--bambu-primary);
+            border-bottom: 2px solid var(--bambu-primary);
+            padding-bottom: 10px;
+        }
+
+        h3 {
+            font-size: 18px !important;
+            margin: 20px 0 15px 0 !important;
+            color: var(--bambu-accent);
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: 1fr !important;
+            gap: 15px !important;
+            margin: 20px 0 !important;
+        }
+
+        .metric-card {
+            background: linear-gradient(135deg, rgba(39, 251, 107, 0.15) 0%, rgba(1, 207, 251, 0.15) 100%);
+            padding: 20px !important;
+            border-radius: 12px;
+            text-align: center;
+            border: 2px solid rgba(39, 251, 107, 0.3);
+        }
+
+        .metric-value {
+            font-size: 32px !important;
+            font-weight: 700;
+            color: var(--bambu-primary);
+            margin: 10px 0 !important;
+        }
+
+        .metric-label {
+            font-size: 14px !important;
+            opacity: 0.9;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .metric-sublabel {
+            font-size: 13px !important;
+            opacity: 0.7;
+            margin-top: 5px;
+        }
+
+        .comparison-card {
+            display: grid;
+            grid-template-columns: 1fr !important;
+            gap: 15px !important;
+            margin: 20px 0 !important;
+        }
+
+        .company-column {
+            padding: 20px !important;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .bambu-column {
+            background: linear-gradient(135deg, rgba(39, 251, 107, 0.15) 0%, rgba(1, 207, 251, 0.15) 100%);
+            border: 2px solid var(--bambu-primary);
+        }
+
+        .majority-column {
+            background: linear-gradient(135deg, rgba(255, 107, 53, 0.15) 0%, rgba(255, 107, 53, 0.05) 100%);
+            border: 2px solid var(--majority-orange);
+        }
+
+        .company-logo {
+            font-size: 24px !important;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .bambu-logo {
+            color: var(--bambu-primary);
+        }
+
+        .majority-logo {
+            color: var(--majority-orange);
+        }
+
+        .big-number {
+            font-size: 36px !important;
+            font-weight: 700;
+            margin: 15px 0 !important;
+        }
+
+        .bambu-number {
+            color: var(--bambu-primary);
+        }
+
+        .majority-number {
+            color: var(--majority-orange);
+        }
+
+        .savings-banner {
+            background: linear-gradient(135deg, var(--bambu-primary) 0%, var(--bambu-accent) 100%);
+            color: var(--bambu-dark);
+            padding: 25px 20px !important;
+            border-radius: 15px;
+            text-align: center;
+            font-size: 16px !important;
+            font-weight: 700;
+            margin: 20px 0 !important;
+            box-shadow: 0 10px 40px rgba(39, 251, 107, 0.4);
+        }
+
+        .savings-number {
+            font-size: 28px !important;
+            margin: 15px 0 !important;
+            display: block;
+        }
+
+        .chart-container {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 15px !important;
+            margin: 20px 0 !important;
+            min-height: 350px;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0 !important;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 10px;
+            font-size: 13px !important;
+            display: block;
+            overflow-x: auto;
+        }
+
+        th, td {
+            padding: 12px 8px !important;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            min-width: 100px;
+            word-wrap: break-word;
+        }
+
+        th {
+            background: rgba(39, 251, 107, 0.2);
+            color: var(--bambu-primary);
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 11px !important;
+        }
+
+        ul {
+            margin: 15px 0;
+            padding-left: 25px;
+        }
+
+        li {
+            margin: 12px 0;
+            font-size: 14px !important;
+            line-height: 1.6;
+        }
+
+        .highlight {
+            color: var(--bambu-primary);
+            font-weight: 600;
+        }
+
+        .winner-badge {
+            display: inline-block;
+            background: var(--bambu-primary);
+            color: var(--bambu-dark);
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-weight: 700;
+            font-size: 12px !important;
+            margin-left: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>MyBambu: The $550M Opportunity</h1>
+            <div class="subtitle">660K Customers • $35 CAC</div>
+            <div class="tagline">56% More Efficient Than Majority</div>
+        </header>
+
+        <div class="nav">
+            <button class="nav-btn active" onclick="showSection('overview')">💰 Valuation Story</button>
+            <button class="nav-btn" onclick="showSection('digital')">Paid Digital</button>
+            <button class="nav-btn" onclick="showSection('field')">Boots on Ground</button>
+            <button class="nav-btn" onclick="showSection('comparison')">Total Comparison</button>
+            <button class="nav-btn" onclick="showSection('insights')">Strategic Insights</button>
+        </div>
+
+        <!-- Overview Section -->
+        <div id="overview" class="section active">
+            <div class="card">
+                <h2>💰 Investment Thesis</h2>
+
+                <div class="savings-banner">
+                    <div style="font-size: 32px; font-weight: 700; margin-bottom: 10px;">$500M - $900M</div>
+                    <div style="font-size: 15px; margin-bottom: 10px;">Estimated Valuation Range</div>
+                    <div style="font-size: 13px; margin-top: 12px;">
+                        Based on 2026 Forward Revenue: $75.3M<br>
+                        664K customers → 934K by 2026
+                    </div>
+                </div>
+
+                <h3>Key Numbers</h3>
+
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <div class="metric-label">Total Customers</div>
+                        <div class="metric-value">664K</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">Active Customers</div>
+                        <div class="metric-value">200K</div>
+                    </div>
+                    <div class="metric-card" style="background: linear-gradient(135deg, rgba(39, 251, 107, 0.25) 0%, rgba(1, 207, 251, 0.25) 100%);">
+                        <div class="metric-label">Blended CAC</div>
+                        <div class="metric-value">$52</div>
+                        <div class="metric-sublabel">Includes $30 incentive</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">Value Per Customer</div>
+                        <div class="metric-value">$794-907</div>
+                    </div>
+                </div>
+
+                <div class="chart-container">
+                    <div id="overviewChart"></div>
+                </div>
+
+                <h3>Valuation Scenarios</h3>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Scenario</th>
+                            <th>Multiple</th>
+                            <th>Valuation</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Bear</strong></td>
+                            <td>5x FY26</td>
+                            <td>$377M</td>
+                        </tr>
+                        <tr style="background: rgba(39, 251, 107, 0.15);">
+                            <td><strong>Base</strong></td>
+                            <td>7x FY26</td>
+                            <td style="color: var(--bambu-primary);"><strong>$527M</strong></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Bull</strong></td>
+                            <td>8x FY26</td>
+                            <td style="color: var(--bambu-accent);">$602M</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Strategic</strong></td>
+                            <td>10-12x</td>
+                            <td style="color: var(--bambu-blue);">$753M-900M</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>Why Premium Valuation</h3>
+                <div style="background: rgba(39, 251, 107, 0.1); padding: 20px; border-radius: 12px; margin: 15px 0;">
+                    <ul>
+                        <li><strong class="highlight">Best CAC:</strong> $35 vs $80 = 56% better</li>
+                        <li><strong class="highlight">Proven Scale:</strong> 660K customers</li>
+                        <li><strong class="highlight">Active Users:</strong> 130K monthly actives</li>
+                        <li><strong class="highlight">Market Leader:</strong> #1 Latino neobank</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Paid Digital Section -->
+        <div id="digital" class="section">
+            <div class="card">
+                <h2>💻 Paid Digital</h2>
+
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <div class="metric-label">MyBambu CAC</div>
+                        <div class="metric-value">$40</div>
+                        <div class="metric-sublabel">Incl. $30 incentive</div>
+                    </div>
+                    <div class="metric-card" style="background: linear-gradient(135deg, rgba(255, 107, 53, 0.15) 0%, rgba(255, 107, 53, 0.05) 100%);">
+                        <div class="metric-label">Majority CAC</div>
+                        <div class="metric-value" style="color: var(--majority-orange);">$62.07</div>
+                        <div class="metric-sublabel">Estimated</div>
+                    </div>
+                </div>
+
+                <div class="comparison-card">
+                    <div class="company-column bambu-column">
+                        <div class="company-logo bambu-logo">MyBambu</div>
+                        <div class="big-number bambu-number">$40</div>
+                        <div><strong>All-In CAC</strong></div>
+                        <div style="margin-top: 15px; font-size: 14px;">
+                            355,579 Downloads<br>
+                            135,120 Customers<br>
+                            <strong>$3.03M Total Spend</strong>
+                        </div>
+                        <div class="winner-badge" style="margin-top: 15px;">✓ 36% LOWER</div>
+                    </div>
+
+                    <div class="company-column majority-column">
+                        <div class="company-logo majority-logo">Majority</div>
+                        <div class="big-number majority-number">$62.07</div>
+                        <div><strong>Estimated CAC</strong></div>
+                        <div style="margin-top: 15px; font-size: 14px;">
+                            Same Downloads<br>
+                            103,118 Customers<br>
+                            <strong>$6.40M Est. Cost</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="chart-container">
+                    <div id="cacChart"></div>
+                </div>
+
+                <div class="savings-banner">
+                    Q3 Savings vs Majority CAC<br>
+                    <span class="savings-number">$5.36M SAVED</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Boots on Ground Section -->
+        <div id="field" class="section">
+            <div class="card">
+                <h2>👥 Boots on Ground</h2>
+
+                <div class="savings-banner">
+                    MyBambu Field CAC: <strong>$55</strong><br>
+                    vs Majority: <strong>$100-120</strong><br>
+                    <span style="font-size: 20px; margin-top: 10px; display: block;">🎯 45-55% LOWER</span>
+                </div>
+
+                <div class="comparison-card">
+                    <div class="company-column bambu-column">
+                        <div class="company-logo bambu-logo">MyBambu</div>
+                        <div class="big-number bambu-number">$55</div>
+                        <div><strong>Field Marketing CAC</strong></div>
+                        <div class="winner-badge" style="margin-top: 15px;">✓ 45-55% LOWER</div>
+                    </div>
+
+                    <div class="company-column majority-column">
+                        <div class="company-logo majority-logo">Majority</div>
+                        <div class="big-number majority-number">$100-120</div>
+                        <div><strong>Estimated Field CAC</strong></div>
+                    </div>
+                </div>
+
+                <div class="chart-container">
+                    <div id="fieldChart"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Total Comparison Section -->
+        <div id="comparison" class="section">
+            <div class="card">
+                <h2>📊 Total CAC: All Channels</h2>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Channel</th>
+                            <th>MyBambu</th>
+                            <th>Majority</th>
+                            <th>Savings</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Paid Digital</strong></td>
+                            <td style="color: var(--bambu-primary);">$40</td>
+                            <td style="color: var(--majority-orange);">$62.07</td>
+                            <td><strong>$22</strong></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Field</strong></td>
+                            <td style="color: var(--bambu-primary);">$55</td>
+                            <td style="color: var(--majority-orange);">$100-120</td>
+                            <td><strong>$45-65</strong></td>
+                        </tr>
+                        <tr style="background: rgba(39, 251, 107, 0.15);">
+                            <td><strong>BLENDED</strong></td>
+                            <td style="color: var(--bambu-primary); font-size: 16px;"><strong>$52</strong></td>
+                            <td style="color: var(--majority-orange); font-size: 16px;"><strong>$90.83</strong></td>
+                            <td style="font-size: 16px;"><strong>$38.83</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="chart-container">
+                    <div id="comparisonChart"></div>
+                </div>
+
+                <div class="savings-banner">
+                    500K customers/year at $52 CAC:<br>
+                    <span class="savings-number">$22.5M Annual Savings</span>
+                    <div style="font-size: 13px; margin-top: 10px;">vs Majority's $90.83 CAC</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Insights Section -->
+        <div id="insights" class="section">
+            <div class="card">
+                <h2>🎯 Strategic Insights</h2>
+
+                <h3>Why MyBambu Wins</h3>
+                <ul>
+                    <li><strong class="highlight">Better Organic:</strong> Strong word-of-mouth</li>
+                    <li><strong class="highlight">Optimized Channels:</strong> Superior paid social</li>
+                    <li><strong class="highlight">Product-Market Fit:</strong> Resonates with Latinos</li>
+                    <li><strong class="highlight">Brand Trust:</strong> Established equity</li>
+                    <li><strong class="highlight">Referrals:</strong> Lower cost per conversion</li>
+                </ul>
+
+                <h3>Competitive Edge</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Factor</th>
+                            <th>MyBambu</th>
+                            <th>Majority</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>CPI</strong></td>
+                            <td style="color: var(--bambu-primary);">$8.53</td>
+                            <td style="color: var(--majority-orange);">$18.00</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Fee</strong></td>
+                            <td style="color: var(--bambu-primary);">$0/mo</td>
+                            <td>$5.99/mo</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Focus</strong></td>
+                            <td>Latino only</td>
+                            <td>All immigrants</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="savings-banner">
+                    MyBambu's CAC efficiency is a<br>
+                    <span class="savings-number">MASSIVE ADVANTAGE</span>
+                    <div style="font-size: 13px; margin-top: 10px;">
+                        Lower CAC = Faster growth + Better unit economics
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showSection(sectionId) {
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.remove('active');
+            });
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.getElementById(sectionId).classList.add('active');
+            event.target.classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Mobile-optimized chart config
+        const mobileConfig = {
+            responsive: true,
+            displayModeBar: false
+        };
+
+        const mobileMargin = { t: 60, r: 20, b: 60, l: 60 };
+
+        // Overview Chart
+        const overviewData = [{
+            x: ['Paid Digital', 'Blended'],
+            y: [40, 52],
+            name: 'MyBambu',
+            type: 'bar',
+            marker: { color: '#27FB6B' },
+            text: ['$40', '$52'],
+            textposition: 'outside'
+        }, {
+            x: ['Paid Digital', 'Blended'],
+            y: [62.07, 90.83],
+            name: 'Majority',
+            type: 'bar',
+            marker: { color: '#FF6B35' },
+            text: ['$62', '$91'],
+            textposition: 'outside'
+        }];
+
+        const overviewLayout = {
+            title: { text: 'CAC Comparison', font: { color: '#F8F9FA', size: 16 } },
+            barmode: 'group',
+            paper_bgcolor: 'rgba(0,0,0,0)',
+            plot_bgcolor: 'rgba(0,0,0,0)',
+            font: { color: '#F8F9FA', size: 11 },
+            yaxis: { title: 'CAC ($)', gridcolor: 'rgba(255,255,255,0.1)', automargin: true },
+            xaxis: { gridcolor: 'rgba(255,255,255,0.1)', automargin: true },
+            legend: { orientation: 'h', y: -0.2 },
+            height: 350,
+            margin: mobileMargin
+        };
+
+        Plotly.newPlot('overviewChart', overviewData, overviewLayout, mobileConfig);
+
+        // CAC Chart
+        Plotly.newPlot('cacChart', overviewData, {
+            ...overviewLayout,
+            title: { text: 'Paid Digital CAC', font: { color: '#F8F9FA', size: 16 } }
+        }, mobileConfig);
+
+        // Field Chart
+        const fieldData = [{
+            x: ['MyBambu', 'Majority Low', 'Majority High'],
+            y: [55, 100, 120],
+            type: 'bar',
+            marker: { color: ['#27FB6B', '#FF6B35', '#FF6B35'] },
+            text: ['$55', '$100', '$120'],
+            textposition: 'outside'
+        }];
+
+        Plotly.newPlot('fieldChart', fieldData, {
+            title: { text: 'Field Marketing CAC', font: { color: '#F8F9FA', size: 16 } },
+            paper_bgcolor: 'rgba(0,0,0,0)',
+            plot_bgcolor: 'rgba(0,0,0,0)',
+            font: { color: '#F8F9FA', size: 11 },
+            yaxis: { title: 'CAC ($)', gridcolor: 'rgba(255,255,255,0.1)', automargin: true },
+            xaxis: { gridcolor: 'rgba(255,255,255,0.1)', automargin: true, tickfont: { size: 10 } },
+            height: 350,
+            margin: mobileMargin
+        }, mobileConfig);
+
+        // Comparison Chart
+        const comparisonData = [{
+            x: ['Paid', 'Field', 'Blended'],
+            y: [40, 55, 52],
+            name: 'MyBambu',
+            type: 'bar',
+            marker: { color: '#27FB6B' },
+            text: ['$40', '$55', '$52'],
+            textposition: 'outside'
+        }, {
+            x: ['Paid', 'Field', 'Blended'],
+            y: [62.07, 110, 90.83],
+            name: 'Majority',
+            type: 'bar',
+            marker: { color: '#FF6B35' },
+            text: ['$62', '$110', '$91'],
+            textposition: 'outside'
+        }];
+
+        Plotly.newPlot('comparisonChart', comparisonData, {
+            title: { text: 'All Channels', font: { color: '#F8F9FA', size: 16 } },
+            barmode: 'group',
+            paper_bgcolor: 'rgba(0,0,0,0)',
+            plot_bgcolor: 'rgba(0,0,0,0)',
+            font: { color: '#F8F9FA', size: 11 },
+            yaxis: { title: 'CAC ($)', gridcolor: 'rgba(255,255,255,0.1)', automargin: true },
+            xaxis: { gridcolor: 'rgba(255,255,255,0.1)', automargin: true },
+            legend: { orientation: 'h', y: -0.2 },
+            height: 350,
+            margin: mobileMargin
+        }, mobileConfig);
+    </script>
+</body>
+</html>

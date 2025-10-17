@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>MyBambu Liquidation Analysis - Mobile</title>
+    <script src="https://cdn.plot.ly/plotly-2.26.0.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        :root {
+            --bambu-primary: #27FB6B;
+            --bambu-dark: #00052E;
+            --bambu-navy: #002041;
+            --bambu-light: #FFFFFF;
+            --bambu-accent: #01CFFB;
+            --majority-orange: #FF6B35;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, var(--bambu-dark) 0%, var(--bambu-navy) 100%);
+            color: var(--bambu-light);
+            line-height: 1.5;
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 100%;
+            padding: 15px !important;
+            max-width: 100vw;
+            overflow-x: hidden;
+        }
+
+        header {
+            text-align: center;
+            padding: 30px 20px !important;
+            background: linear-gradient(135deg, var(--majority-orange) 0%, #FF8C5A 100%);
+            border-radius: 15px;
+            margin-bottom: 20px !important;
+            box-shadow: 0 8px 30px rgba(255, 107, 53, 0.3);
+        }
+
+        h1 {
+            font-size: 28px !important;
+            margin-bottom: 15px !important;
+            font-weight: 700;
+            color: white;
+            line-height: 1.2;
+        }
+
+        .subtitle {
+            font-size: 16px !important;
+            margin-bottom: 8px !important;
+            color: white;
+            font-weight: 600;
+        }
+
+        .tagline {
+            font-size: 14px !important;
+            color: white;
+            opacity: 0.9;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 20px !important;
+            margin: 15px 0 !important;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .savings-banner {
+            background: linear-gradient(135deg, var(--majority-orange) 0%, #FF8C5A 100%);
+            padding: 25px 20px !important;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(255, 107, 53, 0.4);
+            margin: 20px 0 !important;
+        }
+
+        h2 {
+            font-size: 22px !important;
+            margin-bottom: 20px !important;
+            color: var(--bambu-primary);
+            border-bottom: 2px solid var(--bambu-primary);
+            padding-bottom: 10px;
+        }
+
+        h3 {
+            font-size: 18px !important;
+            margin: 20px 0 15px 0 !important;
+            color: var(--majority-orange);
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: 1fr !important;
+            gap: 15px !important;
+            margin: 20px 0 !important;
+        }
+
+        .metric-card {
+            background: linear-gradient(135deg, rgba(255, 107, 53, 0.15) 0%, rgba(255, 107, 53, 0.05) 100%);
+            padding: 20px !important;
+            border-radius: 12px;
+            text-align: center;
+            border: 2px solid var(--majority-orange);
+        }
+
+        .metric-value {
+            font-size: 32px !important;
+            font-weight: 700;
+            color: var(--majority-orange);
+            margin: 10px 0 !important;
+        }
+
+        .metric-label {
+            font-size: 14px !important;
+            opacity: 0.9;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .chart-container {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 15px !important;
+            margin: 20px 0 !important;
+            min-height: 350px;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0 !important;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 10px;
+            font-size: 13px !important;
+            display: block;
+            overflow-x: auto;
+        }
+
+        th, td {
+            padding: 12px 8px !important;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            min-width: 100px;
+            word-wrap: break-word;
+        }
+
+        th {
+            background: var(--majority-orange);
+            color: white;
+            font-weight: 700;
+            font-size: 11px !important;
+        }
+
+        ul {
+            margin: 15px 0;
+            padding-left: 25px;
+            list-style: none;
+        }
+
+        ul li {
+            margin: 12px 0;
+            font-size: 14px !important;
+            line-height: 1.6;
+            padding-left: 5px;
+        }
+
+        ul li:before {
+            content: "▶ ";
+            color: var(--majority-orange);
+            font-weight: bold;
+            margin-right: 8px;
+        }
+
+        .highlight {
+            color: var(--bambu-primary);
+        }
+
+        .logo {
+            position: fixed;
+            top: 15px;
+            left: 15px;
+            z-index: 1000;
+            font-size: 18px;
+            font-weight: 900;
+            color: var(--bambu-primary);
+        }
+    </style>
+</head>
+<body>
+
+<div class="logo">⚡ MyBambu</div>
+
+<div class="container">
+    <header>
+        <h1>🔄 Liquidation Analysis</h1>
+        <div class="subtitle">Majority's Acquisition Scenario</div>
+        <div class="tagline">What Would Majority Pay for 664K Customers?</div>
+    </header>
+
+    <div class="card">
+        <h2>💰 Liquidation Value Overview</h2>
+
+        <div class="savings-banner">
+            <div style="font-size: 32px; margin-bottom: 12px; font-weight: 700;">664,000 Customers</div>
+            <div style="font-size: 15px; opacity: 0.95;">
+                What would Majority pay to acquire MyBambu's entire customer base?
+            </div>
+        </div>
+
+        <div class="metrics-grid">
+            <div class="metric-card">
+                <div class="metric-label">Total Customers</div>
+                <div class="metric-value">664K</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">MyBambu's CAC</div>
+                <div class="metric-value" style="color: var(--bambu-primary);">$52</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">Majority's CAC</div>
+                <div class="metric-value">$90.83</div>
+            </div>
+            <div class="metric-card" style="background: linear-gradient(135deg, rgba(255, 107, 53, 0.25) 0%, rgba(255, 107, 53, 0.15) 100%);">
+                <div class="metric-label">Liquidation Offer</div>
+                <div class="metric-value">$63.58</div>
+                <div style="font-size: 12px; opacity: 0.9; margin-top: 5px;">30% discount off CAC</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>💸 Majority's Liquidation Offer</h2>
+
+        <div style="background: rgba(255, 107, 53, 0.15); padding: 20px; border-radius: 12px; margin: 15px 0; border: 2px solid var(--majority-orange);">
+            <div style="font-size: 15px; margin: 15px 0; line-height: 1.8;">
+                <strong>Majority's Blended CAC:</strong> <span style="color: var(--majority-orange); font-size: 18px;">$90.83</span><br>
+                <strong>Liquidation Discount:</strong> 30% off<br>
+                <strong>Offer Price:</strong> $90.83 × 70% = <span style="color: var(--majority-orange); font-size: 20px; font-weight: 700;">$63.58</span>
+            </div>
+
+            <div style="margin-top: 20px; padding: 20px; background: rgba(0,0,0,0.3); border-radius: 10px;">
+                <div style="font-size: 14px; margin-bottom: 12px;"><strong>Total Liquidation Offer:</strong></div>
+                <div style="font-size: 24px; margin: 12px 0; font-weight: 700;">
+                    664,000 × $63.58 = <span style="color: var(--majority-orange);">$42.2M</span>
+                </div>
+                <div style="font-size: 12px; opacity: 0.9; margin-top: 12px;">
+                    ⚠️ Majority pays 30% less than their CAC (no marketing risk)
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>📊 Economics Summary</h2>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Metric</th>
+                    <th>MyBambu</th>
+                    <th>Majority</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Customers</strong></td>
+                    <td>664,000</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td><strong>CAC</strong></td>
+                    <td style="color: var(--bambu-primary);">$52</td>
+                    <td style="color: var(--majority-orange);">$90.83</td>
+                </tr>
+                <tr style="background: rgba(255, 107, 53, 0.15);">
+                    <td><strong>Offer Price</strong></td>
+                    <td>-</td>
+                    <td><strong>$63.58</strong></td>
+                </tr>
+                <tr style="background: rgba(255, 107, 53, 0.2);">
+                    <td><strong>Total Offer</strong></td>
+                    <td colspan="2" style="color: var(--majority-orange); font-size: 16px; text-align: center;">
+                        <strong>$42.2M</strong>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="chart-container">
+            <div id="liquidationChart"></div>
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>💡 Key Insights</h2>
+        <div style="background: rgba(39, 251, 107, 0.1); padding: 20px; border-radius: 12px; margin: 15px 0;">
+            <ul>
+                <li><strong class="highlight">Majority's Offer:</strong> $42.2M for all 664K customers</li>
+                <li><strong class="highlight">30% Discount:</strong> $90.83 → $63.58 per customer</li>
+                <li><strong class="highlight">MyBambu's Cost:</strong> $34.5M total investment</li>
+                <li><strong class="highlight">Profit:</strong> $7.7M gain (22% return)</li>
+                <li><strong class="highlight">Still Profitable:</strong> Built for $52, sold for $63.58</li>
+            </ul>
+        </div>
+
+        <div class="savings-banner" style="margin-top: 25px;">
+            <div style="font-size: 20px; margin-bottom: 12px; font-weight: 700;">Majority's Liquidation Offer</div>
+            <div style="font-size: 15px; line-height: 1.7;">
+                <strong>664,000 customers × $63.58</strong><br>
+                <br>
+                <span style="font-size: 28px; font-weight: 700;">Total: $42.2M</span><br>
+                <br>
+                <span style="font-size: 13px;">30% discount off Majority's $90.83 CAC</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>📈 The Bottom Line</h2>
+
+        <div style="background: rgba(39, 251, 107, 0.15); padding: 20px; border-radius: 12px; margin: 15px 0; border: 2px solid var(--bambu-primary); text-align: center;">
+            <div style="font-size: 18px; line-height: 1.7; margin: 15px 0;">
+                <strong>MyBambu's Investment:</strong><br>
+                664K customers × $52 CAC
+            </div>
+            <div style="font-size: 32px; font-weight: 900; margin: 20px 0; color: var(--bambu-primary);">
+                $34.5M Total Cost
+            </div>
+            <div style="font-size: 18px; margin-top: 25px; padding: 15px; background: rgba(39, 251, 107, 0.2); border-radius: 10px;">
+                <strong>Liquidation Profit:</strong><br>
+                <span style="font-size: 28px; font-weight: 700; color: var(--bambu-primary);">+$7.7M</span><br>
+                <span style="font-size: 16px;">(22% return even in worst case)</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Mobile-optimized chart config
+    const mobileConfig = {
+        responsive: true,
+        displayModeBar: false
+    };
+
+    const liquidationData = [{
+        x: ['MyBambu<br>Investment', 'Majority<br>Offer'],
+        y: [34.5, 42.2],
+        type: 'bar',
+        marker: {
+            color: ['#27FB6B', '#FF6B35']
+        },
+        text: ['$34.5M', '$42.2M'],
+        textposition: 'outside',
+        textfont: { size: 16, color: '#FFFFFF' }
+    }];
+
+    const liquidationLayout = {
+        title: {
+            text: 'Liquidation Value',
+            font: { color: '#F8F9FA', size: 16, family: 'Poppins' }
+        },
+        paper_bgcolor: 'rgba(0,0,0,0)',
+        plot_bgcolor: 'rgba(0,0,0,0)',
+        font: { color: '#F8F9FA', size: 11 },
+        yaxis: {
+            title: 'Amount ($M)',
+            gridcolor: 'rgba(255,255,255,0.1)',
+            automargin: true,
+            tickfont: { size: 11 }
+        },
+        xaxis: {
+            gridcolor: 'rgba(255,255,255,0.1)',
+            automargin: true,
+            tickfont: { size: 11 }
+        },
+        height: 350,
+        margin: { t: 60, r: 20, b: 60, l: 60 }
+    };
+
+    Plotly.newPlot('liquidationChart', liquidationData, liquidationLayout, mobileConfig);
+</script>
+
+</body>
+</html>
