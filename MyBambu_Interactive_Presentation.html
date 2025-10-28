@@ -1,0 +1,1621 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyBambu - Financial Presentation</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-green: #27FB6B;
+            --navy-blue: #00052E;
+            --midnight-blue: #000312;
+            --light-green: #E1FFEF;
+            --white: #FFFFFF;
+            --blue-accent: #0156F4;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--navy-blue);
+            color: var(--white);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .presentation-container {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .slide {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 60px;
+            opacity: 0;
+            transform: translateX(100%);
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .slide.active {
+            opacity: 1;
+            transform: translateX(0);
+            z-index: 10;
+        }
+
+        .slide.prev {
+            transform: translateX(-100%);
+        }
+
+        .slide h1 {
+            font-size: 4rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--primary-green);
+            text-align: center;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .slide h2 {
+            font-size: 2.5rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: var(--white);
+            text-align: center;
+            animation: fadeInUp 0.8s ease-out 0.2s backwards;
+        }
+
+        .slide h3 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--primary-green);
+        }
+
+        .slide p {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            margin-bottom: 20px;
+            animation: fadeInUp 0.8s ease-out 0.4s backwards;
+        }
+
+        .tagline {
+            font-size: 1.5rem;
+            color: var(--primary-green);
+            font-weight: 300;
+            animation: fadeInUp 0.8s ease-out 0.6s backwards;
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            width: 100%;
+            max-width: 1200px;
+            margin: 40px 0;
+        }
+
+        .metric-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid var(--primary-green);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(39, 251, 107, 0.3);
+        }
+
+        .metric-value {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--primary-green);
+            margin: 15px 0;
+        }
+
+        .metric-label {
+            font-size: 1rem;
+            color: var(--white);
+            opacity: 0.9;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, var(--primary-green) 0%, #17CA60 100%);
+            color: var(--navy-blue);
+            padding: 40px;
+            border-radius: 20px;
+            max-width: 900px;
+            margin: 30px auto;
+            box-shadow: 0 10px 40px rgba(39, 251, 107, 0.3);
+        }
+
+        .highlight-box h3 {
+            color: var(--navy-blue);
+            margin-bottom: 20px;
+        }
+
+        .highlight-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .highlight-list li {
+            font-size: 1.3rem;
+            margin: 15px 0;
+            padding-left: 40px;
+            position: relative;
+        }
+
+        .highlight-list li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 4px;
+            background: var(--primary-green);
+            transition: width 0.3s ease;
+            z-index: 1000;
+        }
+
+        .slide-counter {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-size: 1rem;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-buttons {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            display: flex;
+            gap: 15px;
+            z-index: 1000;
+        }
+
+        .nav-button {
+            background: var(--primary-green);
+            color: var(--navy-blue);
+            border: none;
+            padding: 15px 30px;
+            border-radius: 30px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .nav-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 20px rgba(39, 251, 107, 0.5);
+        }
+
+        .nav-button:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        .data-table {
+            width: 100%;
+            max-width: 1000px;
+            border-collapse: collapse;
+            margin: 30px 0;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .data-table th {
+            background: var(--primary-green);
+            color: var(--navy-blue);
+            padding: 20px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .data-table td {
+            padding: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .data-table tr:hover {
+            background: rgba(39, 251, 107, 0.1);
+        }
+
+        .chart-container {
+            width: 100%;
+            max-width: 900px;
+            margin: 40px auto;
+        }
+
+        .bar-chart {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-around;
+            height: 400px;
+            gap: 20px;
+        }
+
+        .bar {
+            flex: 1;
+            background: linear-gradient(to top, var(--primary-green), #17CA60);
+            border-radius: 10px 10px 0 0;
+            position: relative;
+            transition: all 0.5s ease;
+            animation: growUp 1s ease-out;
+        }
+
+        .bar:hover {
+            filter: brightness(1.2);
+            transform: scaleY(1.05);
+        }
+
+        .bar-label {
+            position: absolute;
+            bottom: -40px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.9rem;
+            white-space: nowrap;
+        }
+
+        .bar-value {
+            position: absolute;
+            top: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-weight: 700;
+            color: var(--primary-green);
+            white-space: nowrap;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes growUp {
+            from {
+                transform: scaleY(0);
+                transform-origin: bottom;
+            }
+            to {
+                transform: scaleY(1);
+                transform-origin: bottom;
+            }
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin: 5px;
+        }
+
+        .status-success {
+            background: var(--primary-green);
+            color: var(--navy-blue);
+        }
+
+        .status-info {
+            background: var(--blue-accent);
+            color: var(--white);
+        }
+
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        .content-box {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 30px;
+            border-radius: 15px;
+            border-left: 5px solid var(--primary-green);
+        }
+
+        .slide-content {
+            width: 100%;
+            max-width: 1400px;
+            overflow-y: auto;
+            max-height: 85vh;
+            padding: 20px;
+        }
+
+        .slide-content::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .slide-content::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+
+        .slide-content::-webkit-scrollbar-thumb {
+            background: var(--primary-green);
+            border-radius: 10px;
+        }
+
+        .center-content {
+            text-align: center;
+        }
+
+        .logo-text {
+            font-size: 5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary-green) 0%, #17CA60 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .growth-indicator {
+            color: var(--primary-green);
+            font-weight: 700;
+        }
+
+        .decline-indicator {
+            color: #FF6B6B;
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body>
+    <div class="progress-bar" id="progressBar"></div>
+    <div class="slide-counter" id="slideCounter">1 / 30</div>
+    <div class="nav-buttons">
+        <button class="nav-button" id="prevBtn" onclick="changeSlide(-1)">← Previous</button>
+        <button class="nav-button" id="nextBtn" onclick="changeSlide(1)">Next →</button>
+    </div>
+
+    <div class="presentation-container">
+        <!-- Slide 1: Title -->
+        <div class="slide active">
+            <h1 class="logo-text">MyBambu</h1>
+            <h2>Financial Presentation for Investors</h2>
+            <p class="tagline">Banking the Underbanked • Tu cuenta para todo</p>
+            <p style="margin-top: 60px; opacity: 0.7;">Prepared: October 2025</p>
+            <p style="opacity: 0.7;">Confidential & Proprietary</p>
+        </div>
+
+        <!-- Slide 2: Executive Summary -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2>Executive Summary</h2>
+                <div class="highlight-box">
+                    <h3>Investment Opportunity at a Glance</h3>
+                    <p style="font-size: 1.4rem; margin: 0;"><strong>MyBambu</strong> is a fully-funded fintech company with <strong>21 months to profitability</strong> and <strong>no additional capital required</strong> to reach breakeven.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 3: Key Metrics -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2>Key Metrics</h2>
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <div class="metric-label">2024 Revenue</div>
+                        <div class="metric-value">$8.0M</div>
+                        <span class="status-badge status-success">Actual</span>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">2025 Revenue (Forecast)</div>
+                        <div class="metric-value">$13.8M</div>
+                        <span class="growth-indicator">+73% YoY</span>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">2026 Revenue (Forecast)</div>
+                        <div class="metric-value">$75.3M</div>
+                        <span class="growth-indicator">+445% YoY</span>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">Monthly Burn Rate</div>
+                        <div class="metric-value">$2.4M</div>
+                        <span class="decline-indicator">↓ 56% reduction</span>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">Breakeven Date</div>
+                        <div class="metric-value">Oct 2026</div>
+                        <span class="status-badge status-info">21 months</span>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">Capital to Breakeven</div>
+                        <div class="metric-value">$26.5M</div>
+                        <span class="status-badge status-success">Fully funded</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 4: Why Invest Now -->
+        <div class="slide">
+            <div class="slide-content center-content">
+                <h2>Why Invest Now?</h2>
+                <div class="highlight-box">
+                    <ul class="highlight-list">
+                        <li>Proven expense discipline: Cut burn 56% in 2 months</li>
+                        <li>Revenue acceleration: 445% growth trajectory in 2026</li>
+                        <li>Fully funded to profitability: No survival risk</li>
+                        <li>Near-term exit opportunity: Profitable Q4 2026</li>
+                        <li>Massive market: 29M+ underbanked households in U.S.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 5: Company Overview -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2>Company Overview</h2>
+                <h3>Our Mission</h3>
+                <p style="font-size: 1.5rem; margin: 30px 0;">Banking the underbanked Hispanic community through mobile-first financial services</p>
+                <div class="two-column">
+                    <div class="content-box">
+                        <h3>Business Model</h3>
+                        <ul style="list-style: none; padding: 0;">
+                            <li style="margin: 15px 0;">✓ FDIC-insured deposit accounts</li>
+                            <li style="margin: 15px 0;">✓ Cross-border remittance services</li>
+                            <li style="margin: 15px 0;">✓ Mobile-first platform</li>
+                            <li style="margin: 15px 0;">✓ Program manager model</li>
+                        </ul>
+                    </div>
+                    <div class="content-box">
+                        <h3>Market Opportunity</h3>
+                        <ul style="list-style: none; padding: 0;">
+                            <li style="margin: 15px 0;">• 5.9M unbanked households</li>
+                            <li style="margin: 15px 0;">• 23.6M underbanked households</li>
+                            <li style="margin: 15px 0;">• $60B+ annual remittances to Mexico</li>
+                            <li style="margin: 15px 0;">• Growing Hispanic demographic</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 6: Revenue Growth Chart -->
+        <div class="slide">
+            <div class="slide-content center-content">
+                <h2>Revenue Growth Trajectory</h2>
+                <div class="chart-container">
+                    <div class="bar-chart">
+                        <div class="bar" style="height: 15%;">
+                            <div class="bar-value">$1.6M</div>
+                            <div class="bar-label">2022</div>
+                        </div>
+                        <div class="bar" style="height: 30%;">
+                            <div class="bar-value">$3.2M</div>
+                            <div class="bar-label">2023</div>
+                        </div>
+                        <div class="bar" style="height: 50%;">
+                            <div class="bar-value">$8.0M</div>
+                            <div class="bar-label">2024</div>
+                        </div>
+                        <div class="bar" style="height: 75%;">
+                            <div class="bar-value">$13.8M</div>
+                            <div class="bar-label">2025F</div>
+                        </div>
+                        <div class="bar" style="height: 100%;">
+                            <div class="bar-value">$75.3M</div>
+                            <div class="bar-label">2026F</div>
+                        </div>
+                    </div>
+                </div>
+                <p style="margin-top: 80px; font-size: 1.3rem;"><strong>3-Year CAGR:</strong> <span class="growth-indicator">129%</span> | <strong>2024-2026 CAGR:</strong> <span class="growth-indicator">343%</span></p>
+            </div>
+        </div>
+
+        <!-- Slide 7: Path to Profitability -->
+        <div class="slide">
+            <div class="slide-content center-content">
+                <h2 style="color: var(--primary-green);">Path to Profitability</h2>
+                <h3>Breakeven: October 2026</h3>
+                <div class="highlight-box">
+                    <h3>Critical Achievement: Expense Reduction ✓</h3>
+                    <div class="metrics-grid">
+                        <div class="metric-card">
+                            <div class="metric-label">September 2025</div>
+                            <div class="metric-value">$5.5M</div>
+                            <p>Monthly OpEx</p>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-label">November 2025</div>
+                            <div class="metric-value">$2.4M</div>
+                            <p>Monthly OpEx</p>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-label">Reduction</div>
+                            <div class="metric-value">56%</div>
+                            <p>In 2 months ✓</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 8: Timeline to Profitability -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2>Timeline to Profitability</h2>
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Period</th>
+                            <th>Revenue</th>
+                            <th>Net Income</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>2024</td>
+                            <td>$8.0M</td>
+                            <td style="color: #FF6B6B;">$(27.1M)</td>
+                            <td>Historical</td>
+                        </tr>
+                        <tr>
+                            <td>2025</td>
+                            <td>$13.8M</td>
+                            <td style="color: #FF6B6B;">$(53.0M)</td>
+                            <td>Investment year</td>
+                        </tr>
+                        <tr>
+                            <td>Q1 2026</td>
+                            <td>$12.5M</td>
+                            <td style="color: #FF6B6B;">$(10.5M)</td>
+                            <td>Improving</td>
+                        </tr>
+                        <tr>
+                            <td>Q2 2026</td>
+                            <td>$16.8M</td>
+                            <td style="color: #FF6B6B;">$(4.2M)</td>
+                            <td>Approaching</td>
+                        </tr>
+                        <tr>
+                            <td>Q3 2026</td>
+                            <td>$21.4M</td>
+                            <td style="color: #FF6B6B;">$(1.8M)</td>
+                            <td>Near breakeven</td>
+                        </tr>
+                        <tr style="background: rgba(39, 251, 107, 0.2);">
+                            <td><strong>Oct 2026</strong></td>
+                            <td><strong>$6.3M/mo</strong></td>
+                            <td style="color: var(--primary-green);"><strong>$0</strong></td>
+                            <td><strong>🎯 BREAKEVEN</strong></td>
+                        </tr>
+                        <tr style="background: rgba(39, 251, 107, 0.2);">
+                            <td><strong>Q4 2026</strong></td>
+                            <td><strong>$24.6M</strong></td>
+                            <td style="color: var(--primary-green);"><strong>$2.6M</strong></td>
+                            <td><strong>✓ Profitable</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Slide 9: Capital Requirements -->
+        <div class="slide">
+            <div class="slide-content center-content">
+                <h2>Capital Requirements to Breakeven</h2>
+                <h3>Total Funding Required: $26.5M</h3>
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Period</th>
+                            <th>Revenue</th>
+                            <th>Cash Burn</th>
+                            <th>Cumulative</th>
+                            <th>Purpose</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Q4 2025</td>
+                            <td>$3.9M</td>
+                            <td style="color: #FF6B6B;">$(8.2M)</td>
+                            <td>$8.2M</td>
+                            <td>Complete 2025 operations</td>
+                        </tr>
+                        <tr>
+                            <td>Q1 2026</td>
+                            <td>$12.5M</td>
+                            <td style="color: #FF6B6B;">$(8.3M)</td>
+                            <td>$16.5M</td>
+                            <td>Customer acquisition ramp</td>
+                        </tr>
+                        <tr>
+                            <td>Q2 2026</td>
+                            <td>$16.8M</td>
+                            <td style="color: #FF6B6B;">$(5.8M)</td>
+                            <td>$22.3M</td>
+                            <td>Scaling to profitability</td>
+                        </tr>
+                        <tr>
+                            <td>Q3 2026</td>
+                            <td>$21.4M</td>
+                            <td style="color: #FF6B6B;">$(1.7M)</td>
+                            <td>$24.0M</td>
+                            <td>Final push to breakeven</td>
+                        </tr>
+                        <tr>
+                            <td>Buffer</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>$2.5M</td>
+                            <td>Working capital cushion</td>
+                        </tr>
+                        <tr style="background: rgba(39, 251, 107, 0.2);">
+                            <td><strong>TOTAL</strong></td>
+                            <td></td>
+                            <td style="color: var(--primary-green);"><strong>$(26.5M)</strong></td>
+                            <td><strong>$26.5M</strong></td>
+                            <td><strong>To profitability</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Slide 10: Funding Status -->
+        <div class="slide">
+            <div class="slide-content center-content">
+                <h2 style="color: var(--primary-green);">Funding Status: ✓ FULLY FUNDED</h2>
+                <div class="highlight-box">
+                    <table class="data-table" style="background: rgba(0, 5, 46, 0.3);">
+                        <thead>
+                            <tr>
+                                <th>Source</th>
+                                <th>Amount</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Cash at Dec 31, 2024</td>
+                                <td>$1.8M</td>
+                                <td>✓ Available</td>
+                            </tr>
+                            <tr>
+                                <td>Credit facility - 2025 borrowings</td>
+                                <td>$37.9M</td>
+                                <td><strong>✓ Borrowed</strong></td>
+                            </tr>
+                            <tr>
+                                <td>Credit facility - remaining capacity</td>
+                                <td>$30.1M</td>
+                                <td>✓ Available</td>
+                            </tr>
+                            <tr style="background: rgba(39, 251, 107, 0.2);">
+                                <td><strong>Total Available Funding</strong></td>
+                                <td><strong>$69.8M</strong></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td colspan="3" style="height: 20px;"></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Required to Breakeven</strong></td>
+                                <td style="color: #FF6B6B;"><strong>$(26.5M)</strong></td>
+                                <td></td>
+                            </tr>
+                            <tr style="background: rgba(39, 251, 107, 0.3);">
+                                <td><strong>Excess Cushion</strong></td>
+                                <td style="color: var(--primary-green);"><strong>$43.3M</strong></td>
+                                <td><strong>163% buffer</strong></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p style="margin-top: 30px; font-size: 1.4rem;">🎯 <strong>Company is overcapitalized for base case profitability scenario</strong></p>
+            </div>
+        </div>
+
+        <!-- Slide 11: Revenue Breakdown 2025 -->
+        <div class="slide">
+            <div class="slide-content center-content">
+                <h2>Revenue Breakdown 2025: $13.8M</h2>
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Revenue Stream</th>
+                            <th>2025 Forecast</th>
+                            <th>% of Total</th>
+                            <th>Margin</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Foreign Remittance Fees</strong></td>
+                            <td>$7.6M</td>
+                            <td>55%</td>
+                            <td style="color: var(--primary-green);">High (60%+)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Card & Interchange Fees</strong></td>
+                            <td>$4.1M</td>
+                            <td>30%</td>
+                            <td>Medium (40%)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>ATM Surcharges</strong></td>
+                            <td>$1.4M</td>
+                            <td>10%</td>
+                            <td style="color: var(--primary-green);">High (70%+)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Unsecured Loans</strong></td>
+                            <td>$0.7M</td>
+                            <td>5%</td>
+                            <td style="color: var(--primary-green);">High (50%+)</td>
+                        </tr>
+                        <tr style="background: rgba(39, 251, 107, 0.2);">
+                            <td><strong>Total</strong></td>
+                            <td><strong>$13.8M</strong></td>
+                            <td><strong>100%</strong></td>
+                            <td><strong>Blended</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Slide 12: Customer Growth -->
+        <div class="slide">
+            <div class="slide-content center-content">
+                <h2>Customer Base Expansion</h2>
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <div class="metric-label">Total Customers (2024)</div>
+                        <div class="metric-value">~400K</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">Total Customers (2025F)</div>
+                        <div class="metric-value">664K</div>
+                        <span class="growth-indicator">+66% YoY</span>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">Total Customers (2026F)</div>
+                        <div class="metric-value">934K</div>
+                        <span class="growth-indicator">+41% YoY</span>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">Active Customers (2024)</div>
+                        <div class="metric-value">~100K</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">Active Customers (2025F)</div>
+                        <div class="metric-value">125K</div>
+                        <span class="growth-indicator">+25% YoY</span>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">Active Customers (2026F)</div>
+                        <div class="metric-value">260K</div>
+                        <span class="growth-indicator">+108% YoY</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 13: Revenue Per Customer -->
+        <div class="slide">
+            <div class="slide-content center-content">
+                <h2>Revenue Per Customer Growth</h2>
+                <div class="chart-container">
+                    <div class="bar-chart">
+                        <div class="bar" style="height: 28%;">
+                            <div class="bar-value">$80</div>
+                            <div class="bar-label">2024</div>
+                        </div>
+                        <div class="bar" style="height: 38%;">
+                            <div class="bar-value">$111</div>
+                            <div class="bar-label">2025F</div>
+                        </div>
+                        <div class="bar" style="height: 100%;">
+                            <div class="bar-value">$289</div>
+                            <div class="bar-label">2026F</div>
+                        </div>
+                    </div>
+                </div>
+                <p style="margin-top: 100px; font-size: 1.5rem;"><strong>Annual Customer Value:</strong> <span class="growth-indicator">+261% growth (3.6x increase)</span></p>
+                <div class="highlight-box" style="margin-top: 40px;">
+                    <h3>Key Drivers:</h3>
+                    <ul class="highlight-list">
+                        <li>Cross-border remittance adoption</li>
+                        <li>Increased card usage frequency</li>
+                        <li>Loan product penetration</li>
+                        <li>Multi-product customer growth</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 14: Unit Economics -->
+        <div class="slide">
+            <div class="slide-content center-content">
+                <h2>Unit Economics Improvement</h2>
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Metric</th>
+                            <th>2024</th>
+                            <th>2025F</th>
+                            <th>2026F</th>
+                            <th>Change</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Customer Acquisition Cost (CAC)</strong></td>
+                            <td>$120</td>
+                            <td>$146</td>
+                            <td style="color: var(--primary-green);">$87</td>
+                            <td style="color: var(--primary-green);">Improving</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Revenue per Customer (Annual)</strong></td>
+                            <td>$80</td>
+                            <td>$111</td>
+                            <td style="color: var(--primary-green);">$289</td>
+                            <td style="color: var(--primary-green);">+261%</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Gross Profit per Customer</strong></td>
+                            <td style="color: #FF6B6B;">$(23)</td>
+                            <td style="color: #FF6B6B;">$(6)</td>
+                            <td style="color: var(--primary-green);">$58</td>
+                            <td style="color: var(--primary-green);">Positive</td>
+                        </tr>
+                        <tr>
+                            <td><strong>CAC Payback Period</strong></td>
+                            <td>N/A</td>
+                            <td>N/A</td>
+                            <td style="color: var(--primary-green);">3.6 months</td>
+                            <td style="color: var(--primary-green);">Viable</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Customer Lifetime Value (LTV)</strong></td>
+                            <td>$240</td>
+                            <td>$333</td>
+                            <td style="color: var(--primary-green);">$867</td>
+                            <td style="color: var(--primary-green);">3.6x</td>
+                        </tr>
+                        <tr style="background: rgba(39, 251, 107, 0.2);">
+                            <td><strong>LTV:CAC Ratio</strong></td>
+                            <td>2.0x</td>
+                            <td>2.3x</td>
+                            <td style="color: var(--primary-green);"><strong>10.0x</strong></td>
+                            <td style="color: var(--primary-green);"><strong>Excellent</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Slide 15: Operating Leverage -->
+        <div class="slide">
+            <div class="slide-content center-content">
+                <h2>Operating Leverage Model</h2>
+                <h3>Proof of Scalability</h3>
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Period</th>
+                            <th>Revenue</th>
+                            <th>Rev Growth</th>
+                            <th>OpEx</th>
+                            <th>OpEx Growth</th>
+                            <th>Leverage Ratio</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>2024</td>
+                            <td>$8.0M</td>
+                            <td>-</td>
+                            <td>$48.5M</td>
+                            <td>-</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td>2025F</td>
+                            <td>$13.8M</td>
+                            <td style="color: var(--primary-green);">+73%</td>
+                            <td>$53.7M</td>
+                            <td>+11%</td>
+                            <td style="color: var(--primary-green);">6.6x</td>
+                        </tr>
+                        <tr style="background: rgba(39, 251, 107, 0.2);">
+                            <td><strong>2026F</strong></td>
+                            <td><strong>$75.3M</strong></td>
+                            <td style="color: var(--primary-green);"><strong>+445%</strong></td>
+                            <td><strong>$59.0M</strong></td>
+                            <td><strong>+10%</strong></td>
+                            <td style="color: var(--primary-green);"><strong>44.5x</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p style="margin-top: 40px; font-size: 1.3rem;"><strong>Leverage Ratio = Revenue Growth ÷ OpEx Growth</strong></p>
+                <div class="highlight-box" style="margin-top: 30px;">
+                    <p style="font-size: 1.5rem; margin: 0;">Platform demonstrates <strong>strong operating leverage</strong> ✓</p>
+                    <p style="margin-top: 20px; font-size: 1.2rem;">Platform scales 44x faster than costs</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 16: Market Opportunity -->
+        <div class="slide">
+            <div class="slide-content center-content">
+                <h2>Total Addressable Market (TAM)</h2>
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <div class="metric-label">Unbanked Households</div>
+                        <div class="metric-value">5.9M</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">Underbanked Households</div>
+                        <div class="metric-value">23.6M</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">Total Addressable</div>
+                        <div class="metric-value">29.5M</div>
+                        <p>households</p>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">U.S. to Mexico Remittances</div>
+                        <div class="metric-value">$60B+</div>
+                        <p>annually</p>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">MyBambu Market Share</div>
+                        <div class="metric-value">1.2%</div>
+                        <p>by 2026</p>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">Opportunity Remaining</div>
+                        <div class="metric-value">99%+</div>
+                        <p style="color: var(--primary-green);">to capture</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 17: Investment Highlights 1 -->
+        <div class="slide">
+            <div class="slide-content center-content">
+                <h2 style="color: var(--primary-green);">Investment Highlights</h2>
+                <h3>Why Invest in MyBambu?</h3>
+                <div class="two-column" style="margin-top: 40px;">
+                    <div class="content-box">
+                        <h3>1. Proven Revenue Acceleration ✓</h3>
+                        <p style="font-size: 1.2rem; margin: 20px 0;">445% projected growth in 2026</p>
+                        <ul style="list-style: none; padding: 0;">
+                            <li>2022: $1.6M</li>
+                            <li>2023: $3.2M (+109%)</li>
+                            <li>2024: $8.0M (+148%)</li>
+                            <li style="color: var(--primary-green); font-weight: 700; font-size: 1.2rem;">2026: $75.3M (+445%)</li>
+                        </ul>
+                    </div>
+                    <div class="content-box">
+                        <h3>2. Operational Excellence ✓</h3>
+                        <p style="font-size: 1.2rem; margin: 20px 0;">56% expense reduction in 2 months</p>
+                        <ul style="list-style: none; padding: 0;">
+                            <li>Sep 2025: $5.5M monthly burn</li>
+                            <li>Nov 2025: $2.4M monthly burn</li>
+                            <li style="color: var(--primary-green); font-weight: 700;">Savings: $3.1M/month</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 18: Investment Highlights 2 -->
+        <div class="slide">
+            <div class="slide-content center-content">
+                <h2 style="color: var(--primary-green);">Investment Highlights</h2>
+                <div class="two-column">
+                    <div class="content-box">
+                        <h3>3. Fully Funded to Profitability ✓</h3>
+                        <p style="font-size: 1.2rem; margin: 20px 0;">No survival risk</p>
+                        <table style="width: 100%; margin-top: 20px;">
+                            <tr>
+                                <td>Capital needed:</td>
+                                <td style="text-align: right;">$26.5M</td>
+                            </tr>
+                            <tr>
+                                <td>Available funding:</td>
+                                <td style="text-align: right; color: var(--primary-green); font-weight: 700;">$69.8M ✓</td>
+                            </tr>
+                            <tr>
+                                <td>Excess cushion:</td>
+                                <td style="text-align: right; color: var(--primary-green); font-weight: 700;">$43.3M</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" style="padding-top: 20px; color: var(--primary-green); text-align: center;">163% buffer</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="content-box">
+                        <h3>4. Near-Term Profitability ✓</h3>
+                        <p style="font-size: 1.2rem; margin: 20px 0;">21 months to breakeven</p>
+                        <ul style="list-style: none; padding: 0;">
+                            <li>Q4 2025: Expense optimization</li>
+                            <li>Q1 2026: Gross margin positive</li>
+                            <li>Q2 2026: OpEx loss narrowing</li>
+                            <li>Q3 2026: Approaching breakeven</li>
+                            <li style="color: var(--primary-green); font-weight: 700; margin-top: 15px;">Oct 2026: Cash flow positive 🎯</li>
+                            <li style="color: var(--primary-green); font-weight: 700;">Q4 2026: Profitable quarter ✓</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 19: Investment Highlights 3 -->
+        <div class="slide">
+            <div class="slide-content center-content">
+                <h2 style="color: var(--primary-green);">Investment Highlights</h2>
+                <div class="highlight-box">
+                    <h3>5. Massive Market Opportunity ✓</h3>
+                    <p style="font-size: 1.3rem;">$60B+ addressable market, <1% penetration</p>
+                    <div class="metrics-grid" style="margin-top: 30px;">
+                        <div class="metric-card" style="background: rgba(0, 5, 46, 0.3);">
+                            <div class="metric-label">U.S. Market</div>
+                            <div class="metric-value">29.5M</div>
+                            <p>underbanked households</p>
+                        </div>
+                        <div class="metric-card" style="background: rgba(0, 5, 46, 0.3);">
+                            <div class="metric-label">MyBambu Customers (2026)</div>
+                            <div class="metric-value">934K</div>
+                            <p>1.2% market share</p>
+                        </div>
+                        <div class="metric-card" style="background: rgba(0, 5, 46, 0.3);">
+                            <div class="metric-label">Opportunity Remaining</div>
+                            <div class="metric-value">99%+</div>
+                            <p style="color: var(--primary-green);">to capture</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 20: Validated Product-Market Fit -->
+        <div class="slide">
+            <div class="slide-content center-content">
+                <h2 style="color: var(--primary-green);">6. Validated Product-Market Fit ✓</h2>
+                <div class="highlight-box">
+                    <h3>Customer metrics prove demand</h3>
+                    <ul class="highlight-list">
+                        <li>Retention: 65%+ after 24 months</li>
+                        <li>Revenue per customer: Growing 3.6x in 2 years</li>
+                        <li>Activation rate: Improving to 28%</li>
+                        <li>Customer feedback: Strong NPS scores</li>
+                        <li>Repeat usage: High transaction frequency</li>
+                    </ul>
+                </div>
+                <div class="metrics-grid" style="margin-top: 40px;">
+                    <div class="metric-card">
+                        <div class="metric-label">LTV:CAC Ratio (2026)</div>
+                        <div class="metric-value">10.0x</div>
+                        <span class="status-badge status-success">Excellent</span>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">CAC Payback</div>
+                        <div class="metric-value">3.6</div>
+                        <p>months</p>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">Gross Margin (Q1 2026)</div>
+                        <div class="metric-value">Positive</div>
+                        <span class="status-badge status-success">✓</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 21: Operating Leverage Advantage -->
+        <div class="slide">
+            <div class="slide-content center-content">
+                <h2 style="color: var(--primary-green);">7. Strong Operating Leverage ✓</h2>
+                <div class="highlight-box">
+                    <h3>Platform scales 44x faster than costs</h3>
+                    <div class="metrics-grid" style="margin-top: 30px;">
+                        <div class="metric-card" style="background: rgba(0, 5, 46, 0.3);">
+                            <div class="metric-label">Revenue Growth (2025-2026)</div>
+                            <div class="metric-value">+445%</div>
+                        </div>
+                        <div class="metric-card" style="background: rgba(0, 5, 46, 0.3);">
+                            <div class="metric-label">OpEx Growth (2025-2026)</div>
+                            <div class="metric-value">+10%</div>
+                        </div>
+                        <div class="metric-card" style="background: rgba(0, 5, 46, 0.3);">
+                            <div class="metric-label">Leverage Ratio</div>
+                            <div class="metric-value">44.5x</div>
+                        </div>
+                    </div>
+                    <h3 style="margin-top: 40px;">Technology Advantage:</h3>
+                    <ul class="highlight-list">
+                        <li>Mobile-first platform (built, not rented)</li>
+                        <li>Automated onboarding</li>
+                        <li>Scalable infrastructure</li>
+                        <li>Low marginal cost per customer</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 22: Competitive Advantages -->
+        <div class="slide">
+            <div class="slide-content center-content">
+                <h2 style="color: var(--primary-green);">8. Competitive Advantages ✓</h2>
+                <div class="highlight-box">
+                    <h3>Defensible positioning in underserved market</h3>
+                    <ul class="highlight-list">
+                        <li>FDIC-insured: Trust & safety vs competitors</li>
+                        <li>Cross-border capability: U.S.-Mexico expertise</li>
+                        <li>Hispanic focus: Culturally aligned product</li>
+                        <li>Mobile-first: Superior UX for target demographic</li>
+                        <li>Lower fees: Value proposition vs traditional remittance</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 23: Exit Path -->
+        <div class="slide">
+            <div class="slide-content center-content">
+                <h2 style="color: var(--primary-green);">9. Clear Path to Exit ✓</h2>
+                <h3>Multiple exit scenarios by 2027-2028</h3>
+                <div class="two-column" style="margin-top: 40px;">
+                    <div class="content-box">
+                        <h3>IPO Path</h3>
+                        <ul style="list-style: none; padding: 0;">
+                            <li style="margin: 15px 0;">• Profitable fintech at $120M+ revenue</li>
+                            <li style="margin: 15px 0;">• 8-12x revenue multiple</li>
+                            <li style="margin: 15px 0; color: var(--primary-green); font-weight: 700;">• $1.0B - $1.4B valuation</li>
+                            <li style="margin: 15px 0;">• Timing: 2027-2028</li>
+                            <li style="margin: 15px 0;">• Comparables: Chime, Dave, Nubank</li>
+                        </ul>
+                    </div>
+                    <div class="content-box">
+                        <h3>Strategic Acquisition</h3>
+                        <ul style="list-style: none; padding: 0;">
+                            <li style="margin: 15px 0;">• Traditional bank seeking digital growth</li>
+                            <li style="margin: 15px 0;">• Fintech consolidation play</li>
+                            <li style="margin: 15px 0;">• Remittance company expansion</li>
+                            <li style="margin: 15px 0;">• Payment processor integration</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 24: Return Scenarios -->
+        <div class="slide">
+            <div class="slide-content center-content">
+                <h2>Return Scenarios</h2>
+                <p style="font-size: 1.2rem; margin-bottom: 30px;">On $40M investment @ $150M post-money</p>
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Scenario</th>
+                            <th>Exit Value</th>
+                            <th>Investor Proceeds</th>
+                            <th>Multiple</th>
+                            <th>IRR</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Conservative</td>
+                            <td>$500M</td>
+                            <td>$33.5M</td>
+                            <td style="color: var(--primary-green);">3.3x</td>
+                            <td style="color: var(--primary-green);">49%</td>
+                        </tr>
+                        <tr style="background: rgba(39, 251, 107, 0.2);">
+                            <td><strong>Base Case</strong></td>
+                            <td><strong>$1.0B</strong></td>
+                            <td><strong>$67.0M</strong></td>
+                            <td style="color: var(--primary-green);"><strong>6.7x</strong></td>
+                            <td style="color: var(--primary-green);"><strong>157%</strong></td>
+                        </tr>
+                        <tr>
+                            <td>Optimistic</td>
+                            <td>$2.0B</td>
+                            <td>$134.0M</td>
+                            <td style="color: var(--primary-green);">13.3x</td>
+                            <td style="color: var(--primary-green);">274%</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Slide 25: Comparable Valuations -->
+        <div class="slide">
+            <div class="slide-content center-content">
+                <h2>Comparable Company Valuations</h2>
+                <h3>Recent Fintech Exits & Valuations</h3>
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Company</th>
+                            <th>Type</th>
+                            <th>Last Valuation</th>
+                            <th>Revenue Multiple</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Chime</td>
+                            <td>Neobank</td>
+                            <td>$25B</td>
+                            <td>10-12x revenue</td>
+                        </tr>
+                        <tr>
+                            <td>Nubank</td>
+                            <td>Digital bank</td>
+                            <td>$30B (IPO 2021)</td>
+                            <td>8-10x revenue</td>
+                        </tr>
+                        <tr>
+                            <td>Dave</td>
+                            <td>Banking app</td>
+                            <td>$1.3B (SPAC 2022)</td>
+                            <td>6-8x revenue</td>
+                        </tr>
+                        <tr>
+                            <td>MoneyLion</td>
+                            <td>Fintech</td>
+                            <td>$2.4B (SPAC 2021)</td>
+                            <td>8-10x revenue</td>
+                        </tr>
+                        <tr>
+                            <td>Remitly</td>
+                            <td>Remittances</td>
+                            <td>$6.0B (IPO 2021)</td>
+                            <td>10-12x revenue</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="highlight-box" style="margin-top: 40px;">
+                    <h3>MyBambu Potential (2027)</h3>
+                    <p style="font-size: 1.3rem;">Projected 2027 revenue: $120M - $150M</p>
+                    <p style="font-size: 1.3rem;">Conservative multiple: 6-8x</p>
+                    <p style="font-size: 1.5rem; color: var(--navy-blue); font-weight: 700; margin-top: 20px;">Valuation range: $720M - $1.2B</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 26: Risk Factors -->
+        <div class="slide">
+            <div class="slide-content center-content">
+                <h2>Risk Factors & Mitigations</h2>
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Risk Category</th>
+                            <th>Probability</th>
+                            <th>Impact</th>
+                            <th>Mitigation Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Execution</td>
+                            <td>Medium</td>
+                            <td>Medium</td>
+                            <td style="color: var(--primary-green);">✓ Strong</td>
+                        </tr>
+                        <tr>
+                            <td>Competition</td>
+                            <td>Medium</td>
+                            <td>Medium</td>
+                            <td style="color: var(--primary-green);">✓ Adequate</td>
+                        </tr>
+                        <tr>
+                            <td>Regulatory</td>
+                            <td>Low</td>
+                            <td>High</td>
+                            <td style="color: var(--primary-green);">✓ Strong</td>
+                        </tr>
+                        <tr>
+                            <td>Market</td>
+                            <td>Medium</td>
+                            <td>Medium</td>
+                            <td style="color: var(--primary-green);">✓ Strong</td>
+                        </tr>
+                        <tr>
+                            <td>Profitability Timing</td>
+                            <td>Medium</td>
+                            <td>Low</td>
+                            <td style="color: var(--primary-green);">✓ Strong</td>
+                        </tr>
+                        <tr>
+                            <td>Technology</td>
+                            <td>Low</td>
+                            <td>High</td>
+                            <td style="color: var(--primary-green);">✓ Adequate</td>
+                        </tr>
+                        <tr>
+                            <td>Funding</td>
+                            <td>Low</td>
+                            <td>High</td>
+                            <td style="color: var(--primary-green);">✓ Strong</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="highlight-box" style="margin-top: 40px;">
+                    <p style="font-size: 1.4rem; margin: 0;"><strong>Overall Assessment: Medium-Low Risk</strong> for growth-stage fintech</p>
+                    <p style="font-size: 1.2rem; margin-top: 20px;"><strong>Key Risk Mitigant:</strong> $43M funding cushion provides exceptional downside protection</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 27: Investment Opportunity -->
+        <div class="slide">
+            <div class="slide-content center-content">
+                <h2 style="color: var(--primary-green);">Investment Opportunity</h2>
+                <h3>Series D Preferred Units - Proposed Terms</h3>
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Term</th>
+                            <th>Details</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Security Type</strong></td>
+                            <td>Series D Preferred Units</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Amount Raising</strong></td>
+                            <td>$0 - $20M (optional growth capital)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Pre-Money Valuation</strong></td>
+                            <td>To be negotiated</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Post-Money Valuation</strong></td>
+                            <td>$150M - $200M range (indicative)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Minimum Investment</strong></td>
+                            <td>$500K</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="highlight-box" style="margin-top: 40px;">
+                    <h3>This is NOT a survival round - it's a growth opportunity</h3>
+                    <ul class="highlight-list">
+                        <li>Company is fully funded to profitability ($69.8M available)</li>
+                        <li>Breakeven in 21 months (October 2026)</li>
+                        <li>No additional capital required</li>
+                        <li>This capital accelerates growth and strengthens balance sheet</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 28: Use of Proceeds -->
+        <div class="slide">
+            <div class="slide-content center-content">
+                <h2>Use of Proceeds (if raised)</h2>
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Use</th>
+                            <th>Amount</th>
+                            <th>% of Total</th>
+                            <th>Purpose</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Accelerated Customer Acquisition</strong></td>
+                            <td>$8M - $12M</td>
+                            <td>50%</td>
+                            <td>Pull forward 2027 growth</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Debt Refinancing/Paydown</strong></td>
+                            <td>$4M - $6M</td>
+                            <td>25%</td>
+                            <td>Reduce 10% interest cost</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Product Development</strong></td>
+                            <td>$2M - $3M</td>
+                            <td>12.5%</td>
+                            <td>Loan expansion, new products</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Working Capital Buffer</strong></td>
+                            <td>$2M - $3M</td>
+                            <td>12.5%</td>
+                            <td>Additional safety margin</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Slide 29: Key Takeaway -->
+        <div class="slide">
+            <div class="slide-content center-content">
+                <h2 style="color: var(--primary-green);">Key Takeaway</h2>
+                <div class="highlight-box">
+                    <h3>MyBambu has achieved critical operational milestones that fundamentally change the investment thesis:</h3>
+                    <ul class="highlight-list">
+                        <li>Expense discipline proven: 56% burn reduction</li>
+                        <li>Revenue acceleration: 445% growth trajectory</li>
+                        <li>Funded to profitability: $68M facility > $26.5M needed</li>
+                        <li>Near-term breakeven: October 2026</li>
+                        <li>Optional capital raise: Growth capital, not survival capital</li>
+                    </ul>
+                    <p style="font-size: 1.5rem; margin-top: 40px; color: var(--navy-blue); font-weight: 700;">This is no longer a "save the company" round—it's a pre-profitability growth opportunity.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 30: Thank You -->
+        <div class="slide">
+            <h1 class="logo-text">MyBambu</h1>
+            <h2 class="tagline">Tu cuenta para todo</h2>
+            <p style="font-size: 1.5rem; margin: 40px 0;">Banking the Underbanked</p>
+            <p style="margin-top: 80px; font-size: 1.2rem; opacity: 0.8;">Thank you for your consideration</p>
+            <p style="margin-top: 40px; opacity: 0.6;">Confidential & Proprietary</p>
+            <p style="opacity: 0.6;">© 2025 MyBambu Systems, LLC. All Rights Reserved.</p>
+        </div>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+        const progressBar = document.getElementById('progressBar');
+        const slideCounter = document.getElementById('slideCounter');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+
+        function updateSlide() {
+            slides.forEach((slide, index) => {
+                slide.classList.remove('active', 'prev');
+                if (index === currentSlide) {
+                    slide.classList.add('active');
+                } else if (index < currentSlide) {
+                    slide.classList.add('prev');
+                }
+            });
+
+            // Update progress bar
+            const progress = ((currentSlide + 1) / totalSlides) * 100;
+            progressBar.style.width = progress + '%';
+
+            // Update counter
+            slideCounter.textContent = `${currentSlide + 1} / ${totalSlides}`;
+
+            // Update button states
+            prevBtn.disabled = currentSlide === 0;
+            nextBtn.disabled = currentSlide === totalSlides - 1;
+
+            // Scroll to top of slide content
+            const activeSlideContent = slides[currentSlide].querySelector('.slide-content');
+            if (activeSlideContent) {
+                activeSlideContent.scrollTop = 0;
+            }
+        }
+
+        function changeSlide(direction) {
+            currentSlide += direction;
+            if (currentSlide < 0) currentSlide = 0;
+            if (currentSlide >= totalSlides) currentSlide = totalSlides - 1;
+            updateSlide();
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ') {
+                e.preventDefault();
+                if (currentSlide < totalSlides - 1) {
+                    changeSlide(1);
+                }
+            } else if (e.key === 'ArrowLeft') {
+                e.preventDefault();
+                if (currentSlide > 0) {
+                    changeSlide(-1);
+                }
+            } else if (e.key === 'Home') {
+                e.preventDefault();
+                currentSlide = 0;
+                updateSlide();
+            } else if (e.key === 'End') {
+                e.preventDefault();
+                currentSlide = totalSlides - 1;
+                updateSlide();
+            }
+        });
+
+        // Touch gestures for mobile
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        document.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        });
+
+        document.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        });
+
+        function handleSwipe() {
+            if (touchEndX < touchStartX - 50) {
+                // Swipe left - next slide
+                if (currentSlide < totalSlides - 1) {
+                    changeSlide(1);
+                }
+            }
+            if (touchEndX > touchStartX + 50) {
+                // Swipe right - previous slide
+                if (currentSlide > 0) {
+                    changeSlide(-1);
+                }
+            }
+        }
+
+        // Initialize
+        updateSlide();
+    </script>
+</body>
+</html>
