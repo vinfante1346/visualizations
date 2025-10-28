@@ -1,0 +1,1703 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyBambu - Financial Presentation (Detailed)</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-green: #27FB6B;
+            --navy-blue: #00052E;
+            --midnight-blue: #000312;
+            --light-green: #E1FFEF;
+            --white: #FFFFFF;
+            --blue-accent: #0156F4;
+            --gradient-start: #27FB6B;
+            --gradient-end: #17CA60;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--navy-blue);
+            color: var(--white);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .header {
+            text-align: center;
+            padding: 80px 20px;
+            background: linear-gradient(135deg, var(--navy-blue) 0%, var(--midnight-blue) 100%);
+            margin-bottom: 60px;
+            border-radius: 20px;
+        }
+
+        .logo-text {
+            font-size: 4rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-end) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 20px;
+        }
+
+        .tagline {
+            font-size: 1.5rem;
+            color: var(--primary-green);
+            font-weight: 300;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.8;
+        }
+
+        .section {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 20px;
+            padding: 60px 40px;
+            margin-bottom: 40px;
+            border: 1px solid rgba(39, 251, 107, 0.1);
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            color: var(--primary-green);
+            margin-bottom: 30px;
+            text-align: center;
+            font-weight: 700;
+        }
+
+        .section-subtitle {
+            font-size: 1.8rem;
+            color: var(--white);
+            margin-bottom: 30px;
+            font-weight: 600;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-end) 100%);
+            color: var(--navy-blue);
+            padding: 40px;
+            border-radius: 20px;
+            margin: 30px 0;
+            box-shadow: 0 10px 40px rgba(39, 251, 107, 0.3);
+        }
+
+        .highlight-box h3 {
+            color: var(--navy-blue);
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+        }
+
+        .info-box {
+            background: rgba(255, 255, 255, 0.05);
+            border-left: 5px solid var(--primary-green);
+            padding: 30px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .metric-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid var(--primary-green);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(39, 251, 107, 0.3);
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-green);
+            margin: 15px 0;
+        }
+
+        .metric-label {
+            font-size: 0.95rem;
+            opacity: 0.9;
+        }
+
+        .metric-change {
+            font-size: 0.9rem;
+            margin-top: 10px;
+        }
+
+        .positive {
+            color: var(--primary-green);
+            font-weight: 600;
+        }
+
+        .negative {
+            color: #FF6B6B;
+            font-weight: 600;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 30px 0;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .data-table th {
+            background: var(--primary-green);
+            color: var(--navy-blue);
+            padding: 20px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .data-table td {
+            padding: 18px 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.95rem;
+        }
+
+        .data-table tr:hover {
+            background: rgba(39, 251, 107, 0.1);
+        }
+
+        .data-table tr.highlight {
+            background: rgba(39, 251, 107, 0.2);
+            font-weight: 600;
+        }
+
+        .year-section {
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 15px;
+            padding: 40px;
+            margin: 30px 0;
+            border: 2px solid rgba(39, 251, 107, 0.2);
+        }
+
+        .year-title {
+            font-size: 2rem;
+            color: var(--primary-green);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .year-badge {
+            background: var(--primary-green);
+            color: var(--navy-blue);
+            padding: 8px 20px;
+            border-radius: 25px;
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin: 5px;
+        }
+
+        .status-actual {
+            background: var(--primary-green);
+            color: var(--navy-blue);
+        }
+
+        .status-forecast {
+            background: var(--blue-accent);
+            color: var(--white);
+        }
+
+        .status-target {
+            background: #FFD700;
+            color: var(--navy-blue);
+        }
+
+        .list-check {
+            list-style: none;
+            padding: 0;
+        }
+
+        .list-check li {
+            padding: 12px 0 12px 40px;
+            position: relative;
+            font-size: 1.1rem;
+        }
+
+        .list-check li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--primary-green);
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 30px 0;
+        }
+
+        .chart-bar-container {
+            margin: 40px 0;
+        }
+
+        .chart-bar {
+            margin: 20px 0;
+        }
+
+        .chart-bar-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+        }
+
+        .chart-bar-visual {
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .chart-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--gradient-start), var(--gradient-end));
+            border-radius: 10px;
+            transition: width 1s ease-out;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 15px;
+            font-weight: 700;
+        }
+
+        .timeline {
+            position: relative;
+            padding: 40px 0;
+        }
+
+        .timeline-item {
+            position: relative;
+            padding: 30px 0 30px 50px;
+            border-left: 3px solid var(--primary-green);
+            margin-left: 20px;
+        }
+
+        .timeline-item:before {
+            content: "";
+            position: absolute;
+            left: -13px;
+            top: 30px;
+            width: 24px;
+            height: 24px;
+            background: var(--primary-green);
+            border-radius: 50%;
+            border: 4px solid var(--navy-blue);
+        }
+
+        .timeline-year {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-green);
+            margin-bottom: 10px;
+        }
+
+        .timeline-content {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .logo-text {
+                font-size: 2.5rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .two-column {
+                grid-template-columns: 1fr;
+            }
+
+            .metrics-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section {
+                padding: 40px 20px;
+            }
+        }
+
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--primary-green);
+            color: var(--navy-blue);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.5rem;
+            box-shadow: 0 5px 20px rgba(39, 251, 107, 0.5);
+            transition: transform 0.3s ease;
+            z-index: 1000;
+        }
+
+        .back-to-top:hover {
+            transform: translateY(-5px);
+        }
+
+        .nav-links {
+            position: sticky;
+            top: 0;
+            background: rgba(0, 5, 46, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 40px;
+            z-index: 100;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+            border: 1px solid rgba(39, 251, 107, 0.2);
+        }
+
+        .nav-links a {
+            color: var(--white);
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            background: rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .nav-links a:hover {
+            background: var(--primary-green);
+            color: var(--navy-blue);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1 class="logo-text">MyBambu</h1>
+            <p class="tagline">Tu cuenta para todo</p>
+            <p class="subtitle">Financial Presentation for Investors • Banking the Underbanked</p>
+            <p style="margin-top: 30px; opacity: 0.7; font-size: 0.95rem;">Prepared: October 2025 | Confidential & Proprietary</p>
+        </div>
+
+        <!-- Navigation -->
+        <div class="nav-links">
+            <a href="#executive-summary">Executive Summary</a>
+            <a href="#year-2022">2022 Actual</a>
+            <a href="#year-2023">2023 Actual</a>
+            <a href="#year-2024">2024 Actual</a>
+            <a href="#year-2025">2025 Forecast</a>
+            <a href="#year-2026">2026 Forecast</a>
+            <a href="#profitability">Path to Profitability</a>
+            <a href="#investment">Investment Opportunity</a>
+        </div>
+
+        <!-- Executive Summary -->
+        <div class="section" id="executive-summary">
+            <h2 class="section-title">Executive Summary</h2>
+
+            <div class="highlight-box">
+                <h3>Investment Opportunity at a Glance</h3>
+                <p style="font-size: 1.3rem;"><strong>MyBambu</strong> is a fully-funded fintech company with <strong>21 months to profitability</strong> and <strong>no additional capital required</strong> to reach breakeven.</p>
+            </div>
+
+            <h3 class="section-subtitle">Key Metrics Overview</h3>
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <div class="metric-label">2024 Revenue</div>
+                    <div class="metric-value">$8.0M</div>
+                    <span class="status-badge status-actual">✓ Actual</span>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">2025 Revenue (Forecast)</div>
+                    <div class="metric-value">$13.8M</div>
+                    <div class="metric-change positive">+73% YoY</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">2026 Revenue (Forecast)</div>
+                    <div class="metric-value">$75.3M</div>
+                    <div class="metric-change positive">+445% YoY</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Breakeven Date</div>
+                    <div class="metric-value">Oct 2026</div>
+                    <span class="status-badge status-target">21 months</span>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Capital to Breakeven</div>
+                    <div class="metric-value">$26.5M</div>
+                    <span class="status-badge status-actual">✓ Fully funded</span>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Available Funding</div>
+                    <div class="metric-value">$69.8M</div>
+                    <div class="metric-change positive">$43M cushion</div>
+                </div>
+            </div>
+
+            <div class="info-box">
+                <h3 style="color: var(--primary-green); margin-bottom: 15px;">Why Invest Now?</h3>
+                <ul class="list-check">
+                    <li>Proven expense discipline: Cut burn 56% in 2 months</li>
+                    <li>Revenue acceleration: 445% growth trajectory in 2026</li>
+                    <li>Fully funded to profitability: No survival risk</li>
+                    <li>Near-term exit opportunity: Profitable Q4 2026</li>
+                    <li>Massive market: 29M+ underbanked households in U.S.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Company Overview -->
+        <div class="section">
+            <h2 class="section-title">Company Overview</h2>
+
+            <h3 class="section-subtitle">Our Mission</h3>
+            <p style="font-size: 1.3rem; margin-bottom: 30px;">Banking the underbanked Hispanic community through mobile-first financial services</p>
+
+            <div class="two-column">
+                <div class="info-box">
+                    <h3 style="color: var(--primary-green); margin-bottom: 15px;">Business Model</h3>
+                    <ul class="list-check">
+                        <li>FDIC-insured deposit accounts through sponsor banks</li>
+                        <li>Cross-border remittance services (U.S. to Mexico)</li>
+                        <li>Mobile-first platform serving cash-preferred consumers</li>
+                        <li>Program manager model with banking partners</li>
+                    </ul>
+                </div>
+                <div class="info-box">
+                    <h3 style="color: var(--primary-green); margin-bottom: 15px;">Market Opportunity</h3>
+                    <ul style="list-style: none; padding: 0;">
+                        <li style="padding: 10px 0; font-size: 1.1rem;">🏦 <strong>5.9M</strong> unbanked households</li>
+                        <li style="padding: 10px 0; font-size: 1.1rem;">📊 <strong>23.6M</strong> underbanked households</li>
+                        <li style="padding: 10px 0; font-size: 1.1rem;">💵 <strong>$60B+</strong> annual remittances to Mexico</li>
+                        <li style="padding: 10px 0; font-size: 1.1rem;">📈 Growing Hispanic demographic</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3 class="section-subtitle" style="margin-top: 40px;">Company Timeline</h3>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-year">2012</div>
+                    <div class="timeline-content">Founded as Delaware LLC</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-year">2020</div>
+                    <div class="timeline-content">Commenced operations (June)</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-year">2022</div>
+                    <div class="timeline-content">Series A/B funding ($80.7M)</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-year">2023</div>
+                    <div class="timeline-content">Mexico expansion launched</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-year">2024</div>
+                    <div class="timeline-content">Series C funding ($47.7M) • New sponsor bank partnership</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-year">2025</div>
+                    <div class="timeline-content">Secured $68M credit facility • Achieved 56% expense reduction ✓</div>
+                </div>
+                <div class="timeline-item" style="border-left-color: #FFD700;">
+                    <div class="timeline-year" style="color: #FFD700;">2026</div>
+                    <div class="timeline-content">🎯 <strong>TARGET PROFITABILITY (October)</strong></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2022 Performance -->
+        <div class="section year-section" id="year-2022">
+            <div class="year-title">
+                <span class="year-badge">2022</span>
+                <span>Actual Performance</span>
+                <span class="status-badge status-actual">Historical</span>
+            </div>
+
+            <h3 class="section-subtitle">Financial Summary</h3>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Metric</th>
+                        <th>Amount</th>
+                        <th>Notes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="highlight">
+                        <td><strong>Total Revenue</strong></td>
+                        <td><strong>$1.6M</strong></td>
+                        <td>Initial operations year</td>
+                    </tr>
+                    <tr>
+                        <td>Operating Expenses</td>
+                        <td class="negative">$(36.8M)</td>
+                        <td>Building infrastructure</td>
+                    </tr>
+                    <tr>
+                        <td>Operating Loss</td>
+                        <td class="negative">$(35.2M)</td>
+                        <td>Investment phase</td>
+                    </tr>
+                    <tr>
+                        <td>Net Loss</td>
+                        <td class="negative">$(32.5M)</td>
+                        <td>Net margin: (2,086%)</td>
+                    </tr>
+                    <tr>
+                        <td>Estimated Customers</td>
+                        <td>~150K</td>
+                        <td>Building customer base</td>
+                    </tr>
+                    <tr>
+                        <td>Revenue per Customer</td>
+                        <td>~$11</td>
+                        <td>Early stage</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="info-box">
+                <h3 style="color: var(--primary-green); margin-bottom: 15px;">2022 Key Highlights</h3>
+                <ul class="list-check">
+                    <li>Series A/B funding secured ($80.7M)</li>
+                    <li>Initial product market validation</li>
+                    <li>Platform infrastructure built</li>
+                    <li>Customer acquisition programs launched</li>
+                    <li>Banking partnerships established</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 2023 Performance -->
+        <div class="section year-section" id="year-2023">
+            <div class="year-title">
+                <span class="year-badge">2023</span>
+                <span>Actual Performance</span>
+                <span class="status-badge status-actual">Historical</span>
+            </div>
+
+            <h3 class="section-subtitle">Financial Summary</h3>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Metric</th>
+                        <th>Amount</th>
+                        <th>YoY Change</th>
+                        <th>Notes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="highlight">
+                        <td><strong>Total Revenue</strong></td>
+                        <td><strong>$3.2M</strong></td>
+                        <td class="positive">+109%</td>
+                        <td>Strong growth</td>
+                    </tr>
+                    <tr>
+                        <td>Operating Expenses</td>
+                        <td class="negative">$(30.7M)</td>
+                        <td class="positive">-17%</td>
+                        <td>Cost optimization begins</td>
+                    </tr>
+                    <tr>
+                        <td>Operating Loss</td>
+                        <td class="negative">$(27.5M)</td>
+                        <td class="positive">-22%</td>
+                        <td>Narrowing losses</td>
+                    </tr>
+                    <tr>
+                        <td>Net Loss</td>
+                        <td class="negative">$(46.8M)</td>
+                        <td class="negative">+44%</td>
+                        <td>Includes non-cash charges</td>
+                    </tr>
+                    <tr>
+                        <td>Net Margin</td>
+                        <td class="negative">(1,442%)</td>
+                        <td>-</td>
+                        <td>Improving from (2,086%)</td>
+                    </tr>
+                    <tr>
+                        <td>Estimated Customers</td>
+                        <td>~300K</td>
+                        <td class="positive">+100%</td>
+                        <td>Doubling customer base</td>
+                    </tr>
+                    <tr>
+                        <td>Revenue per Customer</td>
+                        <td>$11</td>
+                        <td>Flat</td>
+                        <td>Focus on acquisition</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3 class="section-subtitle" style="margin-top: 40px;">Revenue Breakdown</h3>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Revenue Stream</th>
+                        <th>Amount (Est.)</th>
+                        <th>% of Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Foreign Remittance Fees</td>
+                        <td>$1.76M</td>
+                        <td>55%</td>
+                    </tr>
+                    <tr>
+                        <td>Card & Interchange Fees</td>
+                        <td>$0.96M</td>
+                        <td>30%</td>
+                    </tr>
+                    <tr>
+                        <td>ATM Surcharges</td>
+                        <td>$0.32M</td>
+                        <td>10%</td>
+                    </tr>
+                    <tr>
+                        <td>Other Services</td>
+                        <td>$0.16M</td>
+                        <td>5%</td>
+                    </tr>
+                    <tr class="highlight">
+                        <td><strong>Total</strong></td>
+                        <td><strong>$3.2M</strong></td>
+                        <td><strong>100%</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="info-box">
+                <h3 style="color: var(--primary-green); margin-bottom: 15px;">2023 Key Highlights</h3>
+                <ul class="list-check">
+                    <li>Revenue doubled (+109% YoY)</li>
+                    <li>Mexico subsidiary launched</li>
+                    <li>Operating expenses reduced 17%</li>
+                    <li>Customer base reached ~300K</li>
+                    <li>Cross-border remittance platform expanded</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 2024 Performance -->
+        <div class="section year-section" id="year-2024">
+            <div class="year-title">
+                <span class="year-badge">2024</span>
+                <span>Actual Performance</span>
+                <span class="status-badge status-actual">Historical</span>
+            </div>
+
+            <h3 class="section-subtitle">Financial Summary</h3>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Metric</th>
+                        <th>Amount</th>
+                        <th>YoY Change</th>
+                        <th>Notes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="highlight">
+                        <td><strong>Total Revenue</strong></td>
+                        <td><strong>$8.0M</strong></td>
+                        <td class="positive">+148%</td>
+                        <td>Accelerating growth</td>
+                    </tr>
+                    <tr>
+                        <td>Operating Expenses</td>
+                        <td class="negative">$(48.5M)</td>
+                        <td class="negative">+58%</td>
+                        <td>Scaling operations</td>
+                    </tr>
+                    <tr>
+                        <td>Operating Loss</td>
+                        <td class="negative">$(40.5M)</td>
+                        <td class="negative">+47%</td>
+                        <td>Investment in growth</td>
+                    </tr>
+                    <tr>
+                        <td>Net Loss</td>
+                        <td class="negative">$(27.1M)</td>
+                        <td class="positive">-42%</td>
+                        <td>Major improvement</td>
+                    </tr>
+                    <tr>
+                        <td>Net Margin</td>
+                        <td class="negative">(337%)</td>
+                        <td class="positive">Improving</td>
+                        <td>From (1,442%) in 2023</td>
+                    </tr>
+                    <tr>
+                        <td>Estimated Customers</td>
+                        <td>~400K</td>
+                        <td class="positive">+33%</td>
+                        <td>Continued growth</td>
+                    </tr>
+                    <tr>
+                        <td>Revenue per Customer</td>
+                        <td>$80</td>
+                        <td class="positive">+627%</td>
+                        <td>Major monetization improvement</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3 class="section-subtitle" style="margin-top: 40px;">Revenue Breakdown</h3>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Revenue Stream</th>
+                        <th>Amount</th>
+                        <th>% of Total</th>
+                        <th>YoY Growth</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Foreign Remittance Fees</td>
+                        <td>$4.4M</td>
+                        <td>55%</td>
+                        <td class="positive">+150%</td>
+                    </tr>
+                    <tr>
+                        <td>Card & Interchange Fees</td>
+                        <td>$2.4M</td>
+                        <td>30%</td>
+                        <td class="positive">+150%</td>
+                    </tr>
+                    <tr>
+                        <td>ATM Surcharges</td>
+                        <td>$0.8M</td>
+                        <td>10%</td>
+                        <td class="positive">+150%</td>
+                    </tr>
+                    <tr>
+                        <td>Unsecured Loans (New)</td>
+                        <td>$0.4M</td>
+                        <td>5%</td>
+                        <td class="positive">New product</td>
+                    </tr>
+                    <tr class="highlight">
+                        <td><strong>Total</strong></td>
+                        <td><strong>$8.0M</strong></td>
+                        <td><strong>100%</strong></td>
+                        <td class="positive"><strong>+148%</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3 class="section-subtitle" style="margin-top: 40px;">Operating Expense Detail</h3>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Category</th>
+                        <th>Amount</th>
+                        <th>% of Total</th>
+                        <th>Per Customer</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Salaries & Personnel</td>
+                        <td>$12.6M</td>
+                        <td>26%</td>
+                        <td>$31.59</td>
+                    </tr>
+                    <tr>
+                        <td>Other G&A</td>
+                        <td>$14.0M</td>
+                        <td>29%</td>
+                        <td>$34.88</td>
+                    </tr>
+                    <tr>
+                        <td>Marketing & CAC</td>
+                        <td>$12.0M</td>
+                        <td>25%</td>
+                        <td>$30.00</td>
+                    </tr>
+                    <tr>
+                        <td>Direct Processing</td>
+                        <td>$9.9M</td>
+                        <td>20%</td>
+                        <td>$24.75</td>
+                    </tr>
+                    <tr class="highlight">
+                        <td><strong>Total OpEx</strong></td>
+                        <td><strong>$48.5M</strong></td>
+                        <td><strong>100%</strong></td>
+                        <td><strong>$121.25</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="info-box">
+                <h3 style="color: var(--primary-green); margin-bottom: 15px;">2024 Key Highlights</h3>
+                <ul class="list-check">
+                    <li>Revenue growth accelerated to +148%</li>
+                    <li>Series C funding completed ($47.7M)</li>
+                    <li>Converted $47.7M debt to Series C Units</li>
+                    <li>New sponsor bank partnership established</li>
+                    <li>Personal loans product launched</li>
+                    <li>Revenue per customer increased 7.3x</li>
+                    <li>Customer base reached ~400K</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 2025 Forecast -->
+        <div class="section year-section" id="year-2025">
+            <div class="year-title">
+                <span class="year-badge" style="background: var(--blue-accent);">2025</span>
+                <span>Forecast Performance</span>
+                <span class="status-badge status-forecast">Projected</span>
+            </div>
+
+            <h3 class="section-subtitle">Financial Forecast</h3>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Metric</th>
+                        <th>Amount</th>
+                        <th>YoY Change</th>
+                        <th>Notes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="highlight">
+                        <td><strong>Total Revenue</strong></td>
+                        <td><strong>$13.8M</strong></td>
+                        <td class="positive">+73%</td>
+                        <td>Continued acceleration</td>
+                    </tr>
+                    <tr>
+                        <td>Operating Expenses</td>
+                        <td class="negative">$(53.7M)</td>
+                        <td class="negative">+11%</td>
+                        <td>Controlled growth</td>
+                    </tr>
+                    <tr>
+                        <td>Operating Loss</td>
+                        <td class="negative">$(40.0M)</td>
+                        <td class="positive">-1%</td>
+                        <td>Stabilizing</td>
+                    </tr>
+                    <tr>
+                        <td>Net Loss</td>
+                        <td class="negative">$(53.0M)</td>
+                        <td class="negative">+96%</td>
+                        <td>Investment year</td>
+                    </tr>
+                    <tr>
+                        <td>Net Margin</td>
+                        <td class="negative">(383%)</td>
+                        <td>-</td>
+                        <td>Improving from (337%)</td>
+                    </tr>
+                    <tr>
+                        <td>Total Customers</td>
+                        <td>664K</td>
+                        <td class="positive">+66%</td>
+                        <td>Q4 2025 target</td>
+                    </tr>
+                    <tr>
+                        <td>Active Customers</td>
+                        <td>125K</td>
+                        <td class="positive">+25%</td>
+                        <td>19% activation rate</td>
+                    </tr>
+                    <tr>
+                        <td>Revenue per Customer</td>
+                        <td>$111</td>
+                        <td class="positive">+39%</td>
+                        <td>Growing monetization</td>
+                    </tr>
+                    <tr>
+                        <td>Monthly Burn Rate</td>
+                        <td class="negative">$(2.4M)</td>
+                        <td class="positive">-56%</td>
+                        <td><strong>Major achievement</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3 class="section-subtitle" style="margin-top: 40px;">Revenue Breakdown</h3>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Revenue Stream</th>
+                        <th>Amount</th>
+                        <th>% of Total</th>
+                        <th>Margin</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Foreign Remittance Fees</td>
+                        <td>$7.6M</td>
+                        <td>55%</td>
+                        <td class="positive">High (60%+)</td>
+                    </tr>
+                    <tr>
+                        <td>Card & Interchange Fees</td>
+                        <td>$4.1M</td>
+                        <td>30%</td>
+                        <td>Medium (40%)</td>
+                    </tr>
+                    <tr>
+                        <td>ATM Surcharges</td>
+                        <td>$1.4M</td>
+                        <td>10%</td>
+                        <td class="positive">High (70%+)</td>
+                    </tr>
+                    <tr>
+                        <td>Unsecured Loans</td>
+                        <td>$0.7M</td>
+                        <td>5%</td>
+                        <td class="positive">High (50%+)</td>
+                    </tr>
+                    <tr class="highlight">
+                        <td><strong>Total</strong></td>
+                        <td><strong>$13.8M</strong></td>
+                        <td><strong>100%</strong></td>
+                        <td><strong>Blended</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3 class="section-subtitle" style="margin-top: 40px;">Operating Expense Forecast</h3>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Category</th>
+                        <th>Amount</th>
+                        <th>% of Total</th>
+                        <th>YoY Change</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Salaries & Personnel</td>
+                        <td>$15.0M</td>
+                        <td>28%</td>
+                        <td class="positive">+19%</td>
+                    </tr>
+                    <tr>
+                        <td>Other G&A</td>
+                        <td>$20.5M</td>
+                        <td>38%</td>
+                        <td class="negative">+46%</td>
+                    </tr>
+                    <tr>
+                        <td>Marketing & CAC</td>
+                        <td>$18.2M</td>
+                        <td>34%</td>
+                        <td class="positive">+52%</td>
+                    </tr>
+                    <tr class="highlight">
+                        <td><strong>Total OpEx</strong></td>
+                        <td><strong>$53.7M</strong></td>
+                        <td><strong>100%</strong></td>
+                        <td class="positive"><strong>+11%</strong></td>
+                    </tr>
+                    <tr>
+                        <td colspan="4" style="text-align: center; padding-top: 20px;">
+                            <strong>OpEx as % of Revenue: 389%</strong> (improving from 603% in 2024)
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3 class="section-subtitle" style="margin-top: 40px;">Critical Achievement: Expense Reduction</h3>
+            <div class="chart-bar-container">
+                <div class="chart-bar">
+                    <div class="chart-bar-label">
+                        <span>September 2025</span>
+                        <span class="negative">$5.5M monthly OpEx</span>
+                    </div>
+                    <div class="chart-bar-visual">
+                        <div class="chart-bar-fill" style="width: 100%;">$5.5M</div>
+                    </div>
+                </div>
+                <div class="chart-bar">
+                    <div class="chart-bar-label">
+                        <span>November 2025</span>
+                        <span class="positive">$2.4M monthly OpEx (Current)</span>
+                    </div>
+                    <div class="chart-bar-visual">
+                        <div class="chart-bar-fill" style="width: 44%;">$2.4M</div>
+                    </div>
+                </div>
+                <div class="chart-bar">
+                    <div class="chart-bar-label">
+                        <span>Target (2026)</span>
+                        <span>$2.0M monthly OpEx</span>
+                    </div>
+                    <div class="chart-bar-visual">
+                        <div class="chart-bar-fill" style="width: 36%;">$2.0M</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="highlight-box">
+                <h3>56% Expense Reduction in 2 Months ✓</h3>
+                <p style="font-size: 1.2rem; margin: 15px 0;"><strong>Monthly savings: $3.1M</strong></p>
+                <p>This achievement proves management execution capability and demonstrates that the path to profitability is achievable.</p>
+            </div>
+
+            <div class="info-box">
+                <h3 style="color: var(--primary-green); margin-bottom: 15px;">2025 Key Milestones</h3>
+                <ul class="list-check">
+                    <li>Secured $68M credit facility ✓</li>
+                    <li>Achieved 56% expense reduction ✓</li>
+                    <li>Total customers reaching 664K</li>
+                    <li>Active customer base: 125K</li>
+                    <li>Revenue growing 73% YoY</li>
+                    <li>Monthly burn reduced to $2.4M</li>
+                    <li>Operating leverage ratio: 6.6x</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 2026 Forecast -->
+        <div class="section year-section" id="year-2026">
+            <div class="year-title">
+                <span class="year-badge" style="background: #FFD700;">2026</span>
+                <span>Breakeven Year</span>
+                <span class="status-badge status-target">Target</span>
+            </div>
+
+            <h3 class="section-subtitle">Financial Forecast</h3>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Metric</th>
+                        <th>Amount</th>
+                        <th>YoY Change</th>
+                        <th>Notes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="highlight">
+                        <td><strong>Total Revenue</strong></td>
+                        <td><strong>$75.3M</strong></td>
+                        <td class="positive">+445%</td>
+                        <td><strong>Major inflection</strong></td>
+                    </tr>
+                    <tr>
+                        <td>Operating Expenses</td>
+                        <td class="negative">$(59.0M)</td>
+                        <td class="negative">+10%</td>
+                        <td>Highly controlled</td>
+                    </tr>
+                    <tr>
+                        <td>Operating Loss</td>
+                        <td class="negative">$(4.0M)</td>
+                        <td class="positive">-90%</td>
+                        <td>Near breakeven</td>
+                    </tr>
+                    <tr>
+                        <td>Net Loss</td>
+                        <td class="negative">$(13.9M)</td>
+                        <td class="positive">-74%</td>
+                        <td>Major improvement</td>
+                    </tr>
+                    <tr>
+                        <td>Net Margin</td>
+                        <td class="negative">(18%)</td>
+                        <td class="positive">Improving</td>
+                        <td>From (383%) to (18%)</td>
+                    </tr>
+                    <tr class="highlight">
+                        <td><strong>Breakeven Month</strong></td>
+                        <td><strong>October 2026</strong></td>
+                        <td>-</td>
+                        <td><strong>🎯 Cash flow positive</strong></td>
+                    </tr>
+                    <tr>
+                        <td>Q4 2026 Profitability</td>
+                        <td class="positive">$2.6M</td>
+                        <td>-</td>
+                        <td><strong>First profitable quarter</strong></td>
+                    </tr>
+                    <tr>
+                        <td>Total Customers</td>
+                        <td>934K</td>
+                        <td class="positive">+41%</td>
+                        <td>Q4 2026 target</td>
+                    </tr>
+                    <tr>
+                        <td>Active Customers</td>
+                        <td>260K</td>
+                        <td class="positive">+108%</td>
+                        <td>28% activation rate</td>
+                    </tr>
+                    <tr>
+                        <td>Revenue per Customer</td>
+                        <td>$289</td>
+                        <td class="positive">+160%</td>
+                        <td>3.6x increase from 2024</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3 class="section-subtitle" style="margin-top: 40px;">Quarterly Progression to Profitability</h3>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Quarter</th>
+                        <th>Revenue</th>
+                        <th>Net Income</th>
+                        <th>QoQ Growth</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Q1 2026</strong></td>
+                        <td>$12.5M</td>
+                        <td class="negative">$(10.5M)</td>
+                        <td>-</td>
+                        <td>Improving</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Q2 2026</strong></td>
+                        <td>$16.8M</td>
+                        <td class="negative">$(4.2M)</td>
+                        <td class="positive">+34%</td>
+                        <td>Approaching breakeven</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Q3 2026</strong></td>
+                        <td>$21.4M</td>
+                        <td class="negative">$(1.8M)</td>
+                        <td class="positive">+27%</td>
+                        <td>Near breakeven</td>
+                    </tr>
+                    <tr class="highlight">
+                        <td><strong>October 2026</strong></td>
+                        <td><strong>$6.3M (monthly)</strong></td>
+                        <td class="positive"><strong>$0.0M</strong></td>
+                        <td>-</td>
+                        <td><strong>🎯 BREAKEVEN</strong></td>
+                    </tr>
+                    <tr class="highlight">
+                        <td><strong>Q4 2026</strong></td>
+                        <td><strong>$24.6M</strong></td>
+                        <td class="positive"><strong>$2.6M</strong></td>
+                        <td class="positive"><strong>+15%</strong></td>
+                        <td><strong>✓ Profitable</strong></td>
+                    </tr>
+                    <tr class="highlight">
+                        <td><strong>Full Year 2026</strong></td>
+                        <td><strong>$75.3M</strong></td>
+                        <td class="negative"><strong>$(13.9M)</strong></td>
+                        <td class="positive"><strong>+445%</strong></td>
+                        <td><strong>Exit Q4 profitable</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3 class="section-subtitle" style="margin-top: 40px;">Revenue Breakdown</h3>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Revenue Stream</th>
+                        <th>Amount</th>
+                        <th>% of Total</th>
+                        <th>YoY Growth</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Foreign Remittance Fees</td>
+                        <td>$41.4M</td>
+                        <td>55%</td>
+                        <td class="positive">+445%</td>
+                    </tr>
+                    <tr>
+                        <td>Card & Interchange Fees</td>
+                        <td>$22.6M</td>
+                        <td>30%</td>
+                        <td class="positive">+451%</td>
+                    </tr>
+                    <tr>
+                        <td>ATM Surcharges</td>
+                        <td>$7.5M</td>
+                        <td>10%</td>
+                        <td class="positive">+436%</td>
+                    </tr>
+                    <tr>
+                        <td>Unsecured Loans</td>
+                        <td>$3.8M</td>
+                        <td>5%</td>
+                        <td class="positive">+443%</td>
+                    </tr>
+                    <tr class="highlight">
+                        <td><strong>Total</strong></td>
+                        <td><strong>$75.3M</strong></td>
+                        <td><strong>100%</strong></td>
+                        <td class="positive"><strong>+445%</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3 class="section-subtitle" style="margin-top: 40px;">Operating Expense Forecast</h3>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Category</th>
+                        <th>Amount</th>
+                        <th>% of Total</th>
+                        <th>YoY Change</th>
+                        <th>As % Revenue</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Salaries & Personnel</td>
+                        <td>$16.5M</td>
+                        <td>28%</td>
+                        <td class="positive">+10%</td>
+                        <td>22%</td>
+                    </tr>
+                    <tr>
+                        <td>Other G&A</td>
+                        <td>$19.8M</td>
+                        <td>34%</td>
+                        <td class="positive">-3%</td>
+                        <td>26%</td>
+                    </tr>
+                    <tr>
+                        <td>Marketing & CAC</td>
+                        <td>$22.7M</td>
+                        <td>38%</td>
+                        <td class="positive">+25%</td>
+                        <td>30%</td>
+                    </tr>
+                    <tr class="highlight">
+                        <td><strong>Total OpEx</strong></td>
+                        <td><strong>$59.0M</strong></td>
+                        <td><strong>100%</strong></td>
+                        <td class="positive"><strong>+10%</strong></td>
+                        <td class="positive"><strong>78%</strong></td>
+                    </tr>
+                    <tr>
+                        <td colspan="5" style="text-align: center; padding-top: 20px;">
+                            <strong>Operating Leverage: Revenue growing 44.5x faster than costs</strong>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3 class="section-subtitle" style="margin-top: 40px;">Unit Economics (2026)</h3>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Metric</th>
+                        <th>2024</th>
+                        <th>2025F</th>
+                        <th>2026F</th>
+                        <th>Change</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Customer Acquisition Cost (CAC)</td>
+                        <td>$120</td>
+                        <td>$146</td>
+                        <td class="positive">$87</td>
+                        <td class="positive">-40%</td>
+                    </tr>
+                    <tr>
+                        <td>Revenue per Customer (Annual)</td>
+                        <td>$80</td>
+                        <td>$111</td>
+                        <td class="positive">$289</td>
+                        <td class="positive">+261%</td>
+                    </tr>
+                    <tr>
+                        <td>Gross Profit per Customer</td>
+                        <td class="negative">$(23)</td>
+                        <td class="negative">$(6)</td>
+                        <td class="positive">$58</td>
+                        <td class="positive">Positive</td>
+                    </tr>
+                    <tr>
+                        <td>CAC Payback Period</td>
+                        <td>N/A</td>
+                        <td>N/A</td>
+                        <td class="positive">3.6 months</td>
+                        <td class="positive">Viable</td>
+                    </tr>
+                    <tr>
+                        <td>Customer Lifetime Value (LTV)</td>
+                        <td>$240</td>
+                        <td>$333</td>
+                        <td class="positive">$867</td>
+                        <td class="positive">3.6x</td>
+                    </tr>
+                    <tr class="highlight">
+                        <td><strong>LTV:CAC Ratio</strong></td>
+                        <td>2.0x</td>
+                        <td>2.3x</td>
+                        <td class="positive"><strong>10.0x</strong></td>
+                        <td class="positive"><strong>Excellent</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="highlight-box">
+                <h3>2026: The Profitability Year</h3>
+                <ul class="list-check">
+                    <li>Revenue growth: +445% (from $13.8M to $75.3M)</li>
+                    <li>OpEx growth: Only +10% (from $53.7M to $59.0M)</li>
+                    <li>Operating leverage ratio: 44.5x</li>
+                    <li>Breakeven achieved: October 2026</li>
+                    <li>Q4 2026: First profitable quarter ($2.6M profit)</li>
+                    <li>Unit economics turn positive</li>
+                    <li>Platform demonstrates scalability</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Path to Profitability -->
+        <div class="section" id="profitability">
+            <h2 class="section-title">Path to Profitability</h2>
+
+            <h3 class="section-subtitle">Capital Requirements to Breakeven</h3>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Period</th>
+                        <th>Revenue</th>
+                        <th>Cash Burn</th>
+                        <th>Cumulative</th>
+                        <th>Purpose</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Q4 2025</td>
+                        <td>$3.9M</td>
+                        <td class="negative">$(8.2M)</td>
+                        <td>$8.2M</td>
+                        <td>Complete 2025 operations</td>
+                    </tr>
+                    <tr>
+                        <td>Q1 2026</td>
+                        <td>$12.5M</td>
+                        <td class="negative">$(8.3M)</td>
+                        <td>$16.5M</td>
+                        <td>Customer acquisition ramp</td>
+                    </tr>
+                    <tr>
+                        <td>Q2 2026</td>
+                        <td>$16.8M</td>
+                        <td class="negative">$(5.8M)</td>
+                        <td>$22.3M</td>
+                        <td>Scaling to profitability</td>
+                    </tr>
+                    <tr>
+                        <td>Q3 2026</td>
+                        <td>$21.4M</td>
+                        <td class="negative">$(1.7M)</td>
+                        <td>$24.0M</td>
+                        <td>Final push to breakeven</td>
+                    </tr>
+                    <tr>
+                        <td>Buffer</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>$2.5M</td>
+                        <td>Working capital cushion</td>
+                    </tr>
+                    <tr class="highlight">
+                        <td><strong>TOTAL</strong></td>
+                        <td></td>
+                        <td class="negative"><strong>$(26.5M)</strong></td>
+                        <td><strong>$26.5M</strong></td>
+                        <td><strong>To profitability</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3 class="section-subtitle" style="margin-top: 40px;">Funding Status: ✓ FULLY FUNDED</h3>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Source</th>
+                        <th>Amount</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Cash at Dec 31, 2024</td>
+                        <td>$1.8M</td>
+                        <td>✓ Available</td>
+                    </tr>
+                    <tr>
+                        <td>Credit facility - 2025 borrowings</td>
+                        <td>$37.9M</td>
+                        <td><strong>✓ Borrowed</strong></td>
+                    </tr>
+                    <tr>
+                        <td>Credit facility - remaining capacity</td>
+                        <td>$30.1M</td>
+                        <td>✓ Available</td>
+                    </tr>
+                    <tr class="highlight">
+                        <td><strong>Total Available Funding</strong></td>
+                        <td><strong>$69.8M</strong></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td colspan="3" style="height: 20px;"></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Required to Breakeven</strong></td>
+                        <td class="negative"><strong>$(26.5M)</strong></td>
+                        <td></td>
+                    </tr>
+                    <tr class="highlight">
+                        <td><strong>Excess Cushion</strong></td>
+                        <td class="positive"><strong>$43.3M</strong></td>
+                        <td><strong>163% buffer</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="highlight-box">
+                <h3>🎯 Company is overcapitalized for base case profitability scenario</h3>
+                <p style="font-size: 1.2rem; margin: 15px 0;">With $69.8M in available funding and only $26.5M needed to reach profitability, MyBambu has a $43.3M cushion (163% buffer) for the unexpected.</p>
+                <p style="font-size: 1.1rem;">This is <strong>growth capital</strong>, not survival capital.</p>
+            </div>
+        </div>
+
+        <!-- Investment Opportunity -->
+        <div class="section" id="investment">
+            <h2 class="section-title">Investment Opportunity</h2>
+
+            <h3 class="section-subtitle">Series D Preferred Units - Proposed Terms</h3>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Term</th>
+                        <th>Details</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Security Type</strong></td>
+                        <td>Series D Preferred Units</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Amount Raising</strong></td>
+                        <td>$0 - $20M (optional growth capital)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Pre-Money Valuation</strong></td>
+                        <td>To be negotiated</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Post-Money Valuation</strong></td>
+                        <td>$150M - $200M range (indicative)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Minimum Investment</strong></td>
+                        <td>$500K</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3 class="section-subtitle" style="margin-top: 40px;">Return Scenarios</h3>
+            <p style="margin-bottom: 20px;">Based on $40M investment @ $150M post-money valuation</p>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Scenario</th>
+                        <th>Exit Value</th>
+                        <th>Investor Proceeds</th>
+                        <th>Multiple</th>
+                        <th>IRR</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Conservative</td>
+                        <td>$500M</td>
+                        <td>$33.5M</td>
+                        <td class="positive">3.3x</td>
+                        <td class="positive">49%</td>
+                    </tr>
+                    <tr class="highlight">
+                        <td><strong>Base Case</strong></td>
+                        <td><strong>$1.0B</strong></td>
+                        <td><strong>$67.0M</strong></td>
+                        <td class="positive"><strong>6.7x</strong></td>
+                        <td class="positive"><strong>157%</strong></td>
+                    </tr>
+                    <tr>
+                        <td>Optimistic</td>
+                        <td>$2.0B</td>
+                        <td>$134.0M</td>
+                        <td class="positive">13.3x</td>
+                        <td class="positive">274%</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3 class="section-subtitle" style="margin-top: 40px;">Investment Highlights</h3>
+            <div class="two-column">
+                <div class="info-box">
+                    <h3 style="color: var(--primary-green); margin-bottom: 15px;">1. Proven Revenue Acceleration ✓</h3>
+                    <ul style="list-style: none; padding: 0;">
+                        <li style="padding: 8px 0;">2022: $1.6M</li>
+                        <li style="padding: 8px 0;">2023: $3.2M (+109%)</li>
+                        <li style="padding: 8px 0;">2024: $8.0M (+148%)</li>
+                        <li style="padding: 8px 0; color: var(--primary-green); font-weight: 700; font-size: 1.2rem;">2026: $75.3M (+445%)</li>
+                    </ul>
+                </div>
+                <div class="info-box">
+                    <h3 style="color: var(--primary-green); margin-bottom: 15px;">2. Operational Excellence ✓</h3>
+                    <ul style="list-style: none; padding: 0;">
+                        <li style="padding: 8px 0;">Sep 2025: $5.5M burn</li>
+                        <li style="padding: 8px 0;">Nov 2025: $2.4M burn</li>
+                        <li style="padding: 8px 0; color: var(--primary-green); font-weight: 700;">Reduction: 56% (2 months)</li>
+                        <li style="padding: 8px 0; color: var(--primary-green); font-weight: 700;">Savings: $3.1M/month</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="highlight-box" style="margin-top: 40px;">
+                <h3>Key Takeaway</h3>
+                <p style="font-size: 1.2rem; margin: 15px 0;">MyBambu has achieved critical operational milestones that fundamentally change the investment thesis:</p>
+                <ul class="list-check">
+                    <li>Expense discipline proven: 56% burn reduction</li>
+                    <li>Revenue acceleration: 445% growth trajectory</li>
+                    <li>Funded to profitability: $68M facility > $26.5M needed</li>
+                    <li>Near-term breakeven: October 2026</li>
+                    <li>Optional capital raise: Growth capital, not survival capital</li>
+                </ul>
+                <p style="font-size: 1.3rem; margin-top: 30px; font-weight: 700; color: var(--navy-blue);">This is no longer a "save the company" round—it's a pre-profitability growth opportunity.</p>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="section" style="text-align: center; background: rgba(255, 255, 255, 0.02);">
+            <h2 class="logo-text">MyBambu</h2>
+            <p class="tagline">Tu cuenta para todo</p>
+            <p style="font-size: 1.2rem; margin: 30px 0;">Banking the Underbanked</p>
+            <p style="margin-top: 40px; opacity: 0.7;">Thank you for your consideration</p>
+            <p style="margin-top: 20px; opacity: 0.6; font-size: 0.9rem;">Confidential & Proprietary</p>
+            <p style="opacity: 0.6; font-size: 0.9rem;">© 2025 MyBambu Systems, LLC. All Rights Reserved.</p>
+        </div>
+    </div>
+
+    <div class="back-to-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">↑</div>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('.nav-links a').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            });
+        });
+
+        // Show/hide back to top button
+        const backToTop = document.querySelector('.back-to-top');
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                backToTop.style.opacity = '1';
+            } else {
+                backToTop.style.opacity = '0';
+            }
+        });
+
+        // Animate charts on scroll
+        const observerOptions = {
+            threshold: 0.5,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.year-section, .metric-card').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'all 0.6s ease-out';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
