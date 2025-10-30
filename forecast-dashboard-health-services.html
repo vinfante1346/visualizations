@@ -391,9 +391,9 @@
                 <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 30px;">
                     <div style="background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); border-top: 4px solid #667eea;">
                         <h3 style="color: #667eea; margin-bottom: 15px; font-size: 20px;">💸 MyBambu Send</h3>
-                        <div style="font-size: 36px; font-weight: 700; color: #2d3748; margin-bottom: 10px;">$300M</div>
+                        <div style="font-size: 36px; font-weight: 700; color: #2d3748; margin-bottom: 10px;">~$7M</div>
                         <div style="color: #718096; font-size: 15px; line-height: 1.6;">
-                            Projected remittances in 2026. Enhanced cross-border margins from 0% to 76% through direct transactions.
+                            Projected revenue in 2026. No Bambu bank account needed, zero operational costs to us. Direct transactions enhance margins.
                         </div>
                     </div>
 
@@ -1721,6 +1721,18 @@
                             <div style="margin-bottom: 15px;">
                                 <label style="color: #4a5568; font-weight: 600; display: block; margin-bottom: 5px;">Unsecured Loan Fee ($)</label>
                                 <input type="number" id="loanFee" value="300" step="1" onchange="updateScenario()"
+                                    style="width: 100%; padding: 10px; border: 2px solid #e2e8f0; border-radius: 6px; font-size: 14px;">
+                            </div>
+
+                            <div style="margin-bottom: 15px;">
+                                <label style="color: #4a5568; font-weight: 600; display: block; margin-bottom: 5px;">Health Services Fee ($/month)</label>
+                                <input type="number" id="healthServicesFee" value="3.00" step="0.50" onchange="updateScenario()"
+                                    style="width: 100%; padding: 10px; border: 2px solid #e2e8f0; border-radius: 6px; font-size: 14px;">
+                            </div>
+
+                            <div style="margin-bottom: 15px;">
+                                <label style="color: #4a5568; font-weight: 600; display: block; margin-bottom: 5px;">Vehicle Loan Fee ($)</label>
+                                <input type="number" id="vehicleLoanFee" value="0" step="10" onchange="updateScenario()"
                                     style="width: 100%; padding: 10px; border: 2px solid #e2e8f0; border-radius: 6px; font-size: 14px;">
                             </div>
                         </div>
@@ -4140,6 +4152,8 @@
             scenarioAssumptions.fxRate = parseFloat(document.getElementById('fxRate').value);
             scenarioAssumptions.cardInterchange = parseFloat(document.getElementById('cardInterchange').value);
             scenarioAssumptions.loanFee = parseFloat(document.getElementById('loanFee').value);
+            scenarioAssumptions.healthServicesFee = parseFloat(document.getElementById('healthServicesFee').value);
+            scenarioAssumptions.vehicleLoanFee = parseFloat(document.getElementById('vehicleLoanFee').value);
             scenarioAssumptions.remittanceUtil = parseFloat(document.getElementById('remittanceUtil').value);
             scenarioAssumptions.atmUtil = parseFloat(document.getElementById('atmUtil').value);
             scenarioAssumptions.fxUtil = parseFloat(document.getElementById('fxUtil').value);
@@ -4155,11 +4169,17 @@
                 fxRate: 0.75,
                 cardInterchange: 1.15,
                 loanFee: 300,
+                healthServicesFee: 3.00,
+                vehicleLoanFee: 0,
                 remittanceUtil: 24,
                 atmUtil: 14,
                 fxUtil: 24,
                 cardUtil: 73
             };
+
+            // Base 2026 revenues by product
+            const baseHealthServicesRevenue = 1040400;  // $3/month at 15% activation
+            const baseVehicleLoanRevenue = 0;  // Not yet launched
 
             // Estimate revenue impact
             const feeImpact = (
@@ -4167,7 +4187,9 @@
                 (scenarioAssumptions.atmFee / baseAssumptions.atmFee - 1) * 2274164 +
                 (scenarioAssumptions.fxRate / baseAssumptions.fxRate - 1) * 10720744 +
                 (scenarioAssumptions.cardInterchange / baseAssumptions.cardInterchange - 1) * 18805832 +
-                (scenarioAssumptions.loanFee / baseAssumptions.loanFee - 1) * 11833528
+                (scenarioAssumptions.loanFee / baseAssumptions.loanFee - 1) * 11833528 +
+                (scenarioAssumptions.healthServicesFee / baseAssumptions.healthServicesFee - 1) * baseHealthServicesRevenue +
+                (scenarioAssumptions.vehicleLoanFee - baseAssumptions.vehicleLoanFee) * 1000  // Vehicle loans: estimate 1000 loans/year
             );
 
             const utilizationImpact = (
