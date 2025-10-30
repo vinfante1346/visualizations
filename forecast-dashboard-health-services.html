@@ -312,6 +312,7 @@
             <button class="tab active" onclick="switchTab('yearly')">Yearly Summary</button>
             <button class="tab" onclick="switchTab('monthly')">Monthly Breakdown</button>
             <button class="tab" onclick="switchTab('burnrate')">Burn Rate to Breakeven</button>
+            <button class="tab" onclick="switchTab('highvalue')">💎 High-Value Growth</button>
             <button class="tab" onclick="switchTab('opex')">OpEx Reduction</button>
             <button class="tab" onclick="switchTab('scenario')">Scenario Planning 🔒</button>
         </div>
@@ -607,6 +608,293 @@
                             <!-- Will be populated by JavaScript -->
                         </tbody>
                     </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- HIGH-VALUE CUSTOMER GROWTH TAB -->
+        <div id="highvalueTab" class="tab-content">
+            <!-- Hero Banner -->
+            <div class="chart-container" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                <div style="text-align: center; color: white; padding: 20px 0;">
+                    <h1 style="font-size: 42px; margin-bottom: 15px; font-weight: 700;">💎 High-Value Customer Growth Forecast</h1>
+                    <p style="font-size: 18px; opacity: 0.95; max-width: 800px; margin: 0 auto; line-height: 1.6;">
+                        2026 forecast with 25% growth in Diamond and Emerald customer tiers - the strategic path to accelerated profitability
+                    </p>
+                </div>
+            </div>
+
+            <!-- Key Metrics Comparison -->
+            <div class="chart-container">
+                <h2>Base Forecast vs High-Value Growth Scenario</h2>
+                <div class="metrics-grid" style="margin-top: 30px;">
+                    <div class="metric-card">
+                        <div class="label">2026 Revenue - Base</div>
+                        <div class="value">$76.31M</div>
+                        <div class="comparison">
+                            <span class="badge neutral">Current forecast</span>
+                        </div>
+                    </div>
+                    <div class="metric-card" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+                        <div class="label" style="color: white;">2026 Revenue - High-Value</div>
+                        <div class="value" style="color: white;">$79.46M</div>
+                        <div class="comparison">
+                            <span style="color: rgba(255,255,255,0.9); background: rgba(255,255,255,0.2); padding: 4px 12px; border-radius: 12px; font-size: 12px;">+$3.15M from tier growth</span>
+                        </div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="label">Net Income - Base</div>
+                        <div class="value" style="color: #e53e3e;">-$5.28M</div>
+                        <div class="comparison">
+                            <span class="badge negative">Still losing money</span>
+                        </div>
+                    </div>
+                    <div class="metric-card" style="background: linear-gradient(135deg, #48bb78 0%, #38a169 100%); color: white;">
+                        <div class="label" style="color: white;">Net Income - High-Value</div>
+                        <div class="value" style="color: white;">-$2.14M</div>
+                        <div class="comparison">
+                            <span style="color: rgba(255,255,255,0.9); background: rgba(255,255,255,0.2); padding: 4px 12px; border-radius: 12px; font-size: 12px;">60% improvement</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Customer Tier Breakdown -->
+            <div class="chart-container">
+                <h2>Customer Tier Growth Details</h2>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 30px;">
+                    <div style="background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);">
+                        <h3 style="color: #2d3748; margin-bottom: 20px; font-size: 20px; display: flex; align-items: center;">
+                            💎 Diamond Tier Growth
+                        </h3>
+                        <table style="width: 100%;">
+                            <tr style="border-bottom: 2px solid #e2e8f0;">
+                                <th style="text-align: left; padding: 12px 0; color: #718096; font-size: 13px;">Metric</th>
+                                <th style="text-align: right; padding: 12px 0; color: #718096; font-size: 13px;">Current</th>
+                                <th style="text-align: right; padding: 12px 0; color: #718096; font-size: 13px;">With 25% Growth</th>
+                            </tr>
+                            <tr>
+                                <td style="padding: 15px 0; font-weight: 600;">Customers</td>
+                                <td style="text-align: right; padding: 15px 0;">18,447</td>
+                                <td style="text-align: right; padding: 15px 0; color: #667eea; font-weight: 600;">23,059</td>
+                            </tr>
+                            <tr style="background: #f7fafc;">
+                                <td style="padding: 15px 0; font-weight: 600;">Revenue per Customer</td>
+                                <td style="text-align: right; padding: 15px 0;">$30.60/mo</td>
+                                <td style="text-align: right; padding: 15px 0;">$30.60/mo</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 15px 0; font-weight: 600;">Monthly Revenue</td>
+                                <td style="text-align: right; padding: 15px 0;">$564,479</td>
+                                <td style="text-align: right; padding: 15px 0; color: #667eea; font-weight: 600;">$705,599</td>
+                            </tr>
+                            <tr style="background: #667eea; color: white;">
+                                <td style="padding: 15px 0; font-weight: 600;">Annual Revenue</td>
+                                <td style="text-align: right; padding: 15px 0;">$6.77M</td>
+                                <td style="text-align: right; padding: 15px 0; font-weight: 700;">$8.47M</td>
+                            </tr>
+                        </table>
+                        <div style="margin-top: 20px; padding: 15px; background: #f7fafc; border-radius: 8px; border-left: 4px solid #667eea;">
+                            <div style="font-size: 13px; color: #4a5568; margin-bottom: 5px;">Additional Annual Revenue</div>
+                            <div style="font-size: 24px; font-weight: 700; color: #667eea;">+$1,697,280</div>
+                            <div style="font-size: 12px; color: #718096; margin-top: 5px;">From 4,612 new Diamond customers</div>
+                        </div>
+                    </div>
+
+                    <div style="background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);">
+                        <h3 style="color: #2d3748; margin-bottom: 20px; font-size: 20px; display: flex; align-items: center;">
+                            💚 Emerald Tier Growth
+                        </h3>
+                        <table style="width: 100%;">
+                            <tr style="border-bottom: 2px solid #e2e8f0;">
+                                <th style="text-align: left; padding: 12px 0; color: #718096; font-size: 13px;">Metric</th>
+                                <th style="text-align: right; padding: 12px 0; color: #718096; font-size: 13px;">Current</th>
+                                <th style="text-align: right; padding: 12px 0; color: #718096; font-size: 13px;">With 25% Growth</th>
+                            </tr>
+                            <tr>
+                                <td style="padding: 15px 0; font-weight: 600;">Customers</td>
+                                <td style="text-align: right; padding: 15px 0;">34,721</td>
+                                <td style="text-align: right; padding: 15px 0; color: #48bb78; font-weight: 600;">43,401</td>
+                            </tr>
+                            <tr style="background: #f7fafc;">
+                                <td style="padding: 15px 0; font-weight: 600;">Revenue per Customer</td>
+                                <td style="text-align: right; padding: 15px 0;">$13.96/mo</td>
+                                <td style="text-align: right; padding: 15px 0;">$13.96/mo</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 15px 0; font-weight: 600;">Monthly Revenue</td>
+                                <td style="text-align: right; padding: 15px 0;">$484,701</td>
+                                <td style="text-align: right; padding: 15px 0; color: #48bb78; font-weight: 600;">$605,877</td>
+                            </tr>
+                            <tr style="background: #48bb78; color: white;">
+                                <td style="padding: 15px 0; font-weight: 600;">Annual Revenue</td>
+                                <td style="text-align: right; padding: 15px 0;">$5.82M</td>
+                                <td style="text-align: right; padding: 15px 0; font-weight: 700;">$7.27M</td>
+                            </tr>
+                        </table>
+                        <div style="margin-top: 20px; padding: 15px; background: #f7fafc; border-radius: 8px; border-left: 4px solid #48bb78;">
+                            <div style="font-size: 13px; color: #4a5568; margin-bottom: 5px;">Additional Annual Revenue</div>
+                            <div style="font-size: 24px; font-weight: 700; color: #48bb78;">+$1,450,272</div>
+                            <div style="font-size: 12px; color: #718096; margin-top: 5px;">From 8,680 new Emerald customers</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Combined Impact -->
+            <div class="chart-container" style="background: linear-gradient(135deg, #48bb78 0%, #38a169 100%); color: white;">
+                <h2 style="color: white; border-bottom: 2px solid rgba(255,255,255,0.3); padding-bottom: 15px;">Combined Financial Impact</h2>
+                <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-top: 30px;">
+                    <div style="background: rgba(255,255,255,0.15); padding: 25px; border-radius: 12px; backdrop-filter: blur(10px); text-align: center;">
+                        <div style="font-size: 14px; opacity: 0.9; margin-bottom: 10px;">Additional Customers</div>
+                        <div style="font-size: 36px; font-weight: 700; margin-bottom: 5px;">13,292</div>
+                        <div style="font-size: 13px; opacity: 0.8;">High-value adds</div>
+                    </div>
+                    <div style="background: rgba(255,255,255,0.15); padding: 25px; border-radius: 12px; backdrop-filter: blur(10px); text-align: center;">
+                        <div style="font-size: 14px; opacity: 0.9; margin-bottom: 10px;">Monthly Revenue Boost</div>
+                        <div style="font-size: 36px; font-weight: 700; margin-bottom: 5px;">$262K</div>
+                        <div style="font-size: 13px; opacity: 0.8;">Per month in 2026</div>
+                    </div>
+                    <div style="background: rgba(255,255,255,0.15); padding: 25px; border-radius: 12px; backdrop-filter: blur(10px); text-align: center;">
+                        <div style="font-size: 14px; opacity: 0.9; margin-bottom: 10px;">Annual Revenue Boost</div>
+                        <div style="font-size: 36px; font-weight: 700; margin-bottom: 5px;">$3.15M</div>
+                        <div style="font-size: 13px; opacity: 0.8;">Total in 2026</div>
+                    </div>
+                    <div style="background: rgba(255,255,255,0.15); padding: 25px; border-radius: 12px; backdrop-filter: blur(10px); text-align: center;">
+                        <div style="font-size: 14px; opacity: 0.9; margin-bottom: 10px;">Loss Reduction</div>
+                        <div style="font-size: 36px; font-weight: 700; margin-bottom: 5px;">60%</div>
+                        <div style="font-size: 13px; opacity: 0.8;">Net income improvement</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Strategic Insights -->
+            <div class="chart-container">
+                <h2>Strategic Growth Playbook</h2>
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 30px;">
+                    <div style="background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); border-top: 4px solid #667eea;">
+                        <h3 style="color: #667eea; margin-bottom: 15px; font-size: 18px;">🎯 Retention Focus</h3>
+                        <p style="color: #4a5568; line-height: 1.8; margin-bottom: 15px;">
+                            Diamond customers stay 13.51 months vs 4.64 for Pearl tier - nearly 3x longer lifetime value.
+                        </p>
+                        <div style="background: #f7fafc; padding: 15px; border-radius: 8px; border-left: 3px solid #667eea;">
+                            <div style="font-size: 12px; color: #718096; margin-bottom: 5px;">LTV Multiplier</div>
+                            <div style="font-size: 24px; font-weight: 700; color: #667eea;">2.9x</div>
+                        </div>
+                    </div>
+
+                    <div style="background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); border-top: 4px solid #48bb78;">
+                        <h3 style="color: #48bb78; margin-bottom: 15px; font-size: 18px;">📊 Transaction Velocity</h3>
+                        <p style="color: #4a5568; line-height: 1.8; margin-bottom: 15px;">
+                            Diamond customers average 44 transactions/month compared to just 4 for Pearl - 11x more active.
+                        </p>
+                        <div style="background: #f7fafc; padding: 15px; border-radius: 8px; border-left: 3px solid #48bb78;">
+                            <div style="font-size: 12px; color: #718096; margin-bottom: 5px;">Activity Multiplier</div>
+                            <div style="font-size: 24px; font-weight: 700; color: #48bb78;">11x</div>
+                        </div>
+                    </div>
+
+                    <div style="background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); border-top: 4px solid #f6ad55;">
+                        <h3 style="color: #f6ad55; margin-bottom: 15px; font-size: 18px;">💰 Revenue Density</h3>
+                        <p style="color: #4a5568; line-height: 1.8; margin-bottom: 15px;">
+                            Top 2 tiers represent only 24.74% of customers but generate 3.4x more revenue per user than average.
+                        </p>
+                        <div style="background: #f7fafc; padding: 15px; border-radius: 8px; border-left: 3px solid #f6ad55;">
+                            <div style="font-size: 12px; color: #718096; margin-bottom: 5px;">Revenue Efficiency</div>
+                            <div style="font-size: 24px; font-weight: 700; color: #f6ad55;">3.4x</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Path to Breakeven -->
+            <div class="chart-container" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+                <h2 style="color: white; border-bottom: 2px solid rgba(255,255,255,0.3); padding-bottom: 15px;">📈 Accelerated Path to Breakeven</h2>
+                <div style="margin-top: 30px;">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
+                        <div style="background: rgba(255,255,255,0.15); padding: 30px; border-radius: 12px; backdrop-filter: blur(10px);">
+                            <h3 style="color: white; margin-bottom: 20px; font-size: 20px;">Base Forecast Trajectory</h3>
+                            <div style="margin-bottom: 20px;">
+                                <div style="font-size: 14px; opacity: 0.9; margin-bottom: 5px;">2026 Net Income</div>
+                                <div style="font-size: 32px; font-weight: 700;">-$5.28M</div>
+                            </div>
+                            <div style="margin-bottom: 20px;">
+                                <div style="font-size: 14px; opacity: 0.9; margin-bottom: 5px;">Cash to Breakeven</div>
+                                <div style="font-size: 32px; font-weight: 700;">$18.96M</div>
+                            </div>
+                            <div>
+                                <div style="font-size: 14px; opacity: 0.9; margin-bottom: 5px;">Breakeven Timeline</div>
+                                <div style="font-size: 32px; font-weight: 700;">Oct 2026</div>
+                            </div>
+                        </div>
+
+                        <div style="background: rgba(72, 187, 120, 0.3); padding: 30px; border-radius: 12px; backdrop-filter: blur(10px); border: 2px solid rgba(72, 187, 120, 0.5);">
+                            <h3 style="color: white; margin-bottom: 20px; font-size: 20px;">💎 High-Value Growth Trajectory</h3>
+                            <div style="margin-bottom: 20px;">
+                                <div style="font-size: 14px; opacity: 0.9; margin-bottom: 5px;">2026 Net Income</div>
+                                <div style="font-size: 32px; font-weight: 700; color: #48bb78;">-$2.14M</div>
+                                <div style="font-size: 13px; opacity: 0.8; margin-top: 5px;">⬆ $3.14M improvement</div>
+                            </div>
+                            <div style="margin-bottom: 20px;">
+                                <div style="font-size: 14px; opacity: 0.9; margin-bottom: 5px;">Cash to Breakeven</div>
+                                <div style="font-size: 32px; font-weight: 700; color: #48bb78;">$15.81M</div>
+                                <div style="font-size: 13px; opacity: 0.8; margin-top: 5px;">⬇ $3.15M less needed</div>
+                            </div>
+                            <div>
+                                <div style="font-size: 14px; opacity: 0.9; margin-bottom: 5px;">Breakeven Timeline</div>
+                                <div style="font-size: 32px; font-weight: 700; color: #48bb78;">Aug 2026</div>
+                                <div style="font-size: 13px; opacity: 0.8; margin-top: 5px;">⏩ 2 months earlier</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Implementation Roadmap -->
+            <div class="chart-container">
+                <h2>💡 Implementation Roadmap</h2>
+                <div style="margin-top: 30px;">
+                    <div style="background: #f7fafc; padding: 30px; border-radius: 12px; border-left: 4px solid #667eea;">
+                        <h3 style="color: #2d3748; margin-bottom: 20px; font-size: 20px;">Key Actions to Achieve 25% Tier Growth</h3>
+                        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 25px;">
+                            <div>
+                                <h4 style="color: #667eea; margin-bottom: 10px; font-size: 16px;">🎯 Acquisition Strategy</h4>
+                                <ul style="color: #4a5568; line-height: 2; margin-left: 20px;">
+                                    <li>Target high-income Latino professionals ($75K+ annual income)</li>
+                                    <li>Focus marketing on remittance corridors with highest transaction volumes</li>
+                                    <li>Partner with employers for direct deposit enrollment campaigns</li>
+                                    <li>Offer premium onboarding incentives for high-value segments</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h4 style="color: #667eea; margin-bottom: 10px; font-size: 16px;">📈 Engagement & Upsell</h4>
+                                <ul style="color: #4a5568; line-height: 2; margin-left: 20px;">
+                                    <li>Develop tier upgrade programs (Sapphire → Emerald → Diamond)</li>
+                                    <li>Create exclusive features for premium tiers (e.g., premium loans, investment products)</li>
+                                    <li>Implement personalized financial coaching for high-value customers</li>
+                                    <li>Launch referral bonuses targeting high-value customer networks</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h4 style="color: #667eea; margin-bottom: 10px; font-size: 16px;">🔒 Retention Programs</h4>
+                                <ul style="color: #4a5568; line-height: 2; margin-left: 20px;">
+                                    <li>VIP customer support for Diamond and Emerald tiers</li>
+                                    <li>Loyalty rewards program with escalating benefits</li>
+                                    <li>Exclusive access to new products and features</li>
+                                    <li>Quarterly engagement campaigns with personalized offers</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h4 style="color: #667eea; margin-bottom: 10px; font-size: 16px;">📊 Measurement & Optimization</h4>
+                                <ul style="color: #4a5568; line-height: 2; margin-left: 20px;">
+                                    <li>Weekly monitoring of tier composition and movement</li>
+                                    <li>Monthly cohort analysis of customer acquisition by tier</li>
+                                    <li>A/B test premium features and pricing strategies</li>
+                                    <li>Track customer satisfaction scores by tier</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1315,12 +1603,15 @@
                 tabs[2].classList.add('active');
                 document.getElementById('burnrateTab').classList.add('active');
                 updateBurnRateView();
-            } else if (tab === 'opex') {
+            } else if (tab === 'highvalue') {
                 tabs[3].classList.add('active');
+                document.getElementById('highvalueTab').classList.add('active');
+            } else if (tab === 'opex') {
+                tabs[4].classList.add('active');
                 document.getElementById('opexTab').classList.add('active');
                 initializeOpExTab();
             } else if (tab === 'scenario') {
-                tabs[4].classList.add('active');
+                tabs[5].classList.add('active');
                 document.getElementById('scenarioTab').classList.add('active');
             }
         }
