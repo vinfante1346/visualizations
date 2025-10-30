@@ -1988,13 +1988,13 @@
                         'Unsecured Business Loan Fees': 0,
                         'Home Mortgage Referral Fees': 0
                     },
-                    totalRevenue: 13213542.74,
-                    costOfServices: 13101323.17,
-                    grossProfit: 112219.56,
-                    marketing: 16249194.00,
-                    otherOperatingExpenses: 33987600.50,
-                    operatingExpenses: 50236794.50,
-                    netIncome: -50124574.94,
+                    totalRevenue: 14292960,
+                    costOfServices: 9428996,
+                    grossProfit: 4863964,
+                    marketing: 15442762,
+                    otherOperatingExpenses: 34399650,
+                    operatingExpenses: 49842412,
+                    netIncome: -47311478,
                     endingCustomers: 664225,
                     activeCustomers: 124867
                 },
@@ -2018,13 +2018,13 @@
                         'Home Mortgage Referral Fees': 385238.22,
                         'Health Services & Burial Assistance': 1040400.00
                     },
-                    totalRevenue: 76310818.74,
-                    costOfServices: 30206085.27,
-                    grossProfit: 46104733.46,
-                    marketing: 12002408.00,
-                    otherOperatingExpenses: 34726147.96,
-                    operatingExpenses: 46728555.96,
-                    netIncome: -623822.50,
+                    totalRevenue: 72513042,
+                    costOfServices: 28143444,
+                    grossProfit: 44369598,
+                    marketing: 17554220,
+                    otherOperatingExpenses: 32053016,
+                    operatingExpenses: 49607236,
+                    netIncome: -5237637,
                     endingCustomers: 933611,
                     activeCustomers: 260219
                 }
@@ -2202,10 +2202,10 @@
                 totalRevenue: [999063, 1058638, 1139054, 1213744, 1358383, 919413, 958330, 1089524, 896324, 1071204, 1322097, 2267186],
                 costOfServices: [348000, 3050000, 0, 294000, 282000, 353000, 455000, 552000, 661000, 1082502, 1116430, 1235064],
                 grossProfit: [19829, 170029, 0, 16794, 16268, 20285, 25817, 31898, 37859, -11298, 205668, 1032122],
-                marketing: [1320000, 1345089, 1368695, 1394030, 1423794, 1678845, 1708544, 1726838, 2298974, 120000, 120000, 120000],
+                marketing: [1320000, 1345089, 1368695, 1394030, 1423794, 1678845, 1708544, 1726838, 2298974, 937953, 120000, 120000],
                 otherOperatingExpenses: [2613526, 2683933, 2789853, 2803238, 2979087, 3359005, 3283725, 3305040, 3203448, 2757746, 2505834, 2115215],
-                operatingExpenses: [3933526, 4029023, 4158549, 4197269, 4402881, 5037851, 4992269, 5031879, 5502422, 2877746, 2625834, 2235215],
-                netIncome: [-4460171, -4309971, -4480000, -4463206, -4463732, -4459715, -4454183, -4448102, -4442141, -2889044, -2420167, -1203093],
+                operatingExpenses: [3933526, 4029023, 4158549, 4197269, 4402881, 5037851, 4992269, 5031879, 5502422, 3695699, 2625834, 2235215],
+                netIncome: [-4460171, -4309971, -4480000, -4463206, -4463732, -4459715, -4454183, -4448102, -4442141, -3706997, -2420167, -1203093],
                 customers: [485000, 500000, 515000, 530000, 545000, 560000, 580000, 600000, 620000, 640000, 655000, 664225],
                 activeCustomers: [75000, 80000, 85000, 90000, 95000, 100000, 105000, 110000, 115000, 118000, 122000, 124867]
             },
@@ -2235,7 +2235,7 @@
             }
         };
 
-        // Cash burn data (Updated with $120k/month marketing + payables)
+        // Cash burn data (From PDF with $120k marketing Nov-Feb + payables)
         const cashBurnData = {
             unpaidSept2025: 2500000,
             q42025: 7433358,
@@ -2245,7 +2245,7 @@
             totalToBreakeven: 20254508,
             monthlyBurn: {
                 months: ['Oct-25', 'Nov-25', 'Dec-25', 'Jan-26', 'Feb-26', 'Mar-26', 'Apr-26', 'May-26', 'Jun-26', 'Jul-26', 'Aug-26', 'Sep-26'],
-                values: [-2889044, -2420167, -1203093, -1194192, -1026624, -2121538, -1840493, -1528432, -916175, -454688, -51819, 342955]
+                values: [-3706997, -2420167, -1203093, -1194192, -1026624, -2121538, -1840493, -1528432, -916175, -454688, -51819, 342955]
             }
         };
 
@@ -4065,9 +4065,9 @@
 
             // Q4 2025 data (Oct, Nov, Dec)
             const q42025 = [
-                { month: 'Oct-25', revenue: 1074579, cos: 1082502, marketing: 937953, opex: 2757746, netIncome: -3703622 },
-                { month: 'Nov-25', revenue: 2020230, cos: 1123089, marketing: 700000, opex: 2525987, netIncome: -2328846 },
-                { month: 'Dec-25', revenue: 2375965, cos: 1274822, marketing: 700000, opex: 2570765, netIncome: -2169622 }
+                { month: 'Oct-25', revenue: 1071204, cos: 1082502, marketing: 937953, opex: 2757746, netIncome: -3706997 },
+                { month: 'Nov-25', revenue: 1322097, cos: 1116430, marketing: 120000, opex: 2505834, netIncome: -2420167 },
+                { month: 'Dec-25', revenue: 2267186, cos: 1235064, marketing: 120000, opex: 2115215, netIncome: -1203093 }
             ];
 
             // 2026 data (Jan-Sep)
