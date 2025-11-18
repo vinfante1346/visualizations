@@ -1,0 +1,1417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comprehensive Customer Analysis - Activity, Churn & Retention</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: white;
+            padding: 50px;
+            border-radius: 16px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 48px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 15px;
+        }
+
+        .header p {
+            font-size: 20px;
+            color: #718096;
+            margin-bottom: 10px;
+        }
+
+        .header .subtitle {
+            font-size: 16px;
+            color: #a0aec0;
+        }
+
+        .alert-box {
+            background: linear-gradient(135deg, #fc8181 0%, #f56565 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(245, 101, 101, 0.3);
+        }
+
+        .alert-box h2 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .alert-box p {
+            font-size: 16px;
+            opacity: 0.95;
+            line-height: 1.6;
+        }
+
+        .tabs {
+            background: white;
+            padding: 10px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .tab-button {
+            padding: 15px 30px;
+            border: none;
+            background: transparent;
+            color: #4a5568;
+            font-weight: 600;
+            font-size: 15px;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.2s;
+        }
+
+        .tab-button:hover {
+            background: #f7fafc;
+        }
+
+        .tab-button.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .metric-card {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .metric-card.primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .metric-card.critical {
+            background: linear-gradient(135deg, #fc8181 0%, #f56565 100%);
+            color: white;
+        }
+
+        .metric-card.warning {
+            background: linear-gradient(135deg, #f6ad55 0%, #ed8936 100%);
+            color: white;
+        }
+
+        .metric-card.success {
+            background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+            color: white;
+        }
+
+        .metric-card.info {
+            background: linear-gradient(135deg, #4299e1 0%, #3182ce 100%);
+            color: white;
+        }
+
+        .metric-label {
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            opacity: 0.85;
+            margin-bottom: 10px;
+        }
+
+        .metric-value {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .metric-subtitle {
+            font-size: 14px;
+            opacity: 0.75;
+        }
+
+        .chart-container {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+
+        .chart-container h2 {
+            font-size: 24px;
+            font-weight: 700;
+            color: #2d3748;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+
+        .data-table {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            overflow-x: auto;
+            margin-bottom: 30px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 14px;
+            position: sticky;
+            top: 0;
+        }
+
+        td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #e2e8f0;
+            font-size: 14px;
+        }
+
+        tr:hover {
+            background: #f7fafc;
+        }
+
+        .state-name {
+            font-weight: 600;
+            color: #2d3748;
+        }
+
+        .number {
+            font-family: 'Courier New', monospace;
+            font-weight: 600;
+            color: #4a5568;
+        }
+
+        .critical-number {
+            font-family: 'Courier New', monospace;
+            font-weight: 700;
+            color: #e53e3e;
+            font-size: 16px;
+        }
+
+        .percentage {
+            font-weight: 600;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+        }
+
+        .percentage.high, .percentage.good {
+            background: #c6f6d5;
+            color: #22543d;
+        }
+
+        .percentage.medium {
+            background: #fefcbf;
+            color: #744210;
+        }
+
+        .percentage.low, .percentage.warning {
+            background: #feebc8;
+            color: #7c2d12;
+        }
+
+        .percentage.critical {
+            background: #fed7d7;
+            color: #742a2a;
+        }
+
+        .filters {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .filter-group label {
+            font-size: 12px;
+            font-weight: 600;
+            color: #718096;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        select, input {
+            padding: 10px 15px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            background: white;
+            transition: border-color 0.2s;
+        }
+
+        select:focus, input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .insights-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .insight-card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            border-left: 4px solid #667eea;
+        }
+
+        .insight-card.critical {
+            border-left-color: #fc8181;
+        }
+
+        .insight-card h3 {
+            font-size: 18px;
+            font-weight: 700;
+            color: #2d3748;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .insight-card ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .insight-card li {
+            padding: 8px 0;
+            color: #4a5568;
+            line-height: 1.6;
+            display: flex;
+            align-items: start;
+            gap: 10px;
+        }
+
+        .insight-card li:before {
+            content: "→";
+            color: #667eea;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .insight-card.critical li:before {
+            color: #fc8181;
+        }
+
+        .state-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .state-card {
+            background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+        }
+
+        .state-card .rank {
+            font-size: 12px;
+            font-weight: 700;
+            color: #667eea;
+            margin-bottom: 5px;
+        }
+
+        .state-card .state {
+            font-size: 18px;
+            font-weight: 700;
+            color: #2d3748;
+            margin-bottom: 5px;
+        }
+
+        .state-card .count {
+            font-size: 28px;
+            font-weight: 800;
+            color: #667eea;
+            margin-bottom: 5px;
+        }
+
+        .state-card .share {
+            font-size: 12px;
+            color: #718096;
+        }
+
+        .section-divider {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            margin: 40px 0 30px 0;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .section-divider h2 {
+            font-size: 32px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #fc8181 0%, #f56565 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .section-divider p {
+            color: #718096;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Comprehensive Customer Analysis</h1>
+            <p>Activity, Churn, Retention & Geographic Insights</p>
+            <div class="subtitle">Combined Monthly Activity & Long-Term Attrition Analysis</div>
+        </div>
+
+        <div class="tabs">
+            <button class="tab-button active" onclick="switchTab('overview')">📊 Overview</button>
+            <button class="tab-button" onclick="switchTab('monthly')">📅 Monthly Activity</button>
+            <button class="tab-button" onclick="switchTab('churn')">⚠️ Churn Analysis</button>
+            <button class="tab-button" onclick="switchTab('states')">🗺️ State Analysis</button>
+            <button class="tab-button" onclick="switchTab('insights')">💡 Insights & Actions</button>
+        </div>
+
+        <!-- OVERVIEW TAB -->
+        <div id="overview" class="tab-content active">
+            <div class="metrics-grid">
+                <div class="metric-card primary">
+                    <div class="metric-label">Active Customers (Month Start)</div>
+                    <div class="metric-value">119,551</div>
+                    <div class="metric-subtitle">beginning of month baseline</div>
+                </div>
+                <div class="metric-card success">
+                    <div class="metric-label">End of Month</div>
+                    <div class="metric-value">122,254</div>
+                    <div class="metric-subtitle">+2,703 net growth (2.3%)</div>
+                </div>
+                <div class="metric-card critical">
+                    <div class="metric-label">Monthly Churn</div>
+                    <div class="metric-value">29,784</div>
+                    <div class="metric-subtitle">24.9% monthly loss rate</div>
+                </div>
+                <div class="metric-card warning">
+                    <div class="metric-label">90+ Day Churn</div>
+                    <div class="metric-value">143,368</div>
+                    <div class="metric-subtitle">71.7% long-term attrition</div>
+                </div>
+            </div>
+
+            <div class="alert-box">
+                <h2>
+                    <span style="font-size: 32px;">🚨</span>
+                    Critical Retention Challenge
+                </h2>
+                <p><strong>Despite positive monthly growth of +2,703 customers</strong>, the business faces a severe long-term retention crisis. Of the 200,031 customers tracked over time, <strong>143,368 (71.7%) churned after 90+ days</strong>. This indicates strong acquisition but critical retention gaps that must be addressed to achieve sustainable growth.</p>
+            </div>
+
+            <div class="chart-container">
+                <h2>Customer Flow: Monthly Activity</h2>
+                <canvas id="flowChart"></canvas>
+            </div>
+
+            <div class="insights-grid">
+                <div class="insight-card">
+                    <h3>📈 Positive Indicators</h3>
+                    <ul>
+                        <li>+2.3% month-over-month growth (net +2,703 customers)</li>
+                        <li>Strong new customer acquisition (12,666 new accounts)</li>
+                        <li>Low early churn (0.54% at 30 days)</li>
+                        <li>Effective onboarding processes</li>
+                    </ul>
+                </div>
+
+                <div class="insight-card critical">
+                    <h3>⚠️ Critical Concerns</h3>
+                    <ul>
+                        <li>71.7% churn rate after 90+ days (vs 20-25% industry standard)</li>
+                        <li>24.9% monthly churn rate across all states</li>
+                        <li>Only 28.3% overall retention rate</li>
+                        <li>Major gap between acquisition and retention performance</li>
+                    </ul>
+                </div>
+
+                <div class="insight-card">
+                    <h3>🎯 Strategic Priorities</h3>
+                    <ul>
+                        <li>Focus on 60-90 day engagement to prevent long-term churn</li>
+                        <li>Implement retention programs for high-risk states</li>
+                        <li>Maintain current onboarding excellence</li>
+                        <li>Develop re-activation campaigns for dormant users</li>
+                    </ul>
+                </div>
+
+                <div class="insight-card">
+                    <h3>💰 Business Impact</h3>
+                    <ul>
+                        <li>Reducing 90+ day churn by 10% saves ~14,337 customers</li>
+                        <li>Current acquisition masks retention problems</li>
+                        <li>Sustainable growth requires retention improvement</li>
+                        <li>Target: Reduce churn to industry standard (20-25%)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- MONTHLY ACTIVITY TAB -->
+        <div id="monthly" class="tab-content">
+            <div class="metrics-grid">
+                <div class="metric-card primary">
+                    <div class="metric-label">Beginning of Month</div>
+                    <div class="metric-value">119,551</div>
+                    <div class="metric-subtitle">active customers</div>
+                </div>
+                <div class="metric-card success">
+                    <div class="metric-label">Again Active</div>
+                    <div class="metric-value">89,766</div>
+                    <div class="metric-subtitle">75.1% reactivation</div>
+                </div>
+                <div class="metric-card info">
+                    <div class="metric-label">New Accounts</div>
+                    <div class="metric-value">12,666</div>
+                    <div class="metric-subtitle">fresh acquisitions</div>
+                </div>
+                <div class="metric-card warning">
+                    <div class="metric-label">Lost Customers</div>
+                    <div class="metric-value">29,784</div>
+                    <div class="metric-subtitle">24.9% monthly churn</div>
+                </div>
+            </div>
+
+            <div class="chart-container">
+                <h2>Monthly Activity Breakdown</h2>
+                <canvas id="monthlyActivityChart"></canvas>
+            </div>
+
+            <div class="chart-container">
+                <h2>Top 15 States by Active Customers</h2>
+                <canvas id="topStatesChart"></canvas>
+            </div>
+
+            <div class="chart-container">
+                <h2>Top 10 States - Active Customers</h2>
+                <div class="state-cards">
+                    <div class="state-card">
+                        <div class="rank">#1</div>
+                        <div class="state">Texas</div>
+                        <div class="count">19,915</div>
+                        <div class="share">16.7% of total</div>
+                    </div>
+                    <div class="state-card">
+                        <div class="rank">#2</div>
+                        <div class="state">California</div>
+                        <div class="count">11,741</div>
+                        <div class="share">9.8% of total</div>
+                    </div>
+                    <div class="state-card">
+                        <div class="rank">#3</div>
+                        <div class="state">Florida</div>
+                        <div class="count">11,169</div>
+                        <div class="share">9.3% of total</div>
+                    </div>
+                    <div class="state-card">
+                        <div class="rank">#4</div>
+                        <div class="state">New York</div>
+                        <div class="count">6,955</div>
+                        <div class="share">5.8% of total</div>
+                    </div>
+                    <div class="state-card">
+                        <div class="rank">#5</div>
+                        <div class="state">Georgia</div>
+                        <div class="count">4,973</div>
+                        <div class="share">4.2% of total</div>
+                    </div>
+                    <div class="state-card">
+                        <div class="rank">#6</div>
+                        <div class="state">North Carolina</div>
+                        <div class="count">4,449</div>
+                        <div class="share">3.7% of total</div>
+                    </div>
+                    <div class="state-card">
+                        <div class="rank">#7</div>
+                        <div class="state">Illinois</div>
+                        <div class="count">4,096</div>
+                        <div class="share">3.4% of total</div>
+                    </div>
+                    <div class="state-card">
+                        <div class="rank">#8</div>
+                        <div class="state">New Jersey</div>
+                        <div class="count">3,569</div>
+                        <div class="share">3.0% of total</div>
+                    </div>
+                    <div class="state-card">
+                        <div class="rank">#9</div>
+                        <div class="state">Ohio</div>
+                        <div class="count">3,362</div>
+                        <div class="share">2.8% of total</div>
+                    </div>
+                    <div class="state-card">
+                        <div class="rank">#10</div>
+                        <div class="state">Tennessee</div>
+                        <div class="count">3,308</div>
+                        <div class="share">2.8% of total</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CHURN ANALYSIS TAB -->
+        <div id="churn" class="tab-content">
+            <div class="alert-box">
+                <h2>
+                    <span style="font-size: 32px;">⚠️</span>
+                    Long-Term Churn Crisis
+                </h2>
+                <p>Out of <strong>200,031 total customers</strong> tracked, <strong>143,368 (71.7%)</strong> have churned after more than 90 days. This is significantly higher than industry benchmarks of 20-25% and represents the primary business challenge.</p>
+            </div>
+
+            <div class="metrics-grid">
+                <div class="metric-card info">
+                    <div class="metric-label">Total Tracked</div>
+                    <div class="metric-value">200,031</div>
+                    <div class="metric-subtitle">baseline customer count</div>
+                </div>
+                <div class="metric-card success">
+                    <div class="metric-label">30 Day Churn</div>
+                    <div class="metric-value">1,086</div>
+                    <div class="metric-subtitle">0.54% - excellent</div>
+                </div>
+                <div class="metric-card warning">
+                    <div class="metric-label">60+ Day Churn</div>
+                    <div class="metric-value">25,535</div>
+                    <div class="metric-subtitle">12.77% - concerning</div>
+                </div>
+                <div class="metric-card critical">
+                    <div class="metric-label">90+ Day Churn</div>
+                    <div class="metric-value">143,368</div>
+                    <div class="metric-subtitle">71.67% - CRITICAL</div>
+                </div>
+            </div>
+
+            <div class="chart-container">
+                <h2>Churn by Time Period</h2>
+                <canvas id="churnTimeChart"></canvas>
+            </div>
+
+            <div class="chart-container">
+                <h2>Cumulative Churn Over Time</h2>
+                <canvas id="cumulativeChurnChart"></canvas>
+            </div>
+
+            <div class="chart-container">
+                <h2>Retention vs Churn</h2>
+                <canvas id="retentionPieChart"></canvas>
+            </div>
+
+            <div class="data-table">
+                <h2>Churn Cohort Details</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Cohort</th>
+                            <th>Total Customers</th>
+                            <th>Churned</th>
+                            <th>Churn Rate</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="state-name">30 Days</td>
+                            <td class="number">200,031</td>
+                            <td class="number">1,086</td>
+                            <td><span class="percentage good">0.54%</span></td>
+                            <td>✓ Excellent</td>
+                        </tr>
+                        <tr>
+                            <td class="state-name">More than 30 Days</td>
+                            <td class="number">200,031</td>
+                            <td class="number">30,042</td>
+                            <td><span class="percentage warning">15.02%</span></td>
+                            <td>⚠️ Concerning</td>
+                        </tr>
+                        <tr>
+                            <td class="state-name">More than 60 Days</td>
+                            <td class="number">200,031</td>
+                            <td class="number">25,535</td>
+                            <td><span class="percentage warning">12.77%</span></td>
+                            <td>⚠️ Concerning</td>
+                        </tr>
+                        <tr style="background: #fff5f5;">
+                            <td class="state-name" style="font-weight: 700;">More than 90 Days</td>
+                            <td class="number">200,031</td>
+                            <td class="critical-number" style="font-size: 18px;">143,368</td>
+                            <td><span class="percentage critical" style="font-size: 14px;">71.67%</span></td>
+                            <td style="color: #e53e3e; font-weight: 700;">🚨 CRITICAL</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- STATE ANALYSIS TAB -->
+        <div id="states" class="tab-content">
+            <div class="metrics-grid">
+                <div class="metric-card primary">
+                    <div class="metric-label">States Tracked</div>
+                    <div class="metric-value">52</div>
+                    <div class="metric-subtitle">including territories</div>
+                </div>
+                <div class="metric-card info">
+                    <div class="metric-label">Top State (Texas)</div>
+                    <div class="metric-value">19,915</div>
+                    <div class="metric-subtitle">16.7% of all customers</div>
+                </div>
+                <div class="metric-card warning">
+                    <div class="metric-label">Avg Churn Rate</div>
+                    <div class="metric-value">24.9%</div>
+                    <div class="metric-subtitle">across all states</div>
+                </div>
+                <div class="metric-card critical">
+                    <div class="metric-label">Highest Churn (Hawaii)</div>
+                    <div class="metric-value">39.7%</div>
+                    <div class="metric-subtitle">needs immediate attention</div>
+                </div>
+            </div>
+
+            <div class="chart-container">
+                <h2>Top 15 States by Customer Loss</h2>
+                <canvas id="statesLostChart"></canvas>
+            </div>
+
+            <div class="chart-container">
+                <h2>State Churn Rate Comparison (Top 20)</h2>
+                <canvas id="stateChurnRateChart"></canvas>
+            </div>
+
+            <div class="filters">
+                <div class="filter-group">
+                    <label>Search State</label>
+                    <input type="text" id="stateSearch" placeholder="Search..." onkeyup="filterStateTable()">
+                </div>
+                <div class="filter-group">
+                    <label>Sort By</label>
+                    <select id="stateSort" onchange="sortStateTable()">
+                        <option value="lost-desc">Highest Losses</option>
+                        <option value="churn-rate-desc">Highest Churn Rate</option>
+                        <option value="beginning-desc">Most Customers</option>
+                        <option value="retention-desc">Best Retention</option>
+                        <option value="state">State Name A-Z</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="data-table">
+                <h2>Complete State Breakdown</h2>
+                <table id="stateTable">
+                    <thead>
+                        <tr>
+                            <th>Rank</th>
+                            <th>State</th>
+                            <th>Beginning</th>
+                            <th>Lost</th>
+                            <th>End of Month</th>
+                            <th>Churn Rate</th>
+                            <th>Retention Rate</th>
+                            <th>Net Change</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="stateTableBody">
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="chart-container">
+                <h2>State Performance Matrix</h2>
+                <canvas id="stateScatterChart"></canvas>
+            </div>
+        </div>
+
+        <!-- INSIGHTS & ACTIONS TAB -->
+        <div id="insights" class="tab-content">
+            <div class="insights-grid">
+                <div class="insight-card">
+                    <h3>🏆 Best Performing States (Lowest Churn)</h3>
+                    <ul id="bestStates"></ul>
+                </div>
+
+                <div class="insight-card critical">
+                    <h3>⚠️ Highest Risk States</h3>
+                    <ul id="worstStates"></ul>
+                </div>
+
+                <div class="insight-card">
+                    <h3>📍 Largest Markets</h3>
+                    <ul id="largestStates"></ul>
+                </div>
+
+                <div class="insight-card critical">
+                    <h3>💰 Highest Absolute Losses</h3>
+                    <ul id="highestLosses"></ul>
+                </div>
+
+                <div class="insight-card">
+                    <h3>📊 Key Findings</h3>
+                    <ul>
+                        <li>Monthly growth of +2,703 customers despite 24.9% churn</li>
+                        <li>Early retention (30 days) is strong at 99.46%</li>
+                        <li>Critical drop-off occurs between 60-90 days</li>
+                        <li>Top 3 states (TX, CA, FL) represent 36% of customer base</li>
+                        <li>Geographic concentration creates both opportunity and risk</li>
+                    </ul>
+                </div>
+
+                <div class="insight-card critical">
+                    <h3>🎯 Immediate Actions Required</h3>
+                    <ul>
+                        <li>Launch 60-90 day engagement campaigns immediately</li>
+                        <li>Investigate root causes of long-term churn (90+ days)</li>
+                        <li>Implement early warning system for at-risk customers</li>
+                        <li>Focus retention efforts on high-loss states (FL, TX, CA)</li>
+                        <li>Develop state-specific retention strategies</li>
+                    </ul>
+                </div>
+
+                <div class="insight-card">
+                    <h3>💡 Strategic Recommendations</h3>
+                    <ul>
+                        <li>Set target: Reduce 90+ day churn from 71.7% to 25% within 12 months</li>
+                        <li>Maintain current onboarding excellence (0.54% early churn)</li>
+                        <li>Create tiered retention programs by customer lifecycle stage</li>
+                        <li>Invest in predictive analytics to identify churn risk early</li>
+                        <li>Benchmark against fintech industry standards (75-80% retention)</li>
+                    </ul>
+                </div>
+
+                <div class="insight-card">
+                    <h3>📈 Impact Projections</h3>
+                    <ul>
+                        <li>10% reduction in 90+ day churn = ~14,337 customers saved</li>
+                        <li>Reaching 50% retention rate = +43,353 additional customers</li>
+                        <li>5% improvement in monthly churn = +5,979 customers/month</li>
+                        <li>Current trajectory: Sustainable growth once retention improves</li>
+                        <li>Goal: Align retention with industry standard (75-80%)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="chart-container">
+                <h2>Regional Distribution</h2>
+                <canvas id="regionChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Tab switching
+        function switchTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
+
+            document.getElementById(tabName).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        // State data
+        const stateData = [
+            { state: "Texas", beginning: 19915, lost: 4635, end: 22079, againActive: 15280, renewed: 2087 },
+            { state: "California", beginning: 11741, lost: 2690, end: 12105, againActive: 9051, renewed: 1325 },
+            { state: "Florida", beginning: 11169, lost: 3436, end: 10776, againActive: 7733, renewed: 1467 },
+            { state: "New York", beginning: 6955, lost: 1906, end: 6782, againActive: 5049, renewed: 978 },
+            { state: "North Carolina", beginning: 4449, lost: 968, end: 5408, againActive: 3481, renewed: 445 },
+            { state: "Georgia", beginning: 4973, lost: 1219, end: 4938, againActive: 3754, renewed: 605 },
+            { state: "Illinois", beginning: 4096, lost: 1058, end: 4046, againActive: 3038, renewed: 583 },
+            { state: "New Jersey", beginning: 3569, lost: 988, end: 3440, againActive: 2581, renewed: 519 },
+            { state: "Tennessee", beginning: 3308, lost: 786, end: 3333, againActive: 2522, renewed: 396 },
+            { state: "Ohio", beginning: 3362, lost: 800, end: 3288, againActive: 2562, renewed: 378 },
+            { state: "Indiana", beginning: 3260, lost: 768, end: 3111, againActive: 2492, renewed: 345 },
+            { state: "Louisiana", beginning: 2792, lost: 615, end: 3213, againActive: 2177, renewed: 327 },
+            { state: "Pennsylvania", beginning: 2922, lost: 798, end: 3021, againActive: 2124, renewed: 365 },
+            { state: "Colorado", beginning: 2428, lost: 685, end: 2307, againActive: 1743, renewed: 345 },
+            { state: "Michigan", beginning: 2026, lost: 486, end: 2435, againActive: 1540, renewed: 205 },
+            { state: "Virginia", beginning: 2104, lost: 549, end: 2069, againActive: 1555, renewed: 266 },
+            { state: "Alabama", beginning: 2103, lost: 456, end: 2120, againActive: 1647, renewed: 251 },
+            { state: "South Carolina", beginning: 1859, lost: 433, end: 1872, againActive: 1426, renewed: 220 },
+            { state: "Maryland", beginning: 1798, lost: 445, end: 1801, againActive: 1353, renewed: 224 },
+            { state: "Wisconsin", beginning: 1896, lost: 372, end: 1855, againActive: 1524, renewed: 186 },
+            { state: "Kentucky", beginning: 1787, lost: 438, end: 1684, againActive: 1349, renewed: 182 },
+            { state: "Arizona", beginning: 1626, lost: 451, end: 1611, againActive: 1175, renewed: 160 },
+            { state: "Oklahoma", beginning: 1632, lost: 368, end: 1621, againActive: 1264, renewed: 153 },
+            { state: "Missouri", beginning: 1583, lost: 328, end: 1656, againActive: 1255, renewed: 203 },
+            { state: "Utah", beginning: 1427, lost: 369, end: 1385, againActive: 1058, renewed: 193 },
+            { state: "Nevada", beginning: 1424, lost: 427, end: 1278, againActive: 997, renewed: 154 },
+            { state: "Minnesota", beginning: 1329, lost: 321, end: 1291, againActive: 1008, renewed: 172 },
+            { state: "Arkansas", beginning: 1318, lost: 284, end: 1324, againActive: 1034, renewed: 129 },
+            { state: "Washington", beginning: 1185, lost: 319, end: 1158, againActive: 866, renewed: 158 },
+            { state: "Massachusetts", beginning: 1141, lost: 337, end: 1079, againActive: 804, renewed: 171 },
+            { state: "Mississippi", beginning: 1109, lost: 266, end: 1102, againActive: 843, renewed: 108 },
+            { state: "Kansas", beginning: 1045, lost: 222, end: 1037, againActive: 823, renewed: 102 },
+            { state: "Oregon", beginning: 903, lost: 230, end: 857, againActive: 673, renewed: 109 },
+            { state: "Iowa", beginning: 883, lost: 197, end: 848, againActive: 686, renewed: 84 },
+            { state: "Connecticut", beginning: 771, lost: 214, end: 764, againActive: 557, renewed: 118 },
+            { state: "New Mexico", beginning: 606, lost: 168, end: 588, againActive: 438, renewed: 60 },
+            { state: "Nebraska", beginning: 614, lost: 157, end: 576, againActive: 457, renewed: 60 },
+            { state: "Idaho", beginning: 441, lost: 97, end: 426, againActive: 344, renewed: 46 },
+            { state: "South Dakota", beginning: 295, lost: 52, end: 287, againActive: 243, renewed: 27 },
+            { state: "Delaware", beginning: 274, lost: 69, end: 258, againActive: 205, renewed: 27 },
+            { state: "North Dakota", beginning: 231, lost: 52, end: 229, againActive: 179, renewed: 25 },
+            { state: "West Virginia", beginning: 213, lost: 61, end: 214, againActive: 152, renewed: 19 },
+            { state: "Rhode Island", beginning: 214, lost: 53, end: 207, againActive: 161, renewed: 27 },
+            { state: "District of Columbia", beginning: 135, lost: 39, end: 142, againActive: 96, renewed: 20 },
+            { state: "Wyoming", beginning: 122, lost: 29, end: 121, againActive: 93, renewed: 15 },
+            { state: "Montana", beginning: 112, lost: 34, end: 101, againActive: 78, renewed: 11 },
+            { state: "Maine", beginning: 98, lost: 21, end: 106, againActive: 77, renewed: 11 },
+            { state: "Hawaii", beginning: 78, lost: 31, end: 71, againActive: 47, renewed: 12 },
+            { state: "New Hampshire", beginning: 77, lost: 16, end: 77, againActive: 61, renewed: 7 },
+            { state: "Vermont", beginning: 64, lost: 10, end: 69, againActive: 54, renewed: 7 },
+            { state: "Alaska", beginning: 43, lost: 15, end: 46, againActive: 28, renewed: 9 },
+            { state: "Puerto Rico", beginning: 3, lost: 1, end: 4, againActive: 2, renewed: 2 }
+        ];
+
+        // Calculate metrics
+        stateData.forEach(state => {
+            state.churnRate = ((state.lost / state.beginning) * 100).toFixed(2);
+            state.retentionRate = (((state.beginning - state.lost) / state.beginning) * 100).toFixed(2);
+            state.netChange = state.end - state.beginning;
+        });
+
+        let filteredStateData = [...stateData];
+
+        // Flow Chart
+        const flowCtx = document.getElementById('flowChart').getContext('2d');
+        new Chart(flowCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Beginning of Month', 'Again Active', 'Renewed Active', 'New Accounts', 'Lost', 'End of Month'],
+                datasets: [{
+                    label: 'Customers',
+                    data: [119551, 89766, 14106, 12666, -29784, 122254],
+                    backgroundColor: [
+                        'rgba(102, 126, 234, 0.8)',
+                        'rgba(72, 187, 120, 0.8)',
+                        'rgba(66, 153, 225, 0.8)',
+                        'rgba(159, 122, 234, 0.8)',
+                        'rgba(252, 129, 129, 0.8)',
+                        'rgba(72, 187, 120, 0.8)'
+                    ],
+                    borderColor: [
+                        'rgba(102, 126, 234, 1)',
+                        'rgba(72, 187, 120, 1)',
+                        'rgba(66, 153, 225, 1)',
+                        'rgba(159, 122, 234, 1)',
+                        'rgba(252, 129, 129, 1)',
+                        'rgba(72, 187, 120, 1)'
+                    ],
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        callbacks: {
+                            label: (context) => Math.abs(context.parsed.y).toLocaleString() + ' customers'
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        ticks: {
+                            callback: (value) => Math.abs(value).toLocaleString()
+                        }
+                    }
+                }
+            }
+        });
+
+        // Monthly Activity Chart
+        const monthlyCtx = document.getElementById('monthlyActivityChart').getContext('2d');
+        new Chart(monthlyCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Again Active', 'Renewed Active', 'New Accounts', 'Lost'],
+                datasets: [{
+                    data: [89766, 14106, 12666, 29784],
+                    backgroundColor: [
+                        'rgba(72, 187, 120, 0.8)',
+                        'rgba(66, 153, 225, 0.8)',
+                        'rgba(159, 122, 234, 0.8)',
+                        'rgba(252, 129, 129, 0.8)'
+                    ],
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { position: 'bottom' },
+                    tooltip: {
+                        callbacks: {
+                            label: (context) => {
+                                const value = context.parsed.toLocaleString();
+                                const pct = ((context.parsed / 146322) * 100).toFixed(1);
+                                return `${context.label}: ${value} (${pct}%)`;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        // Top States Chart
+        const topStatesCtx = document.getElementById('topStatesChart').getContext('2d');
+        const top15 = [...stateData].sort((a, b) => b.beginning - a.beginning).slice(0, 15);
+        new Chart(topStatesCtx, {
+            type: 'bar',
+            data: {
+                labels: top15.map(s => s.state),
+                datasets: [{
+                    label: 'Active Customers',
+                    data: top15.map(s => s.beginning),
+                    backgroundColor: 'rgba(102, 126, 234, 0.8)',
+                    borderColor: 'rgba(102, 126, 234, 1)',
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: { legend: { display: false } },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: { callback: (value) => value.toLocaleString() }
+                    }
+                }
+            }
+        });
+
+        // Churn Time Chart
+        const churnTimeCtx = document.getElementById('churnTimeChart').getContext('2d');
+        new Chart(churnTimeCtx, {
+            type: 'bar',
+            data: {
+                labels: ['30 Days', '30+ Days', '60+ Days', '90+ Days'],
+                datasets: [{
+                    label: 'Churned Customers',
+                    data: [1086, 30042, 25535, 143368],
+                    backgroundColor: [
+                        'rgba(72, 187, 120, 0.8)',
+                        'rgba(246, 173, 85, 0.8)',
+                        'rgba(246, 173, 85, 0.8)',
+                        'rgba(252, 129, 129, 0.9)'
+                    ],
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: { legend: { display: false } },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: { callback: (value) => value.toLocaleString() }
+                    }
+                }
+            }
+        });
+
+        // Cumulative Churn Chart
+        const cumulativeCtx = document.getElementById('cumulativeChurnChart').getContext('2d');
+        new Chart(cumulativeCtx, {
+            type: 'line',
+            data: {
+                labels: ['0 Days', '30 Days', '60 Days', '90+ Days'],
+                datasets: [{
+                    label: 'Cumulative Churn',
+                    data: [0, 1086, 31128, 143368],
+                    backgroundColor: 'rgba(252, 129, 129, 0.2)',
+                    borderColor: 'rgba(252, 129, 129, 1)',
+                    borderWidth: 3,
+                    fill: true,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: { legend: { display: false } },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 200031,
+                        ticks: { callback: (value) => value.toLocaleString() }
+                    }
+                }
+            }
+        });
+
+        // Retention Pie
+        const retentionPieCtx = document.getElementById('retentionPieChart').getContext('2d');
+        new Chart(retentionPieCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Churned (90+ days)', 'Retained'],
+                datasets: [{
+                    data: [143368, 56663],
+                    backgroundColor: [
+                        'rgba(252, 129, 129, 0.8)',
+                        'rgba(72, 187, 120, 0.8)'
+                    ],
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { position: 'bottom' },
+                    tooltip: {
+                        callbacks: {
+                            label: (context) => {
+                                const value = context.parsed.toLocaleString();
+                                const pct = ((context.parsed / 200031) * 100).toFixed(2);
+                                return `${context.label}: ${value} (${pct}%)`;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        // States Lost Chart
+        const statesLostCtx = document.getElementById('statesLostChart').getContext('2d');
+        const topLost = [...stateData].sort((a, b) => b.lost - a.lost).slice(0, 15);
+        new Chart(statesLostCtx, {
+            type: 'bar',
+            data: {
+                labels: topLost.map(s => s.state),
+                datasets: [{
+                    label: 'Customers Lost',
+                    data: topLost.map(s => s.lost),
+                    backgroundColor: 'rgba(252, 129, 129, 0.8)',
+                    borderColor: 'rgba(252, 129, 129, 1)',
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        callbacks: {
+                            label: (context) => {
+                                const state = topLost[context.dataIndex];
+                                return `${context.parsed.y.toLocaleString()} lost (${state.churnRate}% churn)`;
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: { callback: (value) => value.toLocaleString() }
+                    }
+                }
+            }
+        });
+
+        // State Churn Rate Chart
+        const stateChurnCtx = document.getElementById('stateChurnRateChart').getContext('2d');
+        const topChurn = [...stateData].filter(s => s.beginning > 100).sort((a, b) => b.churnRate - a.churnRate).slice(0, 20);
+        new Chart(stateChurnCtx, {
+            type: 'bar',
+            data: {
+                labels: topChurn.map(s => s.state),
+                datasets: [{
+                    label: 'Churn Rate %',
+                    data: topChurn.map(s => parseFloat(s.churnRate)),
+                    backgroundColor: topChurn.map(s => {
+                        const rate = parseFloat(s.churnRate);
+                        if (rate >= 30) return 'rgba(252, 129, 129, 0.8)';
+                        if (rate >= 25) return 'rgba(246, 173, 85, 0.8)';
+                        return 'rgba(72, 187, 120, 0.8)';
+                    }),
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                indexAxis: 'y',
+                responsive: true,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        callbacks: {
+                            label: (context) => {
+                                const state = topChurn[context.dataIndex];
+                                return `${context.parsed.x}% (${state.lost.toLocaleString()} of ${state.beginning.toLocaleString()})`;
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        beginAtZero: true,
+                        ticks: { callback: (value) => value + '%' }
+                    }
+                }
+            }
+        });
+
+        // State Scatter Chart
+        const scatterCtx = document.getElementById('stateScatterChart').getContext('2d');
+        const top25 = [...stateData].sort((a, b) => b.lost - a.lost).slice(0, 25);
+        new Chart(scatterCtx, {
+            type: 'scatter',
+            data: {
+                datasets: [{
+                    label: 'States',
+                    data: top25.map(s => ({
+                        x: s.beginning,
+                        y: parseFloat(s.churnRate),
+                        r: Math.sqrt(s.lost) * 2
+                    })),
+                    backgroundColor: 'rgba(252, 129, 129, 0.6)',
+                    borderColor: 'rgba(252, 129, 129, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        callbacks: {
+                            label: (context) => {
+                                const state = top25[context.dataIndex];
+                                return `${state.state}: ${state.beginning.toLocaleString()} customers, ${state.churnRate}% churn, ${state.lost.toLocaleString()} lost`;
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        title: { display: true, text: 'Beginning of Month Customers' },
+                        ticks: { callback: (value) => value.toLocaleString() }
+                    },
+                    y: {
+                        title: { display: true, text: 'Churn Rate %' },
+                        ticks: { callback: (value) => value + '%' }
+                    }
+                }
+            }
+        });
+
+        // Region Chart
+        const regionCtx = document.getElementById('regionChart').getContext('2d');
+        const regions = {
+            'South': ['Texas', 'Florida', 'North Carolina', 'Georgia', 'Tennessee', 'Louisiana', 'Alabama', 'South Carolina', 'Kentucky', 'Oklahoma', 'Arkansas', 'Mississippi', 'West Virginia', 'Delaware'],
+            'Northeast': ['New York', 'New Jersey', 'Pennsylvania', 'Massachusetts', 'Connecticut', 'Rhode Island', 'Maine', 'New Hampshire', 'Vermont', 'District of Columbia'],
+            'Midwest': ['Illinois', 'Ohio', 'Indiana', 'Michigan', 'Wisconsin', 'Missouri', 'Minnesota', 'Kansas', 'Iowa', 'Nebraska', 'South Dakota', 'North Dakota'],
+            'West': ['California', 'Colorado', 'Arizona', 'Utah', 'Nevada', 'Washington', 'Oregon', 'New Mexico', 'Idaho', 'Wyoming', 'Montana', 'Hawaii', 'Alaska'],
+            'Other': ['Puerto Rico']
+        };
+
+        const regionData = Object.keys(regions).map(region => {
+            return stateData.filter(d => regions[region].includes(d.state))
+                           .reduce((sum, d) => sum + d.beginning, 0);
+        });
+
+        new Chart(regionCtx, {
+            type: 'doughnut',
+            data: {
+                labels: Object.keys(regions),
+                datasets: [{
+                    data: regionData,
+                    backgroundColor: [
+                        'rgba(102, 126, 234, 0.8)',
+                        'rgba(118, 75, 162, 0.8)',
+                        'rgba(72, 187, 120, 0.8)',
+                        'rgba(237, 137, 54, 0.8)',
+                        'rgba(160, 174, 192, 0.8)'
+                    ],
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { position: 'bottom' },
+                    tooltip: {
+                        callbacks: {
+                            label: (context) => {
+                                const value = context.parsed.toLocaleString();
+                                const pct = ((context.parsed / 119551) * 100).toFixed(1);
+                                return `${context.label}: ${value} (${pct}%)`;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        // State Table
+        function renderStateTable(data = filteredStateData) {
+            const tbody = document.getElementById('stateTableBody');
+            tbody.innerHTML = '';
+
+            data.forEach((state, index) => {
+                const churnClass = parseFloat(state.churnRate) >= 30 ? 'critical' :
+                                  parseFloat(state.churnRate) >= 25 ? 'warning' : 'good';
+                const status = parseFloat(state.churnRate) >= 30 ? '🚨 Critical' :
+                              parseFloat(state.churnRate) >= 25 ? '⚠️ Warning' : '✓ Good';
+
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${index + 1}</td>
+                    <td class="state-name">${state.state}</td>
+                    <td class="number">${state.beginning.toLocaleString()}</td>
+                    <td class="critical-number">${state.lost.toLocaleString()}</td>
+                    <td class="number">${state.end.toLocaleString()}</td>
+                    <td><span class="percentage ${churnClass}">${state.churnRate}%</span></td>
+                    <td><span class="percentage ${parseFloat(state.retentionRate) >= 80 ? 'high' : parseFloat(state.retentionRate) >= 70 ? 'medium' : 'low'}">${state.retentionRate}%</span></td>
+                    <td class="number" style="color: ${state.netChange >= 0 ? '#38a169' : '#e53e3e'};">
+                        ${state.netChange >= 0 ? '+' : ''}${state.netChange.toLocaleString()}
+                    </td>
+                    <td>${status}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function filterStateTable() {
+            const searchValue = document.getElementById('stateSearch').value.toLowerCase();
+            filteredStateData = stateData.filter(s => s.state.toLowerCase().includes(searchValue));
+            sortStateTable();
+        }
+
+        function sortStateTable() {
+            const sortBy = document.getElementById('stateSort').value;
+
+            switch(sortBy) {
+                case 'lost-desc':
+                    filteredStateData.sort((a, b) => b.lost - a.lost);
+                    break;
+                case 'churn-rate-desc':
+                    filteredStateData.sort((a, b) => b.churnRate - a.churnRate);
+                    break;
+                case 'beginning-desc':
+                    filteredStateData.sort((a, b) => b.beginning - a.beginning);
+                    break;
+                case 'retention-desc':
+                    filteredStateData.sort((a, b) => b.retentionRate - a.retentionRate);
+                    break;
+                case 'state':
+                    filteredStateData.sort((a, b) => a.state.localeCompare(b.state));
+                    break;
+            }
+
+            renderStateTable(filteredStateData);
+        }
+
+        // Populate insights
+        const bestPerforming = [...stateData].filter(s => s.beginning > 100).sort((a, b) => a.churnRate - b.churnRate).slice(0, 5);
+        const worstPerforming = [...stateData].filter(s => s.beginning > 100).sort((a, b) => b.churnRate - a.churnRate).slice(0, 5);
+        const largest = [...stateData].sort((a, b) => b.beginning - a.beginning).slice(0, 5);
+        const highestLoss = [...stateData].sort((a, b) => b.lost - a.lost).slice(0, 5);
+
+        document.getElementById('bestStates').innerHTML = bestPerforming.map(s =>
+            `<li>${s.state}: ${s.churnRate}% churn, ${s.retentionRate}% retention</li>`
+        ).join('');
+
+        document.getElementById('worstStates').innerHTML = worstPerforming.map(s =>
+            `<li>${s.state}: ${s.churnRate}% churn (${s.lost.toLocaleString()} lost)</li>`
+        ).join('');
+
+        document.getElementById('largestStates').innerHTML = largest.map(s =>
+            `<li>${s.state}: ${s.beginning.toLocaleString()} customers (${s.churnRate}% churn)</li>`
+        ).join('');
+
+        document.getElementById('highestLosses').innerHTML = highestLoss.map(s =>
+            `<li>${s.state}: ${s.lost.toLocaleString()} lost (${s.churnRate}% churn rate)</li>`
+        ).join('');
+
+        // Initial render
+        sortStateTable();
+    </script>
+</body>
+</html>
