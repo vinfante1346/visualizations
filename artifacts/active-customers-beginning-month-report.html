@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Active Customers - Beginning of Month Report</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: white;
+            padding: 40px;
+            border-radius: 16px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 42px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 18px;
+            color: #718096;
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .metric-card {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .metric-card.highlight {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .metric-label {
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            opacity: 0.8;
+            margin-bottom: 10px;
+        }
+
+        .metric-value {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .metric-subtitle {
+            font-size: 14px;
+            opacity: 0.7;
+        }
+
+        .chart-container {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+
+        .chart-container h2 {
+            font-size: 24px;
+            font-weight: 700;
+            color: #2d3748;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+
+        .data-table {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 14px;
+            position: sticky;
+            top: 0;
+        }
+
+        td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #e2e8f0;
+            font-size: 14px;
+        }
+
+        tr:hover {
+            background: #f7fafc;
+        }
+
+        .state-name {
+            font-weight: 600;
+            color: #2d3748;
+        }
+
+        .number {
+            font-family: 'Courier New', monospace;
+            font-weight: 600;
+            color: #4a5568;
+        }
+
+        .percentage {
+            font-weight: 600;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+        }
+
+        .percentage.high {
+            background: #c6f6d5;
+            color: #22543d;
+        }
+
+        .percentage.medium {
+            background: #fefcbf;
+            color: #744210;
+        }
+
+        .percentage.low {
+            background: #fed7d7;
+            color: #742a2a;
+        }
+
+        .filters {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .filter-group label {
+            font-size: 12px;
+            font-weight: 600;
+            color: #718096;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        select, input {
+            padding: 10px 15px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            background: white;
+            transition: border-color 0.2s;
+        }
+
+        select:focus, input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .top-states {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .state-card {
+            background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+        }
+
+        .state-card .rank {
+            font-size: 12px;
+            font-weight: 700;
+            color: #667eea;
+            margin-bottom: 5px;
+        }
+
+        .state-card .state {
+            font-size: 18px;
+            font-weight: 700;
+            color: #2d3748;
+            margin-bottom: 5px;
+        }
+
+        .state-card .count {
+            font-size: 28px;
+            font-weight: 800;
+            color: #667eea;
+            margin-bottom: 5px;
+        }
+
+        .state-card .share {
+            font-size: 12px;
+            color: #718096;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Active Customers Report</h1>
+            <p>Beginning of Month Analysis by State</p>
+        </div>
+
+        <div class="metrics-grid">
+            <div class="metric-card highlight">
+                <div class="metric-label">Total Active Customers</div>
+                <div class="metric-value">119,551</div>
+                <div class="metric-subtitle">at beginning of month</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">Total States</div>
+                <div class="metric-value">54</div>
+                <div class="metric-subtitle">including territories</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">Average per State</div>
+                <div class="metric-value">2,214</div>
+                <div class="metric-subtitle">active customers</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">Top State</div>
+                <div class="metric-value">Texas</div>
+                <div class="metric-subtitle">19,915 customers (16.7%)</div>
+            </div>
+        </div>
+
+        <div class="chart-container">
+            <h2>Top 10 States by Active Customers</h2>
+            <div class="top-states">
+                <div class="state-card">
+                    <div class="rank">#1</div>
+                    <div class="state">Texas</div>
+                    <div class="count">19,915</div>
+                    <div class="share">16.7% of total</div>
+                </div>
+                <div class="state-card">
+                    <div class="rank">#2</div>
+                    <div class="state">California</div>
+                    <div class="count">11,741</div>
+                    <div class="share">9.8% of total</div>
+                </div>
+                <div class="state-card">
+                    <div class="rank">#3</div>
+                    <div class="state">Florida</div>
+                    <div class="count">11,169</div>
+                    <div class="share">9.3% of total</div>
+                </div>
+                <div class="state-card">
+                    <div class="rank">#4</div>
+                    <div class="state">New York</div>
+                    <div class="count">6,955</div>
+                    <div class="share">5.8% of total</div>
+                </div>
+                <div class="state-card">
+                    <div class="rank">#5</div>
+                    <div class="state">Georgia</div>
+                    <div class="count">4,973</div>
+                    <div class="share">4.2% of total</div>
+                </div>
+                <div class="state-card">
+                    <div class="rank">#6</div>
+                    <div class="state">North Carolina</div>
+                    <div class="count">4,449</div>
+                    <div class="share">3.7% of total</div>
+                </div>
+                <div class="state-card">
+                    <div class="rank">#7</div>
+                    <div class="state">Illinois</div>
+                    <div class="count">4,096</div>
+                    <div class="share">3.4% of total</div>
+                </div>
+                <div class="state-card">
+                    <div class="rank">#8</div>
+                    <div class="state">New Jersey</div>
+                    <div class="count">3,569</div>
+                    <div class="share">3.0% of total</div>
+                </div>
+                <div class="state-card">
+                    <div class="rank">#9</div>
+                    <div class="state">Ohio</div>
+                    <div class="count">3,362</div>
+                    <div class="share">2.8% of total</div>
+                </div>
+                <div class="state-card">
+                    <div class="rank">#10</div>
+                    <div class="state">Tennessee</div>
+                    <div class="count">3,308</div>
+                    <div class="share">2.8% of total</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="chart-container">
+            <h2>Geographic Distribution</h2>
+            <canvas id="topStatesChart"></canvas>
+        </div>
+
+        <div class="filters">
+            <div class="filter-group">
+                <label>Filter by Minimum Customers</label>
+                <input type="number" id="minFilter" placeholder="e.g., 1000" min="0" onchange="filterTable()">
+            </div>
+            <div class="filter-group">
+                <label>Search State</label>
+                <input type="text" id="searchFilter" placeholder="Search state name..." onkeyup="filterTable()">
+            </div>
+            <div class="filter-group">
+                <label>Sort By</label>
+                <select id="sortSelect" onchange="sortTable()">
+                    <option value="rank">Rank (Default)</option>
+                    <option value="state">State Name</option>
+                    <option value="customers-desc">Customers (High to Low)</option>
+                    <option value="customers-asc">Customers (Low to High)</option>
+                    <option value="percentage">Market Share %</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="data-table">
+            <h2>Complete State Breakdown</h2>
+            <table id="dataTable">
+                <thead>
+                    <tr>
+                        <th>Rank</th>
+                        <th>State</th>
+                        <th>Active Customers (Beginning of Month)</th>
+                        <th>Market Share %</th>
+                        <th>Retention Rate %</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody">
+                </tbody>
+            </table>
+        </div>
+
+        <div class="chart-container">
+            <h2>Retention Rate Analysis</h2>
+            <canvas id="retentionChart"></canvas>
+        </div>
+
+        <div class="chart-container">
+            <h2>Customer Distribution by Region</h2>
+            <canvas id="regionChart"></canvas>
+        </div>
+    </div>
+
+    <script>
+        const data = [
+            { state: "Texas", beginning: 19915, againActive: 15280, renewed: 2087, newAccount: 3713, newActive: 999, end: 22079, lost: 4635 },
+            { state: "California", beginning: 11741, againActive: 9051, renewed: 1325, newAccount: 1317, newActive: 412, end: 12105, lost: 2690 },
+            { state: "Florida", beginning: 11169, againActive: 7733, renewed: 1467, newAccount: 1030, newActive: 546, end: 10776, lost: 3436 },
+            { state: "New York", beginning: 6955, againActive: 5049, renewed: 978, newAccount: 377, newActive: 378, end: 6782, lost: 1906 },
+            { state: "North Carolina", beginning: 4449, againActive: 3481, renewed: 445, newAccount: 1203, newActive: 279, end: 5408, lost: 968 },
+            { state: "Georgia", beginning: 4973, againActive: 3754, renewed: 605, newAccount: 318, newActive: 261, end: 4938, lost: 1219 },
+            { state: "Illinois", beginning: 4096, againActive: 3038, renewed: 583, newAccount: 224, newActive: 201, end: 4046, lost: 1058 },
+            { state: "New Jersey", beginning: 3569, againActive: 2581, renewed: 519, newAccount: 186, newActive: 154, end: 3440, lost: 988 },
+            { state: "Tennessee", beginning: 3308, againActive: 2522, renewed: 396, newAccount: 251, newActive: 164, end: 3333, lost: 786 },
+            { state: "Ohio", beginning: 3362, againActive: 2562, renewed: 378, newAccount: 198, newActive: 150, end: 3288, lost: 800 },
+            { state: "Indiana", beginning: 3260, againActive: 2492, renewed: 345, newAccount: 143, newActive: 131, end: 3111, lost: 768 },
+            { state: "Louisiana", beginning: 2792, againActive: 2177, renewed: 327, newAccount: 585, newActive: 124, end: 3213, lost: 615 },
+            { state: "Pennsylvania", beginning: 2922, againActive: 2124, renewed: 365, newAccount: 394, newActive: 138, end: 3021, lost: 798 },
+            { state: "Colorado", beginning: 2428, againActive: 1743, renewed: 345, newAccount: 115, newActive: 104, end: 2307, lost: 685 },
+            { state: "Michigan", beginning: 2026, againActive: 1540, renewed: 205, newAccount: 551, newActive: 139, end: 2435, lost: 486 },
+            { state: "Virginia", beginning: 2104, againActive: 1555, renewed: 266, newAccount: 151, newActive: 97, end: 2069, lost: 549 },
+            { state: "Alabama", beginning: 2103, againActive: 1647, renewed: 251, newAccount: 124, newActive: 98, end: 2120, lost: 456 },
+            { state: "South Carolina", beginning: 1859, againActive: 1426, renewed: 220, newAccount: 135, newActive: 91, end: 1872, lost: 433 },
+            { state: "Maryland", beginning: 1798, againActive: 1353, renewed: 224, newAccount: 160, newActive: 64, end: 1801, lost: 445 },
+            { state: "Wisconsin", beginning: 1896, againActive: 1524, renewed: 186, newAccount: 77, newActive: 68, end: 1855, lost: 372 },
+            { state: "Kentucky", beginning: 1787, againActive: 1349, renewed: 182, newAccount: 74, newActive: 79, end: 1684, lost: 438 },
+            { state: "Arizona", beginning: 1626, againActive: 1175, renewed: 160, newAccount: 177, newActive: 99, end: 1611, lost: 451 },
+            { state: "Oklahoma", beginning: 1632, againActive: 1264, renewed: 153, newAccount: 101, newActive: 103, end: 1621, lost: 368 },
+            { state: "Missouri", beginning: 1583, againActive: 1255, renewed: 203, newAccount: 113, newActive: 85, end: 1656, lost: 328 },
+            { state: "Utah", beginning: 1427, againActive: 1058, renewed: 193, newAccount: 84, newActive: 50, end: 1385, lost: 369 },
+            { state: "Nevada", beginning: 1424, againActive: 997, renewed: 154, newAccount: 64, newActive: 63, end: 1278, lost: 427 },
+            { state: "Minnesota", beginning: 1329, againActive: 1008, renewed: 172, newAccount: 53, newActive: 58, end: 1291, lost: 321 },
+            { state: "Arkansas", beginning: 1318, againActive: 1034, renewed: 129, newAccount: 81, newActive: 80, end: 1324, lost: 284 },
+            { state: "Washington", beginning: 1185, againActive: 866, renewed: 158, newAccount: 76, newActive: 58, end: 1158, lost: 319 },
+            { state: "Massachusetts", beginning: 1141, againActive: 804, renewed: 171, newAccount: 73, newActive: 31, end: 1079, lost: 337 },
+            { state: "Mississippi", beginning: 1109, againActive: 843, renewed: 108, newAccount: 76, newActive: 75, end: 1102, lost: 266 },
+            { state: "Kansas", beginning: 1045, againActive: 823, renewed: 102, newAccount: 66, newActive: 46, end: 1037, lost: 222 },
+            { state: "Oregon", beginning: 903, againActive: 673, renewed: 109, newAccount: 38, newActive: 37, end: 857, lost: 230 },
+            { state: "Iowa", beginning: 883, againActive: 686, renewed: 84, newAccount: 35, newActive: 43, end: 848, lost: 197 },
+            { state: "Connecticut", beginning: 771, againActive: 557, renewed: 118, newAccount: 56, newActive: 33, end: 764, lost: 214 },
+            { state: "New Mexico", beginning: 606, againActive: 438, renewed: 60, newAccount: 58, newActive: 32, end: 588, lost: 168 },
+            { state: "Nebraska", beginning: 614, againActive: 457, renewed: 60, newAccount: 40, newActive: 19, end: 576, lost: 157 },
+            { state: "Idaho", beginning: 441, againActive: 344, renewed: 46, newAccount: 15, newActive: 21, end: 426, lost: 97 },
+            { state: "South Dakota", beginning: 295, againActive: 243, renewed: 27, newAccount: 10, newActive: 7, end: 287, lost: 52 },
+            { state: "Delaware", beginning: 274, againActive: 205, renewed: 27, newAccount: 18, newActive: 8, end: 258, lost: 69 },
+            { state: "North Dakota", beginning: 231, againActive: 179, renewed: 25, newAccount: 9, newActive: 16, end: 229, lost: 52 },
+            { state: "West Virginia", beginning: 213, againActive: 152, renewed: 19, newAccount: 20, newActive: 23, end: 214, lost: 61 },
+            { state: "Rhode Island", beginning: 214, againActive: 161, renewed: 27, newAccount: 13, newActive: 6, end: 207, lost: 53 },
+            { state: "District of Columbia", beginning: 135, againActive: 96, renewed: 20, newAccount: 20, newActive: 6, end: 142, lost: 39 },
+            { state: "Wyoming", beginning: 122, againActive: 93, renewed: 15, newAccount: 8, newActive: 5, end: 121, lost: 29 },
+            { state: "Montana", beginning: 112, againActive: 78, renewed: 11, newAccount: 7, newActive: 5, end: 101, lost: 34 },
+            { state: "Maine", beginning: 98, againActive: 77, renewed: 11, newAccount: 10, newActive: 8, end: 106, lost: 21 },
+            { state: "Hawaii", beginning: 78, againActive: 47, renewed: 12, newAccount: 7, newActive: 5, end: 71, lost: 31 },
+            { state: "New Hampshire", beginning: 77, againActive: 61, renewed: 7, newAccount: 4, newActive: 5, end: 77, lost: 16 },
+            { state: "Vermont", beginning: 64, againActive: 54, renewed: 7, newAccount: 2, newActive: 6, end: 69, lost: 10 },
+            { state: "Alaska", beginning: 43, againActive: 28, renewed: 9, newAccount: 4, newActive: 5, end: 46, lost: 15 },
+            { state: "Puerto Rico", beginning: 3, againActive: 2, renewed: 2, newAccount: 0, newActive: 0, end: 4, lost: 1 }
+        ];
+
+        const totalCustomers = 119551;
+        let tableData = [...data];
+
+        // Calculate retention rate and add to data
+        data.forEach(row => {
+            row.retentionRate = ((row.beginning - row.lost) / row.beginning * 100).toFixed(1);
+            row.marketShare = ((row.beginning / totalCustomers) * 100).toFixed(2);
+        });
+
+        // Populate table
+        function renderTable(dataToRender = tableData) {
+            const tbody = document.getElementById('tableBody');
+            tbody.innerHTML = '';
+
+            dataToRender.forEach((row, index) => {
+                const retentionClass = row.retentionRate >= 80 ? 'high' : row.retentionRate >= 70 ? 'medium' : 'low';
+
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${index + 1}</td>
+                    <td class="state-name">${row.state}</td>
+                    <td class="number">${row.beginning.toLocaleString()}</td>
+                    <td class="number">${row.marketShare}%</td>
+                    <td><span class="percentage ${retentionClass}">${row.retentionRate}%</span></td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        renderTable();
+
+        // Filter table
+        function filterTable() {
+            const minValue = parseInt(document.getElementById('minFilter').value) || 0;
+            const searchValue = document.getElementById('searchFilter').value.toLowerCase();
+
+            tableData = data.filter(row => {
+                const meetsMin = row.beginning >= minValue;
+                const meetsSearch = row.state.toLowerCase().includes(searchValue);
+                return meetsMin && meetsSearch;
+            });
+
+            renderTable(tableData);
+        }
+
+        // Sort table
+        function sortTable() {
+            const sortBy = document.getElementById('sortSelect').value;
+
+            switch(sortBy) {
+                case 'state':
+                    tableData.sort((a, b) => a.state.localeCompare(b.state));
+                    break;
+                case 'customers-desc':
+                    tableData.sort((a, b) => b.beginning - a.beginning);
+                    break;
+                case 'customers-asc':
+                    tableData.sort((a, b) => a.beginning - b.beginning);
+                    break;
+                case 'percentage':
+                    tableData.sort((a, b) => b.marketShare - a.marketShare);
+                    break;
+                default:
+                    tableData = [...data];
+            }
+
+            renderTable(tableData);
+        }
+
+        // Top States Chart
+        const topStatesCtx = document.getElementById('topStatesChart').getContext('2d');
+        const topStatesChart = new Chart(topStatesCtx, {
+            type: 'bar',
+            data: {
+                labels: data.slice(0, 15).map(d => d.state),
+                datasets: [{
+                    label: 'Active Customers',
+                    data: data.slice(0, 15).map(d => d.beginning),
+                    backgroundColor: 'rgba(102, 126, 234, 0.8)',
+                    borderColor: 'rgba(102, 126, 234, 1)',
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                const value = context.parsed.y.toLocaleString();
+                                const total = data.reduce((sum, d) => sum + d.beginning, 0);
+                                const percentage = ((context.parsed.y / total) * 100).toFixed(1);
+                                return `${value} customers (${percentage}%)`;
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            callback: function(value) {
+                                return value.toLocaleString();
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        // Retention Rate Chart
+        const retentionCtx = document.getElementById('retentionChart').getContext('2d');
+        const retentionData = data.slice(0, 20).sort((a, b) => b.retentionRate - a.retentionRate);
+        const retentionChart = new Chart(retentionCtx, {
+            type: 'bar',
+            data: {
+                labels: retentionData.map(d => d.state),
+                datasets: [{
+                    label: 'Retention Rate %',
+                    data: retentionData.map(d => parseFloat(d.retentionRate)),
+                    backgroundColor: retentionData.map(d => {
+                        const rate = parseFloat(d.retentionRate);
+                        if (rate >= 80) return 'rgba(72, 187, 120, 0.8)';
+                        if (rate >= 70) return 'rgba(237, 137, 54, 0.8)';
+                        return 'rgba(245, 101, 101, 0.8)';
+                    }),
+                    borderColor: retentionData.map(d => {
+                        const rate = parseFloat(d.retentionRate);
+                        if (rate >= 80) return 'rgba(72, 187, 120, 1)';
+                        if (rate >= 70) return 'rgba(237, 137, 54, 1)';
+                        return 'rgba(245, 101, 101, 1)';
+                    }),
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                indexAxis: 'y',
+                responsive: true,
+                maintainAspectRatio: true,
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return `Retention Rate: ${context.parsed.x}%`;
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        beginAtZero: true,
+                        max: 100,
+                        ticks: {
+                            callback: function(value) {
+                                return value + '%';
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        // Region Chart
+        const regionCtx = document.getElementById('regionChart').getContext('2d');
+
+        const regions = {
+            'South': ['Texas', 'Florida', 'North Carolina', 'Georgia', 'Tennessee', 'Louisiana', 'Alabama', 'South Carolina', 'Kentucky', 'Oklahoma', 'Arkansas', 'Mississippi', 'West Virginia', 'Delaware'],
+            'Northeast': ['New York', 'New Jersey', 'Pennsylvania', 'Massachusetts', 'Connecticut', 'Rhode Island', 'Maine', 'New Hampshire', 'Vermont', 'District of Columbia'],
+            'Midwest': ['Illinois', 'Ohio', 'Indiana', 'Michigan', 'Wisconsin', 'Missouri', 'Minnesota', 'Kansas', 'Iowa', 'Nebraska', 'South Dakota', 'North Dakota'],
+            'West': ['California', 'Colorado', 'Arizona', 'Utah', 'Nevada', 'Washington', 'Oregon', 'New Mexico', 'Idaho', 'Wyoming', 'Montana', 'Hawaii', 'Alaska'],
+            'Other': ['Puerto Rico']
+        };
+
+        const regionData = Object.keys(regions).map(region => {
+            return data.filter(d => regions[region].includes(d.state))
+                       .reduce((sum, d) => sum + d.beginning, 0);
+        });
+
+        const regionChart = new Chart(regionCtx, {
+            type: 'doughnut',
+            data: {
+                labels: Object.keys(regions),
+                datasets: [{
+                    data: regionData,
+                    backgroundColor: [
+                        'rgba(102, 126, 234, 0.8)',
+                        'rgba(118, 75, 162, 0.8)',
+                        'rgba(72, 187, 120, 0.8)',
+                        'rgba(237, 137, 54, 0.8)',
+                        'rgba(160, 174, 192, 0.8)'
+                    ],
+                    borderColor: [
+                        'rgba(102, 126, 234, 1)',
+                        'rgba(118, 75, 162, 1)',
+                        'rgba(72, 187, 120, 1)',
+                        'rgba(237, 137, 54, 1)',
+                        'rgba(160, 174, 192, 1)'
+                    ],
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                plugins: {
+                    legend: {
+                        position: 'bottom'
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                const value = context.parsed.toLocaleString();
+                                const percentage = ((context.parsed / totalCustomers) * 100).toFixed(1);
+                                return `${context.label}: ${value} (${percentage}%)`;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
