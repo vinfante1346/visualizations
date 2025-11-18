@@ -566,6 +566,106 @@
                 </tbody>
             </table>
         </div>
+
+        <div class="header" style="margin-top: 40px;">
+            <h1 style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">State-Level Churn Analysis</h1>
+            <p>Customer Loss and Retention by Geographic Location</p>
+        </div>
+
+        <div class="metrics-grid">
+            <div class="metric-card" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+                <div class="metric-label">Total Active (Month Start)</div>
+                <div class="metric-value">119,551</div>
+                <div class="metric-subtitle">across all states</div>
+            </div>
+            <div class="metric-card critical">
+                <div class="metric-label">Total Lost</div>
+                <div class="metric-value">29,784</div>
+                <div class="metric-subtitle">24.9% monthly churn</div>
+            </div>
+            <div class="metric-card" style="background: linear-gradient(135deg, #48bb78 0%, #38a169 100%); color: white;">
+                <div class="metric-label">End of Month</div>
+                <div class="metric-value">122,254</div>
+                <div class="metric-subtitle">including new accounts</div>
+            </div>
+            <div class="metric-card info">
+                <div class="metric-label">Net Growth</div>
+                <div class="metric-value">+2,703</div>
+                <div class="metric-subtitle">2.3% month-over-month</div>
+            </div>
+        </div>
+
+        <div class="chart-container">
+            <h2>Top 15 States by Customer Loss</h2>
+            <canvas id="statesLostChart"></canvas>
+        </div>
+
+        <div class="chart-container">
+            <h2>State Churn Rate Comparison (Top 20 States)</h2>
+            <canvas id="stateChurnRateChart"></canvas>
+        </div>
+
+        <div class="data-table">
+            <h2>Complete State-by-State Breakdown</h2>
+            <div style="margin-bottom: 20px; display: flex; gap: 15px; flex-wrap: wrap;">
+                <input type="text" id="stateSearch" placeholder="Search state..." style="padding: 10px; border: 2px solid #e2e8f0; border-radius: 8px; font-size: 14px; width: 250px;" onkeyup="filterStateTable()">
+                <select id="stateSort" onchange="sortStateTable()" style="padding: 10px; border: 2px solid #e2e8f0; border-radius: 8px; font-size: 14px;">
+                    <option value="lost-desc">Highest Losses</option>
+                    <option value="lost-asc">Lowest Losses</option>
+                    <option value="churn-rate-desc">Highest Churn Rate %</option>
+                    <option value="churn-rate-asc">Lowest Churn Rate %</option>
+                    <option value="state">State Name A-Z</option>
+                    <option value="beginning-desc">Most Customers</option>
+                </select>
+            </div>
+            <table id="stateTable">
+                <thead>
+                    <tr>
+                        <th>Rank</th>
+                        <th>State</th>
+                        <th>Beginning of Month</th>
+                        <th>Lost Customers</th>
+                        <th>End of Month</th>
+                        <th>Churn Rate %</th>
+                        <th>Net Change</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody id="stateTableBody">
+                </tbody>
+            </table>
+        </div>
+
+        <div class="chart-container">
+            <h2>Geographic Heat Map: Customer Loss Distribution</h2>
+            <canvas id="stateHeatChart"></canvas>
+        </div>
+
+        <div class="insights-grid">
+            <div class="insight-card">
+                <h3>🏆 Best Performing States (Lowest Churn)</h3>
+                <ul id="bestStates">
+                </ul>
+            </div>
+
+            <div class="insight-card" style="border-left-color: #fc8181;">
+                <h3>⚠️ Highest Risk States (Highest Churn)</h3>
+                <ul id="worstStates">
+                </ul>
+            </div>
+
+            <div class="insight-card">
+                <h3>📍 Largest Markets by Volume</h3>
+                <ul id="largestStates">
+                </ul>
+            </div>
+
+            <div class="insight-card">
+                <h3>💰 Highest Absolute Losses</h3>
+                <ul id="highestLosses">
+                </ul>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -708,6 +808,312 @@
                 }
             }
         });
+
+        // State-level data
+        const stateData = [
+            { state: "Texas", beginning: 19915, lost: 4635, end: 22079 },
+            { state: "California", beginning: 11741, lost: 2690, end: 12105 },
+            { state: "Florida", beginning: 11169, lost: 3436, end: 10776 },
+            { state: "New York", beginning: 6955, lost: 1906, end: 6782 },
+            { state: "North Carolina", beginning: 4449, lost: 968, end: 5408 },
+            { state: "Georgia", beginning: 4973, lost: 1219, end: 4938 },
+            { state: "Illinois", beginning: 4096, lost: 1058, end: 4046 },
+            { state: "New Jersey", beginning: 3569, lost: 988, end: 3440 },
+            { state: "Tennessee", beginning: 3308, lost: 786, end: 3333 },
+            { state: "Ohio", beginning: 3362, lost: 800, end: 3288 },
+            { state: "Indiana", beginning: 3260, lost: 768, end: 3111 },
+            { state: "Louisiana", beginning: 2792, lost: 615, end: 3213 },
+            { state: "Pennsylvania", beginning: 2922, lost: 798, end: 3021 },
+            { state: "Colorado", beginning: 2428, lost: 685, end: 2307 },
+            { state: "Michigan", beginning: 2026, lost: 486, end: 2435 },
+            { state: "Virginia", beginning: 2104, lost: 549, end: 2069 },
+            { state: "Alabama", beginning: 2103, lost: 456, end: 2120 },
+            { state: "South Carolina", beginning: 1859, lost: 433, end: 1872 },
+            { state: "Maryland", beginning: 1798, lost: 445, end: 1801 },
+            { state: "Wisconsin", beginning: 1896, lost: 372, end: 1855 },
+            { state: "Kentucky", beginning: 1787, lost: 438, end: 1684 },
+            { state: "Arizona", beginning: 1626, lost: 451, end: 1611 },
+            { state: "Oklahoma", beginning: 1632, lost: 368, end: 1621 },
+            { state: "Missouri", beginning: 1583, lost: 328, end: 1656 },
+            { state: "Utah", beginning: 1427, lost: 369, end: 1385 },
+            { state: "Nevada", beginning: 1424, lost: 427, end: 1278 },
+            { state: "Minnesota", beginning: 1329, lost: 321, end: 1291 },
+            { state: "Arkansas", beginning: 1318, lost: 284, end: 1324 },
+            { state: "Washington", beginning: 1185, lost: 319, end: 1158 },
+            { state: "Massachusetts", beginning: 1141, lost: 337, end: 1079 },
+            { state: "Mississippi", beginning: 1109, lost: 266, end: 1102 },
+            { state: "Kansas", beginning: 1045, lost: 222, end: 1037 },
+            { state: "Oregon", beginning: 903, lost: 230, end: 857 },
+            { state: "Iowa", beginning: 883, lost: 197, end: 848 },
+            { state: "Connecticut", beginning: 771, lost: 214, end: 764 },
+            { state: "New Mexico", beginning: 606, lost: 168, end: 588 },
+            { state: "Nebraska", beginning: 614, lost: 157, end: 576 },
+            { state: "Idaho", beginning: 441, lost: 97, end: 426 },
+            { state: "South Dakota", beginning: 295, lost: 52, end: 287 },
+            { state: "Delaware", beginning: 274, lost: 69, end: 258 },
+            { state: "North Dakota", beginning: 231, lost: 52, end: 229 },
+            { state: "West Virginia", beginning: 213, lost: 61, end: 214 },
+            { state: "Rhode Island", beginning: 214, lost: 53, end: 207 },
+            { state: "District of Columbia", beginning: 135, lost: 39, end: 142 },
+            { state: "Wyoming", beginning: 122, lost: 29, end: 121 },
+            { state: "Montana", beginning: 112, lost: 34, end: 101 },
+            { state: "Maine", beginning: 98, lost: 21, end: 106 },
+            { state: "Hawaii", beginning: 78, lost: 31, end: 71 },
+            { state: "New Hampshire", beginning: 77, lost: 16, end: 77 },
+            { state: "Vermont", beginning: 64, lost: 10, end: 69 },
+            { state: "Alaska", beginning: 43, lost: 15, end: 46 },
+            { state: "Puerto Rico", beginning: 3, lost: 1, end: 4 }
+        ];
+
+        // Calculate churn rate and net change
+        stateData.forEach(state => {
+            state.churnRate = ((state.lost / state.beginning) * 100).toFixed(2);
+            state.netChange = state.end - state.beginning;
+        });
+
+        let filteredStateData = [...stateData];
+
+        // States Lost Chart
+        const statesLostCtx = document.getElementById('statesLostChart').getContext('2d');
+        const topLostStates = [...stateData].sort((a, b) => b.lost - a.lost).slice(0, 15);
+        const statesLostChart = new Chart(statesLostCtx, {
+            type: 'bar',
+            data: {
+                labels: topLostStates.map(s => s.state),
+                datasets: [{
+                    label: 'Customers Lost',
+                    data: topLostStates.map(s => s.lost),
+                    backgroundColor: 'rgba(252, 129, 129, 0.8)',
+                    borderColor: 'rgba(252, 129, 129, 1)',
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                const state = topLostStates[context.dataIndex];
+                                return `${context.parsed.y.toLocaleString()} lost (${state.churnRate}% churn rate)`;
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            callback: function(value) {
+                                return value.toLocaleString();
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        // State Churn Rate Chart
+        const stateChurnRateCtx = document.getElementById('stateChurnRateChart').getContext('2d');
+        const topChurnStates = [...stateData].filter(s => s.beginning > 100).sort((a, b) => b.churnRate - a.churnRate).slice(0, 20);
+        const stateChurnRateChart = new Chart(stateChurnRateCtx, {
+            type: 'bar',
+            data: {
+                labels: topChurnStates.map(s => s.state),
+                datasets: [{
+                    label: 'Churn Rate %',
+                    data: topChurnStates.map(s => parseFloat(s.churnRate)),
+                    backgroundColor: topChurnStates.map(s => {
+                        const rate = parseFloat(s.churnRate);
+                        if (rate >= 30) return 'rgba(252, 129, 129, 0.8)';
+                        if (rate >= 25) return 'rgba(246, 173, 85, 0.8)';
+                        return 'rgba(72, 187, 120, 0.8)';
+                    }),
+                    borderColor: topChurnStates.map(s => {
+                        const rate = parseFloat(s.churnRate);
+                        if (rate >= 30) return 'rgba(252, 129, 129, 1)';
+                        if (rate >= 25) return 'rgba(246, 173, 85, 1)';
+                        return 'rgba(72, 187, 120, 1)';
+                    }),
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                indexAxis: 'y',
+                responsive: true,
+                maintainAspectRatio: true,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                const state = topChurnStates[context.dataIndex];
+                                return `${context.parsed.x}% (${state.lost.toLocaleString()} of ${state.beginning.toLocaleString()})`;
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        beginAtZero: true,
+                        ticks: {
+                            callback: function(value) {
+                                return value + '%';
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        // State Heat Chart
+        const stateHeatCtx = document.getElementById('stateHeatChart').getContext('2d');
+        const statesByLoss = [...stateData].sort((a, b) => b.lost - a.lost).slice(0, 25);
+        const stateHeatChart = new Chart(stateHeatCtx, {
+            type: 'scatter',
+            data: {
+                datasets: [{
+                    label: 'States',
+                    data: statesByLoss.map(s => ({
+                        x: s.beginning,
+                        y: parseFloat(s.churnRate),
+                        r: Math.sqrt(s.lost) * 2
+                    })),
+                    backgroundColor: 'rgba(252, 129, 129, 0.6)',
+                    borderColor: 'rgba(252, 129, 129, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                const state = statesByLoss[context.dataIndex];
+                                return `${state.state}: ${state.beginning.toLocaleString()} customers, ${state.churnRate}% churn, ${state.lost.toLocaleString()} lost`;
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Beginning of Month Customers'
+                        },
+                        ticks: {
+                            callback: function(value) {
+                                return value.toLocaleString();
+                            }
+                        }
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'Churn Rate %'
+                        },
+                        ticks: {
+                            callback: function(value) {
+                                return value + '%';
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        // Render state table
+        function renderStateTable(data = filteredStateData) {
+            const tbody = document.getElementById('stateTableBody');
+            tbody.innerHTML = '';
+
+            data.forEach((state, index) => {
+                const churnClass = parseFloat(state.churnRate) >= 30 ? 'critical' :
+                                  parseFloat(state.churnRate) >= 25 ? 'warning' : 'good';
+                const status = parseFloat(state.churnRate) >= 30 ? '🚨 Critical' :
+                              parseFloat(state.churnRate) >= 25 ? '⚠️ Warning' : '✓ Good';
+
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${index + 1}</td>
+                    <td class="cohort-name">${state.state}</td>
+                    <td class="number">${state.beginning.toLocaleString()}</td>
+                    <td class="critical-number">${state.lost.toLocaleString()}</td>
+                    <td class="number">${state.end.toLocaleString()}</td>
+                    <td><span class="percentage ${churnClass}">${state.churnRate}%</span></td>
+                    <td class="number" style="color: ${state.netChange >= 0 ? '#38a169' : '#e53e3e'};">
+                        ${state.netChange >= 0 ? '+' : ''}${state.netChange.toLocaleString()}
+                    </td>
+                    <td>${status}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        // Filter state table
+        function filterStateTable() {
+            const searchValue = document.getElementById('stateSearch').value.toLowerCase();
+            filteredStateData = stateData.filter(s => s.state.toLowerCase().includes(searchValue));
+            sortStateTable();
+        }
+
+        // Sort state table
+        function sortStateTable() {
+            const sortBy = document.getElementById('stateSort').value;
+
+            switch(sortBy) {
+                case 'lost-desc':
+                    filteredStateData.sort((a, b) => b.lost - a.lost);
+                    break;
+                case 'lost-asc':
+                    filteredStateData.sort((a, b) => a.lost - b.lost);
+                    break;
+                case 'churn-rate-desc':
+                    filteredStateData.sort((a, b) => b.churnRate - a.churnRate);
+                    break;
+                case 'churn-rate-asc':
+                    filteredStateData.sort((a, b) => a.churnRate - b.churnRate);
+                    break;
+                case 'state':
+                    filteredStateData.sort((a, b) => a.state.localeCompare(b.state));
+                    break;
+                case 'beginning-desc':
+                    filteredStateData.sort((a, b) => b.beginning - a.beginning);
+                    break;
+            }
+
+            renderStateTable(filteredStateData);
+        }
+
+        // Populate insight cards
+        const bestPerforming = [...stateData].filter(s => s.beginning > 100).sort((a, b) => a.churnRate - b.churnRate).slice(0, 5);
+        const worstPerforming = [...stateData].filter(s => s.beginning > 100).sort((a, b) => b.churnRate - a.churnRate).slice(0, 5);
+        const largest = [...stateData].sort((a, b) => b.beginning - a.beginning).slice(0, 5);
+        const highestLoss = [...stateData].sort((a, b) => b.lost - a.lost).slice(0, 5);
+
+        document.getElementById('bestStates').innerHTML = bestPerforming.map(s =>
+            `<li>${s.state}: ${s.churnRate}% churn (${s.lost.toLocaleString()} lost)</li>`
+        ).join('');
+
+        document.getElementById('worstStates').innerHTML = worstPerforming.map(s =>
+            `<li>${s.state}: ${s.churnRate}% churn (${s.lost.toLocaleString()} lost)</li>`
+        ).join('');
+
+        document.getElementById('largestStates').innerHTML = largest.map(s =>
+            `<li>${s.state}: ${s.beginning.toLocaleString()} customers (${s.churnRate}% churn)</li>`
+        ).join('');
+
+        document.getElementById('highestLosses').innerHTML = highestLoss.map(s =>
+            `<li>${s.state}: ${s.lost.toLocaleString()} lost (${s.churnRate}% churn rate)</li>`
+        ).join('');
+
+        // Initial render
+        sortStateTable();
     </script>
 </body>
 </html>
