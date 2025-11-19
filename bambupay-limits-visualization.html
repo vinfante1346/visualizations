@@ -14,70 +14,134 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f8f9fa;
+            color: #1a1a1a;
+            display: flex;
+        }
+
+        /* Sidebar Navigation */
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 280px;
+            height: 100vh;
+            background: #0D1752;
+            color: #e2e8f0;
+            overflow-y: auto;
+            padding: 30px 0;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+
+        .sidebar-header {
+            padding: 0 25px 20px;
+            border-bottom: 1px solid #70E242;
+            margin-bottom: 20px;
+        }
+
+        .sidebar-header h3 {
+            color: #70E242;
+            font-size: 1em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+
+        .sidebar-nav {
+            padding: 0 15px;
+        }
+
+        .sidebar-nav ul {
+            list-style: none;
+        }
+
+        .sidebar-nav li {
+            margin: 0;
+        }
+
+        .sidebar-nav a {
+            display: block;
+            padding: 10px 15px;
+            color: #cbd5e1;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+            font-size: 0.9em;
+        }
+
+        .sidebar-nav a:hover {
+            background: #050D30;
+            color: #70E242;
+            padding-left: 20px;
+        }
+
+        .sidebar-nav a.active {
+            background: #70E242;
+            color: #0D1752;
+            font-weight: 600;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: 280px;
+            flex: 1;
+            padding: 0;
+        }
+
+        .document-header {
             background: linear-gradient(135deg, #0D1752 0%, #050D30 100%);
-            color: #ffffff;
-            overflow-x: hidden;
-        }
-
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 40px 20px;
-        }
-
-        header {
-            text-align: center;
-            padding: 60px 20px;
-            margin-bottom: 60px;
+            color: white;
+            padding: 50px 60px;
+            border-bottom: 5px solid #70E242;
         }
 
         h1 {
-            font-size: 3.5em;
+            font-size: 2.5em;
             color: #70E242;
-            margin-bottom: 20px;
-            text-shadow: 0 0 20px rgba(112, 226, 66, 0.3);
+            margin-bottom: 15px;
+            font-weight: 600;
+            letter-spacing: -0.5px;
         }
 
         .subtitle {
-            font-size: 1.3em;
+            font-size: 1.1em;
             color: #cbd5e1;
-            margin-bottom: 10px;
+            opacity: 0.9;
+        }
+
+        .content-body {
+            background: white;
+            padding: 50px 60px;
         }
 
         .section {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 40px;
-            margin-bottom: 40px;
-            border: 1px solid rgba(112, 226, 66, 0.2);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            margin: 50px 0;
+            scroll-margin-top: 20px;
         }
 
         .section-title {
             font-size: 2em;
-            color: #70E242;
+            color: #0D1752;
             margin-bottom: 30px;
-            display: flex;
-            align-items: center;
-            gap: 15px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #70E242;
+            font-weight: 600;
         }
 
         .section-title::before {
-            content: '';
-            width: 5px;
-            height: 40px;
-            background: linear-gradient(to bottom, #70E242, #296BFF);
-            border-radius: 3px;
+            content: '§ ';
+            color: #70E242;
         }
 
         .chart-container {
             position: relative;
             height: 400px;
             margin: 30px 0;
-            background: rgba(255, 255, 255, 0.03);
+            background: #f8fafc;
             padding: 20px;
             border-radius: 15px;
+            border: 1px solid #e5e7eb;
         }
 
         .stats-grid {
@@ -88,12 +152,13 @@
         }
 
         .stat-card {
-            background: linear-gradient(135deg, rgba(112, 226, 66, 0.1) 0%, rgba(41, 107, 255, 0.1) 100%);
+            background: white;
             padding: 30px;
             border-radius: 15px;
             text-align: center;
-            border: 1px solid rgba(112, 226, 66, 0.3);
+            border: 2px solid #70E242;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
         }
 
         .stat-card:hover {
@@ -104,16 +169,16 @@
         .stat-value {
             font-size: 3em;
             font-weight: bold;
-            color: #70E242;
+            color: #0D1752;
             margin: 15px 0;
-            text-shadow: 0 0 10px rgba(112, 226, 66, 0.5);
         }
 
         .stat-label {
             font-size: 1em;
-            color: #cbd5e1;
+            color: #64748b;
             text-transform: uppercase;
             letter-spacing: 1px;
+            font-weight: 600;
         }
 
         .stat-sublabel {
@@ -130,29 +195,30 @@
         }
 
         .comparison-table th {
-            background: rgba(112, 226, 66, 0.2);
+            background: #f1f5f9;
             padding: 20px;
             text-align: left;
-            color: #70E242;
-            font-weight: 600;
+            color: #0D1752;
+            font-weight: 700;
             text-transform: uppercase;
             font-size: 0.9em;
             letter-spacing: 1px;
+            border-bottom: 2px solid #70E242;
         }
 
         .comparison-table td {
-            background: rgba(255, 255, 255, 0.05);
+            background: white;
             padding: 20px;
-            color: #e2e8f0;
-            border-top: 1px solid rgba(112, 226, 66, 0.1);
+            color: #334155;
+            border-bottom: 1px solid #e5e7eb;
         }
 
         .comparison-table tr:hover td {
-            background: rgba(112, 226, 66, 0.1);
+            background: #f8fafc;
         }
 
         .highlight {
-            color: #70E242;
+            color: #0D1752;
             font-weight: bold;
         }
 
@@ -199,26 +265,50 @@
         }
 
         .info-box {
-            background: rgba(41, 107, 255, 0.1);
-            border-left: 4px solid #296BFF;
-            padding: 20px;
-            margin: 20px 0;
-            border-radius: 8px;
+            background: #eff6ff;
+            border-left: 5px solid #296BFF;
+            padding: 20px 25px;
+            margin: 25px 0;
+            border-radius: 4px;
+        }
+
+        .info-box h3 {
+            color: #0D1752;
+            margin-bottom: 15px;
         }
 
         .warning-box {
-            background: rgba(245, 158, 11, 0.1);
-            border-left: 4px solid #f59e0b;
-            padding: 20px;
-            margin: 20px 0;
-            border-radius: 8px;
+            background: #fef3c7;
+            border-left: 5px solid #f59e0b;
+            padding: 20px 25px;
+            margin: 25px 0;
+            border-radius: 4px;
         }
 
         footer {
+            background: #0D1752;
+            color: #cbd5e1;
             text-align: center;
             padding: 40px 20px;
-            color: #94a3b8;
-            margin-top: 60px;
+            border-top: 5px solid #70E242;
+        }
+
+        @media print {
+            .sidebar {
+                display: none;
+            }
+            .main-content {
+                margin-left: 0;
+            }
+        }
+
+        @media (max-width: 1024px) {
+            .sidebar {
+                width: 250px;
+            }
+            .main-content {
+                margin-left: 250px;
+            }
         }
 
         @keyframes fadeInUp {
@@ -252,15 +342,37 @@
     </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>BambuPay & TabaPay Limits</h1>
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <h3>Navigation</h3>
+        </div>
+        <nav class="sidebar-nav">
+            <ul>
+                <li><a href="#amount-limits">Transaction Amount Limits</a></li>
+                <li><a href="#count-limits">Transaction Count Limits</a></li>
+                <li><a href="#utilization">Limit Utilization</a></li>
+                <li><a href="#card-limits">Card Management</a></li>
+                <li><a href="#overview">All Limits Overview</a></li>
+                <li><a href="#comparison">Limits Comparison</a></li>
+                <li><a href="#insights">Key Insights</a></li>
+            </ul>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Document Header -->
+        <header class="document-header">
+            <h1>BambuPay & TabaPay Limits Visualization</h1>
             <div class="subtitle">Interactive Transaction Limits Dashboard</div>
-            <div class="stat-sublabel">Real-time visualization of all enforced limits</div>
         </header>
 
+        <!-- Content Body -->
+        <div class="content-body">
+
         <!-- Transaction Amount Limits -->
-        <section class="section">
+        <section id="amount-limits" class="section">
             <h2 class="section-title">Transaction Amount Limits</h2>
 
             <div class="stats-grid">
@@ -291,7 +403,7 @@
         </section>
 
         <!-- Transaction Count Limits -->
-        <section class="section">
+        <section id="count-limits" class="section">
             <h2 class="section-title">Transaction Count Limits</h2>
 
             <div class="stats-grid">
@@ -318,24 +430,24 @@
         </section>
 
         <!-- Limit Utilization Example -->
-        <section class="section">
+        <section id="utilization" class="section">
             <h2 class="section-title">Example: Limit Utilization Scenarios</h2>
 
             <div style="margin: 30px 0;">
-                <h3 style="color: #cbd5e1; margin-bottom: 20px;">Scenario 1: Daily Amount Usage</h3>
-                <div style="margin-bottom: 10px; color: #94a3b8;">$650 used of $1,000 daily limit</div>
+                <h3 style="color: #0D1752; margin-bottom: 20px;">Scenario 1: Daily Amount Usage</h3>
+                <div style="margin-bottom: 10px; color: #64748b;">$650 used of $1,000 daily limit</div>
                 <div class="progress-bar">
                     <div class="progress-fill" style="width: 65%;">65%</div>
                 </div>
 
-                <h3 style="color: #cbd5e1; margin: 30px 0 20px;">Scenario 2: Weekly Transaction Count</h3>
-                <div style="margin-bottom: 10px; color: #94a3b8;">18 transactions of 30 weekly limit</div>
+                <h3 style="color: #0D1752; margin: 30px 0 20px;">Scenario 2: Weekly Transaction Count</h3>
+                <div style="margin-bottom: 10px; color: #64748b;">18 transactions of 30 weekly limit</div>
                 <div class="progress-bar">
                     <div class="progress-fill" style="width: 60%;">60%</div>
                 </div>
 
-                <h3 style="color: #cbd5e1; margin: 30px 0 20px;">Scenario 3: Monthly Amount Usage</h3>
-                <div style="margin-bottom: 10px; color: #94a3b8;">$15,750 used of $20,000 monthly limit</div>
+                <h3 style="color: #0D1752; margin: 30px 0 20px;">Scenario 3: Monthly Amount Usage</h3>
+                <div style="margin-bottom: 10px; color: #64748b;">$15,750 used of $20,000 monthly limit</div>
                 <div class="progress-bar">
                     <div class="progress-fill" style="width: 78.75%;">78.75%</div>
                 </div>
@@ -343,7 +455,7 @@
         </section>
 
         <!-- Card Limits -->
-        <section class="section">
+        <section id="card-limits" class="section">
             <h2 class="section-title">Card Management Limits</h2>
 
             <div class="stats-grid">
@@ -374,7 +486,7 @@
         </section>
 
         <!-- Comprehensive Comparison -->
-        <section class="section">
+        <section id="overview" class="section">
             <h2 class="section-title">All Limits Overview</h2>
 
             <table class="comparison-table">
@@ -463,7 +575,7 @@
         </section>
 
         <!-- Limit Comparison Chart -->
-        <section class="section">
+        <section id="comparison" class="section">
             <h2 class="section-title">Limits Comparison Across Time Periods</h2>
             <div class="chart-container" style="height: 500px;">
                 <canvas id="comparisonChart"></canvas>
@@ -471,7 +583,7 @@
         </section>
 
         <!-- Key Insights -->
-        <section class="section">
+        <section id="insights" class="section">
             <h2 class="section-title">Key Insights</h2>
 
             <div class="stats-grid">
@@ -503,12 +615,14 @@
             </div>
         </section>
 
+        </div>
+
         <footer>
             <p style="margin-bottom: 10px;">BambuPay & TabaPay Transaction Limits Visualization</p>
             <p style="font-size: 0.9em;">Generated November 2025 | Repository: bambu-middleware</p>
             <p style="font-size: 0.85em; margin-top: 10px;">🤖 Created with Claude Code</p>
         </footer>
-    </div>
+    </main>
 
     <script>
         // Chart.js configuration
@@ -709,6 +823,44 @@
                     }
                 }
             }
+        });
+    </script>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('.sidebar-nav a').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href').substring(1);
+                const targetElement = document.getElementById(targetId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+                    // Update active link
+                    document.querySelectorAll('.sidebar-nav a').forEach(link => {
+                        link.classList.remove('active');
+                    });
+                    this.classList.add('active');
+                }
+            });
+        });
+
+        // Highlight current section in navigation while scrolling
+        window.addEventListener('scroll', () => {
+            let current = '';
+            document.querySelectorAll('.section').forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (pageYOffset >= (sectionTop - 100)) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            document.querySelectorAll('.sidebar-nav a').forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + current) {
+                    link.classList.add('active');
+                }
+            });
         });
     </script>
 </body>
