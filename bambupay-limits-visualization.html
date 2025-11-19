@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BambuPay & TabaPay Limits - Interactive Visualization</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0D1752 0%, #050D30 100%);
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        header {
+            text-align: center;
+            padding: 60px 20px;
+            margin-bottom: 60px;
+        }
+
+        h1 {
+            font-size: 3.5em;
+            color: #70E242;
+            margin-bottom: 20px;
+            text-shadow: 0 0 20px rgba(112, 226, 66, 0.3);
+        }
+
+        .subtitle {
+            font-size: 1.3em;
+            color: #cbd5e1;
+            margin-bottom: 10px;
+        }
+
+        .section {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 40px;
+            border: 1px solid rgba(112, 226, 66, 0.2);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .section-title {
+            font-size: 2em;
+            color: #70E242;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .section-title::before {
+            content: '';
+            width: 5px;
+            height: 40px;
+            background: linear-gradient(to bottom, #70E242, #296BFF);
+            border-radius: 3px;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 400px;
+            margin: 30px 0;
+            background: rgba(255, 255, 255, 0.03);
+            padding: 20px;
+            border-radius: 15px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, rgba(112, 226, 66, 0.1) 0%, rgba(41, 107, 255, 0.1) 100%);
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            border: 1px solid rgba(112, 226, 66, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(112, 226, 66, 0.2);
+        }
+
+        .stat-value {
+            font-size: 3em;
+            font-weight: bold;
+            color: #70E242;
+            margin: 15px 0;
+            text-shadow: 0 0 10px rgba(112, 226, 66, 0.5);
+        }
+
+        .stat-label {
+            font-size: 1em;
+            color: #cbd5e1;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .stat-sublabel {
+            font-size: 0.9em;
+            color: #94a3b8;
+            margin-top: 10px;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0 10px;
+            margin: 30px 0;
+        }
+
+        .comparison-table th {
+            background: rgba(112, 226, 66, 0.2);
+            padding: 20px;
+            text-align: left;
+            color: #70E242;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.9em;
+            letter-spacing: 1px;
+        }
+
+        .comparison-table td {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 20px;
+            color: #e2e8f0;
+            border-top: 1px solid rgba(112, 226, 66, 0.1);
+        }
+
+        .comparison-table tr:hover td {
+            background: rgba(112, 226, 66, 0.1);
+        }
+
+        .highlight {
+            color: #70E242;
+            font-weight: bold;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 600;
+            margin-left: 10px;
+        }
+
+        .badge-hard {
+            background: rgba(220, 38, 38, 0.3);
+            color: #fca5a5;
+            border: 1px solid rgba(220, 38, 38, 0.5);
+        }
+
+        .badge-soft {
+            background: rgba(59, 130, 246, 0.3);
+            color: #93c5fd;
+            border: 1px solid rgba(59, 130, 246, 0.5);
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 30px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #70E242 0%, #296BFF 100%);
+            transition: width 1s ease;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 15px;
+            font-weight: bold;
+            font-size: 0.9em;
+        }
+
+        .info-box {
+            background: rgba(41, 107, 255, 0.1);
+            border-left: 4px solid #296BFF;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+
+        .warning-box {
+            background: rgba(245, 158, 11, 0.1);
+            border-left: 4px solid #f59e0b;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: #94a3b8;
+            margin-top: 60px;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section {
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5em;
+            }
+
+            .chart-container {
+                height: 300px;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>BambuPay & TabaPay Limits</h1>
+            <div class="subtitle">Interactive Transaction Limits Dashboard</div>
+            <div class="stat-sublabel">Real-time visualization of all enforced limits</div>
+        </header>
+
+        <!-- Transaction Amount Limits -->
+        <section class="section">
+            <h2 class="section-title">Transaction Amount Limits</h2>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-label">Daily Limit</div>
+                    <div class="stat-value">$1,000</div>
+                    <div class="stat-sublabel">Per 24-hour period</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Weekly Limit</div>
+                    <div class="stat-value">$7,000</div>
+                    <div class="stat-sublabel">Per 7-day period</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Monthly Limit</div>
+                    <div class="stat-value">$20,000</div>
+                    <div class="stat-sublabel">Per 30-day period</div>
+                </div>
+            </div>
+
+            <div class="chart-container">
+                <canvas id="amountLimitsChart"></canvas>
+            </div>
+
+            <div class="info-box">
+                <strong>Note:</strong> These limits apply to all outgoing transactions including transfers, payment requests, and invitations for both BambuPayMyBambuUser and BambuExternalUser.
+            </div>
+        </section>
+
+        <!-- Transaction Count Limits -->
+        <section class="section">
+            <h2 class="section-title">Transaction Count Limits</h2>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-label">Daily Count</div>
+                    <div class="stat-value">10</div>
+                    <div class="stat-sublabel">Transactions per day</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Weekly Count</div>
+                    <div class="stat-value">30</div>
+                    <div class="stat-sublabel">Transactions per week</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Monthly Count</div>
+                    <div class="stat-value">90</div>
+                    <div class="stat-sublabel">Transactions per month</div>
+                </div>
+            </div>
+
+            <div class="chart-container">
+                <canvas id="countLimitsChart"></canvas>
+            </div>
+        </section>
+
+        <!-- Limit Utilization Example -->
+        <section class="section">
+            <h2 class="section-title">Example: Limit Utilization Scenarios</h2>
+
+            <div style="margin: 30px 0;">
+                <h3 style="color: #cbd5e1; margin-bottom: 20px;">Scenario 1: Daily Amount Usage</h3>
+                <div style="margin-bottom: 10px; color: #94a3b8;">$650 used of $1,000 daily limit</div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 65%;">65%</div>
+                </div>
+
+                <h3 style="color: #cbd5e1; margin: 30px 0 20px;">Scenario 2: Weekly Transaction Count</h3>
+                <div style="margin-bottom: 10px; color: #94a3b8;">18 transactions of 30 weekly limit</div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 60%;">60%</div>
+                </div>
+
+                <h3 style="color: #cbd5e1; margin: 30px 0 20px;">Scenario 3: Monthly Amount Usage</h3>
+                <div style="margin-bottom: 10px; color: #94a3b8;">$15,750 used of $20,000 monthly limit</div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 78.75%;">78.75%</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Card Limits -->
+        <section class="section">
+            <h2 class="section-title">Card Management Limits</h2>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-label">Maximum Cards</div>
+                    <div class="stat-value">5</div>
+                    <div class="stat-sublabel">Active cards per user</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Validation Attempts</div>
+                    <div class="stat-value">5</div>
+                    <div class="stat-sublabel">Before card blocked</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Reward Max</div>
+                    <div class="stat-value">$500</div>
+                    <div class="stat-sublabel">Reward-eligible limit</div>
+                </div>
+            </div>
+
+            <div class="chart-container">
+                <canvas id="cardLimitsChart"></canvas>
+            </div>
+
+            <div class="warning-box">
+                <strong>Warning:</strong> After 5 failed validation attempts, cards are automatically blocked from further transactions until administrative intervention.
+            </div>
+        </section>
+
+        <!-- Comprehensive Comparison -->
+        <section class="section">
+            <h2 class="section-title">All Limits Overview</h2>
+
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Limit Category</th>
+                        <th>Type</th>
+                        <th>Value</th>
+                        <th>Enforcement</th>
+                        <th>Applies To</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Transaction Amount</td>
+                        <td>Daily</td>
+                        <td class="highlight">$1,000</td>
+                        <td><span class="badge badge-hard">Hard Limit</span></td>
+                        <td>All outgoing transactions</td>
+                    </tr>
+                    <tr>
+                        <td>Transaction Amount</td>
+                        <td>Weekly</td>
+                        <td class="highlight">$7,000</td>
+                        <td><span class="badge badge-hard">Hard Limit</span></td>
+                        <td>All outgoing transactions</td>
+                    </tr>
+                    <tr>
+                        <td>Transaction Amount</td>
+                        <td>Monthly</td>
+                        <td class="highlight">$20,000</td>
+                        <td><span class="badge badge-hard">Hard Limit</span></td>
+                        <td>All outgoing transactions</td>
+                    </tr>
+                    <tr>
+                        <td>Transaction Count</td>
+                        <td>Daily</td>
+                        <td class="highlight">10 transactions</td>
+                        <td><span class="badge badge-hard">Hard Limit</span></td>
+                        <td>All outgoing transactions</td>
+                    </tr>
+                    <tr>
+                        <td>Transaction Count</td>
+                        <td>Weekly</td>
+                        <td class="highlight">30 transactions</td>
+                        <td><span class="badge badge-hard">Hard Limit</span></td>
+                        <td>All outgoing transactions</td>
+                    </tr>
+                    <tr>
+                        <td>Transaction Count</td>
+                        <td>Monthly</td>
+                        <td class="highlight">90 transactions</td>
+                        <td><span class="badge badge-hard">Hard Limit</span></td>
+                        <td>All outgoing transactions</td>
+                    </tr>
+                    <tr>
+                        <td>Card Management</td>
+                        <td>Max Cards</td>
+                        <td class="highlight">5 cards</td>
+                        <td><span class="badge badge-hard">Hard Limit</span></td>
+                        <td>Per user account</td>
+                    </tr>
+                    <tr>
+                        <td>Card Management</td>
+                        <td>Validation</td>
+                        <td class="highlight">5 attempts</td>
+                        <td><span class="badge badge-hard">Hard Limit</span></td>
+                        <td>Per card before blocking</td>
+                    </tr>
+                    <tr>
+                        <td>Reward Program</td>
+                        <td>Max Amount</td>
+                        <td class="highlight">$500</td>
+                        <td><span class="badge badge-soft">Soft Limit</span></td>
+                        <td>Reward eligibility</td>
+                    </tr>
+                    <tr>
+                        <td>Transfer</td>
+                        <td>Minimum</td>
+                        <td class="highlight">> $0.00</td>
+                        <td><span class="badge badge-hard">Hard Limit</span></td>
+                        <td>All transactions</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Limit Comparison Chart -->
+        <section class="section">
+            <h2 class="section-title">Limits Comparison Across Time Periods</h2>
+            <div class="chart-container" style="height: 500px;">
+                <canvas id="comparisonChart"></canvas>
+            </div>
+        </section>
+
+        <!-- Key Insights -->
+        <section class="section">
+            <h2 class="section-title">Key Insights</h2>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-label">Weekly Multiplier</div>
+                    <div class="stat-value">7x</div>
+                    <div class="stat-sublabel">Weekly limit is 7x daily</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Monthly Multiplier</div>
+                    <div class="stat-value">20x</div>
+                    <div class="stat-sublabel">Monthly limit is 20x daily</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Avg Transaction</div>
+                    <div class="stat-value">$222</div>
+                    <div class="stat-sublabel">Monthly limit ÷ count (90)</div>
+                </div>
+            </div>
+
+            <div class="info-box">
+                <h3 style="color: #70E242; margin-bottom: 15px;">Important Notes</h3>
+                <ul style="margin-left: 20px; line-height: 1.8;">
+                    <li>Limits track cumulative activity within rolling time windows (not calendar periods)</li>
+                    <li>Cancelled, failed, expired, and deleted transactions are excluded from limits</li>
+                    <li>TabaPay may impose additional network-specific limits based on card issuer and user verification level</li>
+                    <li>Error code 828 (transfer_velocity) is returned when limits are exceeded</li>
+                </ul>
+            </div>
+        </section>
+
+        <footer>
+            <p style="margin-bottom: 10px;">BambuPay & TabaPay Transaction Limits Visualization</p>
+            <p style="font-size: 0.9em;">Generated November 2025 | Repository: bambu-middleware</p>
+            <p style="font-size: 0.85em; margin-top: 10px;">🤖 Created with Claude Code</p>
+        </footer>
+    </div>
+
+    <script>
+        // Chart.js configuration
+        Chart.defaults.color = '#cbd5e1';
+        Chart.defaults.borderColor = 'rgba(112, 226, 66, 0.2)';
+
+        // Transaction Amount Limits Chart
+        const amountCtx = document.getElementById('amountLimitsChart').getContext('2d');
+        new Chart(amountCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Daily', 'Weekly', 'Monthly'],
+                datasets: [{
+                    label: 'Transaction Amount Limits (USD)',
+                    data: [1000, 7000, 20000],
+                    backgroundColor: [
+                        'rgba(112, 226, 66, 0.6)',
+                        'rgba(41, 107, 255, 0.6)',
+                        'rgba(31, 74, 196, 0.6)'
+                    ],
+                    borderColor: [
+                        '#70E242',
+                        '#296BFF',
+                        '#1F4AC4'
+                    ],
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: true,
+                        labels: {
+                            color: '#cbd5e1',
+                            font: { size: 14 }
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            callback: function(value) {
+                                return '$' + value.toLocaleString();
+                            }
+                        },
+                        grid: {
+                            color: 'rgba(112, 226, 66, 0.1)'
+                        }
+                    },
+                    x: {
+                        grid: {
+                            display: false
+                        }
+                    }
+                }
+            }
+        });
+
+        // Transaction Count Limits Chart
+        const countCtx = document.getElementById('countLimitsChart').getContext('2d');
+        new Chart(countCtx, {
+            type: 'line',
+            data: {
+                labels: ['Daily', 'Weekly', 'Monthly'],
+                datasets: [{
+                    label: 'Transaction Count Limits',
+                    data: [10, 30, 90],
+                    backgroundColor: 'rgba(112, 226, 66, 0.2)',
+                    borderColor: '#70E242',
+                    borderWidth: 3,
+                    fill: true,
+                    tension: 0.4,
+                    pointRadius: 6,
+                    pointBackgroundColor: '#70E242',
+                    pointBorderColor: '#fff',
+                    pointBorderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: true,
+                        labels: {
+                            color: '#cbd5e1',
+                            font: { size: 14 }
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: {
+                            color: 'rgba(112, 226, 66, 0.1)'
+                        }
+                    },
+                    x: {
+                        grid: {
+                            display: false
+                        }
+                    }
+                }
+            }
+        });
+
+        // Card Limits Chart
+        const cardCtx = document.getElementById('cardLimitsChart').getContext('2d');
+        new Chart(cardCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Max Cards (5)', 'Validation Attempts (5)', 'Reward Limit ($500)'],
+                datasets: [{
+                    data: [5, 5, 500],
+                    backgroundColor: [
+                        'rgba(171, 252, 135, 0.6)',
+                        'rgba(245, 158, 11, 0.6)',
+                        'rgba(31, 74, 196, 0.6)'
+                    ],
+                    borderColor: [
+                        '#ABFC87',
+                        '#f59e0b',
+                        '#1F4AC4'
+                    ],
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            color: '#cbd5e1',
+                            font: { size: 13 },
+                            padding: 20
+                        }
+                    }
+                }
+            }
+        });
+
+        // Comparison Chart
+        const comparisonCtx = document.getElementById('comparisonChart').getContext('2d');
+        new Chart(comparisonCtx, {
+            type: 'radar',
+            data: {
+                labels: [
+                    'Daily Amount ($)',
+                    'Weekly Amount ($)',
+                    'Monthly Amount ($)',
+                    'Daily Count',
+                    'Weekly Count',
+                    'Monthly Count'
+                ],
+                datasets: [{
+                    label: 'Normalized Limits (0-100 scale)',
+                    data: [5, 35, 100, 11, 33, 100],
+                    backgroundColor: 'rgba(112, 226, 66, 0.2)',
+                    borderColor: '#70E242',
+                    borderWidth: 2,
+                    pointBackgroundColor: '#70E242',
+                    pointBorderColor: '#fff',
+                    pointRadius: 5
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: true,
+                        labels: {
+                            color: '#cbd5e1',
+                            font: { size: 14 }
+                        }
+                    }
+                },
+                scales: {
+                    r: {
+                        beginAtZero: true,
+                        max: 100,
+                        ticks: {
+                            stepSize: 20,
+                            color: '#94a3b8'
+                        },
+                        grid: {
+                            color: 'rgba(112, 226, 66, 0.2)'
+                        },
+                        pointLabels: {
+                            color: '#cbd5e1',
+                            font: { size: 12 }
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
