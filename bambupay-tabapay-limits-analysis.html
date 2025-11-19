@@ -1,0 +1,1588 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BambuPay and TabaPay Transaction Limits - Technical Specification Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            line-height: 1.8;
+            color: #1a1a1a;
+            background: #f8f9fa;
+            display: flex;
+        }
+
+        /* Sidebar Navigation */
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 280px;
+            height: 100vh;
+            background: #0D1752;
+            color: #e2e8f0;
+            overflow-y: auto;
+            padding: 30px 0;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+
+        .sidebar-header {
+            padding: 0 25px 20px;
+            border-bottom: 1px solid #70E242;
+            margin-bottom: 20px;
+        }
+
+        .sidebar-header h3 {
+            color: #f1f5f9;
+            font-size: 0.85em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+
+        .sidebar-nav {
+            padding: 0 15px;
+        }
+
+        .sidebar-nav ul {
+            list-style: none;
+        }
+
+        .sidebar-nav li {
+            margin: 0;
+        }
+
+        .sidebar-nav a {
+            display: block;
+            padding: 10px 15px;
+            color: #cbd5e1;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+            font-size: 0.9em;
+        }
+
+        .sidebar-nav a:hover {
+            background: #050D30;
+            color: #70E242;
+            padding-left: 20px;
+        }
+
+        .sidebar-nav a.active {
+            background: #70E242;
+            color: #0D1752;
+            font-weight: 600;
+        }
+
+        .sidebar-nav .subsection {
+            padding-left: 15px;
+            margin-top: 5px;
+        }
+
+        .sidebar-nav .subsection a {
+            font-size: 0.85em;
+            color: #94a3b8;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: 280px;
+            flex: 1;
+            padding: 0;
+        }
+
+        .document-header {
+            background: linear-gradient(135deg, #0D1752 0%, #050D30 100%);
+            color: white;
+            padding: 50px 60px;
+            border-bottom: 5px solid #70E242;
+        }
+
+        .document-header h1 {
+            font-size: 2.5em;
+            margin-bottom: 15px;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+            color: #70E242;
+        }
+
+        .document-header .subtitle {
+            font-size: 1.1em;
+            opacity: 0.9;
+            font-style: italic;
+        }
+
+        .document-meta {
+            background: white;
+            padding: 30px 60px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .meta-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .meta-item {
+            padding: 15px;
+            background: #f8fafc;
+            border-left: 3px solid #70E242;
+        }
+
+        .meta-item label {
+            display: block;
+            font-size: 0.75em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #64748b;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+
+        .meta-item .value {
+            font-size: 1em;
+            color: #1e293b;
+            font-weight: 500;
+        }
+
+        .content-body {
+            background: white;
+            padding: 50px 60px;
+            max-width: 1400px;
+        }
+
+        .executive-summary {
+            background: #f0fdf4;
+            border: 2px solid #70E242;
+            padding: 30px;
+            margin: 40px 0;
+            border-radius: 4px;
+        }
+
+        .executive-summary h2 {
+            color: #0D1752;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+
+        .executive-summary p {
+            color: #1e293b;
+            margin-bottom: 10px;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Helvetica Neue', 'Arial', sans-serif;
+            color: #0f172a;
+        }
+
+        h2 {
+            font-size: 2em;
+            margin-top: 60px;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #0f172a;
+            font-weight: 600;
+        }
+
+        h2::before {
+            content: "§ ";
+            color: #70E242;
+        }
+
+        h3 {
+            font-size: 1.4em;
+            margin-top: 35px;
+            margin-bottom: 20px;
+            color: #1e293b;
+            font-weight: 600;
+        }
+
+        h4 {
+            font-size: 1.1em;
+            margin-top: 25px;
+            margin-bottom: 15px;
+            color: #334155;
+            font-weight: 600;
+        }
+
+        .section {
+            margin: 50px 0;
+            scroll-margin-top: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            background: white;
+            border: 1px solid #d1d5db;
+            font-size: 0.95em;
+        }
+
+        thead {
+            background: #f1f5f9;
+            border-bottom: 2px solid #94a3b8;
+        }
+
+        th {
+            padding: 15px 20px;
+            text-align: left;
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.8em;
+            letter-spacing: 0.5px;
+            color: #1e293b;
+            border-bottom: 2px solid #cbd5e1;
+        }
+
+        td {
+            padding: 15px 20px;
+            border-bottom: 1px solid #e5e7eb;
+            color: #334155;
+        }
+
+        tbody tr:hover {
+            background: #f8fafc;
+        }
+
+        tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        .specification-box {
+            background: #fefce8;
+            border-left: 5px solid #eab308;
+            padding: 20px 25px;
+            margin: 25px 0;
+        }
+
+        .specification-box h4 {
+            color: #854d0e;
+            margin-top: 0;
+        }
+
+        .technical-note {
+            background: #eff6ff;
+            border-left: 5px solid #296BFF;
+            padding: 20px 25px;
+            margin: 25px 0;
+        }
+
+        .technical-note h4 {
+            color: #0D1752;
+            margin-top: 0;
+        }
+
+        .compliance-notice {
+            background: #fef2f2;
+            border-left: 5px solid #dc2626;
+            padding: 20px 25px;
+            margin: 25px 0;
+        }
+
+        .compliance-notice h4 {
+            color: #991b1b;
+            margin-top: 0;
+        }
+
+        .code {
+            background: #f1f5f9;
+            padding: 3px 8px;
+            border-radius: 3px;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 0.9em;
+            color: #0f172a;
+            border: 1px solid #cbd5e1;
+        }
+
+        .file-reference {
+            color: #64748b;
+            font-size: 0.9em;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-style: italic;
+            display: block;
+            margin: 10px 0;
+        }
+
+        ul, ol {
+            margin: 20px 0 20px 40px;
+        }
+
+        li {
+            margin: 10px 0;
+            line-height: 1.8;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 4px;
+            font-size: 0.8em;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-left: 10px;
+        }
+
+        .status-active {
+            background: #dcfce7;
+            color: #065f46;
+            border: 1px solid #70E242;
+        }
+
+        .status-updated {
+            background: #dbeafe;
+            color: #1e3a8a;
+            border: 1px solid #296BFF;
+        }
+
+        .status-deprecated {
+            background: #fee2e2;
+            color: #991b1b;
+            border: 1px solid #fecaca;
+        }
+
+        .limits-summary {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .limit-card {
+            background: white;
+            padding: 25px;
+            border: 2px solid #e5e7eb;
+            border-radius: 4px;
+            text-align: center;
+        }
+
+        .limit-card h4 {
+            color: #64748b;
+            font-size: 0.85em;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        .limit-card .amount {
+            font-size: 2.5em;
+            font-weight: 700;
+            color: #1e293b;
+            margin: 10px 0;
+        }
+
+        .limit-card .period {
+            color: #64748b;
+            font-size: 0.9em;
+        }
+
+        .document-footer {
+            background: #0D1752;
+            color: #cbd5e1;
+            padding: 40px 60px;
+            margin-top: 60px;
+            border-top: 5px solid #70E242;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+            margin-bottom: 30px;
+        }
+
+        .footer-section h4 {
+            color: #70E242;
+            margin-bottom: 15px;
+            font-size: 1em;
+        }
+
+        .footer-section p {
+            font-size: 0.9em;
+            line-height: 1.6;
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid #70E242;
+            font-size: 0.85em;
+            color: #94a3b8;
+        }
+
+        @media print {
+            body {
+                display: block;
+            }
+            .sidebar {
+                display: none;
+            }
+            .main-content {
+                margin-left: 0;
+            }
+            .section {
+                page-break-inside: avoid;
+            }
+        }
+
+        @media (max-width: 1024px) {
+            .sidebar {
+                width: 250px;
+            }
+            .main-content {
+                margin-left: 250px;
+            }
+            .meta-grid, .footer-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <h3>Document Navigation</h3>
+        </div>
+        <nav class="sidebar-nav">
+            <ul>
+                <li><a href="#executive-summary">Executive Summary</a></li>
+                <li><a href="#quick-reference">Quick Reference - All Limits</a></li>
+                <li><a href="#scope">Scope & Purpose</a></li>
+                <li><a href="#transaction-limits">Transaction Limits</a>
+                    <ul class="subsection">
+                        <li><a href="#amount-limits">Amount Limits</a></li>
+                        <li><a href="#count-limits">Count Limits</a></li>
+                    </ul>
+                </li>
+                <li><a href="#card-limits">Card Limits</a>
+                    <ul class="subsection">
+                        <li><a href="#card-maximum">Maximum Cards</a></li>
+                        <li><a href="#card-validation">Validation Attempts</a></li>
+                    </ul>
+                </li>
+                <li><a href="#transfer-limits">Transfer Specifications</a>
+                    <ul class="subsection">
+                        <li><a href="#card-transfers">Card Transfers</a></li>
+                        <li><a href="#minimum-amounts">Minimum Amounts</a></li>
+                    </ul>
+                </li>
+                <li><a href="#reward-limits">Reward Program Limits</a></li>
+                <li><a href="#data-constraints">Data Constraints</a>
+                    <ul class="subsection">
+                        <li><a href="#precision">Amount Precision</a></li>
+                        <li><a href="#text-limits">Text Field Limits</a></li>
+                    </ul>
+                </li>
+                <li><a href="#tabapay-api">TabaPay API Integration</a></li>
+                <li><a href="#recent-changes">Change History</a></li>
+                <li><a href="#error-codes">Error Code Reference</a></li>
+                <li><a href="#implementation">Implementation Details</a>
+                    <ul class="subsection">
+                        <li><a href="#tracking">Limit Tracking</a></li>
+                        <li><a href="#validation">Validation Logic</a></li>
+                    </ul>
+                </li>
+                <li><a href="#appendix">Appendices</a></li>
+            </ul>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Document Header -->
+        <header class="document-header">
+            <h1>BambuPay and TabaPay Transaction Limits</h1>
+            <p class="subtitle">Technical Specification Document - Version 1.0</p>
+        </header>
+
+        <!-- Document Metadata -->
+        <section class="document-meta">
+            <div class="meta-grid">
+                <div class="meta-item">
+                    <label>Document Version</label>
+                    <div class="value">1.0</div>
+                </div>
+                <div class="meta-item">
+                    <label>Date Generated</label>
+                    <div class="value">November 19, 2025</div>
+                </div>
+                <div class="meta-item">
+                    <label>Status</label>
+                    <div class="value">Active</div>
+                </div>
+                <div class="meta-item">
+                    <label>Repository</label>
+                    <div class="value">bambu-middleware</div>
+                </div>
+                <div class="meta-item">
+                    <label>Branch</label>
+                    <div class="value">main</div>
+                </div>
+                <div class="meta-item">
+                    <label>Classification</label>
+                    <div class="value">Internal Technical Documentation</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Content Body -->
+        <div class="content-body">
+            <!-- Executive Summary -->
+            <section id="executive-summary" class="executive-summary">
+                <h2 style="border: none; margin-top: 0; padding-bottom: 0;">Executive Summary</h2>
+                <p>This document provides a comprehensive analysis of all transaction limits, restrictions, and constraints implemented within the BambuPay and TabaPay payment processing systems. The specification encompasses financial transaction limits, card management constraints, data validation rules, and system integration parameters.</p>
+                <p><strong>Key Findings:</strong></p>
+                <ul style="margin-left: 20px;">
+                    <li>Daily transaction limit of $1,000 per user account</li>
+                    <li>Monthly transaction limit of $20,000 per user account</li>
+                    <li>Maximum of 5 active payment cards per user</li>
+                    <li>Automatic card blocking after 5 failed validation attempts</li>
+                    <li>Recent implementation of limits for card-to-card transfers (November 2025)</li>
+                </ul>
+            </section>
+
+            <!-- Quick Reference - All Limits -->
+            <section id="quick-reference" class="section">
+                <h2 style="border-bottom-color: #70E242;">Quick Reference - All Limits</h2>
+
+                <p style="font-size: 1.1em; margin-bottom: 30px;">This section provides a consolidated view of all enforced limits within the BambuPay and TabaPay systems for quick reference.</p>
+
+                <h3>Transaction Amount Limits</h3>
+                <div class="limits-summary">
+                    <div class="limit-card" style="border-color: #70E242;">
+                        <h4>Daily Limit</h4>
+                        <div class="amount" style="color: #0D1752;">$1,000</div>
+                        <div class="period">Per 24-hour period</div>
+                    </div>
+                    <div class="limit-card" style="border-color: #70E242;">
+                        <h4>Weekly Limit</h4>
+                        <div class="amount" style="color: #0D1752;">$7,000</div>
+                        <div class="period">Per 7-day period</div>
+                    </div>
+                    <div class="limit-card" style="border-color: #70E242;">
+                        <h4>Monthly Limit</h4>
+                        <div class="amount" style="color: #0D1752;">$20,000</div>
+                        <div class="period">Per 30-day period</div>
+                    </div>
+                </div>
+
+                <h3>Transaction Count Limits</h3>
+                <div class="limits-summary">
+                    <div class="limit-card" style="border-color: #296BFF;">
+                        <h4>Daily Count</h4>
+                        <div class="amount" style="color: #0D1752;">10</div>
+                        <div class="period">Transactions per day</div>
+                    </div>
+                    <div class="limit-card" style="border-color: #296BFF;">
+                        <h4>Weekly Count</h4>
+                        <div class="amount" style="color: #0D1752;">30</div>
+                        <div class="period">Transactions per week</div>
+                    </div>
+                    <div class="limit-card" style="border-color: #296BFF;">
+                        <h4>Monthly Count</h4>
+                        <div class="amount" style="color: #0D1752;">90</div>
+                        <div class="period">Transactions per month</div>
+                    </div>
+                </div>
+
+                <h3>Card Management Limits</h3>
+                <div class="limits-summary">
+                    <div class="limit-card" style="border-color: #ABFC87;">
+                        <h4>Maximum Active Cards</h4>
+                        <div class="amount" style="color: #0D1752;">5</div>
+                        <div class="period">Per user account</div>
+                    </div>
+                    <div class="limit-card" style="border-color: #f59e0b;">
+                        <h4>Validation Attempts</h4>
+                        <div class="amount" style="color: #0D1752;">5</div>
+                        <div class="period">Before card blocked</div>
+                    </div>
+                    <div class="limit-card" style="border-color: #1F4AC4;">
+                        <h4>Max Reward Amount</h4>
+                        <div class="amount" style="color: #0D1752;">$500</div>
+                        <div class="period">Reward-eligible limit</div>
+                    </div>
+                </div>
+
+                <h3>Comprehensive Limits Table</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Limit Category</th>
+                            <th>Limit Type</th>
+                            <th>Value</th>
+                            <th>Applies To</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td rowspan="3"><strong>Transaction Amount</strong></td>
+                            <td>Daily</td>
+                            <td><strong>$1,000</strong></td>
+                            <td>All users, all outgoing transactions</td>
+                        </tr>
+                        <tr>
+                            <td>Weekly</td>
+                            <td><strong>$7,000</strong></td>
+                            <td>All users, all outgoing transactions</td>
+                        </tr>
+                        <tr>
+                            <td>Monthly</td>
+                            <td><strong>$20,000</strong></td>
+                            <td>All users, all outgoing transactions</td>
+                        </tr>
+                        <tr>
+                            <td rowspan="3"><strong>Transaction Count</strong></td>
+                            <td>Daily</td>
+                            <td><strong>10 transactions</strong></td>
+                            <td>All users, all outgoing transactions</td>
+                        </tr>
+                        <tr>
+                            <td>Weekly</td>
+                            <td><strong>30 transactions</strong></td>
+                            <td>All users, all outgoing transactions</td>
+                        </tr>
+                        <tr>
+                            <td>Monthly</td>
+                            <td><strong>90 transactions</strong></td>
+                            <td>All users, all outgoing transactions</td>
+                        </tr>
+                        <tr>
+                            <td rowspan="2"><strong>Card Limits</strong></td>
+                            <td>Maximum Active Cards</td>
+                            <td><strong>5 cards</strong></td>
+                            <td>Per user account</td>
+                        </tr>
+                        <tr>
+                            <td>Validation Attempts</td>
+                            <td><strong>5 attempts</strong></td>
+                            <td>Per card before blocking</td>
+                        </tr>
+                        <tr>
+                            <td rowspan="3"><strong>Transfer Limits</strong></td>
+                            <td>Minimum Transaction</td>
+                            <td><strong>&gt; $0.00</strong></td>
+                            <td>All transactions</td>
+                        </tr>
+                        <tr>
+                            <td>Card Transfer Direction</td>
+                            <td><strong>Credit Only</strong></td>
+                            <td>Card-funded transfers</td>
+                        </tr>
+                        <tr>
+                            <td>Max Reward Amount</td>
+                            <td><strong>$500.00</strong></td>
+                            <td>Reward program eligibility</td>
+                        </tr>
+                        <tr>
+                            <td rowspan="4"><strong>Data Constraints</strong></td>
+                            <td>Decimal Precision</td>
+                            <td><strong>10 digits, 2 decimals</strong></td>
+                            <td>All monetary values</td>
+                        </tr>
+                        <tr>
+                            <td>Max Monetary Value</td>
+                            <td><strong>$99,999,999.99</strong></td>
+                            <td>System maximum</td>
+                        </tr>
+                        <tr>
+                            <td>Transaction Memo</td>
+                            <td><strong>128 characters</strong></td>
+                            <td>User-provided descriptions</td>
+                        </tr>
+                        <tr>
+                            <td>Card Issuer/Network Names</td>
+                            <td><strong>100/30 characters</strong></td>
+                            <td>Metadata fields</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="technical-note">
+                    <h4>Important Notes</h4>
+                    <ul>
+                        <li><strong>Hard Limits:</strong> Transaction amount and count limits are strictly enforced and cannot be exceeded without system modification.</li>
+                        <li><strong>Dynamic Limits:</strong> TabaPay may impose additional network-specific limits based on card issuer, network policies, and user verification level.</li>
+                        <li><strong>Cumulative Tracking:</strong> Limits track cumulative activity within rolling time windows (not calendar periods).</li>
+                        <li><strong>Excluded Transactions:</strong> Cancelled, failed, expired, and deleted transactions are not counted toward limits.</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Scope and Purpose -->
+            <section id="scope" class="section">
+                <h2>1. Scope and Purpose</h2>
+
+                <h3>1.1 Document Objective</h3>
+                <p>This technical specification document serves to catalog and describe all financial and operational limits enforced within the BambuPay and TabaPay payment processing infrastructure. It is intended for use by engineering teams, compliance officers, and system administrators requiring detailed knowledge of system constraints.</p>
+
+                <h3>1.2 System Coverage</h3>
+                <p>The limits documented herein apply to the following user categories:</p>
+                <ul>
+                    <li><strong>BambuPayMyBambuUser:</strong> Registered BambuPay platform users</li>
+                    <li><strong>BambuExternalUser:</strong> External users receiving payments via invitation</li>
+                    <li><strong>TabaPay Integration:</strong> All transactions processed through the TabaPay payment gateway</li>
+                </ul>
+
+                <h3>1.3 Regulatory Context</h3>
+                <div class="compliance-notice">
+                    <h4>Compliance Notice</h4>
+                    <p>The transaction limits specified in this document are implemented to ensure compliance with financial regulations, prevent fraud, and manage operational risk. Any modifications to these limits must be reviewed by the compliance and risk management teams.</p>
+                </div>
+            </section>
+
+            <!-- Transaction Limits -->
+            <section id="transaction-limits" class="section">
+                <h2>2. Transaction Limits</h2>
+                <span class="file-reference">Implementation: tabapay/views.py:164-170</span>
+
+                <div class="specification-box">
+                    <h4>Specification Reference</h4>
+                    <p><strong>Class:</strong> <span class="code">BambuPayUserTxLimitsMixin</span></p>
+                    <p><strong>Enforcement Method:</strong> <span class="code">_is_tx_permitted()</span> (lines 362-422)</p>
+                    <p><strong>Applicable User Types:</strong> All BambuPay users (registered and external)</p>
+                </div>
+
+                <h3 id="amount-limits">2.1 Transaction Amount Limits</h3>
+                <p>The following monetary limits are enforced on a per-user basis for all outgoing transactions, including transfers, payment requests, and invitations.</p>
+
+                <div class="limits-summary">
+                    <div class="limit-card">
+                        <h4>Daily Limit</h4>
+                        <div class="amount">$1,000</div>
+                        <div class="period">Per 24-hour period</div>
+                        <div class="file-reference" style="margin-top: 15px;">TX_AMOUNT_DAILY_LIMIT</div>
+                    </div>
+                    <div class="limit-card">
+                        <h4>Weekly Limit</h4>
+                        <div class="amount">$7,000</div>
+                        <div class="period">Per 7-day period</div>
+                        <div class="file-reference" style="margin-top: 15px;">TX_AMOUNT_WEEKLY_LIMIT</div>
+                    </div>
+                    <div class="limit-card">
+                        <h4>Monthly Limit</h4>
+                        <div class="amount">$20,000</div>
+                        <div class="period">Per 30-day period</div>
+                        <div class="file-reference" style="margin-top: 15px;">TX_AMOUNT_MONTHLY_LIMIT</div>
+                    </div>
+                </div>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Time Period</th>
+                            <th>Maximum Amount (USD)</th>
+                            <th>Constant Name</th>
+                            <th>Source Line</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Daily (24 hours)</td>
+                            <td>$1,000.00</td>
+                            <td><span class="code">TX_AMOUNT_DAILY_LIMIT</span></td>
+                            <td>165</td>
+                        </tr>
+                        <tr>
+                            <td>Weekly (7 days)</td>
+                            <td>$7,000.00</td>
+                            <td><span class="code">TX_AMOUNT_WEEKLY_LIMIT</span></td>
+                            <td>166</td>
+                        </tr>
+                        <tr>
+                            <td>Monthly (30 days)</td>
+                            <td>$20,000.00</td>
+                            <td><span class="code">TX_AMOUNT_MONTHLY_LIMIT</span></td>
+                            <td>167</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3 id="count-limits">2.2 Transaction Count Limits</h3>
+                <p>In addition to monetary limits, the system enforces restrictions on the total number of transactions a user may initiate within specified time periods.</p>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Time Period</th>
+                            <th>Maximum Count</th>
+                            <th>Constant Name</th>
+                            <th>Source Line</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Daily (24 hours)</td>
+                            <td>10 transactions</td>
+                            <td><span class="code">TX_COUNT_DAILY_LIMIT</span></td>
+                            <td>168</td>
+                        </tr>
+                        <tr>
+                            <td>Weekly (7 days)</td>
+                            <td>30 transactions</td>
+                            <td><span class="code">TX_COUNT_WEEKLY_LIMIT</span></td>
+                            <td>169</td>
+                        </tr>
+                        <tr>
+                            <td>Monthly (30 days)</td>
+                            <td>90 transactions</td>
+                            <td><span class="code">TX_COUNT_MONTHLY_LIMIT</span></td>
+                            <td>170</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="technical-note">
+                    <h4>Technical Implementation Note</h4>
+                    <p><strong>Calculation Method:</strong> The <span class="code">get_bambupay_user_amount_sent_in_period()</span> method (lines 190-306) aggregates all qualifying transactions within the specified time window.</p>
+                    <p><strong>Excluded Transactions:</strong> Cancelled, failed, expired, and deleted transactions are not counted toward limits.</p>
+                    <p><strong>Error Response:</strong> When limits are exceeded, the system returns error code 828 (<span class="code">transfer_velocity</span>).</p>
+                </div>
+            </section>
+
+            <!-- Card Limits -->
+            <section id="card-limits" class="section">
+                <h2>3. Card Management Limits</h2>
+
+                <h3 id="card-maximum">3.1 Maximum Active Cards Per User</h3>
+                <span class="file-reference">Implementation: tabapay/views.py:1574, 1587</span>
+
+                <p>Each user account is restricted to a maximum of five (5) active payment cards at any given time. This limit applies uniformly to both registered BambuPay users and external invitation-based users.</p>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Value</th>
+                            <th>User Type</th>
+                            <th>Error Code</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Maximum Active Cards</td>
+                            <td>5</td>
+                            <td>BambuPayMyBambuUser</td>
+                            <td>845</td>
+                        </tr>
+                        <tr>
+                            <td>Maximum Active Cards</td>
+                            <td>5</td>
+                            <td>BambuExternalUser</td>
+                            <td>845</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="technical-note">
+                    <h4>Implementation Details</h4>
+                    <p><strong>Storage Model:</strong> <span class="code">BambuExternalPaymentOptions</span></p>
+                    <p><strong>Filter Criteria:</strong> Only cards with <span class="code">status="active"</span> are counted toward the limit</p>
+                    <p><strong>Error Message:</strong> <span class="code">card_count_limit_reached</span> (error code 845)</p>
+                </div>
+
+                <h3 id="card-validation">3.2 Card Validation Attempt Restrictions</h3>
+                <span class="file-reference">Implementation: tabapay/views.py:1325</span>
+
+                <p>To prevent fraudulent activity and protect system resources, cards are automatically blocked after five (5) consecutive failed validation attempts.</p>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Value</th>
+                            <th>Constant Name</th>
+                            <th>Action Taken</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Validation Attempt Threshold</td>
+                            <td>5 attempts</td>
+                            <td><span class="code">BLOCK_AFTER_X_ATTEMPTS</span></td>
+                            <td>Card automatically blocked</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="compliance-notice">
+                    <h4>Security Protocol</h4>
+                    <p>The <span class="code">validation_count</span> field is incremented with each failed validation attempt (lines 1703-1707, 1825-1829). Upon reaching the threshold, the card is permanently blocked from further transaction attempts until administrative intervention occurs.</p>
+                </div>
+            </section>
+
+            <!-- Transfer Limits -->
+            <section id="transfer-limits" class="section">
+                <h2>4. Transfer-Specific Specifications</h2>
+
+                <h3 id="card-transfers">4.1 Card-to-Card Transfer Restrictions <span class="status-badge status-updated">Recently Updated</span></h3>
+                <span class="file-reference">Implementation: tabapay/views.py:5334-5391</span>
+
+                <p>Transfers initiated from stored payment cards are subject to additional constraints beyond standard transaction limits.</p>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Restriction Type</th>
+                            <th>Specification</th>
+                            <th>Implementation Line</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Transaction Direction</td>
+                            <td>Credit only (deposits to user account)</td>
+                            <td>5353</td>
+                            <td><span class="status-badge status-active">Active</span></td>
+                        </tr>
+                        <tr>
+                            <td>Amount Limits</td>
+                            <td>All standard daily/weekly/monthly limits enforced</td>
+                            <td>5367</td>
+                            <td><span class="status-badge status-active">Active</span></td>
+                        </tr>
+                        <tr>
+                            <td>Validation Method</td>
+                            <td><span class="code">_is_tx_permitted(deposit=True)</span></td>
+                            <td>5367</td>
+                            <td><span class="status-badge status-active">Active</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="specification-box">
+                    <h4>Change History Reference</h4>
+                    <p><strong>Implementation Date:</strong> November 18, 2025</p>
+                    <p><strong>Commit Reference:</strong> 66f03a28c</p>
+                    <p><strong>Pull Request:</strong> #421 - "BambuPay: Add limit to transfer from card"</p>
+                    <p><strong>Rationale:</strong> Enhanced fraud prevention and regulatory compliance for card-funded transactions</p>
+                </div>
+
+                <h3 id="minimum-amounts">4.2 Minimum Transaction Amount</h3>
+                <span class="file-reference">Implementation: tabapay/serializers.py:1382-1385</span>
+
+                <p>All financial transactions must exceed a minimum threshold to ensure operational efficiency and prevent micro-transaction abuse.</p>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Value</th>
+                            <th>Validator</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Minimum Transaction Amount</td>
+                            <td>&gt; $0.00</td>
+                            <td><span class="code">GetFeeByTransactionAmountSerializer.validate_amount()</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- Reward Limits -->
+            <section id="reward-limits" class="section">
+                <h2>5. Reward Program Limitations</h2>
+                <span class="file-reference">Implementation: bambu_models/models/bambupay.py:483-488</span>
+
+                <p>The BambuPay rewards program offers fee-free transaction processing for qualifying transactions. Eligibility is determined by transaction amount.</p>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Program Parameter</th>
+                            <th>Value</th>
+                            <th>Model Field</th>
+                            <th>Validation Method</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Maximum Reward-Eligible Amount</td>
+                            <td>$500.00</td>
+                            <td><span class="code">max_transaction_amount</span></td>
+                            <td><span class="code">is_eligible_amount(amount)</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="technical-note">
+                    <h4>Eligibility Criteria</h4>
+                    <p><strong>Model:</strong> <span class="code">BambuPayRewards</span> (lines 483-488)</p>
+                    <p><strong>Validation:</strong> The <span class="code">is_eligible_amount(amount)</span> method (lines 512-514) determines whether a transaction qualifies for reward program benefits based on the transaction amount.</p>
+                    <p><strong>Purpose:</strong> Transactions at or below $500.00 may qualify for promotional fee structures or processing incentives.</p>
+                </div>
+            </section>
+
+            <!-- Data Constraints -->
+            <section id="data-constraints" class="section">
+                <h2>6. Data Validation Constraints</h2>
+
+                <h3 id="precision">6.1 Monetary Value Precision</h3>
+                <span class="file-reference">Implementation: tabapay/serializers.py (multiple locations)</span>
+
+                <p>All monetary values within the system adhere to standardized precision and rounding specifications to ensure financial accuracy.</p>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Constraint</th>
+                            <th>Specification</th>
+                            <th>Implementation</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Decimal Field Format</td>
+                            <td>Maximum 10 digits, 2 decimal places</td>
+                            <td><span class="code">DecimalField(max_digits=10, decimal_places=2)</span></td>
+                        </tr>
+                        <tr>
+                            <td>Rounding Method</td>
+                            <td>Round half down to nearest cent</td>
+                            <td><span class="code">ROUND_HALF_DOWN to 0.01</span> (line 8442)</td>
+                        </tr>
+                        <tr>
+                            <td>Maximum Representable Value</td>
+                            <td>$99,999,999.99</td>
+                            <td>System-enforced database constraint</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3 id="text-limits">6.2 Text Field Length Restrictions</h3>
+
+                <p>String-based fields are subject to character limits to maintain database performance and prevent storage overflow.</p>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Field Name</th>
+                            <th>Maximum Length</th>
+                            <th>Implementation Reference</th>
+                            <th>Purpose</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Transaction Memo</td>
+                            <td>128 characters</td>
+                            <td>tabapay/serializers.py:1309</td>
+                            <td>User-provided transaction description</td>
+                        </tr>
+                        <tr>
+                            <td>Card Issuer Name</td>
+                            <td>100 characters</td>
+                            <td>tabapay/utils.py:1267</td>
+                            <td>Financial institution name</td>
+                        </tr>
+                        <tr>
+                            <td>Card Network Identifier</td>
+                            <td>30 characters</td>
+                            <td>tabapay/utils.py:1305</td>
+                            <td>Network/platform designation (Visa, Mastercard, etc.)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- TabaPay API -->
+            <section id="tabapay-api" class="section">
+                <h2>7. TabaPay API Dynamic Limit Integration</h2>
+                <span class="file-reference">Implementation: tabapay/models.py:9-87</span>
+
+                <p>In addition to platform-defined limits, the system integrates with TabaPay's proprietary limit infrastructure, which provides network-specific and dynamic constraint values.</p>
+
+                <div class="specification-box">
+                    <h4>Integration Architecture</h4>
+                    <p>TabaPay API responses contain dynamic limit information that varies based on multiple factors including card network, user verification tier, and account configuration. These limits are stored locally and updated periodically through API synchronization.</p>
+                </div>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Model</th>
+                            <th>Source Lines</th>
+                            <th>Purpose</th>
+                            <th>Update Frequency</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="code">NetworkLimits</span></td>
+                            <td>9-31</td>
+                            <td>Network-specific transaction and daily amount restrictions</td>
+                            <td>Per-transaction query</td>
+                        </tr>
+                        <tr>
+                            <td><span class="code">TransactionLimits</span></td>
+                            <td>35-61</td>
+                            <td>Pull and push operation constraints</td>
+                            <td>Per-transaction query</td>
+                        </tr>
+                        <tr>
+                            <td><span class="code">Limits</span></td>
+                            <td>65-87</td>
+                            <td>Currency-specific pull/push limits from TabaPay provider</td>
+                            <td>Per-transaction query</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="technical-note">
+                    <h4>Dynamic Limit Variability</h4>
+                    <p>TabaPay-provided limits are subject to change based on:</p>
+                    <ul>
+                        <li>Card network policies (Visa, Mastercard, American Express, Discover)</li>
+                        <li>Issuing bank restrictions</li>
+                        <li>User account verification level</li>
+                        <li>Geographic location and regulatory requirements</li>
+                        <li>Historical transaction patterns and risk assessment</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Change History -->
+            <section id="recent-changes" class="section">
+                <h2>8. Change History and Version Control</h2>
+
+                <h3>8.1 Recent Modifications (November 2025)</h3>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Commit ID</th>
+                            <th>PR Number</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>November 18, 2025</td>
+                            <td>66f03a28c</td>
+                            <td>#421</td>
+                            <td>BambuPay: Add limit to transfer from card</td>
+                        </tr>
+                        <tr>
+                            <td>November 17, 2025</td>
+                            <td>cdd4073bc</td>
+                            <td>#413</td>
+                            <td>Hotfix: Include limits on transfer for card</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h4>8.1.1 Commit 66f03a28c - Card Transfer Limit Implementation</h4>
+                <p><strong>Date:</strong> November 18, 2025</p>
+                <p><strong>Title:</strong> "BambuPay: Add limit to transfer from card (#421)"</p>
+
+                <div class="specification-box">
+                    <h4>Modifications Summary</h4>
+                    <ul>
+                        <li><strong>Limit Validation for Card Transfers:</strong> Implemented velocity limit checking for all card-to-card transfer operations</li>
+                        <li><strong>Apple Pay Integration:</strong> Applied transaction limits to Apple Pay-initiated transfers</li>
+                        <li><strong>External User Controls:</strong> Enhanced permission validation for external user debit transactions</li>
+                        <li><strong>Code Locations:</strong> tabapay/views.py (lines 5367, 8093, 8163, 8222)</li>
+                    </ul>
+                </div>
+
+                <h4>8.1.2 Commit cdd4073bc - Card Limit Hotfix</h4>
+                <p><strong>Date:</strong> November 17, 2025</p>
+                <p><strong>Title:</strong> "Hotfix: Include limits on transfer for card (#413)"</p>
+
+                <div class="specification-box">
+                    <h4>Modifications Summary</h4>
+                    <ul>
+                        <li><strong>Initial Implementation:</strong> First implementation of card-based transfer limits</li>
+                        <li><strong>Self-Transfer Tracking:</strong> Added tracking for self-transfer requests in limit calculations</li>
+                        <li><strong>Serializer Updates:</strong> Enhanced data serializers to support limit validation workflows</li>
+                        <li><strong>Administrative Tools:</strong> Implemented administrative portal endpoints for transfer management</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Error Codes -->
+            <section id="error-codes" class="section">
+                <h2>9. Error Code Reference</h2>
+                <span class="file-reference">Implementation: tabapay/error_messages.py</span>
+
+                <p>The following error codes are returned when transaction limit violations or constraint failures occur.</p>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Error Code</th>
+                            <th>Error Name</th>
+                            <th>Description</th>
+                            <th>Source Reference</th>
+                            <th>User Action Required</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>828</strong></td>
+                            <td><span class="code">transfer_velocity</span></td>
+                            <td>Transaction amount or count limits exceeded for specified time period</td>
+                            <td>Lines 130-131</td>
+                            <td>Wait until limit period expires or contact support for limit increase</td>
+                        </tr>
+                        <tr>
+                            <td><strong>845</strong></td>
+                            <td><span class="code">card_count_limit_reached</span></td>
+                            <td>User has reached maximum allowable active payment cards (5)</td>
+                            <td>Lines 186-187</td>
+                            <td>Remove inactive cards before adding new payment method</td>
+                        </tr>
+                        <tr>
+                            <td><strong>846</strong></td>
+                            <td>Various validation errors</td>
+                            <td>Generic status or amount validation failure</td>
+                            <td>Multiple locations</td>
+                            <td>Review transaction details and retry</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- Implementation Details -->
+            <section id="implementation" class="section">
+                <h2>10. Technical Implementation Details</h2>
+
+                <h3 id="tracking">10.1 Limit Tracking Infrastructure</h3>
+                <span class="file-reference">Implementation: tabapay/views.py:164-468</span>
+
+                <div class="technical-note">
+                    <h4>Core Implementation Class</h4>
+                    <p><strong>Class Name:</strong> <span class="code">BambuPayUserTxLimitsMixin</span></p>
+                    <p><strong>Location:</strong> tabapay/views.py (lines 164-468)</p>
+                    <p><strong>Purpose:</strong> Provides centralized limit checking and enforcement for all BambuPay transaction views</p>
+                </div>
+
+                <h4>10.1.1 Key Methods and Functions</h4>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Method Name</th>
+                            <th>Lines</th>
+                            <th>Purpose</th>
+                            <th>Return Type</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="code">is_bambupay_limit_reached()</span></td>
+                            <td>178-188</td>
+                            <td>Boolean check for limit violation</td>
+                            <td>Boolean</td>
+                        </tr>
+                        <tr>
+                            <td><span class="code">get_bambupay_user_amount_sent_in_period()</span></td>
+                            <td>190-306</td>
+                            <td>Calculates aggregate transaction amounts within time windows</td>
+                            <td>Decimal</td>
+                        </tr>
+                        <tr>
+                            <td><span class="code">get_bambupay_tx_limits()</span></td>
+                            <td>308-360</td>
+                            <td>Retrieves all applicable limits for specific user</td>
+                            <td>Dictionary</td>
+                        </tr>
+                        <tr>
+                            <td><span class="code">_is_tx_permitted()</span></td>
+                            <td>362-422</td>
+                            <td>Validates transaction against all relevant limits before execution</td>
+                            <td>Tuple[Boolean, Dictionary]</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3 id="validation">10.2 Transaction Validation Logic</h3>
+
+                <h4>10.2.1 Tracked Transaction Types</h4>
+                <p>The limit calculation system aggregates the following transaction types:</p>
+                <ul>
+                    <li><span class="code">BambuPayExternalUserInvite</span> - Payment requests sent to external users</li>
+                    <li><span class="code">BambuPayMyBambuUserInvite</span> - Payment requests between registered BambuPay users</li>
+                    <li><span class="code">BambuPayExternalTransferRequest</span> - Transfer requests to external recipients</li>
+                    <li><span class="code">BambuPayMyBambuUserTransferRequest</span> - Transfer requests between registered users</li>
+                    <li><span class="code">BambuPayTransfer</span> - Completed and executed transfer transactions</li>
+                </ul>
+
+                <h4>10.2.2 Exclusion Criteria</h4>
+                <p>The following transaction states are excluded from limit calculations:</p>
+                <ul>
+                    <li>Transactions with cancelled status</li>
+                    <li>Failed transaction attempts</li>
+                    <li>Expired payment invitations</li>
+                    <li>Soft-deleted database records</li>
+                </ul>
+
+                <h4>10.2.3 Balance Validation Requirements</h4>
+                <span class="file-reference">Implementation: tabapay/views.py:387</span>
+
+                <div class="specification-box">
+                    <h4>Dual Validation Protocol</h4>
+                    <p>Before transaction approval, the system validates that users possess sufficient account balance to cover:</p>
+                    <ol>
+                        <li>The requested transaction amount</li>
+                        <li>All applicable processing fees</li>
+                    </ol>
+                    <p><strong>Validation Function:</strong> <span class="code">has_available_balance(bp_user, amount, fee_amount)</span></p>
+                </div>
+
+                <h4>10.2.4 User Limit Status Endpoint</h4>
+                <p><strong>Endpoint:</strong> <span class="code">/request/limits/</span></p>
+                <p><strong>View Class:</strong> <span class="code">BambuPayGetPendingInvitesAmount</span></p>
+                <p><strong>Purpose:</strong> Provides real-time limit status information to client applications</p>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Response Field</th>
+                            <th>Data Type</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="code">pending_invitation_amount_total</span></td>
+                            <td>String (Decimal)</td>
+                            <td>Total amount in pending invitations</td>
+                        </tr>
+                        <tr>
+                            <td><span class="code">allowed_amount</span></td>
+                            <td>String (Decimal)</td>
+                            <td>Remaining transaction capacity for current period</td>
+                        </tr>
+                        <tr>
+                            <td><span class="code">daily</span></td>
+                            <td>Boolean</td>
+                            <td>Daily limit threshold reached status</td>
+                        </tr>
+                        <tr>
+                            <td><span class="code">weekly</span></td>
+                            <td>Boolean</td>
+                            <td>Weekly limit threshold reached status</td>
+                        </tr>
+                        <tr>
+                            <td><span class="code">monthly</span></td>
+                            <td>Boolean</td>
+                            <td>Monthly limit threshold reached status</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- Appendix -->
+            <section id="appendix" class="section">
+                <h2>11. Appendices</h2>
+
+                <h3>11.1 Summary Table - All Enforced Limits</h3>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Limit Category</th>
+                            <th>Specific Limit</th>
+                            <th>Value</th>
+                            <th>Enforcement Type</th>
+                            <th>Source File</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td rowspan="3">Transaction Amount</td>
+                            <td>Daily</td>
+                            <td>$1,000</td>
+                            <td>Hard Limit</td>
+                            <td>tabapay/views.py:165</td>
+                        </tr>
+                        <tr>
+                            <td>Weekly</td>
+                            <td>$7,000</td>
+                            <td>Hard Limit</td>
+                            <td>tabapay/views.py:166</td>
+                        </tr>
+                        <tr>
+                            <td>Monthly</td>
+                            <td>$20,000</td>
+                            <td>Hard Limit</td>
+                            <td>tabapay/views.py:167</td>
+                        </tr>
+                        <tr>
+                            <td rowspan="3">Transaction Count</td>
+                            <td>Daily</td>
+                            <td>10 transactions</td>
+                            <td>Hard Limit</td>
+                            <td>tabapay/views.py:168</td>
+                        </tr>
+                        <tr>
+                            <td>Weekly</td>
+                            <td>30 transactions</td>
+                            <td>Hard Limit</td>
+                            <td>tabapay/views.py:169</td>
+                        </tr>
+                        <tr>
+                            <td>Monthly</td>
+                            <td>90 transactions</td>
+                            <td>Hard Limit</td>
+                            <td>tabapay/views.py:170</td>
+                        </tr>
+                        <tr>
+                            <td rowspan="2">Card Management</td>
+                            <td>Maximum Active Cards</td>
+                            <td>5 cards</td>
+                            <td>Hard Limit</td>
+                            <td>tabapay/views.py:1574,1587</td>
+                        </tr>
+                        <tr>
+                            <td>Validation Attempts</td>
+                            <td>5 attempts</td>
+                            <td>Hard Limit</td>
+                            <td>tabapay/views.py:1325</td>
+                        </tr>
+                        <tr>
+                            <td>Reward Eligibility</td>
+                            <td>Maximum Amount</td>
+                            <td>$500.00</td>
+                            <td>Soft Limit</td>
+                            <td>bambu_models/models/bambupay.py:483-488</td>
+                        </tr>
+                        <tr>
+                            <td rowspan="2">Transfer Restrictions</td>
+                            <td>Minimum Amount</td>
+                            <td>&gt; $0.00</td>
+                            <td>Hard Limit</td>
+                            <td>tabapay/serializers.py:1382-1385</td>
+                        </tr>
+                        <tr>
+                            <td>Card Transfer Direction</td>
+                            <td>Credit Only</td>
+                            <td>Hard Limit</td>
+                            <td>tabapay/views.py:5353</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>11.2 Compliance and Regulatory Notes</h3>
+                <div class="compliance-notice">
+                    <h4>Important Regulatory Information</h4>
+                    <p>The transaction limits specified in this document are subject to periodic review and modification based on:</p>
+                    <ul>
+                        <li>Federal and state financial services regulations</li>
+                        <li>Anti-money laundering (AML) requirements</li>
+                        <li>Know Your Customer (KYC) verification levels</li>
+                        <li>Risk management policy updates</li>
+                        <li>Payment network rule changes</li>
+                    </ul>
+                    <p>Any proposed modifications to these limits must be reviewed and approved by the Compliance, Risk Management, and Engineering teams prior to implementation.</p>
+                </div>
+
+                <h3>11.3 Document Revision History</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Version</th>
+                            <th>Date</th>
+                            <th>Author</th>
+                            <th>Changes</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1.0</td>
+                            <td>November 19, 2025</td>
+                            <td>Engineering Documentation Team</td>
+                            <td>Initial comprehensive limits analysis and documentation</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+        </div>
+
+        <!-- Footer -->
+        <footer class="document-footer">
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <h4>Document Information</h4>
+                    <p><strong>Version:</strong> 1.0</p>
+                    <p><strong>Last Updated:</strong> November 19, 2025</p>
+                    <p><strong>Classification:</strong> Internal Technical Documentation</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Repository Details</h4>
+                    <p><strong>Repository:</strong> bambu-middleware</p>
+                    <p><strong>Branch:</strong> main</p>
+                    <p><strong>Base Commit:</strong> 66f03a28c</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Contacts</h4>
+                    <p><strong>Engineering Team:</strong> Backend Services</p>
+                    <p><strong>Compliance Team:</strong> Financial Operations</p>
+                    <p><strong>Documentation:</strong> Technical Writing</p>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2025 BambuPay Financial Services. All rights reserved.</p>
+                <p>This document contains confidential and proprietary information. Unauthorized distribution is prohibited.</p>
+            </div>
+        </footer>
+    </main>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('.sidebar-nav a').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href').substring(1);
+                const targetElement = document.getElementById(targetId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+                    // Update active link
+                    document.querySelectorAll('.sidebar-nav a').forEach(link => {
+                        link.classList.remove('active');
+                    });
+                    this.classList.add('active');
+                }
+            });
+        });
+
+        // Highlight current section in navigation while scrolling
+        window.addEventListener('scroll', () => {
+            let current = '';
+            document.querySelectorAll('.section, #executive-summary').forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (pageYOffset >= (sectionTop - 100)) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            document.querySelectorAll('.sidebar-nav a').forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
